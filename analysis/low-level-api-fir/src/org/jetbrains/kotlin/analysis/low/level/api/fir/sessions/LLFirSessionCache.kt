@@ -34,6 +34,7 @@ import org.jetbrains.kotlin.fir.SessionConfiguration
 import org.jetbrains.kotlin.fir.analysis.checkersComponent
 import org.jetbrains.kotlin.fir.analysis.extensions.additionalCheckers
 import org.jetbrains.kotlin.fir.backend.jvm.FirJvmTypeMapper
+import org.jetbrains.kotlin.fir.deserialization.AbstractFirDeserializedSymbolProvider
 import org.jetbrains.kotlin.fir.extensions.*
 import org.jetbrains.kotlin.fir.java.JavaSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.*
@@ -48,6 +49,7 @@ import org.jetbrains.kotlin.platform.jvm.JvmPlatforms
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.jvm.modules.JavaModuleResolver
 import org.jetbrains.kotlin.resolve.jvm.platform.JvmPlatformAnalyzerServices
+import org.jetbrains.kotlin.utils.addIfNotNull
 import org.jetbrains.kotlin.utils.addToStdlib.partitionIsInstance
 import java.util.concurrent.ConcurrentMap
 
@@ -536,10 +538,14 @@ internal class LLFirSessionCache(private val project: Project) {
         session: FirSession,
         destination: MutableList<FirSymbolProvider>,
     ) {
-        val (syntheticFunctionSymbolProviders, remainingSymbolProviders1) =
-            partitionIsInstance<_, FirExtensionSyntheticFunctionInterfaceProvider>()
+        val (deserializedSymbolProviders, remainingSymbolProviders1) =
+            partitionIsInstance<_, AbstractFirDeserializedSymbolProvider>()
+        destination.addIfNotNull(LLFirCombinedDeserializedSymbolProvider.merge(session, deserializedSymbolProviders))
 
-        destination.addAll(remainingSymbolProviders1)
+        val (syntheticFunctionSymbolProviders, remainingSymbolProviders2) =
+            remainingSymbolProviders1.partitionIsInstance<_, FirExtensionSyntheticFunctionInterfaceProvider>()
+
+        destination.addAll(remainingSymbolProviders2)
 
         // Unfortunately, the functions that an extension synthetic function symbol provider might provide differ between sessions because
         // they depend on compiler plugins. However, only extension providers that are affected by compiler plugins are added in

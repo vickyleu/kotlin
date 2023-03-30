@@ -279,7 +279,11 @@ abstract class AbstractFirDeserializedSymbolProvider(
 
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
-        val callableId = CallableId(packageFqName, name)
+        getTopLevelCallableSymbolsTo(destination, CallableId(packageFqName, name))
+    }
+
+    @FirSymbolProviderInternals
+    fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, callableId: CallableId) {
         destination += functionCache.getCallables(callableId)
         destination += propertyCache.getCallables(callableId)
     }
@@ -294,12 +298,22 @@ abstract class AbstractFirDeserializedSymbolProvider(
 
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
-        destination += functionCache.getCallables(CallableId(packageFqName, name))
+        getTopLevelFunctionSymbolsTo(destination, CallableId(packageFqName, name))
+    }
+
+    @FirSymbolProviderInternals
+    fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, callableId: CallableId) {
+        destination += functionCache.getCallables(callableId)
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
-        destination += propertyCache.getCallables(CallableId(packageFqName, name))
+        getTopLevelPropertySymbolsTo(destination, CallableId(packageFqName, name))
+    }
+
+    @FirSymbolProviderInternals
+    fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, callableId: CallableId) {
+        destination += propertyCache.getCallables(callableId)
     }
 
     override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? {
