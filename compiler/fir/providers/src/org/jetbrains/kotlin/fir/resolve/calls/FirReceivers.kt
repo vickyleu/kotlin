@@ -111,7 +111,7 @@ sealed class ImplicitReceiverValue<S : FirBasedSymbol<*>>(
     private var _receiverExpression: FirExpression? = null
 
     private fun computeReceiverExpression(): FirExpression {
-        _receiverExpression?.let { return it }
+//        _receiverExpression?.let { return it }
         val actualReceiverExpression = if (receiverIsSmartcasted) {
             buildSmartCastExpression {
                 originalExpression = originalReceiverExpression
@@ -127,7 +127,7 @@ sealed class ImplicitReceiverValue<S : FirBasedSymbol<*>>(
         } else {
             originalReceiverExpression
         }
-        _receiverExpression = actualReceiverExpression
+//        _receiverExpression = actualReceiverExpression
         return actualReceiverExpression
     }
 
