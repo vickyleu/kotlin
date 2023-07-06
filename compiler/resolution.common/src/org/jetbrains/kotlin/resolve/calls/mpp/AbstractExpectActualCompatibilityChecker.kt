@@ -157,10 +157,10 @@ object AbstractExpectActualCompatibilityChecker {
         // and not added if an explicit supertype _is_ specified
         val expectSupertypes = expectClassSymbol.superTypes.filterNot { it.typeConstructor().isAnyConstructor() }
         val actualSupertypes = actualClassSymbol.superTypes.filterNot { it.typeConstructor().isAnyConstructor() }
+            .map { substitutor.safeSubstitute(it) }
         return expectSupertypes.all { expectSupertype ->
-            val substitutedExpectType = substitutor.safeSubstitute(expectSupertype)
             actualSupertypes.any { actualSupertype ->
-                areCompatibleExpectActualTypes(substitutedExpectType, actualSupertype)
+                areCompatibleExpectActualTypes(expectSupertype, actualSupertype)
             }
         }
     }
@@ -172,10 +172,10 @@ object AbstractExpectActualCompatibilityChecker {
         substitutor: TypeSubstitutorMarker,
     ): Boolean {
         val expectSupertypes = expectClassSymbol.superTypes.filterNot { it.typeConstructor().isAnyConstructor() }
-        val actualType = actualClassSymbol.defaultType
+        val actualType = substitutor.safeSubstitute(actualClassSymbol.defaultType)
         return expectSupertypes.all { expectSupertype ->
             actualTypeIsSubtypeOfExpectType(
-                expectType = substitutor.safeSubstitute(expectSupertype),
+                expectType = expectSupertype,
                 actualType = actualType
             )
         }
@@ -328,19 +328,19 @@ object AbstractExpectActualCompatibilityChecker {
 
         if (
             !areCompatibleTypeLists(
-                expectedValueParameters.toTypeList(substitutor),
-                actualValueParameters.toTypeList(createEmptySubstitutor())
+                expectedValueParameters.toTypeList(createEmptySubstitutor()),
+                actualValueParameters.toTypeList(substitutor)
             ) ||
             !areCompatibleExpectActualTypes(
-                expectedReceiverType?.let { substitutor.safeSubstitute(it) },
-                actualReceiverType
+                expectedReceiverType,
+                actualReceiverType?.let { substitutor.safeSubstitute(it) }
             )
         ) {
             return Incompatible.ParameterTypes
         }
 
         if (shouldCheckReturnTypesOfCallables) {
-            if (!areCompatibleExpectActualTypes(substitutor.safeSubstitute(expectDeclaration.returnType), actualDeclaration.returnType)) {
+            if (!areCompatibleExpectActualTypes(expectDeclaration.returnType, substitutor.safeSubstitute(actualDeclaration.returnType))) {
                 return Incompatible.ReturnType
             }
         }
@@ -511,7 +511,7 @@ object AbstractExpectActualCompatibilityChecker {
             val actualBounds = actualTypeParameterSymbols[i].bounds
             if (
                 expectBounds.size != actualBounds.size ||
-                !areCompatibleTypeLists(expectBounds.map { substitutor.safeSubstitute(it) }, actualBounds)
+                !areCompatibleTypeLists(expectBounds, actualBounds.map { substitutor.safeSubstitute(it) })
             ) {
                 return Incompatible.TypeParameterUpperBounds
             }

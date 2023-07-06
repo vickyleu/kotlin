@@ -98,6 +98,17 @@ interface ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSystemC
 
     val PropertySymbolMarker.setter: FunctionSymbolMarker?
 
+    /**
+     * Creates a substitutor which replaces actual type parameters
+     * with expect type parameters.
+     *
+     * We do the substitution in this direction, because for cases
+     * such as typealiases, 1 expect type parameter might map
+     * to 1..N actual type parameters, but it is always
+     * 1 actual type parameter -> 1 expect type parameter.
+     *
+     * e.g. `actual typealias Foo<T> = Bar<T, Int, T>`
+     */
     fun createExpectActualTypeParameterSubstitutor(
         expectTypeParameters: List<TypeParameterSymbolMarker>,
         actualTypeParameters: List<TypeParameterSymbolMarker>,

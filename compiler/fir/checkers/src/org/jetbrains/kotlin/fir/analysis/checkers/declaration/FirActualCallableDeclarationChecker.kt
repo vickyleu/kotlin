@@ -57,8 +57,8 @@ object FirActualCallableDeclarationChecker : FirCallableDeclarationChecker() {
         )
 
         if (!areCompatibleExpectActualTypes(
-                substitutor.substituteOrSelf(expectFunctionSymbol.resolvedReturnType.type),
-                actualFunctionSymbol.resolvedReturnType.type,
+                expectFunctionSymbol.resolvedReturnType.type,
+                substitutor.substituteOrSelf(actualFunctionSymbol.resolvedReturnType.type),
                 context.session
             )
         ) {

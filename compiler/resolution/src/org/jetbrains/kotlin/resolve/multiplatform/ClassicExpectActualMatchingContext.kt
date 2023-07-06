@@ -134,8 +134,8 @@ class ClassicExpectActualMatchingContext(val platformModule: ModuleDescriptor) :
         val expectParameters = expectTypeParameters.castAll<TypeParameterDescriptor>()
         val actualParameters = actualTypeParameters.castAll<TypeParameterDescriptor>()
         val substitutor = TypeSubstitutor.create(
-            TypeConstructorSubstitution.createByParametersMap(expectParameters.keysToMap {
-                actualParameters[it.index].defaultType.asTypeProjection()
+            TypeConstructorSubstitution.createByParametersMap(actualParameters.keysToMap {
+                expectParameters[it.index].defaultType.asTypeProjection()
             })
         )
         return when (parentSubstitutor) {
