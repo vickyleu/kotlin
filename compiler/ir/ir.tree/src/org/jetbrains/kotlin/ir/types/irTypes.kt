@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.ir.symbols.IrTypeParameterSymbol
 import org.jetbrains.kotlin.ir.types.impl.*
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.types.*
 import org.jetbrains.kotlin.utils.memoryOptimizedFilterNot
 import org.jetbrains.kotlin.utils.memoryOptimizedMap
@@ -123,6 +124,25 @@ fun IrType.mergeNullability(other: IrType) = when (other) {
     }
     else -> this
 }
+
+private val typeEnhancementAnnotationFqNames by lazy {
+    listOf(
+        StandardClassIds.Annotations.RawTypeAnnotation.asSingleFqName(),
+        StandardClassIds.Annotations.FlexibleNullability.asSingleFqName(),
+        StandardClassIds.Annotations.FlexibleMutability.asSingleFqName(),
+        StandardClassIds.Annotations.EnhancedNullability.asSingleFqName(),
+    )
+}
+
+val IrType.typeEnhancementAnnotations: List<IrConstructorCall>
+    get() = annotations.filter { anno ->
+        typeEnhancementAnnotationFqNames.any { fqName ->
+            anno.isAnnotation(fqName)
+        }
+    }
+
+fun IrType.mergeAnnotations(other: IrType): IrType =
+    addAnnotations(other.typeEnhancementAnnotations)
 
 @ObsoleteDescriptorBasedAPI
 fun IrType.toKotlinType(): KotlinType {
