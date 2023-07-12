@@ -110,6 +110,9 @@ internal abstract class IrExpectActualMatchingContext(
     override fun TypeAliasSymbolMarker.expandToRegularClass(): RegularClassSymbolMarker? {
         return asIr().expandedType.getClass()?.symbol
     }
+    override fun TypeAliasSymbolMarker.expandedTypeArguments(): List<TypeArgumentMarker> {
+        return asIr().expandedType.getArguments()
+    }
 
     override val RegularClassSymbolMarker.classKind: ClassKind
         get() = asIr().kind
@@ -235,6 +238,33 @@ internal abstract class IrExpectActualMatchingContext(
         }
     }
 
+    @OptIn(UnsafeCastFunction::class)
+    override fun createActualTypeAliasBasedSubstitutor(
+        actualTypeAlias: TypeAliasSymbolMarker,
+        parentSubstitutor: TypeSubstitutorMarker?,
+    ): TypeSubstitutorMarker {
+        val typeAlias = actualTypeAlias as IrTypeAliasSymbol
+
+        val rhsTypeParameters = typeAlias.owner.expandedType.typeConstructor().getParameters()
+            .castAll<IrTypeParameterSymbol>()
+        val rhsTypeArguments = typeAlias.owner.expandedType.getArguments()
+            .castAll<IrTypeArgument>()
+            .map { rhsTypeArgument ->
+                // TODO: consider declaration site variance and upper bounds for star projections
+                val rhsType = rhsTypeArgument.typeOrNull ?: typeContext.nullableAnyType()
+                val subbed = parentSubstitutor?.safeSubstitute(rhsType) ?: rhsType
+                if (rhsType === subbed) rhsTypeArgument
+                else rhsTypeArgument.replaceType(subbed) as IrTypeArgument
+            }
+
+        val substitutor = IrTypeSubstitutor(rhsTypeParameters, rhsTypeArguments, typeContext.irBuiltIns, allowEmptySubstitution = true)
+        return when (parentSubstitutor) {
+            null -> substitutor
+            is AbstractIrTypeSubstitutor -> IrChainedSubstitutor(parentSubstitutor, substitutor)
+            else -> shouldNotBeCalled()
+        }
+    }
+
     /*
      * [isActualDeclaration] flag is needed to correctly determine scope for specific class
      * In IR there are no scopes, all declarations are stored inside IrClass itself, so this flag
@@ -291,6 +321,13 @@ internal abstract class IrExpectActualMatchingContext(
     override fun CallableSymbolMarker.isAnnotationConstructor(): Boolean {
         val irConstructor = safeAsIr<IrConstructor>() ?: return false
         return irConstructor.constructedClass.isAnnotationClass
+    }
+
+    override fun TypeParameterSymbolMarker.asType(): KotlinTypeMarker {
+        return asIr().defaultType
+    }
+    override fun TypeParameterSymbolMarker.asTypeParameterMarker(): TypeParameterMarker {
+        return asIr().symbol
     }
 
     override val TypeParameterSymbolMarker.bounds: List<KotlinTypeMarker>

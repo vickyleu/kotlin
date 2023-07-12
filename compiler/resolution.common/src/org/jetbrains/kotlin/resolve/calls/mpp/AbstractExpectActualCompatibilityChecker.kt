@@ -15,10 +15,12 @@ import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualCompatibility
 import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualCompatibility.Incompatible
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
+import org.jetbrains.kotlin.types.model.TypeParameterMarker
 import org.jetbrains.kotlin.types.model.TypeSubstitutorMarker
 import org.jetbrains.kotlin.utils.SmartList
 import org.jetbrains.kotlin.utils.addToStdlib.enumMapOf
 import org.jetbrains.kotlin.utils.addToStdlib.enumSetOf
+import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
 import org.jetbrains.kotlin.utils.keysToMap
 import java.util.*
 
@@ -97,7 +99,9 @@ object AbstractExpectActualCompatibilityChecker {
         }
 
         val expectTypeParameterSymbols = expectClassSymbol.typeParameters
-        val actualTypeParameterSymbols = actualClass.typeParameters
+        val actualTypeParameterSymbols = actualClassLikeSymbol.typeParameters
+        val actualExpandedTypeParameterSymbols = actualClass.typeParameters
+
         if (expectTypeParameterSymbols.size != actualTypeParameterSymbols.size) {
             return Incompatible.TypeParameterCount
         }
@@ -110,16 +114,42 @@ object AbstractExpectActualCompatibilityChecker {
             return Incompatible.Visibility
         }
 
-        val substitutor = createExpectActualTypeParameterSubstitutor(
-            expectTypeParameterSymbols,
-            actualTypeParameterSymbols,
-            parentSubstitutor
-        )
+        val substitutor = when (actualClassLikeSymbol) {
+            is TypeAliasSymbolMarker -> createActualTypeAliasBasedSubstitutor(
+                actualClassLikeSymbol,
+                createExpectActualTypeParameterSubstitutor(
+                    expectTypeParameterSymbols,
+                    actualTypeParameterSymbols,
+                    parentSubstitutor
+                )
+            )
+            else -> createExpectActualTypeParameterSubstitutor(
+                expectTypeParameterSymbols,
+                actualExpandedTypeParameterSymbols,
+                parentSubstitutor
+            )
+        }
 
-        areCompatibleTypeParameters(expectTypeParameterSymbols, actualTypeParameterSymbols, substitutor).let {
-            if (it != ExpectActualCompatibility.Compatible) {
-                return it
+        when (actualClassLikeSymbol) {
+            is RegularClassSymbolMarker -> {
+                areCompatibleTypeParameters(
+                    expectTypeParameterSymbols, actualExpandedTypeParameterSymbols, substitutor
+                ).let {
+                    if (it != ExpectActualCompatibility.Compatible) {
+                        return it
+                    }
+                }
             }
+            is TypeAliasSymbolMarker -> {
+                areCompatibleTypeParametersInActualTypeAlias(
+                    expectTypeParameterSymbols, actualExpandedTypeParameterSymbols, substitutor
+                ).let {
+                    if (it != ExpectActualCompatibility.Compatible) {
+                        return it
+                    }
+                }
+            }
+            else -> shouldNotBeCalled()
         }
 
         if (!areCompatibleSupertypes(expectClassSymbol, actualClass, substitutor)) {
@@ -528,6 +558,76 @@ object AbstractExpectActualCompatibilityChecker {
             }
         ) {
             return Incompatible.TypeParameterReified
+        }
+
+        return ExpectActualCompatibility.Compatible
+    }
+
+    context(ExpectActualMatchingContext<*>)
+    private fun areCompatibleTypeParametersInActualTypeAlias(
+        expectTypeParameterSymbols: List<TypeParameterSymbolMarker>,
+        actualTypeParameterSymbols: List<TypeParameterSymbolMarker>,
+        substitutor: TypeSubstitutorMarker,
+    ): ExpectActualCompatibility<*> {
+        return areDeeplyCompatibleTypeParameters(
+            expectTypeParameterSymbols.mapTo(mutableSetOf()) { it.asTypeParameterMarker() },
+            actualTypeParameterSymbols.map { it.asTypeParameterMarker() },
+            actualTypeParameterSymbols.map { substitutor.safeSubstitute(it.asType()) },
+            substitutor,
+        )
+    }
+
+    context(ExpectActualMatchingContext<*>)
+    private fun areDeeplyCompatibleTypeParameters(
+        expectTypeParameters: Set<TypeParameterMarker>,
+        actualTypeParameters: List<TypeParameterMarker>,
+        actualTypes: List<KotlinTypeMarker>,
+        substitutor: TypeSubstitutorMarker,
+    ): ExpectActualCompatibility<*> {
+        // expect class Foo<T /* (1) */>
+        // class Bar<A, B, C>
+        // actual typealias Foo<T /* (2) */> = Bar<Int, T /* (3) */, MutableList<T>>
+
+        for (i in actualTypes.indices) {
+            val actualType = actualTypes[i] // T(3)
+            val actualTypeCtor = actualType.typeConstructor()
+            val possibleExpectTypeParameterForActual = actualTypeCtor.getTypeParameterClassifier() // T(1) via the type alias aware substitutor
+
+            if (possibleExpectTypeParameterForActual != null && possibleExpectTypeParameterForActual in expectTypeParameters) {
+                val actualTypeParameter = actualTypeParameters[i] // B
+
+                val expectTypeParameterBound = intersectTypes(possibleExpectTypeParameterForActual.getUpperBounds())
+                val actualTypeParameterBound = intersectTypes(actualTypeParameter.getUpperBounds())
+
+                if (!areCompatibleExpectActualTypes(expectTypeParameterBound, actualTypeParameterBound)) {
+                    return Incompatible.TypeParameterUpperBounds
+                }
+
+                val expectTypeParameterVariance = possibleExpectTypeParameterForActual.getVariance()
+                val actualTypeParameterVariance = actualTypeParameter.getVariance()
+
+                if (expectTypeParameterVariance != actualTypeParameterVariance) {
+                    return Incompatible.TypeParameterVariance
+                }
+
+                // Actual type argument variance is checked w.r.t. actual type parameter variance separately
+                // by the regular declaration checkers (CONFLICTING_PROJECTION / REDUNDANT_PROJECTION)
+            }
+
+            val actualTypeCtorParameters = actualTypeCtor.getParameters()
+
+            if (actualTypeCtorParameters.isEmpty()) continue
+
+            areDeeplyCompatibleTypeParameters(
+                expectTypeParameters,
+                actualTypeCtorParameters,
+                actualType.getArguments().map { substitutor.safeSubstitute(it.getType()) },
+                substitutor
+            ).let {
+                if (it != ExpectActualCompatibility.Compatible) {
+                    return it
+                }
+            }
         }
 
         return ExpectActualCompatibility.Compatible

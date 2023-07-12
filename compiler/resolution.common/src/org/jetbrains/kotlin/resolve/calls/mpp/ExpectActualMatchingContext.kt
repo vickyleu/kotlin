@@ -14,9 +14,7 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualCompatibility
 import org.jetbrains.kotlin.types.Variance
-import org.jetbrains.kotlin.types.model.KotlinTypeMarker
-import org.jetbrains.kotlin.types.model.TypeSubstitutorMarker
-import org.jetbrains.kotlin.types.model.TypeSystemContext
+import org.jetbrains.kotlin.types.model.*
 
 interface ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSystemContext {
     val shouldCheckReturnTypesOfCallables: Boolean
@@ -65,6 +63,7 @@ interface ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSystemC
     val ValueParameterSymbolMarker.parameterName: Name
 
     fun TypeAliasSymbolMarker.expandToRegularClass(): RegularClassSymbolMarker?
+    fun TypeAliasSymbolMarker.expandedTypeArguments(): List<TypeArgumentMarker>
 
     val RegularClassSymbolMarker.classKind: ClassKind
 
@@ -115,6 +114,11 @@ interface ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSystemC
         parentSubstitutor: TypeSubstitutorMarker?
     ): TypeSubstitutorMarker
 
+    fun createActualTypeAliasBasedSubstitutor(
+        actualTypeAlias: TypeAliasSymbolMarker,
+        parentSubstitutor: TypeSubstitutorMarker?
+    ): TypeSubstitutorMarker
+
     fun RegularClassSymbolMarker.collectAllMembers(isActualDeclaration: Boolean): List<DeclarationSymbolMarker>
     fun RegularClassSymbolMarker.getMembersForExpectClass(name: Name): List<DeclarationSymbolMarker>
 
@@ -136,6 +140,8 @@ interface ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSystemC
 
     fun CallableSymbolMarker.isAnnotationConstructor(): Boolean
 
+    fun TypeParameterSymbolMarker.asType(): KotlinTypeMarker
+    fun TypeParameterSymbolMarker.asTypeParameterMarker(): TypeParameterMarker
     val TypeParameterSymbolMarker.bounds: List<KotlinTypeMarker>
     val TypeParameterSymbolMarker.variance: Variance
     val TypeParameterSymbolMarker.isReified: Boolean

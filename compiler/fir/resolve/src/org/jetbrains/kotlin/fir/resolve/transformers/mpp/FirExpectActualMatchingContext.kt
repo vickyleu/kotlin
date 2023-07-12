@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.isSubstitutionOrIntersectionOverride
 import org.jetbrains.kotlin.fir.resolve.*
 import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.scopes.*
+import org.jetbrains.kotlin.fir.scopes.impl.toConeType
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
@@ -75,6 +76,13 @@ class FirExpectActualMatchingContext(
             .coneType
             .fullyExpandedType(actualSession)
             .toSymbol(actualSession) as? FirRegularClassSymbol
+    }
+    override fun TypeAliasSymbolMarker.expandedTypeArguments(): List<TypeArgumentMarker> {
+        return asSymbol()
+            .resolvedExpandedTypeRef
+            .coneType
+            .fullyExpandedType(actualSession)
+            .getArguments()
     }
 
     override val RegularClassSymbolMarker.classKind: ClassKind
@@ -145,6 +153,15 @@ class FirExpectActualMatchingContext(
             parentSubstitutor as ConeSubstitutor?
         )
     }
+
+    override fun createActualTypeAliasBasedSubstitutor(
+        actualTypeAlias: TypeAliasSymbolMarker,
+        parentSubstitutor: TypeSubstitutorMarker?,
+    ): TypeSubstitutorMarker = createActualTypeAliasBasedSubstitutor(
+        actualTypeAlias as FirTypeAliasSymbol,
+        actualSession,
+        parentSubstitutor as ConeSubstitutor?
+    )
 
     override val RegularClassSymbolMarker.superTypes: List<KotlinTypeMarker>
         get() = asSymbol().resolvedSuperTypes
@@ -249,6 +266,13 @@ class FirExpectActualMatchingContext(
     override fun CallableSymbolMarker.isAnnotationConstructor(): Boolean {
         val symbol = asSymbol()
         return symbol.isAnnotationConstructor(symbol.moduleData.session)
+    }
+
+    override fun TypeParameterSymbolMarker.asType(): KotlinTypeMarker {
+        return asSymbol().toConeType()
+    }
+    override fun TypeParameterSymbolMarker.asTypeParameterMarker(): TypeParameterMarker {
+        return asSymbol().toLookupTag()
     }
 
     override val TypeParameterSymbolMarker.bounds: List<KotlinTypeMarker>

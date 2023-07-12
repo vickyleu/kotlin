@@ -66,6 +66,9 @@ class ClassicExpectActualMatchingContext(val platformModule: ModuleDescriptor) :
     override fun TypeAliasSymbolMarker.expandToRegularClass(): RegularClassSymbolMarker? {
         return asDescriptor().classDescriptor
     }
+    override fun TypeAliasSymbolMarker.expandedTypeArguments(): List<TypeArgumentMarker> {
+        return asDescriptor().underlyingType.getArguments()
+    }
 
     override val RegularClassSymbolMarker.classKind: ClassKind
         get() = asDescriptor().kind
@@ -145,6 +148,34 @@ class ClassicExpectActualMatchingContext(val platformModule: ModuleDescriptor) :
         }
     }
 
+    override fun createActualTypeAliasBasedSubstitutor(
+        actualTypeAlias: TypeAliasSymbolMarker,
+        parentSubstitutor: TypeSubstitutorMarker?
+    ): TypeSubstitutorMarker {
+        val typeAlias = actualTypeAlias as TypeAliasDescriptor
+
+        val rhsTypeParameters = typeAlias.classDescriptor?.declaredTypeParameters
+            ?: error("Unexpected type alias $typeAlias with no class descriptor")
+        val rhsTypeArguments = typeAlias.underlyingType.arguments
+
+        val substitutor = TypeSubstitutor.create(
+            TypeConstructorSubstitution.createByParametersMap(rhsTypeParameters.keysToMap {
+                val rhsTypeArgument = rhsTypeArguments[it.index]
+                val rhsType = rhsTypeArgument.type
+
+                val subbed = (parentSubstitutor?.safeSubstitute(rhsType) ?: rhsType) as KotlinType
+
+                if (rhsType === subbed) rhsTypeArgument
+                else rhsTypeArgument.replaceType(subbed)
+            })
+        )
+        return when (parentSubstitutor) {
+            null -> substitutor
+            is TypeSubstitutor -> TypeSubstitutor.createChainedSubstitutor(parentSubstitutor.substitution, substitutor.substitution)
+            else -> error("Unsupported substitutor type: $parentSubstitutor")
+        }
+    }
+
     override fun RegularClassSymbolMarker.collectAllMembers(isActualDeclaration: Boolean): List<DeclarationSymbolMarker> {
         return asDescriptor().getMembers(name = null)
     }
@@ -192,6 +223,13 @@ class ClassicExpectActualMatchingContext(val platformModule: ModuleDescriptor) :
     override fun CallableSymbolMarker.isAnnotationConstructor(): Boolean {
         val descriptor = safeAsDescriptor<ConstructorDescriptor>() ?: return false
         return DescriptorUtils.isAnnotationClass(descriptor.constructedClass)
+    }
+
+    override fun TypeParameterSymbolMarker.asType(): KotlinTypeMarker {
+        return asDescriptor().defaultType
+    }
+    override fun TypeParameterSymbolMarker.asTypeParameterMarker(): TypeParameterMarker {
+        return asDescriptor()
     }
 
     override val TypeParameterSymbolMarker.bounds: List<KotlinTypeMarker>
