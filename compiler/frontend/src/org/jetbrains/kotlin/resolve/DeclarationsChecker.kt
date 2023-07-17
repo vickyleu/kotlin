@@ -175,22 +175,6 @@ class DeclarationsChecker(
             trace.report(ACTUAL_TYPE_ALIAS_NOT_TO_CLASS.on(declaration))
             return
         }
-
-        if (classDescriptor.declaredTypeParameters.any { it.variance != Variance.INVARIANT }) {
-            trace.report(ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE.on(declaration))
-            return
-        }
-
-        if (rhs.arguments.any { it.projectionKind != Variance.INVARIANT || it.isStarProjection }) {
-            trace.report(ACTUAL_TYPE_ALIAS_WITH_USE_SITE_VARIANCE.on(declaration))
-            return
-        }
-
-        if (rhs.arguments.map { it.type.constructor.declarationDescriptor as? TypeParameterDescriptor } !=
-            typeAliasDescriptor.declaredTypeParameters) {
-            trace.report(ACTUAL_TYPE_ALIAS_WITH_COMPLEX_SUBSTITUTION.on(declaration))
-            return
-        }
     }
 
     private fun getUsedTypeAliasParameters(type: KotlinType, typeAlias: TypeAliasDescriptor): Set<TypeParameterDescriptor> =

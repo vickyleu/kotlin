@@ -26,40 +26,5 @@ object FirActualTypeAliasChecker : FirTypeAliasChecker() {
         if (expandedTypeSymbol is FirTypeAliasSymbol) {
             reporter.reportOn(declaration.source, FirErrors.ACTUAL_TYPE_ALIAS_NOT_TO_CLASS, context)
         }
-
-        for (typeParameterSymbol in expandedTypeSymbol.typeParameterSymbols) {
-            if (typeParameterSymbol.variance != Variance.INVARIANT) {
-                reporter.reportOn(declaration.source, FirErrors.ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE, context)
-                break
-            }
-        }
-
-        for (typeArgument in expandedTypeRef.coneType.typeArguments) {
-            if (typeArgument.kind != ProjectionKind.INVARIANT) {
-                reporter.reportOn(declaration.source, FirErrors.ACTUAL_TYPE_ALIAS_WITH_USE_SITE_VARIANCE, context)
-                break
-            }
-        }
-
-        var reportActualTypeAliasWithComplexSubstitution = false
-        if (declaration.typeParameters.size != expandedTypeRef.coneType.typeArguments.size) {
-            reportActualTypeAliasWithComplexSubstitution = true
-        } else {
-            for (i in 0 until declaration.typeParameters.size) {
-                val typeArgument = expandedTypeRef.coneType.typeArguments[i]
-                if (typeArgument is ConeTypeParameterType) {
-                    if (declaration.typeParameters[i].symbol != typeArgument.lookupTag.typeParameterSymbol) {
-                        reportActualTypeAliasWithComplexSubstitution = true
-                        break
-                    }
-                } else if (typeArgument is ConeKotlinType && typeArgument.typeArguments.isNotEmpty()) {
-                    reportActualTypeAliasWithComplexSubstitution = true
-                    break
-                }
-            }
-        }
-        if (reportActualTypeAliasWithComplexSubstitution) {
-            reporter.reportOn(declaration.source, FirErrors.ACTUAL_TYPE_ALIAS_WITH_COMPLEX_SUBSTITUTION, context)
-        }
     }
 }
