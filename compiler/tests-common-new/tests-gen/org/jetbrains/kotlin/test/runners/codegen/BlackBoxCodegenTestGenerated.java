@@ -32287,6 +32287,86 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
                     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/migratedOldTests"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
                 }
             }
+
+            @Nested
+            @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/typealias")
+            @TestDataPath("$PROJECT_ROOT")
+            public class Typealias {
+                @Test
+                public void testAllFilesPresentInTypealias() throws Exception {
+                    KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/typealias"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
+                }
+
+                @Nested
+                @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution")
+                @TestDataPath("$PROJECT_ROOT")
+                public class ComplexSubstitution {
+                    @Test
+                    public void testAllFilesPresentInComplexSubstitution() throws Exception {
+                        KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
+                    }
+
+                    @Test
+                    @TestMetadata("simpleNotOK.kt")
+                    public void testSimpleNotOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleNotOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("simpleOK.kt")
+                    public void testSimpleOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("simpleWithJavaNotOK.kt")
+                    public void testSimpleWithJavaNotOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleWithJavaNotOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("simpleWithJavaOK.kt")
+                    public void testSimpleWithJavaOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleWithJavaOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("simpleWithNotNullJavaNotOK.kt")
+                    public void testSimpleWithNotNullJavaNotOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleWithNotNullJavaNotOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("simpleWithNotNullJavaOK.kt")
+                    public void testSimpleWithNotNullJavaOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/simpleWithNotNullJavaOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("withIndirectUpperBoundsNotOK.kt")
+                    public void testWithIndirectUpperBoundsNotOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/withIndirectUpperBoundsNotOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("withIndirectUpperBoundsOK.kt")
+                    public void testWithIndirectUpperBoundsOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/withIndirectUpperBoundsOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("withUpperBoundsNotOK.kt")
+                    public void testWithUpperBoundsNotOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/withUpperBoundsNotOK.kt");
+                    }
+
+                    @Test
+                    @TestMetadata("withUpperBoundsOK.kt")
+                    public void testWithUpperBoundsOK() throws Exception {
+                        runTest("compiler/testData/codegen/box/multiplatform/k2/typealias/complexSubstitution/withUpperBoundsOK.kt");
+                    }
+                }
+            }
         }
 
         @Nested
@@ -32312,6 +32392,86 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             @TestMetadata("expectInterfaceInheritance.kt")
             public void testExpectInterfaceInheritance() throws Exception {
                 runTest("compiler/testData/codegen/box/multiplatform/multiModule/expectInterfaceInheritance.kt");
+            }
+        }
+
+        @Nested
+        @TestMetadata("compiler/testData/codegen/box/multiplatform/typealias")
+        @TestDataPath("$PROJECT_ROOT")
+        public class Typealias {
+            @Test
+            public void testAllFilesPresentInTypealias() throws Exception {
+                KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/typealias"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
+            }
+
+            @Nested
+            @TestMetadata("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution")
+            @TestDataPath("$PROJECT_ROOT")
+            public class ComplexSubstitution {
+                @Test
+                public void testAllFilesPresentInComplexSubstitution() throws Exception {
+                    KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
+                }
+
+                @Test
+                @TestMetadata("simpleNotOK.kt")
+                public void testSimpleNotOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleNotOK.kt");
+                }
+
+                @Test
+                @TestMetadata("simpleOK.kt")
+                public void testSimpleOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleOK.kt");
+                }
+
+                @Test
+                @TestMetadata("simpleWithJavaNotOK.kt")
+                public void testSimpleWithJavaNotOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleWithJavaNotOK.kt");
+                }
+
+                @Test
+                @TestMetadata("simpleWithJavaOK.kt")
+                public void testSimpleWithJavaOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleWithJavaOK.kt");
+                }
+
+                @Test
+                @TestMetadata("simpleWithNotNullJavaNotOK.kt")
+                public void testSimpleWithNotNullJavaNotOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleWithNotNullJavaNotOK.kt");
+                }
+
+                @Test
+                @TestMetadata("simpleWithNotNullJavaOK.kt")
+                public void testSimpleWithNotNullJavaOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/simpleWithNotNullJavaOK.kt");
+                }
+
+                @Test
+                @TestMetadata("withIndirectUpperBoundsNotOK.kt")
+                public void testWithIndirectUpperBoundsNotOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/withIndirectUpperBoundsNotOK.kt");
+                }
+
+                @Test
+                @TestMetadata("withIndirectUpperBoundsOK.kt")
+                public void testWithIndirectUpperBoundsOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/withIndirectUpperBoundsOK.kt");
+                }
+
+                @Test
+                @TestMetadata("withUpperBoundsNotOK.kt")
+                public void testWithUpperBoundsNotOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/withUpperBoundsNotOK.kt");
+                }
+
+                @Test
+                @TestMetadata("withUpperBoundsOK.kt")
+                public void testWithUpperBoundsOK() throws Exception {
+                    runTest("compiler/testData/codegen/box/multiplatform/typealias/complexSubstitution/withUpperBoundsOK.kt");
+                }
             }
         }
     }
