@@ -27,6 +27,12 @@
 -keep class com.google.inject.** { *; }
 -keep class org.jetbrains.kotlin.com.google.inject.** { *; }
 
+-keep class javax.inject.** { *; }
+-keepclassmembers class * {
+    @javax.inject.Inject <fields>;
+    @javax.inject.Inject <init>(...);
+}
+
 -keep class org.jetbrains.kotlin.script.util.impl.PathUtilKt { *; }
 
 -keep class com.google.common.** { *; }

@@ -31,6 +31,12 @@
 -keep class com.google.common.** { *; }
 -keep class org.jetbrains.kotlin.com.google.common.** { *; }
 
+-keep class javax.inject.** { *; }
+-keepclassmembers class * {
+    @javax.inject.Inject <fields>;
+    @javax.inject.Inject <init>(...);
+}
+
 -keep class org.apache.maven.wagon.providers.** { *; }
 -keep class org.jetbrains.kotlin.org.apache.maven.wagon.providers.** { *; }
 
