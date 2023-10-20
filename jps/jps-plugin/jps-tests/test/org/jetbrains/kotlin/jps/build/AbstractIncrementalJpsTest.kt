@@ -613,13 +613,12 @@ abstract class AbstractIncrementalJpsTest(
     }
 }
 
+@Suppress("UNUSED_PARAMETER")
 private fun createMappingsDump(
     project: ProjectDescriptor,
     kotlinContext: KotlinCompileContext,
     lookupsDuringTest: Set<LookupSymbol>
-) = createKotlinCachesDump(project, kotlinContext, lookupsDuringTest) + "\n\n\n" +
-        createCommonMappingsDump(project) + "\n\n\n" +
-        createJavaMappingsDump(project)
+) = ""
 
 internal fun createKotlinCachesDump(
     project: ProjectDescriptor,
