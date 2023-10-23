@@ -48,6 +48,8 @@ class FirCachingCompositeSymbolProvider(
                 ensureNotNull(it) { "classifier names in package $packageFqName" }
             }
 
+        override val hasSpecificCallablePackageNamesComputation: Boolean get() = true
+
         override fun computePackageNamesWithTopLevelCallables(): Set<String>? =
             super.computePackageNamesWithTopLevelCallables().also {
                 ensureNotNull(it) { "package names with top-level callables" }
@@ -63,6 +65,23 @@ class FirCachingCompositeSymbolProvider(
             // We know that `session` is the same as the sessions of all `providers`, so we can take a shortcut here.
             return classId.isNameForFunctionClass(session)
         }
+
+        // TODO (marco): Is this true? `FirProviderImpl` CAN provide general package sets. Debug some compiler runs to find out how this
+        //               symbol provider is used and reevaluate. (Or ask Denis Zharkov if this symbol provider is used to combine
+        //               `FirProviderImpl` symbol providers exclusively, from time to time.)
+        // The compiler does not compute classifier and general package name sets because it is too expensive, so we can disable them.
+        // `FirCachingCompositeSymbolProvider` is only used by the compiler.
+        override fun computePackageNames(): Set<String>? = null
+        override fun computePackageNamesWithTopLevelClassifiers(): Set<String>? = null
+
+        override val hasSpecificClassifierPackageNamesComputation: Boolean get() = false
+
+        // Avoid cache accesses.
+        override fun getPackageNames(): Set<String>? = null
+        override fun getPackageNamesWithTopLevelClassifiers(): Set<String>? = null
+
+        override fun getTopLevelClassifierNamesInPackage(packageFqName: FqName): Set<Name>? =
+            super.getTopLevelClassifierNamesInPackageSkippingPackageCheck(packageFqName)
     }
 
     private inline fun ensureNotNull(v: Any?, representation: () -> String) {
