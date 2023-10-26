@@ -138,6 +138,23 @@ private fun Set<Name>.mayContainTopLevelClassifier(shortClassName: Name): Boolea
 }
 
 /**
+ * Whether the associated [FirSymbolProvider] definitely cannot provide *any* symbols at all. While a result of `true` guarantees that the
+ * symbol provider cannot provide any symbols, `false` is generally only a statement of uncertainty (the symbol provider may or may not
+ * be able to provide any symbols).
+ *
+ * Computation of [isDefinitelyEmpty] is potentially expensive, so it should be used sparingly.
+ */
+fun FirSymbolNamesProvider.isDefinitelyEmpty(): Boolean {
+    if (mayHaveSyntheticFunctionTypes) return false
+
+    return if (!hasSpecificClassifierPackageNamesComputation && !hasSpecificCallablePackageNamesComputation) {
+        getPackageNames()?.isEmpty() == true
+    } else {
+        getPackageNamesWithTopLevelClassifiers()?.isEmpty() == true && getPackageNamesWithTopLevelCallables()?.isEmpty() == true
+    }
+}
+
+/**
  * A [FirSymbolNamesProvider] for symbol providers which can't provide any symbol name sets.
  */
 object FirNullSymbolNamesProvider : FirSymbolNamesProvider() {
