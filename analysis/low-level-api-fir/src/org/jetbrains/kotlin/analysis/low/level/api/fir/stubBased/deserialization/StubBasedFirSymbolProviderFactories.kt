@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
+import org.jetbrains.kotlin.fir.resolve.providers.isDefinitelyEmpty
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.library.KLIB_METADATA_FILE_EXTENSION
 import org.jetbrains.kotlin.serialization.deserialization.MetadataPackageFragment
@@ -25,7 +26,7 @@ internal fun createStubBasedFirSymbolProviderForClassFiles(
     session: FirSession,
     moduleDataProvider: SingleModuleDataProvider,
     kotlinScopeProvider: FirKotlinScopeProvider,
-): FirSymbolProvider = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
+): FirSymbolProvider? = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
     project, baseScope, session, moduleDataProvider, kotlinScopeProvider,
     fileFilter = { file ->
         val extension = file.extension
@@ -39,7 +40,7 @@ internal fun createStubBasedFirSymbolProviderForCommonMetadataFiles(
     session: FirSession,
     moduleDataProvider: SingleModuleDataProvider,
     kotlinScopeProvider: FirKotlinScopeProvider,
-): FirSymbolProvider = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
+): FirSymbolProvider? = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
     project, baseScope, session, moduleDataProvider, kotlinScopeProvider,
     fileFilter = { file ->
         val extension = file.extension
@@ -56,11 +57,15 @@ internal fun createStubBasedFirSymbolProviderForKotlinNativeMetadataFiles(
     session: FirSession,
     moduleDataProvider: SingleModuleDataProvider,
     kotlinScopeProvider: FirKotlinScopeProvider,
-): FirSymbolProvider = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
+): FirSymbolProvider? = createStubBasedFirSymbolProviderForScopeLimitedByFiles(
     project, baseScope, session, moduleDataProvider, kotlinScopeProvider,
     fileFilter = { file -> file.extension == KLIB_METADATA_FILE_EXTENSION },
 )
 
+/**
+ * Creates a [StubBasedFirDeserializedSymbolProvider] for the given parameters. If the symbol provider cannot provide any symbols, for
+ * example when the given scope doesn't contain any Kotlin-compiled classes, this function returns `null`.
+ */
 internal fun createStubBasedFirSymbolProviderForScopeLimitedByFiles(
     project: Project,
     baseScope: GlobalSearchScope,
@@ -68,23 +73,7 @@ internal fun createStubBasedFirSymbolProviderForScopeLimitedByFiles(
     moduleDataProvider: SingleModuleDataProvider,
     kotlinScopeProvider: FirKotlinScopeProvider,
     fileFilter: (VirtualFile) -> Boolean,
-): StubBasedFirDeserializedSymbolProvider {
-    return createFirSymbolProviderForScopeLimitedByFiles(
-        project, baseScope, fileFilter,
-        symbolProviderFactory = { reducedScope: GlobalSearchScope ->
-            StubBasedFirDeserializedSymbolProvider(
-                session, moduleDataProvider, kotlinScopeProvider, project, reducedScope, FirDeclarationOrigin.Library,
-            )
-        }
-    )
-}
-
-private fun <T : FirSymbolProvider> createFirSymbolProviderForScopeLimitedByFiles(
-    project: Project,
-    baseScope: GlobalSearchScope,
-    fileFilter: (VirtualFile) -> Boolean,
-    symbolProviderFactory: (reducedScope: GlobalSearchScope) -> T,
-): T {
+): StubBasedFirDeserializedSymbolProvider? {
     val scopeWithFileFiltering = object : DelegatingGlobalSearchScope(project, baseScope) {
         override fun contains(file: VirtualFile): Boolean {
             if (!fileFilter(file)) {
@@ -94,5 +83,19 @@ private fun <T : FirSymbolProvider> createFirSymbolProviderForScopeLimitedByFile
         }
     }
 
-    return symbolProviderFactory(scopeWithFileFiltering)
+    val symbolProvider = StubBasedFirDeserializedSymbolProvider(
+        session,
+        moduleDataProvider,
+        kotlinScopeProvider,
+        project,
+        scopeWithFileFiltering,
+        FirDeclarationOrigin.Library,
+    )
+
+    // This might compute package name sets, which can be quite heavy, but they will be cached and used later.
+    if (symbolProvider.symbolNamesProvider.isDefinitelyEmpty()) {
+        return null
+    }
+
+    return symbolProvider
 }

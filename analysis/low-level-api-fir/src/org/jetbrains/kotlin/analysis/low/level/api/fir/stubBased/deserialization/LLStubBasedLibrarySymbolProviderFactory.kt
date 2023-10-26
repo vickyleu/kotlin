@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.name.ClassId
+import org.jetbrains.kotlin.utils.addIfNotNull
 
 @LLFirInternals
 class LLStubBasedLibrarySymbolProviderFactory(private val project: Project) : LLFirLibrarySymbolProviderFactory() {
@@ -42,7 +43,7 @@ class LLStubBasedLibrarySymbolProviderFactory(private val project: Project) : LL
             //in order to find java declarations, one need to explicitly setup java symbol provider.
             //for ProtoBuf based provider (used in compiler), there is no need in separated java provider,
             //because all declarations are retrieved at once and are not distinguished
-            add(createStubBasedFirSymbolProviderForClassFiles(project, scope, session, moduleDataProvider, kotlinScopeProvider))
+            addIfNotNull(createStubBasedFirSymbolProviderForClassFiles(project, scope, session, moduleDataProvider, kotlinScopeProvider))
             add(LLFirJavaSymbolProvider(session, moduleData, project, scope))
         }
     }
@@ -54,7 +55,7 @@ class LLStubBasedLibrarySymbolProviderFactory(private val project: Project) : LL
         moduleDataProvider: SingleModuleDataProvider,
         packagePartProvider: PackagePartProvider,
         scope: GlobalSearchScope,
-    ): List<FirSymbolProvider> = listOf(
+    ): List<FirSymbolProvider> = listOfNotNull(
         createStubBasedFirSymbolProviderForCommonMetadataFiles(
             project = project,
             baseScope = scope,
@@ -71,7 +72,7 @@ class LLStubBasedLibrarySymbolProviderFactory(private val project: Project) : LL
         moduleDataProvider: SingleModuleDataProvider,
         scope: GlobalSearchScope,
     ): List<FirSymbolProvider> {
-        return listOf(
+        return listOfNotNull(
             createStubBasedFirSymbolProviderForKotlinNativeMetadataFiles(
                 project, scope, session, moduleDataProvider, kotlinScopeProvider
             )
