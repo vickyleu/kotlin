@@ -10,12 +10,14 @@ plugins {
     `java-library`
     kotlin("jvm")
     `maven-publish`
+    id("gradle-compat-convention")
 }
 
-configureCommonPublicationSettingsForGradle(signLibraryPublication)
-configureKotlinCompileTasksGradleCompatibility()
+extensions.configure<GradleCompatExtension> {
+    configureCommonPublicationSettingsForGradle(signLibraryPublication)
+}
+
 addBomCheckTask()
-extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
 
 val commonSourceSet = createGradleCommonSourceSet()
 reconfigureMainSourcesSetForGradlePlugin(commonSourceSet)

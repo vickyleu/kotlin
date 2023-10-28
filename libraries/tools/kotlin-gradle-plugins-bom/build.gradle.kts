@@ -1,8 +1,11 @@
-import plugins.signLibraryPublication
-
 plugins {
     id("java-platform")
     id("maven-publish")
+    id("gradle-compat-convention")
+}
+
+gradleCompat {
+    configureCommonPublicationSettingsForGradle(singingRequired = true, configureSbom = false)
 }
 
 dependencies {
@@ -25,8 +28,6 @@ dependencies {
         api(project(":kotlin-assignment"))
     }
 }
-
-configureCommonPublicationSettingsForGradle(signLibraryPublication, sbom = false)
 
 publishing {
     publications {

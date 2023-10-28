@@ -10,16 +10,18 @@ plugins {
     `java-gradle-plugin`
     `maven-publish`
     id("com.gradle.plugin-publish")
+    id("gradle-compat-convention")
 }
 
 // Enable signing for publications into Gradle Plugin Portal
 val signPublication = !version.toString().contains("-SNAPSHOT") &&
         (project.gradle.startParameter.taskNames.contains("publishPlugins") || signLibraryPublication)
 
-configureCommonPublicationSettingsForGradle(signPublication)
-configureKotlinCompileTasksGradleCompatibility()
+extensions.configure<GradleCompatExtension> {
+    configureCommonPublicationSettingsForGradle(signPublication)
+}
+
 addBomCheckTask()
-extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
 
 // common plugin bundle configuration
 gradlePlugin {

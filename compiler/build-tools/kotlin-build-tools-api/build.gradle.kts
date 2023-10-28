@@ -4,12 +4,10 @@ plugins {
     kotlin("jvm")
     id("jps-compatible")
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
+    id("gradle-compat-convention")
 }
 
-configureKotlinCompileTasksGradleCompatibility()
-
 dependencies {
-    compileOnly(kotlinStdlib())
     testApi(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)

@@ -68,7 +68,8 @@ dependencies {
     testImplementation(project(":kotlin-gradle-build-metrics"))
     testImplementation(project(":kotlin-tooling-metadata"))
     testImplementation(kotlinGradlePluginTest)
-    testImplementation(project(":kotlin-gradle-subplugin-example"))
+    // TODO: uncomment it
+//    testImplementation(project(":kotlin-gradle-subplugin-example"))
     testImplementation(project(":kotlin-test:kotlin-test-jvm"))
     testImplementation(project(":kotlin-util-klib"))
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2021 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -27,14 +27,12 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.kotlin.dsl.*
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.gradle.plugin.devel.plugins.JavaGradlePluginPlugin
 import org.gradle.plugin.devel.tasks.ValidatePlugins
 import org.jetbrains.dokka.DokkaVersion
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.gradle.GradleExternalDocumentationLinkBuilder
 import org.jetbrains.kotlin.gradle.dsl.KotlinSingleJavaTargetExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import plugins.configureDefaultPublishing
@@ -66,40 +64,6 @@ enum class GradlePluginVariant(
 val commonSourceSetName = "common"
 
 /**
- * Configures common pom configuration parameters
- */
-fun Project.configureCommonPublicationSettingsForGradle(
-    signingRequired: Boolean,
-    sbom: Boolean = true,
-) {
-    plugins.withId("maven-publish") {
-        extensions.configure<PublishingExtension> {
-            publications
-                .withType<MavenPublication>()
-                .configureEach {
-                    configureKotlinPomAttributes(project)
-                    if (sbom && project.name !in internalPlugins) {
-                        if (name == "pluginMaven") {
-                            val sbomTask = configureSbom(target = "PluginMaven")
-                            artifact("$buildDir/spdx/PluginMaven/PluginMaven.spdx.json") {
-                                extension = "spdx.json"
-                                builtBy(sbomTask)
-                            }
-                        } else if (name == "Main") {
-                            val sbomTask = configureSbom()
-                            artifact("$buildDir/spdx/MainPublication/MainPublication.spdx.json") {
-                                extension = "spdx.json"
-                                builtBy(sbomTask)
-                            }
-                        }
-                    }
-                }
-        }
-    }
-    configureDefaultPublishing(signingRequired)
-}
-
-/**
  * These dependencies will be provided by Gradle, and we should prevent version conflict
  */
 fun Configuration.excludeGradleCommonDependencies() {
@@ -124,18 +88,6 @@ fun Project.excludeGradleCommonDependencies(sourceSet: SourceSet) {
     configurations[sourceSet.runtimeOnlyConfigurationName].excludeGradleCommonDependencies()
 }
 
-private val internalPlugins = setOf(
-    "android-test-fixes",
-    "gradle-warnings-detector",
-    "kotlin-compiler-args-properties",
-    "fus-statistics-gradle-plugin",
-)
-
-private val testPlugins = internalPlugins + setOf(
-    "kotlin-gradle-plugin-api",
-    "kotlin-gradle-plugin",
-)
-
 /**
  * Common sources for all variants.
  * Should contain classes that are independent of Gradle API version or using minimal supported Gradle api.
@@ -155,13 +107,13 @@ fun Project.createGradleCommonSourceSet(): SourceSet {
         dependencies {
             compileOnlyConfigurationName(kotlinStdlib())
             "commonGradleApiCompileOnly"("dev.gradleplugins:gradle-api:8.2")
-            if (this@createGradleCommonSourceSet.name !in testPlugins) {
+            //if (this@createGradleCommonSourceSet.name !in testPlugins) {
                 compileOnlyConfigurationName(project(":kotlin-gradle-plugin-api")) {
                     capabilities {
                         requireCapability("org.jetbrains.kotlin:kotlin-gradle-plugin-api-common")
                     }
                 }
-            }
+            //}
         }
     }
 
@@ -308,9 +260,9 @@ fun Project.reconfigureMainSourcesSetForGradlePlugin(
             // Decoupling gradle-api artifact from current project Gradle version. Later would be useful for
             // gradle plugin variants
             "compileOnly"("dev.gradleplugins:gradle-api:${GradlePluginVariant.GRADLE_MIN.gradleApiVersion}")
-            if (this@reconfigureMainSourcesSetForGradlePlugin.name !in testPlugins) {
+            //if (this@reconfigureMainSourcesSetForGradlePlugin.name !in testPlugins) {
                 "api"(project(":kotlin-gradle-plugin-api"))
-            }
+            //}
         }
 
         excludeGradleCommonDependencies(this)
@@ -515,13 +467,13 @@ fun Project.createGradlePluginVariant(
     dependencies {
         variantSourceSet.compileOnlyConfigurationName(kotlinStdlib())
         variantSourceSet.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:${variant.gradleApiVersion}")
-        if (this@createGradlePluginVariant.name !in testPlugins) {
+        //if (this@createGradlePluginVariant.name !in testPlugins) {
             variantSourceSet.apiConfigurationName(project(":kotlin-gradle-plugin-api")) {
                 capabilities {
                     requireCapability("org.jetbrains.kotlin:kotlin-gradle-plugin-api-${variant.sourceSetName}")
                 }
             }
-        }
+        //}
     }
 
     registerValidatePluginTasks(variantSourceSet)
@@ -542,29 +494,6 @@ private fun Project.commonVariantAttributes(): Action<Configuration> = Action<Co
     }
 }
 
-fun Project.configureKotlinCompileTasksGradleCompatibility() {
-    tasks.withType<KotlinCompile>().configureEach {
-        compilerOptions {
-            // check https://docs.gradle.org/current/userguide/compatibility.html#kotlin for Kotlin-Gradle versions matrix
-            @Suppress("DEPRECATION") // we can't use language version greater than 1.5 as minimal supported Gradle embeds Kotlin 1.4
-            languageVersion.set(KotlinVersion.KOTLIN_1_5)
-            @Suppress("DEPRECATION") // we can't use api version greater than 1.4 as minimal supported Gradle version uses kotlin-stdlib 1.4
-            apiVersion.set(KotlinVersion.KOTLIN_1_4)
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xskip-prerelease-check",
-                    "-Xsuppress-version-warnings",
-                    // We have to override the default value for `-Xsam-conversions` to `class`
-                    // otherwise the compiler would compile lambdas using invokedynamic,
-                    // such lambdas are not serializable so are not compatible with Gradle configuration cache.
-                    // It doesn't lead to a significant difference in binaries sizes, and previously (before LV 1.5) the `class` value was set by default.
-                    "-Xsam-conversions=class",
-                )
-            )
-        }
-    }
-}
-
 // Will allow combining outputs of multiple SourceSets
 fun Project.publishShadowedJar(
     sourceSet: SourceSet,
@@ -575,22 +504,22 @@ fun Project.publishShadowedJar(
     val shadowJarTask = embeddableCompilerDummyForDependenciesRewriting(
         taskName = "$EMBEDDABLE_COMPILER_TASK_NAME${sourceSet.jarTaskName.replaceFirstChar { it.uppercase() }}"
     ) {
-        setupPublicJar(
-            jarTask.flatMap { it.archiveBaseName },
-            jarTask.flatMap { it.archiveClassifier }
-        )
-        addEmbeddedRuntime()
-        addEmbeddedRuntime(sourceSet.embeddedConfigurationName)
-        from(sourceSet.output)
-        from(commonSourceSet.output)
+//        setupPublicJar(
+//            jarTask.flatMap { it.archiveBaseName },
+//            jarTask.flatMap { it.archiveClassifier }
+//        )
+//        addEmbeddedRuntime()
+//        addEmbeddedRuntime(sourceSet.embeddedConfigurationName)
+//        from(sourceSet.output)
+//        from(commonSourceSet.output)
 
         // When Gradle traverses the inputs, reject the shaded compiler JAR,
         // which leads to the content of that JAR being excluded as well:
-        exclude {
-            // Docstring says `file` never returns null, but it does
-            @Suppress("UNNECESSARY_SAFE_CALL", "SAFE_CALL_WILL_CHANGE_NULLABILITY")
-            it.file?.name?.startsWith("kotlin-compiler-embeddable") ?: false
-        }
+//        exclude {
+//            // Docstring says `file` never returns null, but it does
+//            @Suppress("UNNECESSARY_SAFE_CALL", "SAFE_CALL_WILL_CHANGE_NULLABILITY")
+//            it.file?.name?.startsWith("kotlin-compiler-embeddable") ?: false
+//        }
     }
 
     // Removing artifact produced by Jar task
@@ -632,7 +561,6 @@ fun Project.addBomCheckTask() {
             project(":gradle:kotlin-compiler-args-properties").path,
             project(":kotlin-gradle-build-metrics").path,
             project(":kotlin-gradle-statistics").path,
-            project(":libraries:tools:gradle:fus-statistics-gradle-plugin").path
         )
         val projectPath = this@addBomCheckTask.path
 

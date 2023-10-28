@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.konan.target.KonanTarget.*
 plugins {
     kotlin("jvm")
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
+    id("gradle-compat-convention")
 }
 
 kotlin {
@@ -29,8 +30,6 @@ dependencies {
     testImplementation(kotlin("reflect"))
     testImplementation(testFixtures(project(":kotlin-gradle-plugin-idea")))
 }
-
-configureKotlinCompileTasksGradleCompatibility()
 
 sourceSets.main.configure {
     java.srcDir("src/generated/java")

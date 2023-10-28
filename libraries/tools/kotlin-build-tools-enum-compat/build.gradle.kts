@@ -1,17 +1,9 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("jps-compatible")
+    id("gradle-compat-convention")
 }
 
-configureKotlinCompileTasksGradleCompatibility()
-extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
-
-dependencies {
-    compileOnly(kotlinStdlib())
-}
-
-tasks.withType<KotlinJvmCompile>().configureEach {
+kotlin {
     compilerOptions.freeCompilerArgs.add("-Xallow-kotlin-package")
 }

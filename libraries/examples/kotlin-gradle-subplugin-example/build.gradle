@@ -3,6 +3,7 @@ import plugins.KotlinBuildPublishingPlugin
 plugins {
     id("java-gradle-plugin")
     id("org.jetbrains.kotlin.jvm")
+    id("gradle-compat-convention")
     id("com.gradle.plugin-publish")
     id("jps-compatible")
     id("maven-publish")
@@ -24,7 +25,6 @@ dependencies {
 
     api project(':kotlin-test:kotlin-test-junit')
 
-    compileOnly RepoDependencies.kotlinStdlib(project)
     compileOnly project(':compiler')
     compileOnly project(':compiler:plugin-api')
     compileOnly project(':compiler:cli-common')
@@ -35,17 +35,19 @@ dependencies {
     compileOnly project(':dependencies:intellij-core')
 }
 
-GradleCommonKt.configureCommonPublicationSettingsForGradle(project, false, false)
-GradleCommonKt.configureKotlinCompileTasksGradleCompatibility(project)
-GradleCommonKt.excludeGradleCommonDependencies(project, sourceSets.main)
+gradleCompat {
+    configureCommonPublicationSettingsForGradle(false, false)
+}
+
+//GradleCommonKt.excludeGradleCommonDependencies(project, sourceSets.main)
 TasksKt.optInToExperimentalCompilerApi(project)
 
 extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
 
 // You should configure your own Gradle plugin publication!
-//extensions.configure(GradlePluginDevelopmentExtension) {
-//    it.setAutomatedPublishing(false)
-//}
+extensions.configure(GradlePluginDevelopmentExtension) {
+    it.setAutomatedPublishing(false)
+}
 
 def sourceSet = sourceSets.main
 def jarTask = tasks.named(sourceSet.jarTaskName, Jar) {

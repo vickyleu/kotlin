@@ -94,11 +94,39 @@ java {
 }
 
 dependencies {
-    implementation(kotlin("stdlib", embeddedKotlinVersion))
-    implementation("org.jetbrains.kotlin:kotlin-build-gradle-plugin:${kotlinBuildProperties.buildGradlePluginVersion}")
-    implementation(libs.gradle.pluginPublish.gradlePlugin)
-    implementation(libs.dokka.gradlePlugin)
-    implementation(libs.spdx.gradlePlugin)
+    constraints {
+        add("api", "org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
+            version {
+                strictly(project.bootstrapKotlinVersion)
+            }
+        }
+        add("api", "org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
+            version {
+                strictly(project.bootstrapKotlinVersion)
+            }
+        }
+    }
+
+    api("org.jetbrains.kotlin:kotlin-build-gradle-plugin:${kotlinBuildProperties.buildGradlePluginVersion}")
+    api("org.jetbrains.kotlin:kotlin-gradle-plugin") {
+        version {
+            strictly(project.bootstrapKotlinVersion)
+        }
+    }
+    api("org.jetbrains.kotlin:kotlin-stdlib") {
+        version {
+            strictly(project.bootstrapKotlinVersion)
+        }
+    }
+    api("org.jetbrains.kotlin:kotlin-reflect") {
+        version {
+            strictly(project.bootstrapKotlinVersion)
+        }
+    }
+
+    api(libs.dokka.gradlePlugin)
+    api(libs.spdx.gradlePlugin)
+
     implementation(libs.dexMemberList)
 
     // Keep in mind https://github.com/johnrengelman/shadow/issues/807 issue as shadow plugin brings transitively "org.ow2.asm" dependency,
@@ -113,11 +141,6 @@ dependencies {
 
     compileOnly(libs.gradle.enterprise.gradlePlugin)
 
-    compileOnly(gradleApi())
-
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${project.bootstrapKotlinVersion}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${project.bootstrapKotlinVersion}")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:${project.bootstrapKotlinVersion}")
     implementation(libs.gson)
     implementation(libs.kotlinx.metadataJvm)
 }

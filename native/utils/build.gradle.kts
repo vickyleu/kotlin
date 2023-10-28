@@ -1,12 +1,12 @@
 plugins {
     kotlin("jvm")
     id("jps-compatible")
+    id("gradle-compat-convention")
 }
 
 description = "Kotlin/Native utils"
 
 dependencies {
-    compileOnly(kotlinStdlib())
     api(project(":kotlin-util-io"))
     api(project(":kotlin-util-klib"))
     api(platform(project(":kotlin-gradle-plugins-bom")))
@@ -23,8 +23,6 @@ sourceSets {
     "main" { projectDefault() }
     "test" { projectDefault() }
 }
-
-configureKotlinCompileTasksGradleCompatibility()
 
 tasks {
     withType<Test>().configureEach {

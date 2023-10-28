@@ -2,16 +2,14 @@ plugins {
     kotlin("jvm")
     id("jps-compatible")
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
+    id("gradle-compat-convention")
 }
-
-configureKotlinCompileTasksGradleCompatibility()
 
 publish()
 standardPublicJars()
 
 dependencies {
     api(platform(project(":kotlin-gradle-plugins-bom")))
-    compileOnly(kotlinStdlib())
 }
 
 apiValidation {
@@ -19,7 +17,7 @@ apiValidation {
 }
 
 tasks {
-    apiBuild {
+    apiBuild.configure {
         inputJar.value(jar.flatMap { it.archiveFile })
     }
 }

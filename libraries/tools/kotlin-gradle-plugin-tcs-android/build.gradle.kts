@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     `maven-publish`
+    id("gradle-compat-convention")
 }
 
 dependencies {
@@ -18,8 +19,6 @@ dependencies {
     }
     compileOnly(project(":kotlin-gradle-plugin-idea"))
 }
-
-configureKotlinCompileTasksGradleCompatibility()
 
 kotlin {
     compilerOptions {

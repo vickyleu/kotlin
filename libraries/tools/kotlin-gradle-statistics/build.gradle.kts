@@ -1,5 +1,4 @@
 import plugins.KotlinBuildPublishingPlugin.Companion.DEFAULT_MAIN_PUBLICATION_NAME
-import plugins.signLibraryPublication
 
 description = "kotlin-gradle-statistics"
 
@@ -8,15 +7,14 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
     id("jps-compatible")
     `maven-publish`
+    id("gradle-compat-convention")
 }
 
-configureKotlinCompileTasksGradleCompatibility()
-configureCommonPublicationSettingsForGradle(signLibraryPublication)
-extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
+gradleCompat {
+    configureCommonPublicationSettingsForGradle(true)
+}
 
 dependencies {
-    compileOnly(kotlinStdlib())
-
     testImplementation(project(":kotlin-test:kotlin-test-junit"))
     testImplementation(libs.junit4)
 }

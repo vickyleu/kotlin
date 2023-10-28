@@ -1,16 +1,11 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("jps-compatible")
+    id("gradle-compat-convention")
 }
-
-configureKotlinCompileTasksGradleCompatibility()
 
 sourceSets {
     "main" {
         kotlin.srcDir("src/generated/kotlin")
     }
-}
-
-dependencies {
-    compileOnly(kotlinStdlib())
 }
