@@ -19,7 +19,7 @@ import java.io.File
 class WasmBoxRunner(
     testServices: TestServices
 ) : AbstractWasmArtifactsCollector(testServices) {
-    private val vmsToCheck: List<WasmVM> = listOf(WasmVM.V8, WasmVM.SpiderMonkey)
+    private val vmsToCheck: List<WasmVM> = listOf(WasmVM.V8, WasmVM.SpiderMonkey, WasmVM.JavaScriptCore)
 
     override fun processAfterAllModules(someAssertionWasFailed: Boolean) {
         if (!someAssertionWasFailed) {
@@ -38,6 +38,14 @@ class WasmBoxRunner(
         val startUnitTests = RUN_UNIT_TESTS in testServices.moduleStructure.allDirectives
 
         val testJsQuiet = """
+                    if (console == void 0) {
+                        globalThis.console = {};
+                    }
+        
+                    if (console.log == void 0) {
+                        console.log = print;
+                    }
+
                     let actualResult;
                     try {
                         // Use "dynamic import" to catch exception happened during JS & Wasm modules initialization
