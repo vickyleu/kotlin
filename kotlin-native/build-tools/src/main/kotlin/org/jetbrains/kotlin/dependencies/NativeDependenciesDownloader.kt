@@ -19,6 +19,9 @@ import org.jetbrains.kotlin.konan.util.DependencyProcessor
  */
 @UntrackedTask(because = "Output is large and work avoidance is performed in DependencyProcessor anyway")
 abstract class NativeDependenciesDownloader : DefaultTask() {
+    init {
+        notCompatibleWithConfigurationCache("Configuration cache state could not be cached: field `executor` of `org.jetbrains.kotlin.konan.util.DependencyDownloader` bean found in field `downloader` of `org.jetbrains.kotlin.konan.util.DependencyProcessor` bean found in field `__dependencyProcessor__` of task `:kotlin-native:dependencies:nativeDependenciesMacos_arm64` of type `org.jetbrains.kotlin.dependencies.NativeDependenciesDownloader`")
+    }
     /**
      * [DependencyProcessor] that will perform downloading
      */

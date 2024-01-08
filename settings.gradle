@@ -25,6 +25,8 @@ plugins {
     id "kotlin-daemon-config"
 }
 
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
 def buildProperties = BuildPropertiesKt.getKotlinBuildPropertiesForSettings(settings)
 if (buildProperties.isKotlinNativeEnabled && startParameter.isConfigurationCacheRequested()) {
     throw new Exception(

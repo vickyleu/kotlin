@@ -67,6 +67,9 @@ abstract class ClangFrontend @Inject constructor(
         private val layout: ProjectLayout,
         providers: ProviderFactory,
 ) : DefaultTask() {
+    init {
+        notCompatibleWithConfigurationCache("Configuration cache state could not be cached: field `compileBitcodeMainElements` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$Module` bean found in field `this\$0` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$Module\$sourceSets\$2\$1\$1\$1\$1` bean found in field `__onlyIf__` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$SourceSet` bean found in field `this\$0` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$SourceSet\$compileTask\$1\$1\$1` bean found in field `spec` of `org.gradle.api.internal.tasks.execution.SelfDescribingSpec` bean found in field `specs` of `org.gradle.api.specs.AndSpec` bean found in field `specHolder` of `org.gradle.api.internal.tasks.execution.DescribingAndSpec` bean found in field `onlyIfSpec` of task `:kotlin-native:common:clangFrontendEnvMainMacos_arm64` of type `org.jetbrains.kotlin.cpp.ClangFrontend`")
+    }
     private data class WorkUnit(
             val inputFile: File,
             val outputFile: File,

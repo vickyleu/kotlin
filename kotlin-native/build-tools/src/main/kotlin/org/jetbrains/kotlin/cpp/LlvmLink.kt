@@ -47,6 +47,9 @@ private abstract class LlvmLinkJob : WorkAction<LlvmLinkJob.Parameters> {
  * Run `llvm-link` on [inputFiles] with extra [arguments] and produce [outputFile]
  */
 abstract class LlvmLink : DefaultTask() {
+    init {
+        notCompatibleWithConfigurationCache("Configuration cache state could not be cached: field `compileBitcodeMainElements` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$Module` bean found in field `this\$0` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$Module\$sourceSets\$2\$1\$1\$1\$1` bean found in field `__onlyIf__` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$SourceSet` bean found in field `this\$0` of `org.jetbrains.kotlin.bitcode.CompileToBitcodeExtension\$SourceSet\$task\$1\$1\$1` bean found in field `spec` of `org.gradle.api.internal.tasks.execution.SelfDescribingSpec` bean found in field `specs` of `org.gradle.api.specs.AndSpec` bean found in field `specHolder` of `org.gradle.api.internal.tasks.execution.DescribingAndSpec` bean found in field `onlyIfSpec` of task `:kotlin-native:common:llvmLinkEnvMainMacos_arm64` of type `org.jetbrains.kotlin.cpp.LlvmLink`")
+    }
     /**
      * Bitcode files to link together.
      */

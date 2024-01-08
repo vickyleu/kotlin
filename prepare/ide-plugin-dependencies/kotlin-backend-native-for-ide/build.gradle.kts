@@ -89,7 +89,7 @@ idePluginDependency {
             put("Implementation-Version", version)
         }
         from {
-            zipTree(proguard.get().singleOutputFile())
+            zipTree(proguard.map { it.singleOutputFile() })
         }
     }
 
