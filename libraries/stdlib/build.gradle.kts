@@ -44,7 +44,7 @@ val configurationBuiltins = resolvingConfiguration("builtins") {
     attributes.attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, project.objects.named(LibraryElements.JAR))
 }
 dependencies {
-    configurationBuiltins(project(":core:builtins", configuration = "runtimeElementsJvm"))
+    configurationBuiltins(project(":core:builtins"))
 }
 
 val builtinsDir = "${rootDir}/core/builtins"
