@@ -278,7 +278,9 @@ fun Project.configureTests() {
     }
 
     // Aggregate task for build related checks
-    tasks.register("checkBuild")
+    tasks.register("checkBuild") {
+        notCompatibleWithConfigurationCache("reasons")
+    }
     val mppProjects: List<String> by rootProject.extra
     if (path !in mppProjects) {
         configureTestRetriesForTestTasks()
