@@ -27,7 +27,6 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.kotlin.dsl.*
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.gradle.plugin.devel.plugins.JavaGradlePluginPlugin
 import org.gradle.plugin.devel.tasks.ValidatePlugins
 import org.jetbrains.dokka.DokkaVersion
@@ -690,13 +689,12 @@ fun Project.configureDokkaPublication(
             } else {
                 tasks.register<DokkaTask>(dokkaTaskName)
             }
+            val javadocPluginDependency = project.dependencies.create("org.jetbrains.dokka:javadoc-plugin:${DokkaVersion.version}")
             dokkaTask.configure {
                 description = "Generates documentation in 'javadoc' format for '${variantSourceSet.javadocTaskName}' variant"
                 notCompatibleWithConfigurationCache("Dokka is not compatible with Configuration Cache yet.")
 
-                plugins.dependencies.add(
-                    project.dependencies.create("org.jetbrains.dokka:javadoc-plugin:${DokkaVersion.version}")
-                )
+                plugins.dependencies.add(javadocPluginDependency)
 
                 dokkaSourceSets {
                     named(commonSourceSet.name) {
