@@ -125,7 +125,7 @@ val proguard by task<CacheableProguardTask> {
 
     outjars(layout.buildDirectory.file(jarBaseName.map { "libs/$it-$version-after-proguard.jar" }))
 
-    javaLauncher.set(project.getToolchainLauncherFor(JdkMajorVersion.JDK_1_8))
+    javaLauncher.set(getToolchainLauncherFor(JdkMajorVersion.JDK_1_8))
 
     libraryjars(mapOf("filter" to "!META-INF/versions/**"), proguardLibraryJars)
     libraryjars(
