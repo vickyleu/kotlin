@@ -50,9 +50,10 @@ def shadowJarTask = EmbeddableKt.embeddableCompilerDummyForDependenciesRewriting
 ) {
     def emptyClassifier = provider { "" }
     RepoArtifacts.setupPublicJar(
-        it,
-        jarTask.flatMap { it.archiveBaseName },
-        jarTask.flatMap { emptyClassifier }
+            it,
+            rootProject.ext["buildNumber"],
+            jarTask.flatMap { it.archiveBaseName },
+            jarTask.flatMap { emptyClassifier }
     )
     RepoArtifacts.addEmbeddedRuntime(it)
     it.from(sourceSet.output)

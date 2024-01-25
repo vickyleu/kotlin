@@ -102,7 +102,7 @@ fun Project.runtimeJar(body: Jar.() -> Unit = {}): TaskProvider<out Jar> {
     val jarTask = tasks.named<Jar>("jar")
     jarTask.configure {
         addEmbeddedRuntime()
-        setupPublicJar(project.extensions.getByType<BasePluginExtension>().archivesName.get())
+        setupPublicJar(this@runtimeJar, this@runtimeJar.extensions.getByType<BasePluginExtension>().archivesName.get())
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         body()
     }
@@ -125,7 +125,7 @@ fun Project.runtimeJarWithRelocation(body: ShadowJar.() -> Unit = {}): TaskProvi
         from {
             zipTree(shadowJarTask.get().outputs.files.singleFile)
         }
-        setupPublicJar(project.extensions.getByType<BasePluginExtension>().archivesName.get())
+        setupPublicJar(this@runtimeJarWithRelocation, this@runtimeJarWithRelocation.extensions.getByType<BasePluginExtension>().archivesName.get())
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
@@ -142,7 +142,7 @@ fun Project.runtimeJar(task: TaskProvider<ShadowJar>, body: ShadowJar.() -> Unit
 
     task.configure {
         configurations = configurations + listOf(project.configurations["embedded"])
-        setupPublicJar(project.extensions.getByType<BasePluginExtension>().archivesName.get())
+        setupPublicJar(this@runtimeJar, this@runtimeJar.extensions.getByType<BasePluginExtension>().archivesName.get())
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         body()
     }
@@ -427,20 +427,24 @@ fun Project.publishTestJar(projects: List<String>, excludedPaths: List<String>) 
 fun ConfigurationContainer.getOrCreate(name: String): Configuration = findByName(name) ?: create(name)
 
 fun Jar.setupPublicJar(
+    project: Project,
     baseName: String,
     classifier: String = ""
 ) = setupPublicJar(
+    project.rootProject.extra["buildNumber"] as String,
     project.provider { baseName },
     project.provider { classifier }
 )
 
 fun Jar.setupPublicJar(
+    buildNumber: String,
     baseName: Provider<String>,
-    classifier: Provider<String> = project.provider { "" }
+    classifier: Provider<String>? = null
 ) {
-    val buildNumber = project.rootProject.extra["buildNumber"] as String
     this.archiveBaseName.set(baseName)
-    this.archiveClassifier.set(classifier)
+    if (classifier!=null) {
+        this.archiveClassifier.set(classifier)
+    }
     manifest.attributes.apply {
         put("Implementation-Vendor", "JetBrains")
         put("Implementation-Title", baseName.get())

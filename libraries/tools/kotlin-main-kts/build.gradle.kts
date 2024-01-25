@@ -118,7 +118,7 @@ val proguard by task<CacheableProguardTask> {
 val resultJar by task<Jar> {
     val pack = if (kotlinBuildProperties.proguard) proguard else relocatedJar
     dependsOn(pack)
-    setupPublicJar(jarBaseName)
+    setupPublicJar(rootProject.extra["buildNumber"] as String, jarBaseName)
     from {
         zipTree(pack.map { it.singleOutputFile(layout) })
     }

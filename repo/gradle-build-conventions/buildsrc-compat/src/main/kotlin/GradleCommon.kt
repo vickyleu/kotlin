@@ -281,7 +281,7 @@ fun Project.wireGradleVariantToCommonGradleVariant(
     tasks.withType<Jar>().configureEach {
         if (name == wireSourceSet.jarTaskName) {
             from(wireSourceSet.output, commonSourceSet.output)
-            setupPublicJar(archiveBaseName.get())
+            setupPublicJar(this@wireGradleVariantToCommonGradleVariant, archiveBaseName.get())
             addEmbeddedRuntime()
             addEmbeddedRuntime(wireSourceSet.embeddedConfigurationName)
         } else if (name == wireSourceSet.sourcesJarTaskName) {
@@ -577,6 +577,7 @@ fun Project.publishShadowedJar(
         taskName = "$EMBEDDABLE_COMPILER_TASK_NAME${sourceSet.jarTaskName.replaceFirstChar { it.uppercase() }}"
     ) {
         setupPublicJar(
+            rootProject.extra["buildNumber"] as String,
             jarTask.flatMap { it.archiveBaseName },
             jarTask.flatMap { it.archiveClassifier }
         )
