@@ -1860,6 +1860,18 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
             token,
         )
     }
+    add(FirErrors.INCORRECT_DATAARG_CLASS) { firDiagnostic ->
+        IncorrectDataargClassImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.INCORRECT_SEALEDARG_CLASS) { firDiagnostic ->
+        IncorrectSealedargClassImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
     add(FirErrors.VALUE_CLASS_NOT_TOP_LEVEL) { firDiagnostic ->
         ValueClassNotTopLevelImpl(
             firDiagnostic as KtPsiDiagnostic,
@@ -2110,6 +2122,30 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
     }
     add(FirErrors.NAME_FOR_AMBIGUOUS_PARAMETER) { firDiagnostic ->
         NameForAmbiguousParameterImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.VALUE_DATA_ARGUMENT_CONFLICT) { firDiagnostic ->
+        ValueDataArgumentConflictImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.SEALED_ARGUMENT_NO_CONSTRUCTOR) { firDiagnostic ->
+        SealedArgumentNoConstructorImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.DATAARG_WITHOUT_SPREAD) { firDiagnostic ->
+        DataargWithoutSpreadImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.DATAARG_SPREAD_AND_NON_SPREAD) { firDiagnostic ->
+        DataargSpreadAndNonSpreadImpl(
             firDiagnostic as KtPsiDiagnostic,
             token,
         )
@@ -3450,6 +3486,30 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
     }
     add(FirErrors.DATA_OBJECT_CUSTOM_EQUALS_OR_HASH_CODE) { firDiagnostic ->
         DataObjectCustomEqualsOrHashCodeImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.MULTIPLE_DATAARG_PARAMETERS) { firDiagnostic ->
+        MultipleDataargParametersImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.VARARG_DATA_ARGUMENT) { firDiagnostic ->
+        VarargDataArgumentImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.DATAARG_PARAMETER_WRONG_CLASS) { firDiagnostic ->
+        DataargParameterWrongClassImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.SEALEDARG_PARAMETER_WRONG_CLASS) { firDiagnostic ->
+        SealedargParameterWrongClassImpl(
             firDiagnostic as KtPsiDiagnostic,
             token,
         )

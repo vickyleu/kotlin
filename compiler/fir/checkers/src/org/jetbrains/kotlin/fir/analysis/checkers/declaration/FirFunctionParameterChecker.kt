@@ -10,23 +10,24 @@ import org.jetbrains.kotlin.KtRealSourceElementKind
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirElement
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
+import org.jetbrains.kotlin.fir.analysis.checkers.*
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
-import org.jetbrains.kotlin.fir.analysis.checkers.isValueClass
-import org.jetbrains.kotlin.fir.analysis.checkers.leastUpperBound
 import org.jetbrains.kotlin.fir.analysis.checkers.valOrVarKeyword
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.FirAnonymousFunction
 import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirFunction
+import org.jetbrains.kotlin.fir.declarations.hasAnnotation
 import org.jetbrains.kotlin.fir.diagnostics.ConeSimpleDiagnostic
 import org.jetbrains.kotlin.fir.diagnostics.DiagnosticKind
 import org.jetbrains.kotlin.fir.expressions.FirPropertyAccessExpression
 import org.jetbrains.kotlin.fir.expressions.FirQualifiedAccessExpression
 import org.jetbrains.kotlin.fir.references.toResolvedValueParameterSymbol
 import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
+import org.jetbrains.kotlin.fir.resolve.toRegularClassSymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.visitors.FirVisitorVoid
+import org.jetbrains.kotlin.name.StandardClassIds
 
 object FirFunctionParameterChecker : FirFunctionChecker(MppCheckerKind.Common) {
     override fun check(declaration: FirFunction, context: CheckerContext, reporter: DiagnosticReporter) {
@@ -82,6 +83,34 @@ object FirFunctionParameterChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     varargParameterType,
                     context
                 )
+            }
+        }
+
+        val dataParameters = function.valueParameters.filter { it.isDataArgument }
+        if (dataParameters.size > 1) {
+            for (parameter in dataParameters) {
+                reporter.reportOn(parameter.source, FirErrors.MULTIPLE_DATAARG_PARAMETERS, context)
+            }
+        }
+
+        if (varargParameters.isNotEmpty() && dataParameters.isNotEmpty() && varargParameters.size + dataParameters.size > 1) {
+            for (parameter in varargParameters) {
+                reporter.reportOn(parameter.source, FirErrors.VARARG_DATA_ARGUMENT, context)
+            }
+        }
+
+        for (dataParameter in dataParameters) {
+            val dataParameterType = dataParameter.returnTypeRef.coneType.toRegularClassSymbol(context.session)
+            if (dataParameterType == null || !dataParameterType.hasAnnotation(StandardClassIds.Annotations.DataArgument, context.session)) {
+                reporter.reportOn(dataParameter.source, FirErrors.DATAARG_PARAMETER_WRONG_CLASS, context)
+            }
+        }
+
+        val sealedParameters = function.valueParameters.filter { it.isSealedArgument }
+        for (sealedParameter in sealedParameters) {
+            val sealedParameterType = sealedParameter.returnTypeRef.coneType.toRegularClassSymbol(context.session)
+            if (sealedParameterType == null || !sealedParameterType.hasAnnotation(StandardClassIds.Annotations.SealedArgument, context.session)) {
+                reporter.reportOn(sealedParameter.source, FirErrors.SEALEDARG_PARAMETER_WRONG_CLASS, context)
             }
         }
     }

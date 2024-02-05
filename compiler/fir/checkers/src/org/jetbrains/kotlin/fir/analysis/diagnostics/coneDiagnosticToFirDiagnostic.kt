@@ -372,6 +372,10 @@ private fun mapInapplicableCandidateError(
                 qualifiedAccessSource ?: source,
                 rootCause.valueParameter.symbol
             )
+            is ValueDataArgumentConflict -> FirErrors.VALUE_DATA_ARGUMENT_CONFLICT.createOn(rootCause.argument.source)
+            is SealedArgumentNoConstructor -> FirErrors.SEALED_ARGUMENT_NO_CONSTRUCTOR.createOn(rootCause.argument.source ?: source)
+            is DataArgumentWithoutSpread -> FirErrors.DATAARG_WITHOUT_SPREAD.createOn(rootCause.argument.source)
+            is DataArgumentSpreadAndNonSpread -> FirErrors.DATAARG_SPREAD_AND_NON_SPREAD.createOn(rootCause.argument.source)
 
             is NameNotFound -> FirErrors.NAMED_PARAMETER_NOT_FOUND.createOn(
                 rootCause.argument.source ?: source,

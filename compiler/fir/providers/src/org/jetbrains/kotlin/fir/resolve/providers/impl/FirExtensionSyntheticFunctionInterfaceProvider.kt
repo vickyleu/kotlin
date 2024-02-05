@@ -287,6 +287,8 @@ abstract class FirSyntheticFunctionInterfaceProviderBase(
                                     isCrossinline = false
                                     isNoinline = false
                                     isVararg = false
+                                    isDataArgument = false
+                                    isSealedArgument = false
                                 }
                             }
                             dispatchReceiverType = classId.defaultType(this@klass.typeParameters.map { it.symbol })

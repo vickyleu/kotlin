@@ -44,6 +44,8 @@ internal object ArgumentCheckingProcessor {
         val context: ResolutionContext,
         val isReceiver: Boolean,
         val isDispatch: Boolean,
+        val isDataArgument: Boolean,
+        val isSealedArgument: Boolean,
     ) {
         val session: FirSession
             get() = context.session
@@ -62,9 +64,11 @@ internal object ArgumentCheckingProcessor {
         sink: CheckerSink,
         context: ResolutionContext,
         isReceiver: Boolean,
-        isDispatch: Boolean
+        isDispatch: Boolean,
+        isDataArgument: Boolean,
+        isSealedArgument: Boolean
     ) {
-        val argumentContext = ArgumentContext(candidate, candidate.csBuilder, expectedType, sink, context, isReceiver, isDispatch)
+        val argumentContext = ArgumentContext(candidate, candidate.csBuilder, expectedType, sink, context, isReceiver, isDispatch, isDataArgument, isSealedArgument)
         argumentContext.resolveArgumentExpression(atom)
     }
 
@@ -77,9 +81,11 @@ internal object ArgumentCheckingProcessor {
         context: ResolutionContext,
         isReceiver: Boolean,
         isDispatch: Boolean,
+        isDataArgument: Boolean,
+        isSealedArgument: Boolean,
         sourceForReceiver: KtSourceElement? = null,
     ) {
-        val argumentContext = ArgumentContext(candidate, candidate.csBuilder, expectedType, sink, context, isReceiver, isDispatch)
+        val argumentContext = ArgumentContext(candidate, candidate.csBuilder, expectedType, sink, context, isReceiver, isDispatch, isDataArgument, isSealedArgument)
         argumentContext.resolvePlainArgumentType(atom, argumentType, sourceForReceiver = sourceForReceiver)
     }
 
@@ -93,7 +99,8 @@ internal object ArgumentCheckingProcessor {
     ): ConeResolvedLambdaAtom {
         val argumentContext = ArgumentContext(
             candidate, csBuilder, expectedType, sink = null,
-            context, isReceiver = false, isDispatch = false
+            context, isReceiver = false, isDispatch = false,
+            isDataArgument = false, isSealedArgument = false,
         )
         return argumentContext.createResolvedLambdaAtom(atom, duringCompletion = true, returnTypeVariable)
     }
@@ -275,7 +282,7 @@ internal object ArgumentCheckingProcessor {
                     }
                 }
 
-                if (!isReceiver) {
+                if (!isReceiver && !isSealedArgument) {
                     reportDiagnostic(subtypeError(expectedType))
                     return
                 }

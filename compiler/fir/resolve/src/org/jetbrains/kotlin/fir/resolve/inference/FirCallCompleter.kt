@@ -365,6 +365,8 @@ class FirCallCompleter(
                         isCrossinline = false
                         isNoinline = false
                         isVararg = false
+                        isDataArgument = false
+                        isSealedArgument = false
                     }
                 }
                 else -> null

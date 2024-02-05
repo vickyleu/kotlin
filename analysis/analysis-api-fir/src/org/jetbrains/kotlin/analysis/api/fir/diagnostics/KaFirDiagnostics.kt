@@ -1336,6 +1336,14 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         override val diagnosticClass get() = AnonymousSuspendFunction::class
     }
 
+    interface IncorrectDataargClass : KaFirDiagnostic<KtClass> {
+        override val diagnosticClass get() = IncorrectDataargClass::class
+    }
+
+    interface IncorrectSealedargClass : KaFirDiagnostic<KtClass> {
+        override val diagnosticClass get() = IncorrectSealedargClass::class
+    }
+
     interface ValueClassNotTopLevel : KaFirDiagnostic<KtDeclaration> {
         override val diagnosticClass get() = ValueClassNotTopLevel::class
     }
@@ -1510,6 +1518,22 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
 
     interface NameForAmbiguousParameter : KaFirDiagnostic<KtValueArgument> {
         override val diagnosticClass get() = NameForAmbiguousParameter::class
+    }
+
+    interface ValueDataArgumentConflict : KaFirDiagnostic<KtValueArgument> {
+        override val diagnosticClass get() = ValueDataArgumentConflict::class
+    }
+
+    interface SealedArgumentNoConstructor : KaFirDiagnostic<PsiElement> {
+        override val diagnosticClass get() = SealedArgumentNoConstructor::class
+    }
+
+    interface DataargWithoutSpread : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = DataargWithoutSpread::class
+    }
+
+    interface DataargSpreadAndNonSpread : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = DataargSpreadAndNonSpread::class
     }
 
     interface AssignmentTypeMismatch : KaFirDiagnostic<KtExpression> {
@@ -2436,6 +2460,22 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
 
     interface DataObjectCustomEqualsOrHashCode : KaFirDiagnostic<KtNamedFunction> {
         override val diagnosticClass get() = DataObjectCustomEqualsOrHashCode::class
+    }
+
+    interface MultipleDataargParameters : KaFirDiagnostic<KtParameter> {
+        override val diagnosticClass get() = MultipleDataargParameters::class
+    }
+
+    interface VarargDataArgument : KaFirDiagnostic<KtParameter> {
+        override val diagnosticClass get() = VarargDataArgument::class
+    }
+
+    interface DataargParameterWrongClass : KaFirDiagnostic<KtParameter> {
+        override val diagnosticClass get() = DataargParameterWrongClass::class
+    }
+
+    interface SealedargParameterWrongClass : KaFirDiagnostic<KtParameter> {
+        override val diagnosticClass get() = SealedargParameterWrongClass::class
     }
 
     interface DefaultValueNotAllowedInOverride : KaFirDiagnostic<KtElement> {

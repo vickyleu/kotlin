@@ -10,9 +10,9 @@ interface B {
 
 interface C : A, B
 
-abstract class D(sealed var x: Int) {
+abstract class D(<!SEALEDARG_PARAMETER_WRONG_CLASS!>sealed<!> var x: Int) {
     abstract var y: Unit
         <!WRONG_MODIFIER_TARGET!>sealed<!> set
 }
 
-abstract class E : D(42)
+abstract class E : D(<!SEALED_ARGUMENT_NO_CONSTRUCTOR!>42<!>)
