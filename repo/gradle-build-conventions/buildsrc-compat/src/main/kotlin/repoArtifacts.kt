@@ -442,7 +442,7 @@ fun Jar.setupPublicJar(
     classifier: Provider<String>? = null
 ) {
     this.archiveBaseName.set(baseName)
-    if (classifier!=null) {
+    if (classifier != null) {
         this.archiveClassifier.set(classifier)
     }
     manifest.attributes.apply {
