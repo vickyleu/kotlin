@@ -39,7 +39,7 @@ sourceSets {
     }
 }
 
-projectTest(jUnitMode = JUnitMode.JUnit5) {
+projectTest(jUnitMode = JUnitMode.JUnit5, maxHeapSizeMb = 1500) {
     dependsOn(":dist")
     workingDir = rootDir
     useJUnitPlatform()
