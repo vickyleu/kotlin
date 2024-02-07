@@ -201,9 +201,11 @@ fun Project.projectTest(
         else
             defaultMaxMemoryPerTestWorkerMb
 
+        println("CRISTIAN: $path maxHeapSize=${memoryPerTestProcessMb}m workers=${junit5ParallelTestWorkers}")
         maxHeapSize = "${memoryPerTestProcessMb}m"
 
         if (minHeapSizeMb != null) {
+            println("CRISTIAN: $path minHeapSize=${minHeapSizeMb}m")
             minHeapSize = "${minHeapSizeMb}m"
         }
 
