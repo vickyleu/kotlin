@@ -32,7 +32,7 @@ abstract class DevFrameworkPathValueSource : ValueSource<String, DevFrameworkPat
             "Developer frameworks path wasn't found at $devFrameworkPath. Check configuration and Xcode installation"
         }
 
-        return parameters.konanTarget.get().developerFrameworkPath()
+        return devFrameworkPath
     }
 
     /**
