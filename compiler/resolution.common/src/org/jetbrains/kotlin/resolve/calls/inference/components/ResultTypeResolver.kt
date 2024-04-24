@@ -191,17 +191,20 @@ class ResultTypeResolver(
     private fun Context.similarOrCloselyBoundCapturedTypes(subType: KotlinTypeMarker?, superType: KotlinTypeMarker?): Boolean {
         if (subType == null) return false
         if (superType == null) return false
-        val subTypeLowerConstructor = subType.lowerBoundIfFlexible().typeConstructor()
-        if (!subTypeLowerConstructor.isCapturedTypeConstructor()) return false
+
+        if (!subType.contains { it.lowerBoundIfFlexible().typeConstructor().isCapturedTypeConstructor() }) return false
 
         // If two captured types or captured-containing types are already in subtyping relation,
         // we shouldn't do approximation, otherwise this subtyping relation becomes broken
         // E.g. subType = CapturedType(out Generic<CapturedType(*)>), superType = Generic<CapturedType(*)>
         // Important: both superType/subType contain the same captured type inside -- CapturedType(*) for the case above
-        if (superType in subTypeLowerConstructor.supertypes() && superType.contains { it.typeConstructor().isCapturedTypeConstructor() }) {
+        if (AbstractTypeChecker.isSubtypeOf(this, subType, superType) &&
+            superType.contains { it.typeConstructor().isCapturedTypeConstructor() }
+        ) {
             return true
         }
 
+        val subTypeLowerConstructor = subType.lowerBoundIfFlexible().typeConstructor()
         return subTypeLowerConstructor == subType.upperBoundIfFlexible().typeConstructor() &&
                 subTypeLowerConstructor == superType.lowerBoundIfFlexible().typeConstructor() &&
                 subTypeLowerConstructor == superType.upperBoundIfFlexible().typeConstructor()
