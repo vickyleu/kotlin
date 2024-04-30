@@ -96,6 +96,8 @@ fun main(args: Array<String>) {
 
             testClass<AbstractFirWasmWasiCodegenBoxTest> {
                 model("codegen/boxWasmWasi")
+                model("codegen/boxInline")
+                model("codegen/box", pattern = jsTranslatorTestPattern, excludeDirs = jvmOnlyBoxTests)
             }
 
             testClass<AbstractFirWasmJsSteppingTest> {

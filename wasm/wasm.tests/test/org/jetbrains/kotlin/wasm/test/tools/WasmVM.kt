@@ -76,6 +76,25 @@ internal sealed class WasmVM(val shortName: String) {
                 workingDirectory = workingDirectory
             )
     }
+
+    object WasmEdge : WasmVM("WasmEdge") {
+        override fun run(
+            entryMjs: String,
+            jsFiles: List<String>,
+            workingDirectory: File?,
+            disableExceptionHandlingIfPossible: Boolean,
+            toolArgs: List<String>
+        ) =
+            tool.run(
+                "--enable-gc",
+                "--enable-exception-handling",
+//                "--enable-all",
+//                "--reactor",
+                workingDirectory!!.listFiles()!!.first { it.extension == "wasm" }.path,
+                "runBoxTest",
+                workingDirectory = workingDirectory
+            )
+    }
 }
 
 internal class ExternalTool(val path: String) {
