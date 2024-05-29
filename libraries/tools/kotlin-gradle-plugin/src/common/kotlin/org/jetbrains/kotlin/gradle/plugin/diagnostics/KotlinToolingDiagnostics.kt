@@ -387,29 +387,20 @@ object KotlinToolingDiagnostics {
         )
     }
 
-    abstract class JsLikeEnvironmentNotChosenExplicitly(
-        private val environmentName: String,
-        private val targetType: String
-    ) : ToolingDiagnosticFactory(WARNING) {
+    object JsEnvironmentNotChosenExplicitly : ToolingDiagnosticFactory(WARNING) {
         operator fun invoke(availableEnvironments: List<String>) = build(
             """
-                |Please choose a $environmentName environment to build distributions and run tests.
+                |Please choose a JavaScript environment to build distributions and run tests.
                 |Not choosing any of them will be an error in the future releases.
                 |kotlin {
-                |    $targetType {
-                |        // To build distributions for and run tests use one or several of:
+                |    js {
+                |        // To build distributions for and run tests on browser or Node.js use one or both of:
                 |        ${availableEnvironments.joinToString(separator = "\n        ")}
                 |    }
                 |}
             """.trimMargin()
         )
     }
-
-    object JsEnvironmentNotChosenExplicitly : JsLikeEnvironmentNotChosenExplicitly("JavaScript", "js")
-
-    object WasmJsEnvironmentNotChosenExplicitly : JsLikeEnvironmentNotChosenExplicitly("WebAssembly-JavaScript", "wasmJs")
-
-    object WasmWasiEnvironmentNotChosenExplicitly : JsLikeEnvironmentNotChosenExplicitly("WebAssembly WASI", "wasmWasi")
 
     object PreHmppDependenciesUsedInBuild : ToolingDiagnosticFactory(WARNING) {
         operator fun invoke(dependencyName: String) = build(
