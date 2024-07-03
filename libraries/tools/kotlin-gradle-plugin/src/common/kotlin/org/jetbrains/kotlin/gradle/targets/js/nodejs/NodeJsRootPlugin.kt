@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.PACKAGE_JSON_UMBRELLA
 import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.implementing
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmCachesSetup
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
+import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinToolingInstallTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.RootPackageJsonTask
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.tasks.CleanDataTask
@@ -96,6 +97,33 @@ open class NodeJsRootPlugin : Plugin<Project> {
         }
 
         project.registerTask<Task>(PACKAGE_JSON_UMBRELLA_TASK_NAME)
+
+        val packageManagerName = nodeJs.packageManagerExtension.map { it.name }
+
+        val npmTooling = NpmTooling(
+            project.objects.directoryProperty()
+                .fileValue(project.gradle.gradleUserHomeDir.resolve("kotlin-npm-tooling"))
+                .zip(packageManagerName) { toolingDir, name ->
+                    toolingDir.dir(name)
+                },
+            nodeJs
+        )
+
+        project.registerTask<KotlinToolingInstallTask>(KotlinToolingInstallTask.NAME) { toolingInstall ->
+            toolingInstall.npmTooling.set(
+                project.provider {
+                    npmTooling.requireConfigured()
+                }
+            )
+
+            toolingInstall.dependsOn(setupTask)
+            toolingInstall.group = TASKS_GROUP_NAME
+            toolingInstall.description = "Find, download and link NPM dependencies and projects"
+
+            toolingInstall.outputs.upToDateWhen {
+                toolingInstall.nodeModules.getFile().exists()
+            }
+        }
 
         nodeJsRoot.resolver = KotlinRootNpmResolver(
             project.name,

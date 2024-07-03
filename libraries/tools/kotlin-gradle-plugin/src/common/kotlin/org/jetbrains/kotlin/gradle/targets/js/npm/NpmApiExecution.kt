@@ -38,6 +38,16 @@ interface NpmApiExecution<out T : PackageManagerEnvironment> : Serializable {
         cliArgs: List<String>,
     )
 
+    fun packageManagerExec(
+        services: ServiceRegistry,
+        logger: Logger,
+        nodeJs: NodeJsEnvironment,
+        environment: @UnsafeVariance T,
+        dir: File,
+        description: String,
+        args: List<String>,
+    )
+
     companion object {
         fun resolveOperationDescription(packageManagerTitle: String): String =
             "Resolving NPM dependencies using $packageManagerTitle"

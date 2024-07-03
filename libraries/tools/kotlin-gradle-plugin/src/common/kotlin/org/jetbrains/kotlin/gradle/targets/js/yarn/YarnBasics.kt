@@ -14,11 +14,11 @@ import java.io.File
 
 abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
 
-    fun yarnExec(
+    override fun packageManagerExec(
         services: ServiceRegistry,
         logger: Logger,
         nodeJs: NodeJsEnvironment,
-        yarn: YarnEnvironment,
+        environment: YarnEnvironment,
         dir: File,
         description: String,
         args: List<String>
@@ -29,11 +29,11 @@ abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
                     if (logger.isDebugEnabled) "--verbose" else ""
                 )
                 .plus(
-                    if (yarn.ignoreScripts) "--ignore-scripts" else ""
+                    if (environment.ignoreScripts) "--ignore-scripts" else ""
                 ).filter { it.isNotEmpty() }
 
             val nodeExecutable = nodeJs.nodeExecutable
-            if (!yarn.ignoreScripts) {
+            if (!environment.ignoreScripts) {
                 val nodePath = File(nodeExecutable).parent
                 exec.environment(
                     "PATH",
@@ -41,8 +41,8 @@ abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
                 )
             }
 
-            val command = yarn.executable
-            if (yarn.standalone) {
+            val command = environment.executable
+            if (environment.standalone) {
                 exec.executable = command
                 exec.args = arguments
             } else {

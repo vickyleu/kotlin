@@ -26,6 +26,8 @@ open class YarnRootExtension(
     val project: Project,
     val nodeJsRoot: NodeJsRootExtension,
 ) : AbstractSettings<YarnEnv>(), NpmApiExtension<YarnEnvironment, Yarn> {
+    override val name: String = "yarn"
+
     init {
         check(project == project.rootProject)
     }

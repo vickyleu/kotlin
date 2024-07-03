@@ -66,7 +66,7 @@ class YarnWorkspaces : YarnBasics() {
     ) {
         val nodeJsWorldDir = nodeJs.rootPackageDir.getFile()
 
-        yarnExec(
+        packageManagerExec(
             services,
             logger,
             nodeJs,

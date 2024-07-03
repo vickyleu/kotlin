@@ -36,4 +36,31 @@ class NpmVersions : Serializable {
     val karmaSourcemapLoader = NpmPackageVersion("karma-sourcemap-loader", "0.4.0")
     val typescript = NpmPackageVersion("typescript", "5.5.4")
     val kotlinWebHelpers = NpmPackageVersion("kotlin-web-helpers", "2.0.0")
+
+    val allDeps = listOf(
+        webpack,
+        webpackCli,
+        webpackDevServer,
+        sourceMapLoader,
+        sourceMapSupport,
+        cssLoader,
+        styleLoader,
+        sassLoader,
+        sass,
+        toStringLoader,
+        miniCssExtractPlugin,
+        mocha,
+        karma,
+        karmaChromeLauncher,
+        karmaPhantomjsLauncher,
+        karmaFirefoxLauncher,
+        karmaOperaLauncher,
+        karmaIeLauncher,
+        karmaSafariLauncher,
+        karmaMocha,
+        karmaWebpack,
+        karmaSourcemapLoader,
+        typescript,
+        kotlinWebHelpers,
+    )
 }

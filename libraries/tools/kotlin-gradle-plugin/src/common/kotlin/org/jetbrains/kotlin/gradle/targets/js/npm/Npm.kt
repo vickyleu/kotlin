@@ -67,7 +67,7 @@ class Npm : NpmApiExecution<NpmEnvironment> {
     ) {
         val nodeJsWorldDir = nodeJs.rootPackageDir.getFile()
 
-        npmExec(
+        packageManagerExec(
             services,
             logger,
             nodeJs,
@@ -78,7 +78,7 @@ class Npm : NpmApiExecution<NpmEnvironment> {
         )
     }
 
-    fun npmExec(
+    override fun packageManagerExec(
         services: ServiceRegistry,
         logger: Logger,
         nodeJs: NodeJsEnvironment,
