@@ -5,20 +5,29 @@
 
 package org.jetbrains.kotlin.gradle.targets.js.npm.tasks
 
+import com.intellij.openapi.util.io.findOrCreateFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.Directory
-import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 import org.gradle.work.DisableCachingByDefault
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin.Companion.kotlinNodeJsExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
-import org.jetbrains.kotlin.gradle.targets.js.npm.*
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProject
+import org.jetbrains.kotlin.gradle.targets.js.npm.PackageJson
 import org.jetbrains.kotlin.gradle.targets.js.npm.asNodeJsEnvironment
 import org.jetbrains.kotlin.gradle.utils.getFile
 import org.jetbrains.kotlin.gradle.utils.property
+import java.nio.channels.FileChannel
+import java.nio.file.StandardOpenOption
+
 
 @DisableCachingByDefault
 abstract class KotlinToolingInstallTask :
@@ -28,17 +37,20 @@ abstract class KotlinToolingInstallTask :
     // Only in configuration phase
     // Not part of configuration caching
 
-    private val nodeJs: NodeJsRootExtension
+    private val nodeJsRoot: NodeJsRootExtension
+        get() = project.rootProject.kotlinNodeJsRootExtension
+
+    private val nodeJs: NodeJsExtension
         get() = project.rootProject.kotlinNodeJsExtension
 
     // -----
 
     private val nodeJsEnvironment by lazy {
-        nodeJs.requireConfigured().asNodeJsEnvironment
+        asNodeJsEnvironment(nodeJsRoot, nodeJs.requireConfigured())
     }
 
     private val packageManagerEnv by lazy {
-        nodeJs.packageManagerExtension.get().environment
+        nodeJsRoot.packageManagerExtension.get().environment
     }
 
     @get:Internal
@@ -47,7 +59,7 @@ abstract class KotlinToolingInstallTask :
     @get:Input
     internal val versionsHash: Provider<String> = npmTooling.map { it.version }
 
-    private val tools = nodeJs.versions.allDeps
+    private val tools = nodeJsRoot.versions.allDeps
 
     @get:OutputDirectory
     val destination: Provider<Directory> = project.objects.directoryProperty().fileProvider(
@@ -62,27 +74,37 @@ abstract class KotlinToolingInstallTask :
 
     @TaskAction
     fun install() {
-        val toolingPackageJson = PackageJson(
-            "kotlin-npm-tooling",
-            versionsHash.get()
-        ).apply {
-            private = true
-            dependencies.putAll(
-                tools.map { it.name to it.version }
-            )
+        val lockFile = destination.getFile().resolve("lock")
+        FileChannel.open(
+            lockFile.toPath(),
+            StandardOpenOption.CREATE, StandardOpenOption.WRITE
+        ).use { channel ->
+            channel.lock().use { _ ->
+                val packageJsonFile = destination.getFile().resolve(NpmProject.PACKAGE_JSON)
+                if (packageJsonFile.exists()) return // return from install
+                val toolingPackageJson = PackageJson(
+                    "kotlin-npm-tooling",
+                    versionsHash.get()
+                ).apply {
+                    private = true
+                    dependencies.putAll(
+                        tools.map { it.name to it.version }
+                    )
+                }
+
+                toolingPackageJson.saveTo(packageJsonFile)
+
+                nodeJsEnvironment.packageManager.packageManagerExec(
+                    services = services,
+                    logger = logger,
+                    nodeJs = nodeJsEnvironment,
+                    environment = packageManagerEnv,
+                    dir = destination.getFile(),
+                    description = "Installation of tooling install",
+                    args = args,
+                )
+            }
         }
-
-        toolingPackageJson.saveTo(destination.getFile().resolve(NpmProject.PACKAGE_JSON))
-
-        nodeJsEnvironment.packageManager.packageManagerExec(
-            services = services,
-            logger = logger,
-            nodeJs = nodeJsEnvironment,
-            environment = packageManagerEnv,
-            dir = destination.getFile(),
-            description = "Installation of tooling install",
-            args = args,
-        )
     }
 
     companion object {

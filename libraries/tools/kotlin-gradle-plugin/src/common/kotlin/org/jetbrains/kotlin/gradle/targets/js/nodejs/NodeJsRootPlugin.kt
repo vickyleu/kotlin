@@ -98,7 +98,7 @@ open class NodeJsRootPlugin : Plugin<Project> {
 
         project.registerTask<Task>(PACKAGE_JSON_UMBRELLA_TASK_NAME)
 
-        val packageManagerName = nodeJs.packageManagerExtension.map { it.name }
+        val packageManagerName = nodeJsRoot.packageManagerExtension.map { it.name }
 
         val npmTooling = NpmTooling(
             project.objects.directoryProperty()
@@ -106,7 +106,7 @@ open class NodeJsRootPlugin : Plugin<Project> {
                 .zip(packageManagerName) { toolingDir, name ->
                     toolingDir.dir(name)
                 },
-            nodeJs
+            nodeJsRoot
         )
 
         project.registerTask<KotlinToolingInstallTask>(KotlinToolingInstallTask.NAME) { toolingInstall ->
@@ -116,7 +116,7 @@ open class NodeJsRootPlugin : Plugin<Project> {
                 }
             )
 
-            toolingInstall.dependsOn(setupTask)
+            toolingInstall.dependsOn(nodeJs.nodeJsSetupTaskProvider)
             toolingInstall.group = TASKS_GROUP_NAME
             toolingInstall.description = "Find, download and link NPM dependencies and projects"
 
