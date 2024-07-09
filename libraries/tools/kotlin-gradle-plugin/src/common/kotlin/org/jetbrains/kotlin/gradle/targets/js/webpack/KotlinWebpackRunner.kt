@@ -15,10 +15,13 @@ import org.jetbrains.kotlin.gradle.internal.LogType
 import org.jetbrains.kotlin.gradle.internal.TeamCityMessageCommonClient
 import org.jetbrains.kotlin.gradle.internal.execWithErrorLogger
 import org.jetbrains.kotlin.gradle.internal.testing.TCServiceMessageOutputStreamHandler
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProject
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProjectModules
 import java.io.File
 
 internal data class KotlinWebpackRunner(
+    val npmToolingEnv: NpmToolingEnv,
     val npmProject: NpmProject,
     val logger: Logger,
     val configFile: File,
@@ -95,12 +98,12 @@ internal data class KotlinWebpackRunner(
             args.add("--progress")
         }
 
-        npmProject.useTool(
-            execFactory,
-            tool,
-            nodeArgs,
-            args
-        )
+        val modules = NpmProjectModules(npmToolingEnv.dir)
+        execFactory.workingDir(npmProject.dir)
+        execFactory.executable(npmProject.nodeExecutable)
+        execFactory.environment("NODE_PATH", npmToolingEnv.dir.resolve("node_modules"))
+        execFactory.environment("KOTLIN_TOOLING_DIR", npmToolingEnv.dir.resolve("node_modules"))
+        execFactory.args = nodeArgs + modules.require(tool) + args
 
         return standardClient to errorClient
     }

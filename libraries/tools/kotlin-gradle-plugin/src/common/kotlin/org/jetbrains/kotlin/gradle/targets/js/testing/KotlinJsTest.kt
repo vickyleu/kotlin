@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.gradle.internal.testing.TCServiceMessagesTestExecuti
 import org.jetbrains.kotlin.gradle.targets.js.RequiredKotlinJsDependency
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin.Companion.kotlinNodeJsExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.npm.RequiresNpmDependencies
 import org.jetbrains.kotlin.gradle.targets.js.testing.karma.KotlinKarma
@@ -38,6 +39,11 @@ constructor(
     RequiresNpmDependencies {
     @Transient
     private val nodeJs = project.kotlinNodeJsExtension
+
+    @Transient
+    private val nodeJsRoot = NodeJsRootPlugin.apply(project.rootProject)
+
+    private val nodeJsToolingDir = nodeJsRoot.toolingInstallTaskProvider.flatMap { it.npmTooling }.map { it.dir }
 
     private val nodeExecutable by project.provider { nodeJs.requireConfigured().executable }
 

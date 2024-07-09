@@ -78,13 +78,13 @@ abstract class KotlinNodeJsIr @Inject constructor(target: KotlinJsIrTarget) :
 
     override fun configureDefaultTestFramework(test: KotlinJsTest) {
         if (target.platformType != KotlinPlatformType.wasm) {
-            val nodeJsRoot = project.rootProject.kotlinNodeJsRootExtension
+//            val nodeJsRoot = project.rootProject.kotlinNodeJsRootExtension
             if (test.testFramework == null) {
                 test.useMocha { }
             }
-            if (test.enabled) {
-                nodeJsRoot.taskRequirements.addTaskRequirements(test)
-            }
+//            if (test.enabled) {
+//                nodeJsRoot.taskRequirements.addTaskRequirements(test)
+//            }
         } else {
             test.testFramework = KotlinWasmNode(test)
         }

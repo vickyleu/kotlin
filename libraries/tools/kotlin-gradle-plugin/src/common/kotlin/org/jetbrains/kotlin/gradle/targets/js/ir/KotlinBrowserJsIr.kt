@@ -56,6 +56,7 @@ abstract class KotlinBrowserJsIr @Inject constructor(target: KotlinJsIrTarget) :
     override fun configureTestDependencies(test: KotlinJsTest) {
         test.dependsOn(
             nodeJsRoot.npmInstallTaskProvider,
+            nodeJsRoot.toolingInstallTaskProvider,
             nodeJs.nodeJsSetupTaskProvider
         )
         test.dependsOn(nodeJsRoot.packageManagerExtension.map { it.postInstallTasks })
@@ -68,9 +69,9 @@ abstract class KotlinBrowserJsIr @Inject constructor(target: KotlinJsIrTarget) :
             }
         }
 
-        if (test.enabled) {
-            nodeJsRoot.taskRequirements.addTaskRequirements(test)
-        }
+//        if (test.enabled) {
+//            nodeJsRoot.taskRequirements.addTaskRequirements(test)
+//        }
     }
 
     override fun commonWebpackConfig(body: Action<KotlinWebpackConfig>) {
@@ -279,6 +280,10 @@ abstract class KotlinBrowserJsIr @Inject constructor(target: KotlinJsIrTarget) :
         dependsOn(nodeJs.packageManagerExtension.map { it.postInstallTasks })
 
         configureOptimization(mode)
+
+        this.dependsOn(nodeJs.toolingInstallTaskProvider)
+
+        this.npmTooling.set(nodeJs.toolingInstallTaskProvider.flatMap { it.npmTooling })
 
         this.inputFilesDirectory.set(inputFilesDirectory)
 

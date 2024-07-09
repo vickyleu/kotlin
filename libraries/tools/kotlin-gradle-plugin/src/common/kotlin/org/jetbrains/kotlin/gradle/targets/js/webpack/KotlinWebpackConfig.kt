@@ -151,6 +151,9 @@ data class KotlinWebpackConfig(
                       plugins: [],
                       module: {
                         rules: []
+                      },
+                      resolveLoader: {
+                        modules: ['node_modules', process.env['KOTLIN_TOOLING_DIR']]
                       }
                     };
                     

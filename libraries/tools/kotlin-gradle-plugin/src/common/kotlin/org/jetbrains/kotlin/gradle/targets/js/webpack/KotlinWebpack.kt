@@ -34,6 +34,7 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.WebpackRulesDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.WebpackRulesDsl.Companion.webpackRulesContainer
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.RequiresNpmDependencies
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode
@@ -82,6 +83,9 @@ constructor(
 
     @Input
     var mode: Mode = Mode.DEVELOPMENT
+
+    @get:Internal
+    internal val npmTooling: Property<NpmToolingEnv> = project.objects.property()
 
     @get:Internal
     abstract val inputFilesDirectory: DirectoryProperty
@@ -272,6 +276,7 @@ constructor(
         }
 
         return KotlinWebpackRunner(
+            npmTooling.get(),
             npmProject,
             logger,
             configFile.get(),
