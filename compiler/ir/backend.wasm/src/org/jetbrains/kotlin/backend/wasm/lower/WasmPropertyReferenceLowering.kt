@@ -27,10 +27,7 @@ import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.classifierOrFail
 import org.jetbrains.kotlin.ir.types.typeWith
-import org.jetbrains.kotlin.ir.util.SYNTHETIC_OFFSET
-import org.jetbrains.kotlin.ir.util.constructors
-import org.jetbrains.kotlin.ir.util.functions
-import org.jetbrains.kotlin.ir.util.getKFunctionType
+import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
 import org.jetbrains.kotlin.name.Name
 
@@ -160,6 +157,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
                         val field = kProperties.getOrPut(expression.symbol.owner) {
                             createLocalKProperty(
                                 expression.symbol.owner.name.asString(),
+                                expression.symbol.owner.parent.kotlinFqName.asString(),
                                 expression.getter.owner.returnType,
                                 createKTypeGenerator(),
                                 this
@@ -266,7 +264,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
             val initializerType = symbol.owner.returnType.classifierOrFail.typeWith(constructorTypeArguments)
             val initializer = irCall(symbol, initializerType, constructorTypeArguments).apply {
                 putValueArgument(0, irString(expression.symbol.owner.name.asString()))
-                putValueArgument(1, with(kTypeGenerator) { irKType(returnType) })
+                putValueArgument(1, irString(expression.symbol.owner.parent.kotlinFqName.asString()))
                 if (getterCallableReference != null)
                     putValueArgument(2, getterCallableReference)
                 if (setterCallableReference != null)
@@ -278,6 +276,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
 
     private fun createLocalKProperty(
         propertyName: String,
+        propertyQualifier: String,
         propertyType: IrType,
         kTypeGenerator: KTypeGeneratorInterface,
         irBuilder: IrBuilderWithScope
@@ -292,7 +291,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
             val initializerType = symbol.owner.returnType.classifierOrFail.typeWith(constructorTypeArguments)
             val initializer = irCall(symbol, initializerType, constructorTypeArguments).apply {
                 putValueArgument(0, irString(propertyName))
-                putValueArgument(1, with(kTypeGenerator) { irKType(propertyType) })
+                putValueArgument(0, irString(propertyQualifier))
             }
             return initializer
         }
