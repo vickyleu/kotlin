@@ -10,8 +10,14 @@ import org.jetbrains.kotlin.ir.backend.js.JsCommonBackendContext
 import org.jetbrains.kotlin.ir.backend.js.JsIrBackendContext
 import org.jetbrains.kotlin.ir.backend.js.export.isExported
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.irAttribute
 import org.jetbrains.kotlin.ir.util.file
+import org.jetbrains.kotlin.ir.util.fqNameWhenAvailable
 import org.jetbrains.kotlin.ir.util.isEffectivelyExternal
+import org.jetbrains.kotlin.name.FqName
+
+private val fqnameAttr = irAttribute<IrDeclaration, FqName>(followAttributeOwner = false).create(null, "fqname")
+var IrClass.fqname: FqName? by fqnameAttr
 
 // Move static member declarations from classes to top level
 class StaticMembersLowering(val context: JsCommonBackendContext) : DeclarationTransformer {
@@ -41,6 +47,11 @@ class StaticMembersLowering(val context: JsCommonBackendContext) : DeclarationTr
                     irClass.file.declarations.add(insertBefore, declaration)
                 } else {
                     irClass.file.declarations += declaration
+                }
+
+                //
+                if (declaration is IrClass) {
+                    declaration.fqname = (declaration as? IrDeclarationWithName)?.fqNameWhenAvailable
                 }
                 declaration.parent = irClass.file
                 return listOf()
