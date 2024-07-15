@@ -1304,7 +1304,7 @@ open class PsiRawFirBuilder(
                 symbol = scriptSymbol
 
                 val scriptDeclarationsIter = script.declarations.listIterator()
-                withContainerSymbol(symbol) {
+                withContainerScriptSymbol(symbol) {
                     while (scriptDeclarationsIter.hasNext()) {
                         val declaration = scriptDeclarationsIter.next()
                         val isLast = !scriptDeclarationsIter.hasNext()
@@ -1677,6 +1677,9 @@ open class PsiRawFirBuilder(
             }.also {
                 if (classOrObject.parent is KtClassBody) {
                     it.initContainingClassForLocalAttr()
+                }
+                context.containingScriptSymbol?.let { script ->
+                    it.containingScriptSymbolAttr = script
                 }
             }
         }

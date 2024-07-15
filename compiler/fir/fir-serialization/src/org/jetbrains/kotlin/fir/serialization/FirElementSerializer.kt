@@ -365,12 +365,7 @@ class FirElementSerializer private constructor(
             builder.flags = flags
         }
 
-        val name = script.name.let {
-            if (it.isSpecial) {
-                NameUtils.getScriptNameForFile(it.asStringStripSpecialMarkers().removePrefix("script-"))
-            } else it
-        }
-        val classId = ClassId(script.symbol.fqName.parentOrNull() ?: FqName.ROOT, name)
+        val classId = scriptClassId(script)
 
         builder.fqName = getClassifierId(classId)
 
@@ -429,7 +424,6 @@ class FirElementSerializer private constructor(
 
         return builder
     }
-
 
     /*
      * Order of nested classifiers:
@@ -1288,8 +1282,15 @@ class FirElementSerializer private constructor(
         return declaration.visibility.normalize()
     }
 
-    private fun getClassifierId(declaration: FirClassLikeDeclaration): Int =
-        stringTable.getFqNameIndex(declaration)
+    private fun getClassifierId(declaration: FirClassLikeDeclaration): Int {
+        val baseClassId = declaration.symbol.classId
+
+        return declaration.containingScriptSymbolAttr?.let { containingScript ->
+            val scriptClassClassId = baseClassId.relativeClassName.pathSegments()
+                .fold(scriptClassId(containingScript.fir)) { acc, n -> acc.createNestedClassId(n) }
+            stringTable.getQualifiedClassNameIndex(scriptClassClassId)
+        } ?: stringTable.getFqNameIndex(declaration)
+    }
 
     private fun getClassifierId(classId: ClassId): Int =
         stringTable.getQualifiedClassNameIndex(classId)
@@ -1435,4 +1436,13 @@ class FirElementSerializer private constructor(
             return versionRequirementTable[requirement]
         }
     }
+}
+
+internal fun scriptClassId(script: FirScript): ClassId {
+    val name = script.name.let {
+        if (it.isSpecial) {
+            NameUtils.getScriptNameForFile(it.asStringStripSpecialMarkers().removePrefix("script-"))
+        } else it
+    }
+    return ClassId(script.symbol.fqName.parentOrNull() ?: FqName.ROOT, name)
 }
