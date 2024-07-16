@@ -291,7 +291,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
             val initializerType = symbol.owner.returnType.classifierOrFail.typeWith(constructorTypeArguments)
             val initializer = irCall(symbol, initializerType, constructorTypeArguments).apply {
                 putValueArgument(0, irString(propertyName))
-                putValueArgument(0, irString(propertyQualifier))
+                putValueArgument(1, irString(propertyQualifier))
             }
             return initializer
         }
