@@ -78,6 +78,17 @@ class Npm : NpmApiExecution<NpmEnvironment> {
         )
     }
 
+    override fun prepareTooling(
+        dir: File,
+    ) {
+        dir.resolve("package-lock.json")
+            .outputStream()
+            .use { out ->
+                Npm::class.java.getResourceAsStream("/org/jetbrains/kotlin/gradle/targets/js/npm/package-lock.json")
+                    ?.copyTo(out)
+            }
+    }
+
     override fun packageManagerExec(
         services: ServiceRegistry,
         logger: Logger,

@@ -10,6 +10,7 @@ import org.gradle.internal.service.ServiceRegistry
 import org.jetbrains.kotlin.gradle.internal.execWithProgress
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmApiExecution
 import org.jetbrains.kotlin.gradle.targets.js.npm.NodeJsEnvironment
+import org.jetbrains.kotlin.gradle.targets.js.npm.Npm
 import java.io.File
 
 abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
@@ -53,5 +54,14 @@ abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
             exec.workingDir = dir
         }
 
+    }
+
+    override fun prepareTooling(dir: File) {
+        dir.resolve("yarn.lock")
+            .outputStream()
+            .use { out ->
+                Npm::class.java.getResourceAsStream("/org/jetbrains/kotlin/gradle/targets/js/yarn/yarn.lock")
+                    ?.copyTo(out)
+            }
     }
 }

@@ -38,6 +38,8 @@ interface NpmApiExecution<out T : PackageManagerEnvironment> : Serializable {
         cliArgs: List<String>,
     )
 
+    fun prepareTooling(dir: File)
+
     fun packageManagerExec(
         services: ServiceRegistry,
         logger: Logger,

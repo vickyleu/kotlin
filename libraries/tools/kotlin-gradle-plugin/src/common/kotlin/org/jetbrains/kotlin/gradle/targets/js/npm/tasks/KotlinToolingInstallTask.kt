@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.gradle.targets.js.npm.tasks
 
-import com.intellij.openapi.util.io.findOrCreateFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.Directory
 import org.gradle.api.provider.Property
@@ -74,14 +73,15 @@ abstract class KotlinToolingInstallTask :
 
     @TaskAction
     fun install() {
-        val lockFile = destination.getFile().resolve("lock")
+        val destinationDir = destination.getFile()
+        val lockFile = destinationDir.resolve("lock")
         FileChannel.open(
             lockFile.toPath(),
             StandardOpenOption.CREATE, StandardOpenOption.WRITE
         ).use { channel ->
             channel.lock().use { _ ->
-                val packageJsonFile = destination.getFile().resolve(NpmProject.PACKAGE_JSON)
-                if (packageJsonFile.exists()) return // return from install
+                val packageJsonFile = destinationDir.resolve(NpmProject.PACKAGE_JSON)
+                if (nodeModules.getFile().exists()) return // return from install
                 val toolingPackageJson = PackageJson(
                     "kotlin-npm-tooling",
                     versionsHash.get()
@@ -94,12 +94,14 @@ abstract class KotlinToolingInstallTask :
 
                 toolingPackageJson.saveTo(packageJsonFile)
 
+                nodeJsEnvironment.packageManager.prepareTooling(destinationDir)
+
                 nodeJsEnvironment.packageManager.packageManagerExec(
                     services = services,
                     logger = logger,
                     nodeJs = nodeJsEnvironment,
                     environment = packageManagerEnv,
-                    dir = destination.getFile(),
+                    dir = destinationDir,
                     description = "Installation of tooling install",
                     args = args,
                 )
