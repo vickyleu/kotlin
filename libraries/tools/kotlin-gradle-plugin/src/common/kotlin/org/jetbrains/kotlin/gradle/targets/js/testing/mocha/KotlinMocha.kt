@@ -16,20 +16,26 @@ import org.jetbrains.kotlin.gradle.targets.js.RequiredKotlinJsDependency
 import org.jetbrains.kotlin.gradle.targets.js.internal.parseNodeJsStackTraceAsJvm
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTestFramework
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinTestRunnerCliArgs
 import org.jetbrains.kotlin.gradle.utils.getFile
 import org.jetbrains.kotlin.gradle.utils.getValue
+import java.io.File
 
 class KotlinMocha(@Transient override val compilation: KotlinJsIrCompilation, private val basePath: String) :
     KotlinJsTestFramework {
     @Transient
     private val project: Project = compilation.target.project
+    @Transient
+    private val nodeJs = project.rootProject.kotlinNodeJsRootExtension
     private val npmProject = compilation.npmProject
     private val versions = project.rootProject.kotlinNodeJsRootExtension.versions
     private val npmProjectDir by project.provider { npmProject.dir }
+
+    internal val npmTooling: Provider<NpmToolingEnv> = nodeJs.toolingInstallTaskProvider.flatMap { it.npmTooling }
 
     override val workingDir: Provider<Directory>
         get() = npmProjectDir

@@ -69,9 +69,9 @@ abstract class KotlinBrowserJsIr @Inject constructor(target: KotlinJsIrTarget) :
             }
         }
 
-//        if (test.enabled) {
-//            nodeJsRoot.taskRequirements.addTaskRequirements(test)
-//        }
+        if (target.platformType != KotlinPlatformType.wasm && test.enabled) {
+            nodeJsRoot.taskRequirements.addTaskRequirements(test)
+        }
     }
 
     override fun commonWebpackConfig(body: Action<KotlinWebpackConfig>) {
