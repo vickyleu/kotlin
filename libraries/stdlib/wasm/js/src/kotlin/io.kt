@@ -16,7 +16,7 @@ private fun printlnImpl(message: String?): Unit =
     js("console.log(message)")
 
 private fun printImpl(message: String?): Unit =
-    js("typeof write !== 'undefined' ? write(message) : console.log(message)")
+    js("console.log(message)") ///???
 
 /** Prints the line separator to the standard output stream. */
 public actual fun println() {
