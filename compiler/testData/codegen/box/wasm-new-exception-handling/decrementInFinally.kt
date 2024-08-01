@@ -1,4 +1,5 @@
 // TARGET_BACKEND: WASM
+// WASM_FAILS_IN: JSC
 // USE_NEW_EXCEPTION_HANDLING_PROPOSAL
 // TODO: remove the test when KT-66906 will be resolved
 fun box(): String {
