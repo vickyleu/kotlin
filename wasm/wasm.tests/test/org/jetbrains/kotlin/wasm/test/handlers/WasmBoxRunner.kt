@@ -58,10 +58,14 @@ class WasmBoxRunner(
                         actualResult = jsModule.box();
                     } catch(e) {
                         console.log('Failed with exception!')
-                        console.log('Message: ' + e.message)
-                        console.log('Name:    ' + e.name)
-                        console.log('Stack:')
-                        console.log(e.stack)
+                        console.log('Exception: ' + e)
+                        console.log('typeof:    ' + typeof e)
+                        if (e != null) {
+                            console.log('Message:   ' + e.message)
+                            console.log('Name:      ' + e.name)
+                            console.log('Stack:')
+                            console.log(e.stack)
+                        }
                     }
     
                     if (actualResult !== "OK")
@@ -71,7 +75,7 @@ class WasmBoxRunner(
                         console.log('test passed');
                 """.trimIndent()
 
-        fun writeToFilesAndRunTest(mode: String, res: WasmCompilerResult) {
+        fun writeToFilesAndRunTest(mode: String, res: WasmCompilerResult): List<Throwable> {
             val dir = File(outputDirBase, mode)
             dir.mkdirs()
 
@@ -140,17 +144,19 @@ class WasmBoxRunner(
                     )
                 }
 
-            processExceptions(exceptions)
-
             when (mode) {
                 "dce" -> checkExpectedDceOutputSize(debugMode, testFileText, dir, filesToIgnoreInSizeChecks)
                 "optimized" -> checkExpectedOptimizedOutputSize(debugMode, testFileText, dir, filesToIgnoreInSizeChecks)
             }
+
+            return exceptions
         }
 
-        writeToFilesAndRunTest("dev", artifacts.compilerResult)
-        writeToFilesAndRunTest("dce", artifacts.compilerResultWithDCE)
-        artifacts.compilerResultWithOptimizer?.let { writeToFilesAndRunTest("optimized", it) }
+        val exceptions = writeToFilesAndRunTest("dev", artifacts.compilerResult) +
+                writeToFilesAndRunTest("dce", artifacts.compilerResultWithDCE) +
+                (artifacts.compilerResultWithOptimizer?.let { writeToFilesAndRunTest("optimized", it) } ?: emptyList())
+
+        processExceptions(exceptions)
     }
 }
 
