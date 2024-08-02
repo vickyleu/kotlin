@@ -1,4 +1,11 @@
 // TARGET_BACKEND: WASM
+// WASM_FAILS_IN: JSC // Related issue https://bugs.webkit.org/show_bug.cgi?id=277546
+
+fun throwNumberFromJs(): Int = js("{ throw 42; }")
+// TODO: cover more cases?
+fun throwNullFromJs(): Int = js("{ throw null; }")
+fun throwStringFromJs(): Int = js("{ throw 'Opps'; }")
+fun throwErrorFromJs(): Int = js("{ throw new Error('OOPS'); }")
 
 fun throwSomeJsException(): Int = js("{ throw new TypeError('Test'); }")
 fun throwSomeJsPrimitive(): Int = js("{ throw 'Test'; }")
@@ -183,7 +190,11 @@ fun jsPrimitiveWithCatchJsExceptionAndFinally(): Boolean {
 fun jsExceptionWithCatchJsExceptionAndFinally(): Boolean {
     var finalException: JsException? = null
     try {
-        throwSomeJsException()
+        println("throw")
+        throwNumberFromJs()
+//        throwStringFromJs()
+//        throwNullFromJs()
+//        throwErrorFromJs()
         return false
     } catch (e: JsException) {
         finalException = e
