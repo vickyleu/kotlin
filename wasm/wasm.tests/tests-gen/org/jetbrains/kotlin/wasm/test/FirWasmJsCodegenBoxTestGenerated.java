@@ -28491,6 +28491,16 @@ public class FirWasmJsCodegenBoxTestGenerated extends AbstractFirWasmJsCodegenBo
       }
 
       @Nested
+      @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype")
+      @TestDataPath("$PROJECT_ROOT")
+      public class KmpCpPrototype {
+        @Test
+        public void testAllFilesPresentInKmpCpPrototype() {
+          KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype"), Pattern.compile("^([^_](.+))\\.kt$"), null, TargetBackend.WASM, true);
+        }
+      }
+
+      @Nested
       @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/migratedOldTests")
       @TestDataPath("$PROJECT_ROOT")
       public class MigratedOldTests {

@@ -28593,6 +28593,16 @@ public class FirJsES6CodegenBoxTestGenerated extends AbstractFirJsES6CodegenBoxT
       }
 
       @Nested
+      @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype")
+      @TestDataPath("$PROJECT_ROOT")
+      public class KmpCpPrototype {
+        @Test
+        public void testAllFilesPresentInKmpCpPrototype() {
+          KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS_IR_ES6, true);
+        }
+      }
+
+      @Nested
       @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/migratedOldTests")
       @TestDataPath("$PROJECT_ROOT")
       public class MigratedOldTests {
