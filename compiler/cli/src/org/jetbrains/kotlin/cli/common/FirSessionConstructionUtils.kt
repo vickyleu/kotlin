@@ -79,11 +79,11 @@ fun <F> prepareJvmSessions(
                 projectEnvironment,
                 extensionRegistrars,
                 librariesScope,
+                emptyList<KotlinResolvedLibrary>(),
                 projectEnvironment.getPackagePartProvider(librariesScope),
                 configuration.languageVersionSettings,
                 predefinedJavaComponents = predefinedJavaComponents,
-                registerExtraComponents = {},
-            )
+            ) {}
         },
     ) { moduleFiles, moduleData, sessionProvider, sessionConfigurator ->
         FirJvmSessionFactory.createModuleBasedSession(

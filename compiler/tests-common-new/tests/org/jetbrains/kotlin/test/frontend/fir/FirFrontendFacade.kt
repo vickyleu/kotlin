@@ -11,16 +11,21 @@ import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.psi.PsiElementFinder
 import com.intellij.psi.search.ProjectScope
 import org.jetbrains.kotlin.asJava.finder.JavaElementFinder
+import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
+import org.jetbrains.kotlin.cli.common.config.ContentRoot
+import org.jetbrains.kotlin.cli.common.messages.toLogger
 import org.jetbrains.kotlin.cli.jvm.compiler.PsiBasedProjectFileSearchScope
 import org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM
 import org.jetbrains.kotlin.cli.jvm.compiler.VfsBasedProjectEnvironment
 import org.jetbrains.kotlin.cli.jvm.compiler.unregisterFinders
+import org.jetbrains.kotlin.cli.jvm.config.JvmClasspathRoot
 import org.jetbrains.kotlin.cli.jvm.config.jvmClasspathRoots
 import org.jetbrains.kotlin.cli.jvm.config.jvmModularRoots
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
 import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.config.LanguageFeature
+import org.jetbrains.kotlin.config.messageCollector
 import org.jetbrains.kotlin.container.topologicalSort
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.checkers.registerExtendedCommonCheckers
@@ -29,6 +34,8 @@ import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
 import org.jetbrains.kotlin.fir.session.*
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
+import org.jetbrains.kotlin.library.metadata.resolver.impl.KotlinResolvedLibraryImpl
+import org.jetbrains.kotlin.library.resolveSingleFileKlib
 import org.jetbrains.kotlin.load.kotlin.PackageAndMetadataPartProvider
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.platform.TargetPlatform
@@ -50,12 +57,17 @@ import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.runners.lightTreeSyntaxDiagnosticsReporterHolder
 import org.jetbrains.kotlin.test.services.*
 import org.jetbrains.kotlin.test.services.configuration.JsEnvironmentConfigurator
+import org.jetbrains.kotlin.test.services.configuration.JvmEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.NativeEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.WasmEnvironmentConfigurator
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.wasm.config.WasmConfigurationKeys
 import org.jetbrains.kotlin.wasm.config.wasmTarget
+import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.collections.filterIsInstance
+import kotlin.collections.orEmpty
+import org.jetbrains.kotlin.konan.file.File as KFile
 
 open class FirFrontendFacade(
     testServices: TestServices,
@@ -74,17 +86,17 @@ open class FirFrontendFacade(
     override val directiveContainers: List<DirectivesContainer>
         get() = listOf(FirDiagnosticsDirectives)
 
-    override fun shouldRunAnalysis(module: TestModule): Boolean {
-        if (!super.shouldRunAnalysis(module)) return false
-
-        return if (module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)) {
-            testServices.moduleStructure
-                .modules.none { testModule -> testModule.dependsOnDependencies.any { testModulesByName[it.moduleName] == module } }
-        } else {
-            true
-        }
-    }
-
+//    override fun shouldRunAnalysis(module: TestModule): Boolean {
+//        if (!super.shouldRunAnalysis(module)) return false
+//
+//        return if (module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)) {
+//            testServices.moduleStructure
+//                .modules.none { testModule -> testModule.dependsOnDependencies.any { testModulesByName[it.moduleName] == module } }
+//        } else {
+//            true
+//        }
+//    }
+//
     private fun registerExtraComponents(session: FirSession) {
         testServices.firSessionComponentRegistrar?.registerAdditionalComponent(session)
     }
@@ -128,6 +140,20 @@ open class FirFrontendFacade(
 
     private fun initializeModuleData(modules: List<TestModule>): Pair<Map<TestModule, FirModuleData>, ModuleDataProvider> {
         val mainModule = modules.last()
+        val moduleInfoProvider = testServices.firModuleInfoProvider
+        val moduleDataMap = mutableMapOf<TestModule, FirModuleData>()
+
+        for (module in modules) {
+            val moduleData = FirModuleDataMutableDeps(
+                Name.special("<${module.name}>"),
+                mainModule.targetPlatform,
+                isCommon = module.targetPlatform.isCommon(),
+            )
+
+            moduleInfoProvider.registerModuleData(module, moduleData)
+
+            moduleDataMap[module] = moduleData
+        }
 
         val targetPlatform = mainModule.targetPlatform
 
@@ -139,28 +165,18 @@ open class FirFrontendFacade(
         val compilerConfigurationProvider = testServices.compilerConfigurationProvider
         val configuration = compilerConfigurationProvider.getCompilerConfiguration(mainModule)
 
-        val libraryList = initializeLibraryList(mainModule, binaryModuleData, targetPlatform, configuration, testServices)
-
-        val moduleInfoProvider = testServices.firModuleInfoProvider
-        val moduleDataMap = mutableMapOf<TestModule, FirModuleData>()
+        val libraryList = initializeLibraryList(modules, binaryModuleData, targetPlatform, configuration, testServices)
 
         for (module in modules) {
             val regularModules = libraryList.regularDependencies + moduleInfoProvider.getRegularDependentSourceModules(module)
             val friendModules = libraryList.friendsDependencies + moduleInfoProvider.getDependentFriendSourceModules(module)
             val dependsOnModules = libraryList.dependsOnDependencies + moduleInfoProvider.getDependentDependsOnSourceModules(module)
 
-            val moduleData = FirModuleDataImpl(
-                Name.special("<${module.name}>"),
-                regularModules,
-                dependsOnModules,
-                friendModules,
-                mainModule.targetPlatform,
-                isCommon = module.targetPlatform.isCommon(),
-            )
-
-            moduleInfoProvider.registerModuleData(module, moduleData)
-
-            moduleDataMap[module] = moduleData
+            with (moduleDataMap[module] as FirModuleDataMutableDeps) {
+                dependencies = regularModules
+                dependsOnDependencies = dependsOnModules
+                friendDependencies = friendModules
+            }
         }
 
         return moduleDataMap to libraryList.moduleDataProvider
@@ -189,6 +205,14 @@ open class FirFrontendFacade(
                 val projectFileSearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
                 val packagePartProvider = projectEnvironment.getPackagePartProvider(projectFileSearchScope)
 
+                // copied hacky code from FirMetadataSerializer.analyze
+                val klibFiles = configuration.get(CLIConfigurationKeys.CONTENT_ROOTS).orEmpty()
+                    .filterIsInstance<JvmClasspathRoot>()
+                    .filter { (it.file.isDirectory && !it.file.name.endsWith("_classes")) || it.file.extension == "klib" }
+                    .map { it.file.absolutePath }
+                val logger = configuration.messageCollector.toLogger()
+                val resolvedLibraries = klibFiles.map { KotlinResolvedLibraryImpl(resolveSingleFileKlib(KFile(it), logger)) }
+
                 if (isCommon) {
                     FirCommonSessionFactory.createLibrarySession(
                         mainModuleName = moduleName,
@@ -197,7 +221,7 @@ open class FirFrontendFacade(
                         projectEnvironment = projectEnvironment,
                         extensionRegistrars = extensionRegistrars,
                         librariesScope = projectFileSearchScope,
-                        resolvedKLibs = emptyList(),
+                        resolvedKLibs = resolvedLibraries,
                         packageAndMetadataPartProvider = packagePartProvider as PackageAndMetadataPartProvider,
                         languageVersionSettings = languageVersionSettings,
                         registerExtraComponents = ::registerExtraComponents
@@ -210,6 +234,7 @@ open class FirFrontendFacade(
                         projectEnvironment,
                         extensionRegistrars,
                         projectFileSearchScope,
+                        resolvedLibraries,
                         packagePartProvider,
                         languageVersionSettings,
                         predefinedJavaComponents,
@@ -415,17 +440,29 @@ open class FirFrontendFacade(
 
     companion object {
         fun initializeLibraryList(
-            mainModule: TestModule,
+            modules: List<TestModule>,
             binaryModuleData: BinaryModuleData,
             targetPlatform: TargetPlatform,
             configuration: CompilerConfiguration,
             testServices: TestServices
         ): DependencyListForCliModule {
+            val mainModule = modules.last()
             return DependencyListForCliModule.build(binaryModuleData) {
                 when {
                     targetPlatform.isCommon() || targetPlatform.isJvm() -> {
                         dependencies(configuration.jvmModularRoots.map { it.toPath() })
-                        dependencies(configuration.jvmClasspathRoots.map { it.toPath() })
+                        val moduleSpecificPaths = mutableSetOf<Path>()
+                        for (module in modules) {
+                            configuration.getMap<TestModule, List<ContentRoot>>(JvmEnvironmentConfigurator.TEST_MODULE_TO_CONTENT_ROOTS_KEY)[module]?.let { moduleDepsRoots ->
+//                                val md =
+//                                    if (module == mainModule) binaryModuleData.regular
+//                                    else testServices.firModuleInfoProvider.getCorrespondingModuleData(module)
+                                val depsPaths = moduleDepsRoots.filterIsInstance<JvmClasspathRoot>().map { it.file.toPath() }
+//                                dependencies(md, depsPaths)
+                                moduleSpecificPaths.addAll(depsPaths)
+                            }
+                        }
+                        dependencies(configuration.jvmClasspathRoots.map { it.toPath() }.filter { it !in moduleSpecificPaths })
                         friendDependencies(configuration[JVMConfigurationKeys.FRIEND_PATHS] ?: emptyList())
                     }
                     targetPlatform.isJs() -> {
@@ -457,3 +494,22 @@ open class FirFrontendFacade(
         }
     }
 }
+
+class FirModuleDataMutableDeps(
+    override val name: Name,
+    override val platform: TargetPlatform,
+    override val capabilities: FirModuleCapabilities = FirModuleCapabilities.Empty,
+    override val isCommon: Boolean = platform.isCommon(),
+) : FirModuleData() {
+    override var dependencies: List<FirModuleData> = emptyList()
+    override var dependsOnDependencies: List<FirModuleData> = emptyList()
+    override var friendDependencies: List<FirModuleData> = emptyList()
+
+    override val session: FirSession
+        get() = boundSession
+            ?: error("module data ${this::class.simpleName}:${name} not bound to session")
+
+    override val allDependsOnDependencies: List<FirModuleData>
+        get() = topologicalSort(dependsOnDependencies) { it.dependsOnDependencies }
+}
+

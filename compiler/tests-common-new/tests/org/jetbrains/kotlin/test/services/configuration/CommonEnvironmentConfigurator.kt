@@ -16,10 +16,12 @@ import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.DISABLE_TYPE
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
 import org.jetbrains.kotlin.test.directives.model.RegisteredDirectives
+import org.jetbrains.kotlin.test.model.DependencyKind
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.parseAnalysisFlags
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
+import org.jetbrains.kotlin.test.services.moduleStructure
 
 class CommonEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
     override val directiveContainers: List<DirectivesContainer>
@@ -50,5 +52,29 @@ class CommonEnvironmentConfigurator(testServices: TestServices) : EnvironmentCon
                 JvmClasspathRoot(ForTestCompileRuntime.stdlibCommonForTests())
             )
         }
+
+        fun addAsKLibDep(depModule: TestModule) {
+            if (depModule.targetPlatform.isCommon()) {
+                val klibFile = ConfUtils.getKlibArtifactFile(testServices, depModule.name)
+                configuration.add(
+                    CLIConfigurationKeys.CONTENT_ROOTS,
+                    JvmClasspathRoot(klibFile)
+                )
+            }
+        }
+
+        fun addKLibDeps(module: TestModule) {
+            for (moduleDependency in module.allDependencies) {
+                testServices.moduleStructure.modules.find { it.name == moduleDependency.moduleName }?.let { depModule ->
+                    if (moduleDependency.kind == DependencyKind.Binary) addAsKLibDep(depModule)
+                    else addKLibDeps(depModule)
+                }
+            }
+        }
+
+        addKLibDeps(module)
+        Unit
     }
 }
+
+private object ConfUtils : KlibBasedEnvironmentConfiguratorUtils

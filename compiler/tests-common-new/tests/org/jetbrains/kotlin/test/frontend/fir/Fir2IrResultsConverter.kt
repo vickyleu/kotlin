@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.test.frontend.fir
 
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.platform.isCommon
 import org.jetbrains.kotlin.platform.isJs
 import org.jetbrains.kotlin.platform.isWasm
@@ -15,6 +16,7 @@ import org.jetbrains.kotlin.test.model.Frontend2BackendConverter
 import org.jetbrains.kotlin.test.model.FrontendKinds
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.TestServices
+import org.jetbrains.kotlin.test.services.moduleStructure
 
 @RequiresOptIn("Please use common converter `Fir2IrResultsConverter` instead")
 annotation class InternalFir2IrConverterAPI
@@ -30,6 +32,18 @@ class Fir2IrResultsConverter(
     private val jvmResultsConverter = Fir2IrJvmResultsConverter(testServices)
     private val jsResultsConverter = Fir2IrJsResultsConverter(testServices)
     private val wasmResultsConverter = Fir2IrWasmResultsConverter(testServices)
+    private val testModulesByName by lazy { testServices.moduleStructure.modules.associateBy { it.name } }
+
+    override fun shouldRunAnalysis(module: TestModule): Boolean {
+        if (!super.shouldRunAnalysis(module)) return false
+
+        return if (module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)) {
+            testServices.moduleStructure
+                .modules.none { testModule -> testModule.dependsOnDependencies.any { testModulesByName[it.moduleName] == module } }
+        } else {
+            true
+        }
+    }
 
     override fun transform(module: TestModule, inputArtifact: FirOutputArtifact): IrBackendInput? = when {
         module.targetPlatform.isJvm() || module.targetPlatform.isCommon() -> {

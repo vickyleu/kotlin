@@ -169,7 +169,7 @@ abstract class AbstractLoadedMetadataDumpHandler<A : ResultingArtifact.Binary<A>
             targetPlatform,
         )
         val libraryList = FirFrontendFacade.initializeLibraryList(
-            emptyModule, binaryModuleData, targetPlatform, configuration, testServices
+            listOf(emptyModule), binaryModuleData, targetPlatform, configuration, testServices
         )
 
         val session = prepareSessions(

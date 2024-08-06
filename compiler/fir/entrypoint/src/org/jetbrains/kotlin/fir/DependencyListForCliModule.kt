@@ -68,6 +68,13 @@ class DependencyListForCliModule(
             }
         }
 
+        fun dependencies(moduleData: FirModuleData, paths: Collection<Path>) {
+            filtersMap.getOrPut(moduleData) {
+                allRegularDependencies.add(moduleData)
+                mutableSetOf()
+            } += paths
+        }
+
         @JvmName("friendDependenciesString")
         fun friendDependencies(paths: Collection<String>) {
             paths.mapTo(filtersMap.getValue(binaryModuleData.friends)) { Paths.get(it) }

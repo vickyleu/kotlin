@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.backend.common.phaser.PhaseConfig
 import org.jetbrains.kotlin.backend.jvm.jvmPhases
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
+import org.jetbrains.kotlin.cli.common.config.ContentRoot
 import org.jetbrains.kotlin.cli.jvm.addModularRootIfNotNull
 import org.jetbrains.kotlin.cli.jvm.config.*
 import org.jetbrains.kotlin.config.*
@@ -65,6 +66,9 @@ import java.io.File
 open class JvmEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
     companion object {
         val TEST_CONFIGURATION_KIND_KEY = CompilerConfigurationKey.create<ConfigurationKind>("ConfigurationKind")
+
+        val TEST_MODULE_TO_CONTENT_ROOTS_KEY =
+            CompilerConfigurationKey.create<MutableMap<TestModule, List<ContentRoot>>>("ModuleToRoots")
 
         private val DEFAULT_JVM_TARGET_FROM_PROPERTY: String? = System.getProperty("kotlin.test.default.jvm.target")
         const val DEFAULT_JVM_VERSION_PROPERTY: String = "kotlin.test.default.jvm.version"
@@ -357,11 +361,12 @@ open class JvmEnvironmentConfigurator(testServices: TestServices) : EnvironmentC
 
     private fun CompilerConfiguration.registerModuleDependencies(module: TestModule) {
         val isJava9Module = module.files.any(TestFile::isModuleInfoJavaFile)
-        for (dependency in module.allDependencies.filter { it.kind == DependencyKind.Binary }.toFileList()) {
-            if (isJava9Module) {
-                add(CLIConfigurationKeys.CONTENT_ROOTS, JvmModulePathRoot(dependency))
+        for (moduleDependency in module.allDependencies.filter { it.kind == DependencyKind.Binary }) {
+            val roots = convertDependencyToFileList(moduleDependency).map {
+                if (isJava9Module) JvmModulePathRoot(it) else JvmClasspathRoot(it)
             }
-            addJvmClasspathRoot(dependency)
+            addAll(CLIConfigurationKeys.CONTENT_ROOTS, roots)
+            put(TEST_MODULE_TO_CONTENT_ROOTS_KEY, module, roots)
         }
 
         val binaryFriends = module.friendDependencies.filter { it.kind == DependencyKind.Binary }

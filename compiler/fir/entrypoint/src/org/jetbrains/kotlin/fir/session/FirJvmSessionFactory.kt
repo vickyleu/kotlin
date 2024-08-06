@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchSco
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
 import org.jetbrains.kotlin.incremental.components.ImportTracker
 import org.jetbrains.kotlin.incremental.components.LookupTracker
+import org.jetbrains.kotlin.library.metadata.resolver.KotlinResolvedLibrary
 import org.jetbrains.kotlin.load.kotlin.KotlinClassFinder
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.name.Name
@@ -41,6 +42,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
         projectEnvironment: AbstractProjectEnvironment,
         extensionRegistrars: List<FirExtensionRegistrar>,
         scope: AbstractProjectFileSearchScope,
+        resolvedKLibs: List<KotlinResolvedLibrary>,
         packagePartProvider: PackagePartProvider,
         languageVersionSettings: LanguageVersionSettings,
         predefinedJavaComponents: FirSharableJavaComponents?,
@@ -61,6 +63,14 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
             createKotlinScopeProvider = { FirKotlinScopeProvider(::wrapScopeWithJvmMapped) },
             createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
                 listOfNotNull(
+                    runIf(resolvedKLibs.isNotEmpty()) {
+                        KlibBasedSymbolProvider(
+                            session,
+                            moduleDataProvider,
+                            kotlinScopeProvider,
+                            resolvedKLibs.map { it.library }
+                        )
+                    },
                     JvmClassFileBasedSymbolProvider(
                         session,
                         moduleDataProvider,

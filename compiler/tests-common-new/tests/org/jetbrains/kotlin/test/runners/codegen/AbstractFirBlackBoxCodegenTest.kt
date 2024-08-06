@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.test.directives.configureFirParser
 import org.jetbrains.kotlin.test.frontend.fir.Fir2IrResultsConverter
 import org.jetbrains.kotlin.test.frontend.fir.FirFrontendFacade
 import org.jetbrains.kotlin.test.frontend.fir.FirMetaInfoDiffSuppressor
+import org.jetbrains.kotlin.test.frontend.fir.FirMetadataSerializerFacade
 import org.jetbrains.kotlin.test.frontend.fir.FirOutputArtifact
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirCfgDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDumpHandler
@@ -44,6 +45,9 @@ abstract class AbstractFirBlackBoxCodegenTestBase(
     override fun configure(builder: TestConfigurationBuilder) {
         super.configure(builder)
         with(builder) {
+
+            facadeStep(::FirMetadataSerializerFacade)
+
             configureFirParser(parser)
             defaultDirectives {
                 // See KT-44152

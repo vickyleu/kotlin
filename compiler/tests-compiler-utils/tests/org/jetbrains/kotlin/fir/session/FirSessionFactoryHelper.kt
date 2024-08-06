@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchSco
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
 import org.jetbrains.kotlin.incremental.components.ImportTracker
 import org.jetbrains.kotlin.incremental.components.LookupTracker
+import org.jetbrains.kotlin.library.metadata.resolver.KotlinResolvedLibrary
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.platform.TargetPlatform
 import org.jetbrains.kotlin.platform.jvm.JvmPlatforms
@@ -50,11 +51,11 @@ object FirSessionFactoryHelper {
             projectEnvironment,
             extensionRegistrars,
             librariesScope,
+            emptyList<KotlinResolvedLibrary>(),
             packagePartProvider,
             languageVersionSettings,
             predefinedJavaComponents = null,
-            registerExtraComponents = {},
-        )
+        ) {}
 
         val mainModuleData = FirModuleDataImpl(
             moduleName,
