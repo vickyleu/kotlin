@@ -1,5 +1,6 @@
 // TARGET_BACKEND: WASM
-// WASM_FAILS_IN: JSC // Related issue https://bugs.webkit.org/show_bug.cgi?id=277546
+// Related issue https://bugs.webkit.org/show_bug.cgi?id=277546
+// WASM_FAILS_IN: JSC
 
 fun throwNumberFromJs(): Int = js("{ throw 42; }")
 // TODO: cover more cases?
@@ -190,7 +191,6 @@ fun jsPrimitiveWithCatchJsExceptionAndFinally(): Boolean {
 fun jsExceptionWithCatchJsExceptionAndFinally(): Boolean {
     var finalException: JsException? = null
     try {
-        println("throw")
         throwNumberFromJs()
 //        throwStringFromJs()
 //        throwNullFromJs()
@@ -232,7 +232,7 @@ fun jsPrimitiveWithCatchIllegalStateExceptionAndFinally(): Boolean {
 fun jsExceptionWithCatchIllegalStateExceptionAndFinally(): Boolean {
     var finalException: IllegalStateException? = null
     try {
-        throwSomeJsException()
+        throwNumberFromJs()
         return false
     } catch (e: IllegalStateException) {
         finalException = e
@@ -268,7 +268,7 @@ fun jsPrimitiveWithCatchJsExceptionAndThrowable(): Boolean {
 }
 fun jsExceptionWithCatchJsExceptionAndThrowable(): Boolean {
     try {
-        throwSomeJsException()
+        throwNumberFromJs()
         return false
     } catch (e: JsException) {
         return e.message == "Exception was thrown while running JavaScript code" && e.thrownValue == null
