@@ -6,12 +6,12 @@
 package org.jetbrains.kotlin.analysis.low.level.api.fir.providers
 
 import com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProvider
+import org.jetbrains.kotlin.analysis.api.platform.declarations.mergeDeclarationProviders
+import org.jetbrains.kotlin.analysis.api.platform.packages.KotlinPackageProvider
+import org.jetbrains.kotlin.analysis.api.platform.packages.mergePackageProviders
 import org.jetbrains.kotlin.analysis.low.level.api.fir.caches.NullableCaffeineCache
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
-import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProvider
-import org.jetbrains.kotlin.analysis.api.platform.packages.KotlinPackageProvider
-import org.jetbrains.kotlin.analysis.api.platform.declarations.mergeDeclarationProviders
-import org.jetbrains.kotlin.analysis.api.platform.packages.mergePackageProviders
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.resolve.providers.FirCompositeCachedSymbolNamesProvider
@@ -137,7 +137,7 @@ internal class LLFirCombinedKotlinSymbolProvider private constructor(
     }
 
     companion object {
-        fun merge(session: LLFirSession, project: Project, providers: List<LLFirKotlinSymbolProvider>): FirSymbolProvider? =
+        fun merge(session: LLFirSession, project: Project, providers: List<LLFirMainKotlinSymbolProvider>): FirSymbolProvider? =
             if (providers.size > 1) {
                 val declarationProvider = project.mergeDeclarationProviders(providers.map { it.declarationProvider })
 

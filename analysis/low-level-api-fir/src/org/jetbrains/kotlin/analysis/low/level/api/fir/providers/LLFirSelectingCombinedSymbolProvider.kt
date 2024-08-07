@@ -7,10 +7,10 @@ package org.jetbrains.kotlin.analysis.low.level.api.fir.providers
 
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
-import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
-import org.jetbrains.kotlin.analysis.api.platform.projectStructure.KotlinProjectStructureProvider
 import org.jetbrains.kotlin.analysis.api.platform.KaCachedService
+import org.jetbrains.kotlin.analysis.api.platform.projectStructure.KotlinProjectStructureProvider
+import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
+import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.utils.mapToIndex
@@ -21,6 +21,11 @@ import org.jetbrains.kotlin.utils.mapToIndex
  * for the element directly.
  *
  * Classpath order must be preserved with [selectFirstElementInClasspathOrder] in case a single result is required.
+ *
+ * Selecting combined symbol providers only support [providers] which are guaranteed to have a unique [KaModule] associated with them, as
+ * the selecting symbol provider requires a unique [KaModule] -> [PROVIDER] relationship. There are cases where multiple symbol providers
+ * of a similar kind can belong to the same [KaModule]. Usually, there will be a main symbol provider, and additionally a number of
+ * auxiliary symbol providers, such as [LLFirNativeForwardDeclarationsSymbolProvider].
  */
 abstract class LLFirSelectingCombinedSymbolProvider<PROVIDER : FirSymbolProvider>(
     session: FirSession,

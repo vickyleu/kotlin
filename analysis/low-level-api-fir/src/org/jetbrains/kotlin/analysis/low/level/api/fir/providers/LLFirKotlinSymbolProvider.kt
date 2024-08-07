@@ -23,8 +23,6 @@ import org.jetbrains.kotlin.psi.KtProperty
 
 /**
  * A [FirSymbolProvider] which provides symbols from Kotlin sources via [KotlinDeclarationProvider].
- *
- * @see LLFirCombinedKotlinSymbolProvider
  */
 internal abstract class LLFirKotlinSymbolProvider(session: FirSession) : FirSymbolProvider(session) {
     abstract val declarationProvider: KotlinDeclarationProvider
@@ -77,3 +75,24 @@ internal abstract class LLFirKotlinSymbolProvider(session: FirSession) : FirSymb
         return "${this::class.simpleName} for $session"
     }
 }
+
+/**
+ * An [LLFirKotlinSymbolProvider] which represents the main Kotlin symbol provider for its session, covering all symbols directly declared
+ * in Kotlin sources / deserialized stubs. It is related to the notion of a "main" [KotlinDeclarationProvider]. Only a single Kotlin symbol
+ * provider per session may be a main provider.
+ *
+ * Main Kotlin symbol providers of different kinds may be combined into an [LLFirCombinedKotlinSymbolProvider]. The combined symbol provider
+ * requires each symbol provider to have a unique [KaModule][org.jetbrains.kotlin.analysis.api.projectStructure.KaModule], and since there
+ * may be only a single main Kotlin symbol provider per session, we can combine even symbol providers of different kinds.
+ */
+internal abstract class LLFirMainKotlinSymbolProvider(session: FirSession) : LLFirKotlinSymbolProvider(session)
+
+/**
+ * An [LLFirKotlinSymbolProvider] which provides additional symbols as an extension to the [LLFirMainKotlinSymbolProvider]. Auxiliary symbol
+ * providers usually provide symbols for generated declarations.
+ *
+ * In contrast to [LLFirMainKotlinSymbolProvider]s, auxiliary providers of different kinds may not be combined into an
+ * [LLFirCombinedKotlinSymbolProvider]. It is however possible to combine auxiliary providers of a *specific kind* into such a provider,
+ * since each session should only have a single symbol provider of the same kind.
+ */
+internal abstract class LLFirAuxiliaryKotlinSymbolProvider(session: FirSession) : LLFirKotlinSymbolProvider(session)

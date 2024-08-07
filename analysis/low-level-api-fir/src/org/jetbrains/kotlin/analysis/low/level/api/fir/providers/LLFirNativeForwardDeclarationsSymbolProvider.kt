@@ -7,12 +7,12 @@ package org.jetbrains.kotlin.analysis.low.level.api.fir.providers
 
 import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.KtRealPsiSourceElement
-import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
-import org.jetbrains.kotlin.analysis.low.level.api.fir.util.LLFirKotlinSymbolNamesProvider
 import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProvider
+import org.jetbrains.kotlin.analysis.api.platform.declarations.createForwardDeclarationProvider
 import org.jetbrains.kotlin.analysis.api.platform.packages.KotlinPackageProvider
 import org.jetbrains.kotlin.analysis.api.platform.packages.createForwardDeclarationsPackageProvider
-import org.jetbrains.kotlin.analysis.api.platform.declarations.createForwardDeclarationProvider
+import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
+import org.jetbrains.kotlin.analysis.low.level.api.fir.util.LLFirKotlinSymbolNamesProvider
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.caches.FirCache
@@ -45,7 +45,7 @@ internal class LLFirNativeForwardDeclarationsSymbolProvider(
     private val kotlinScopeProvider: FirKotlinScopeProvider,
     override val declarationProvider: KotlinDeclarationProvider,
     override val packageProvider: KotlinPackageProvider,
-) : LLFirKotlinSymbolProvider(
+) : LLFirAuxiliaryKotlinSymbolProvider(
     session,
 ) {
     private val moduleData: FirModuleData = moduleDataProvider.getModuleData(path = null)
