@@ -137,7 +137,7 @@ internal class LLFirCombinedKotlinSymbolProvider private constructor(
     }
 
     companion object {
-        fun merge(session: LLFirSession, project: Project, providers: List<LLFirMainKotlinSymbolProvider>): FirSymbolProvider? =
+        fun merge(session: LLFirSession, project: Project, providers: List<LLFirKotlinSymbolProvider>): FirSymbolProvider? =
             if (providers.size > 1) {
                 val declarationProvider = project.mergeDeclarationProviders(providers.map { it.declarationProvider })
 

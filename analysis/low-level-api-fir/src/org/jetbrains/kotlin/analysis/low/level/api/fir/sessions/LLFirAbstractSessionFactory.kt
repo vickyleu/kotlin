@@ -36,6 +36,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.register
 import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.registerCompilerPluginServices
 import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.registerIdeComponents
 import org.jetbrains.kotlin.analysis.low.level.api.fir.providers.*
+import org.jetbrains.kotlin.analysis.low.level.api.fir.stubBased.deserialization.StubBasedFirDeserializedSymbolProvider
 import org.jetbrains.kotlin.assignment.plugin.AssignmentCommandLineProcessor
 import org.jetbrains.kotlin.assignment.plugin.AssignmentConfigurationKeys
 import org.jetbrains.kotlin.assignment.plugin.k2.FirAssignmentPluginExtensionRegistrar
@@ -715,8 +716,9 @@ internal abstract class LLFirAbstractSessionFactory(protected val project: Proje
         destination: MutableList<FirSymbolProvider>,
     ) {
         mergeInto(destination) {
-            merge<LLFirMainKotlinSymbolProvider> { LLFirCombinedKotlinSymbolProvider.merge(session, project, it) }
+            merge<LLFirProvider.SymbolProvider> { LLFirCombinedKotlinSymbolProvider.merge(session, project, it) }
             merge<LLFirJavaSymbolProvider> { LLFirCombinedJavaSymbolProvider.merge(session, project, it) }
+            merge<StubBasedFirDeserializedSymbolProvider> { LLFirCombinedKotlinSymbolProvider.merge(session, project, it) }
             merge<FirExtensionSyntheticFunctionInterfaceProvider> { LLFirCombinedSyntheticFunctionSymbolProvider.merge(session, it) }
         }
     }
