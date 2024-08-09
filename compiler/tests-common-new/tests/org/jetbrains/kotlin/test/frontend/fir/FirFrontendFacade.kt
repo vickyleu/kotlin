@@ -56,7 +56,6 @@ import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.runners.lightTreeSyntaxDiagnosticsReporterHolder
 import org.jetbrains.kotlin.test.services.*
 import org.jetbrains.kotlin.test.services.configuration.JsEnvironmentConfigurator
-import org.jetbrains.kotlin.test.services.configuration.JvmEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.NativeEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.WasmEnvironmentConfigurator
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
@@ -203,9 +202,12 @@ open class FirFrontendFacade(
                 val packagePartProvider = projectEnvironment.getPackagePartProvider(projectFileSearchScope)
 
                 // copied hacky code from FirMetadataSerializer.analyze
-                val klibFiles = configuration.get(CLIConfigurationKeys.CONTENT_ROOTS).orEmpty()
+                val cpRoots = configuration.get(CLIConfigurationKeys.CONTENT_ROOTS).orEmpty()
                     .filterIsInstance<JvmClasspathRoot>()
-                    .filter { (it.file.isDirectory && !it.file.name.endsWith("_classes")) || it.file.extension == "klib" }
+                val klibDirs = cpRoots.filter { (it.file.isDirectory && !it.file.name.endsWith("_classes")) }
+                    .map { it.file.absolutePath }
+                val klibFiles = klibDirs + cpRoots
+                    .filter { it.file.extension == "klib" }
                     .map { it.file.absolutePath }
                 val logger = configuration.messageCollector.toLogger()
                 val resolvedLibraries = klibFiles.map { KotlinResolvedLibraryImpl(resolveSingleFileKlib(KFile(it), logger)) }

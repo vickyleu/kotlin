@@ -151,11 +151,27 @@ abstract class FirAbstractSessionFactory {
         val depsModuleData = moduleData.dependencies + moduleData.friendDependencies + moduleData.allDependsOnDependencies
         val depsSessions = depsModuleData
             .mapNotNull { sessionProvider?.getSession(it) }
+        val commonDepsProviders = moduleData.allDependsOnDependencies
+            .mapNotNull { sessionProvider?.getSession(it) }
+            .flatMap { (it.symbolProvider as? FirCachingCompositeSymbolProvider)?.providers?.filter { it is KlibBasedSymbolProvider } ?: emptyList() }
+            .firstOrNull()
         val depsProviders = depsSessions
             .flatMap { it.symbolProvider.flatten() }
-        return depsProviders
+        val mainCpProviders = moduleData.dependencies
+            .mapNotNull { sessionProvider?.getSession(it) }
+            .flatMap { (it.symbolProvider as? FirCachingCompositeSymbolProvider)?.providers?.filter { it is JvmClassFileBasedSymbolProvider } ?: emptyList() }
+            .firstOrNull()
+        val sortedProviders = depsProviders
             .distinct()
             .sortedBy { if (it is KlibBasedSymbolProvider) 0 else it.session.kind.ordinal + 1 }
+        val withReplacedCP = if (mainCpProviders != null && commonDepsProviders != null) {
+            sortedProviders
+                .map {
+                    if (it == mainCpProviders) CommonAndPlatformDeduplicatingSysmbolProvider(it.session, commonDepsProviders, mainCpProviders)
+                    else it
+                }
+        } else sortedProviders
+        return withReplacedCP
     }
 
     /* It eliminates dependency and composite providers since the current dependency provider is composite in fact.
