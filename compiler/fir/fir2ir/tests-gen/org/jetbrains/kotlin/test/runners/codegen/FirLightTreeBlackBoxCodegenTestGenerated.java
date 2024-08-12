@@ -39660,6 +39660,12 @@ public class FirLightTreeBlackBoxCodegenTestGenerated extends AbstractFirLightTr
         }
 
         @Test
+        @TestMetadata("classes1.kt")
+        public void testClasses1() {
+          runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/classes1.kt");
+        }
+
+        @Test
         @TestMetadata("expectMM3.kt")
         public void testExpectMM3() {
           runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/expectMM3.kt");
