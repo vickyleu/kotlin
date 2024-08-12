@@ -26,7 +26,7 @@ class NpmVersions : Serializable {
     val mocha = NpmPackageVersion("mocha", "10.7.0")
     val karma = NpmPackageVersion("karma", "6.4.3")
     val karmaChromeLauncher = NpmPackageVersion("karma-chrome-launcher", "3.2.0")
-    val karmaPhantomjsLauncher = NpmPackageVersion("karma-phantomjs-launcher", "1.0.4")
+//    val karmaPhantomjsLauncher = NpmPackageVersion("karma-phantomjs-launcher", "1.0.4")
     val karmaFirefoxLauncher = NpmPackageVersion("karma-firefox-launcher", "2.1.3")
     val karmaOperaLauncher = NpmPackageVersion("karma-opera-launcher", "1.0.0")
     val karmaIeLauncher = NpmPackageVersion("karma-ie-launcher", "1.0.0")

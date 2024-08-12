@@ -367,7 +367,9 @@ class KotlinKarma(
         val file = task.inputFileProperty.getFile()
         val fileString = file.toString()
 
-        config.files.add(npmProject.require("kotlin-web-helpers/dist/kotlin-test-karma-runner.js"))
+        val modules = NpmProjectModules(npmTooling.get().dir)
+
+        config.files.add(modules.require("kotlin-web-helpers/dist/kotlin-test-karma-runner.js"))
         if (!debug) {
             if (platformType == KotlinPlatformType.wasm) {
                 val wasmFile = file.parentFile.resolve("${file.nameWithoutExtension}.wasm")
@@ -384,8 +386,8 @@ class KotlinKarma(
                     createLoadWasm(npmProject.dir.getFile(), file).normalize().absolutePath
                 )
 
-                config.customContextFile = npmProject.require("kotlin-web-helpers/dist/static/context.html")
-                config.customDebugFile = npmProject.require("kotlin-web-helpers/dist/static/debug.html")
+                config.customContextFile = modules.require("kotlin-web-helpers/dist/static/context.html")
+                config.customDebugFile = modules.require("kotlin-web-helpers/dist/static/debug.html")
             } else {
                 config.files.add(fileString)
             }
@@ -474,12 +476,10 @@ class KotlinKarma(
             confWriter.println("}")
         }
 
-        val modules = NpmProjectModules(npmTooling.get().dir)
-
         val karmaConfigAbsolutePath = karmaConfJs.absolutePath
         val args = if (debug) {
             nodeJsArgs + listOf(
-                npmProject.require("kotlin-web-helpers/dist/karma-debug-runner.js"),
+                modules.require("kotlin-web-helpers/dist/karma-debug-runner.js"),
                 karmaConfigAbsolutePath
             )
         } else {
