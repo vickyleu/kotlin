@@ -31,6 +31,10 @@ import org.jetbrains.kotlin.fir.checkers.registerExtendedCommonCheckers
 import org.jetbrains.kotlin.fir.deserialization.ModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
+import org.jetbrains.kotlin.fir.java.deserialization.JvmClassFileBasedSymbolProvider
+import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.FirCachingCompositeSymbolProvider
+import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.session.*
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.library.metadata.resolver.impl.KotlinResolvedLibraryImpl
@@ -103,6 +107,7 @@ open class FirFrontendFacade(
         val isMppSupported = module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)
         val sortedModules = if (isMppSupported) sortDependsOnTopologically(module) else listOf(module)
         val moduleDataMap: MutableMap<TestModule, FirModuleData> = mutableMapOf<TestModule, FirModuleData>()
+        var baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>? = null
 
         val firOutputPartForDependsOnModules = sortedModules.map { module ->
             val sortedModules = if (isMppSupported) sortDependsOnTopologically(module) else listOf(module)
@@ -115,16 +120,22 @@ open class FirFrontendFacade(
             val predefinedJavaComponents = runIf(targetPlatform.isJvm()) {
                 FirSharableJavaComponents(firCachesFactoryForCliMode)
             }
-            val projectEnvironment = createLibrarySession(
+            val (session, projectEnvironment) = createLibrarySessionAndProjectEnvironment(
                 module,
                 project,
                 Name.special("<${module.name}>"),
                 testServices.firModuleInfoProvider.firSessionProvider,
                 moduleDataProvider,
                 testServices.compilerConfigurationProvider.getCompilerConfiguration(module),
+                baseSymbolProviders,
                 extensionRegistrars,
                 predefinedJavaComponents
             )
+            if (baseSymbolProviders == null) {
+                baseSymbolProviders = (session.symbolProvider as? FirCachingCompositeSymbolProvider)?.providers?.partition {
+                    it is JvmClassFileBasedSymbolProvider || it is KlibBasedSymbolProvider
+                }
+            }
             analyze(module, moduleDataMap[module]!!, targetPlatform, projectEnvironment, extensionRegistrars, predefinedJavaComponents)
         }
 
@@ -178,21 +189,22 @@ open class FirFrontendFacade(
         return libraryList.moduleDataProvider
     }
 
-    private fun createLibrarySession(
+    private fun createLibrarySessionAndProjectEnvironment(
         module: TestModule,
         project: Project,
         moduleName: Name,
         sessionProvider: FirProjectSessionProvider,
         moduleDataProvider: ModuleDataProvider,
         configuration: CompilerConfiguration,
+        baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>?,
         extensionRegistrars: List<FirExtensionRegistrar>,
         predefinedJavaComponents: FirSharableJavaComponents?
-    ): AbstractProjectEnvironment? {
+    ): Pair<FirSession, VfsBasedProjectEnvironment?> {
         val compilerConfigurationProvider = testServices.compilerConfigurationProvider
         val projectEnvironment: AbstractProjectEnvironment?
         val languageVersionSettings = module.languageVersionSettings
         val isCommon = module.targetPlatform.isCommon()
-        when {
+        val session = when {
             isCommon || module.targetPlatform.isJvm() -> {
                 val packagePartProviderFactory = compilerConfigurationProvider.getPackagePartProviderFactory(module)
                 projectEnvironment = VfsBasedProjectEnvironment(
@@ -221,6 +233,7 @@ open class FirFrontendFacade(
                         extensionRegistrars = extensionRegistrars,
                         librariesScope = projectFileSearchScope,
                         resolvedKLibs = resolvedLibraries,
+                        baseSymbolProviders = baseSymbolProviders,
                         packageAndMetadataPartProvider = packagePartProvider as PackageAndMetadataPartProvider,
                         languageVersionSettings = languageVersionSettings,
                         registerExtraComponents = ::registerExtraComponents
@@ -234,6 +247,7 @@ open class FirFrontendFacade(
                         extensionRegistrars,
                         projectFileSearchScope,
                         resolvedLibraries,
+                        baseSymbolProviders,
                         packagePartProvider,
                         languageVersionSettings,
                         predefinedJavaComponents,
@@ -284,7 +298,7 @@ open class FirFrontendFacade(
             }
             else -> error("Unsupported")
         }
-        return projectEnvironment
+        return session to projectEnvironment
     }
 
     private fun analyze(

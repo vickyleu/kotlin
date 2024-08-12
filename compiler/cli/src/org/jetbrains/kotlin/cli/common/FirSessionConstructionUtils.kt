@@ -80,6 +80,7 @@ fun <F> prepareJvmSessions(
                 extensionRegistrars,
                 librariesScope,
                 emptyList<KotlinResolvedLibrary>(),
+                null,
                 projectEnvironment.getPackagePartProvider(librariesScope),
                 configuration.languageVersionSettings,
                 predefinedJavaComponents = predefinedJavaComponents,
@@ -296,10 +297,10 @@ fun <F> prepareCommonSessions(
                 extensionRegistrars,
                 librariesScope,
                 resolvedLibraries,
+                null,
                 projectEnvironment.getPackagePartProvider(librariesScope) as PackageAndMetadataPartProvider,
                 configuration.languageVersionSettings,
-                registerExtraComponents = {},
-            )
+            ) {}
         }
     ) { moduleFiles, moduleData, sessionProvider, sessionConfigurator ->
         FirCommonSessionFactory.createModuleBasedSession(

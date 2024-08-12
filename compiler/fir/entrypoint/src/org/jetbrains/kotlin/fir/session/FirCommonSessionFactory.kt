@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.fir.deserialization.ModuleDataProvider
 import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
+import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.*
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
@@ -38,9 +39,10 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
         extensionRegistrars: List<FirExtensionRegistrar>,
         librariesScope: AbstractProjectFileSearchScope,
         resolvedKLibs: List<KotlinResolvedLibrary>,
+        baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>?,
         packageAndMetadataPartProvider: PackageAndMetadataPartProvider,
         languageVersionSettings: LanguageVersionSettings,
-        registerExtraComponents: ((FirSession) -> Unit),
+        registerExtraComponents: (FirSession) -> Unit,
     ): FirSession {
         return createLibrarySession(
             mainModuleName,
@@ -54,7 +56,7 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
             },
             createKotlinScopeProvider = { FirKotlinScopeProvider() },
             createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
-                listOfNotNull(
+                val ownProviders = listOfNotNull(
                     MetadataSymbolProvider(
                         session,
                         moduleDataProvider,
@@ -69,14 +71,21 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
                             kotlinScopeProvider,
                             resolvedKLibs.map { it.library }
                         )
-                    },
-                    syntheticFunctionInterfaceProvider,
-                    runUnless(languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
-                        FirFallbackBuiltinSymbolProvider(session, builtinsModuleData, kotlinScopeProvider)
-                    },
-                    FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                    FirCloneableSymbolProvider(session, builtinsModuleData, kotlinScopeProvider),
+                    }
                 )
+                if (baseSymbolProviders != null) {
+                    baseSymbolProviders.first + ownProviders + baseSymbolProviders.second
+                } else {
+                    ownProviders +
+                            listOfNotNull(
+                                syntheticFunctionInterfaceProvider,
+                                runUnless(languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
+                                    FirFallbackBuiltinSymbolProvider(session, builtinsModuleData, kotlinScopeProvider)
+                                },
+                                FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
+                                FirCloneableSymbolProvider(session, builtinsModuleData, kotlinScopeProvider),
+                            )
+                }
             }
         )
     }

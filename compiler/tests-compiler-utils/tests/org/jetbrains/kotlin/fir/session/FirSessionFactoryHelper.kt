@@ -52,11 +52,11 @@ object FirSessionFactoryHelper {
             extensionRegistrars,
             librariesScope,
             emptyList<KotlinResolvedLibrary>(),
+            null,
             packagePartProvider,
             languageVersionSettings,
-            predefinedJavaComponents = null,
-            registerExtraComponents = {}
-        )
+            predefinedJavaComponents = null
+        ) {}
 
         val mainModuleData = FirModuleDataImpl(
             moduleName,
