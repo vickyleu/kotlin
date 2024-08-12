@@ -235,10 +235,16 @@ open class FirFrontendFacade(
                 fun makeBuiltInsProviders(session: FirSession): List<FirSymbolProvider> {
                     val builtInsModuleData = makeBuiltInsModuleData(session, mainModule.name, moduleDataProvider)
                     return if (mainModule.targetPlatform.isJvm()) {
+                        val mainModuleProject = testServices.compilerConfigurationProvider.getProject(mainModule)
+                        val mainProjEnv = VfsBasedProjectEnvironment(
+                            mainModuleProject, VirtualFileManager.getInstance().getFileSystem(StandardFileSystems.FILE_PROTOCOL),
+                        ) { packagePartProviderFactory.invoke(it) }
+                        val mainModuleProjectFileSearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(mainModuleProject))
+                        val mainModulePackagePartProvider = mainProjEnv.getPackagePartProvider(projectFileSearchScope)
                         FirJvmSessionFactory.createBuiltInsProviders(
                             session, builtInsModuleData,
-                            projectEnvironment.getKotlinClassFinder(projectFileSearchScope),
-                            moduleDataProvider, packagePartProvider
+                            mainProjEnv.getKotlinClassFinder(mainModuleProjectFileSearchScope),
+                            moduleDataProvider, mainModulePackagePartProvider
                         )
                     } else {
                         FirCommonSessionFactory.createBuiltInsProviders(session, builtInsModuleData)
