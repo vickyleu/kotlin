@@ -15,9 +15,11 @@ import org.jetbrains.kotlin.fir.deserialization.ModuleDataProvider
 import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
+import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.*
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
+import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
@@ -39,7 +41,7 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
         extensionRegistrars: List<FirExtensionRegistrar>,
         librariesScope: AbstractProjectFileSearchScope,
         resolvedKLibs: List<KotlinResolvedLibrary>,
-        baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>?,
+        setupSymbolProviders: (FirSession, List<FirSymbolProvider>) -> List<FirSymbolProvider>,
         packageAndMetadataPartProvider: PackageAndMetadataPartProvider,
         languageVersionSettings: LanguageVersionSettings,
         registerExtraComponents: (FirSession) -> Unit,
@@ -55,7 +57,7 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
                 registerExtraComponents(it)
             },
             createKotlinScopeProvider = { FirKotlinScopeProvider() },
-            createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
+            createProviders = { session, kotlinScopeProvider ->
                 val ownProviders = listOfNotNull(
                     MetadataSymbolProvider(
                         session,
@@ -73,20 +75,20 @@ object FirCommonSessionFactory : FirAbstractSessionFactory() {
                         )
                     }
                 )
-                if (baseSymbolProviders != null) {
-                    baseSymbolProviders.first + ownProviders + baseSymbolProviders.second
-                } else {
-                    ownProviders +
-                            listOfNotNull(
-                                syntheticFunctionInterfaceProvider,
-                                runUnless(languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
-                                    FirFallbackBuiltinSymbolProvider(session, builtinsModuleData, kotlinScopeProvider)
-                                },
-                                FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                                FirCloneableSymbolProvider(session, builtinsModuleData, kotlinScopeProvider),
-                            )
-                }
+                setupSymbolProviders(session, ownProviders)
             }
+        )
+    }
+
+    fun createBuiltInsProviders(session: FirSession, builtInsModuleData: FirModuleData): List<FirSymbolProvider> {
+        val kotlinScopeProvider = session.kotlinScopeProvider
+        return listOfNotNull(
+            FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(session, builtInsModuleData, kotlinScopeProvider),
+            runUnless(session.languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
+                FirFallbackBuiltinSymbolProvider(session, builtInsModuleData, kotlinScopeProvider)
+            },
+            FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtInsModuleData, kotlinScopeProvider),
+            FirCloneableSymbolProvider(session, builtInsModuleData, kotlinScopeProvider),
         )
     }
 

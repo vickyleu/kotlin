@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.*
 import org.jetbrains.kotlin.fir.resolve.scopes.wrapScopeWithJvmMapped
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
+import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
@@ -43,7 +44,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
         extensionRegistrars: List<FirExtensionRegistrar>,
         scope: AbstractProjectFileSearchScope,
         resolvedKLibs: List<KotlinResolvedLibrary>,
-        baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>?,
+        setupSymbolProviders: (FirSession, List<FirSymbolProvider>) -> List<FirSymbolProvider>,
         packagePartProvider: PackagePartProvider,
         languageVersionSettings: LanguageVersionSettings,
         predefinedJavaComponents: FirSharableJavaComponents?,
@@ -62,7 +63,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
                 registerExtraComponents(it)
             },
             createKotlinScopeProvider = { FirKotlinScopeProvider(::wrapScopeWithJvmMapped) },
-            createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
+            createProviders = { session, kotlinScopeProvider ->
                 val ownProviders =
                     listOfNotNull(
 //                    runIf(resolvedKLibs.isNotEmpty()) {
@@ -82,33 +83,56 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
                             projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), scope)
                         )
                     )
-                val isStdlibCompilation = languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)
-                if (baseSymbolProviders != null) {
-                    baseSymbolProviders.first + ownProviders +
-                            baseSymbolProviders.second.mapNotNull {
-                                if (it is FirFallbackBuiltinSymbolProvider) {
-                                    if (isStdlibCompilation) null
-                                    else initializeBuiltinsProvider(session, builtinsModuleData, kotlinScopeProvider, kotlinClassFinder, it)
-                                } else it
-                            }
-                } else {
-                    ownProviders +
-                            listOfNotNull(
-                                runUnless(isStdlibCompilation) {
-                                    initializeBuiltinsProvider(session, builtinsModuleData, kotlinScopeProvider, kotlinClassFinder)
-                                },
-                                FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                                syntheticFunctionInterfaceProvider,
-                                FirCloneableSymbolProvider(session, builtinsModuleData, kotlinScopeProvider),
-                                OptionalAnnotationClassesProvider(
-                                    session,
-                                    moduleDataProvider,
-                                    kotlinScopeProvider,
-                                    packagePartProvider
-                                )
-                            )
-                }
+                setupSymbolProviders(session, ownProviders)
             }
+        )
+    }
+
+    fun createLibrarySession(
+        mainModuleName: Name,
+        sessionProvider: FirProjectSessionProvider,
+        moduleDataProvider: ModuleDataProvider,
+        projectEnvironment: AbstractProjectEnvironment,
+        extensionRegistrars: List<FirExtensionRegistrar>,
+        scope: AbstractProjectFileSearchScope,
+        resolvedKLibs: List<KotlinResolvedLibrary>,
+        packagePartProvider: PackagePartProvider,
+        languageVersionSettings: LanguageVersionSettings,
+        predefinedJavaComponents: FirSharableJavaComponents?,
+        registerExtraComponents: (FirSession) -> Unit,
+    ): FirSession = createLibrarySession(
+        mainModuleName, sessionProvider, moduleDataProvider, projectEnvironment, extensionRegistrars, scope, resolvedKLibs,
+        { session, newProviders ->
+            newProviders +
+                    createBuiltInsProviders(
+                        session,
+                        makeBuiltInsModuleData(session, mainModuleName.asString(), moduleDataProvider),
+                        projectEnvironment.getKotlinClassFinder(scope), moduleDataProvider, packagePartProvider
+                    )
+        },
+        packagePartProvider, languageVersionSettings, predefinedJavaComponents, registerExtraComponents
+    )
+
+    fun createBuiltInsProviders(
+        session: FirSession,
+        builtInsModuleData: FirModuleData,
+        kotlinClassFinder: KotlinClassFinder,
+        moduleDataProvider: ModuleDataProvider,
+        packagePartProvider: PackagePartProvider
+    ): List<FirSymbolProvider> {
+        val kotlinScopeProvider = session.kotlinScopeProvider
+        return listOfNotNull(
+            runUnless(session.languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
+                initializeBuiltinsProvider(session, builtInsModuleData, kotlinScopeProvider, kotlinClassFinder)
+            },
+            FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(session, builtInsModuleData, kotlinScopeProvider),
+            FirCloneableSymbolProvider(session, builtInsModuleData, kotlinScopeProvider),
+            OptionalAnnotationClassesProvider(
+                session,
+                moduleDataProvider,
+                kotlinScopeProvider,
+                packagePartProvider
+            )
         )
     }
 

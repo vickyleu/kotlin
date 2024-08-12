@@ -22,9 +22,12 @@ import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
 import org.jetbrains.kotlin.fir.resolve.calls.overloads.ConeCallConflictResolverFactory
+import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirBuiltinSyntheticFunctionInterfaceProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.FirExtensionSyntheticFunctionInterfaceProvider
 import org.jetbrains.kotlin.fir.scopes.FirDefaultImportProviderHolder
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
+import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.fir.types.typeContext
 import org.jetbrains.kotlin.incremental.components.LookupTracker
 import org.jetbrains.kotlin.js.config.JSConfigurationKeys
@@ -99,14 +102,19 @@ object FirJsSessionFactory : FirAbstractSessionFactory() {
             registerExtraComponents(it)
         },
         createKotlinScopeProvider = { FirKotlinScopeProvider() },
-        createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
-            listOfNotNull(
-                KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, resolvedLibraries),
-                FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                syntheticFunctionInterfaceProvider
-            )
+        createProviders = { session, kotlinScopeProvider ->
+            listOf(KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, resolvedLibraries)) +
+                    createBuiltInsProviders(session, makeBuiltInsModuleData(session, mainModuleName.asString(), moduleDataProvider))
         }
     )
+
+    fun createBuiltInsProviders(session: FirSession, builtInsModuleData: FirModuleData): List<FirSymbolProvider> {
+        val kotlinScopeProvider = session.kotlinScopeProvider
+        return listOfNotNull(
+            FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtInsModuleData, kotlinScopeProvider),
+            FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(session, builtInsModuleData, kotlinScopeProvider)
+        )
+    }
 
     private fun FirSession.registerJsComponents(compilerConfiguration: CompilerConfiguration) {
         val moduleKind = compilerConfiguration.get(JSConfigurationKeys.MODULE_KIND, ModuleKind.PLAIN)

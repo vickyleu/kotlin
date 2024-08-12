@@ -107,7 +107,8 @@ open class FirFrontendFacade(
         val isMppSupported = module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)
         val sortedModules = if (isMppSupported) sortDependsOnTopologically(module) else listOf(module)
         val moduleDataMap: MutableMap<TestModule, FirModuleData> = mutableMapOf<TestModule, FirModuleData>()
-        var baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>? = null
+        var baseSymbolProviders: List<FirSymbolProvider>? = null
+        val mainModule = sortedModules.last()
 
         val firOutputPartForDependsOnModules = sortedModules.map { module ->
             val sortedModules = if (isMppSupported) sortDependsOnTopologically(module) else listOf(module)
@@ -128,13 +129,12 @@ open class FirFrontendFacade(
                 moduleDataProvider,
                 testServices.compilerConfigurationProvider.getCompilerConfiguration(module),
                 baseSymbolProviders,
+                mainModule,
                 extensionRegistrars,
                 predefinedJavaComponents
             )
             if (baseSymbolProviders == null) {
-                baseSymbolProviders = (session.symbolProvider as? FirCachingCompositeSymbolProvider)?.providers?.partition {
-                    it is JvmClassFileBasedSymbolProvider || it is KlibBasedSymbolProvider
-                }
+                baseSymbolProviders = (session.symbolProvider as? FirCachingCompositeSymbolProvider)?.providers
             }
             analyze(module, moduleDataMap[module]!!, targetPlatform, projectEnvironment, extensionRegistrars, predefinedJavaComponents)
         }
@@ -196,7 +196,8 @@ open class FirFrontendFacade(
         sessionProvider: FirProjectSessionProvider,
         moduleDataProvider: ModuleDataProvider,
         configuration: CompilerConfiguration,
-        baseSymbolProviders: Pair<List<FirSymbolProvider>, List<FirSymbolProvider>>?,
+        baseSymbolProviders: List<FirSymbolProvider>?,
+        mainModule: TestModule,
         extensionRegistrars: List<FirExtensionRegistrar>,
         predefinedJavaComponents: FirSharableJavaComponents?
     ): Pair<FirSession, VfsBasedProjectEnvironment?> {
@@ -213,6 +214,13 @@ open class FirFrontendFacade(
                 val projectFileSearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
                 val packagePartProvider = projectEnvironment.getPackagePartProvider(projectFileSearchScope)
 
+                val (baseRegularProviders: List<FirSymbolProvider>?, baseBuiltInsProviders: List<FirSymbolProvider>?) =
+                    if (baseSymbolProviders != null) baseSymbolProviders.partition {
+                        it is JvmClassFileBasedSymbolProvider || it is KlibBasedSymbolProvider
+                    } else {
+                        null to null
+                    }
+
                 // copied hacky code from FirMetadataSerializer.analyze
                 val cpRoots = configuration.get(CLIConfigurationKeys.CONTENT_ROOTS).orEmpty()
                     .filterIsInstance<JvmClasspathRoot>()
@@ -224,6 +232,19 @@ open class FirFrontendFacade(
                 val logger = configuration.messageCollector.toLogger()
                 val resolvedLibraries = klibFiles.map { KotlinResolvedLibraryImpl(resolveSingleFileKlib(KFile(it), logger)) }
 
+                fun makeBuiltInsProviders(session: FirSession): List<FirSymbolProvider> {
+                    val builtInsModuleData = makeBuiltInsModuleData(session, mainModule.name, moduleDataProvider)
+                    return if (mainModule.targetPlatform.isJvm()) {
+                        FirJvmSessionFactory.createBuiltInsProviders(
+                            session, builtInsModuleData,
+                            projectEnvironment.getKotlinClassFinder(projectFileSearchScope),
+                            moduleDataProvider, packagePartProvider
+                        )
+                    } else {
+                        FirCommonSessionFactory.createBuiltInsProviders(session, builtInsModuleData)
+                    }
+                }
+
                 if (isCommon) {
                     FirCommonSessionFactory.createLibrarySession(
                         mainModuleName = moduleName,
@@ -233,24 +254,30 @@ open class FirFrontendFacade(
                         extensionRegistrars = extensionRegistrars,
                         librariesScope = projectFileSearchScope,
                         resolvedKLibs = resolvedLibraries,
-                        baseSymbolProviders = baseSymbolProviders,
+                        setupSymbolProviders = { session, newProviders ->
+                            if (baseRegularProviders != null) baseRegularProviders + newProviders + baseBuiltInsProviders!!
+                            else newProviders + makeBuiltInsProviders(session)
+                        },
                         packageAndMetadataPartProvider = packagePartProvider as PackageAndMetadataPartProvider,
                         languageVersionSettings = languageVersionSettings,
                         registerExtraComponents = ::registerExtraComponents
                     )
                 } else {
                     FirJvmSessionFactory.createLibrarySession(
-                        moduleName,
-                        sessionProvider,
-                        moduleDataProvider,
-                        projectEnvironment,
-                        extensionRegistrars,
-                        projectFileSearchScope,
-                        resolvedLibraries,
-                        baseSymbolProviders,
-                        packagePartProvider,
-                        languageVersionSettings,
-                        predefinedJavaComponents,
+                        mainModuleName = moduleName,
+                        sessionProvider = sessionProvider,
+                        moduleDataProvider = moduleDataProvider,
+                        projectEnvironment = projectEnvironment,
+                        extensionRegistrars = extensionRegistrars,
+                        scope = projectFileSearchScope,
+                        resolvedKLibs = resolvedLibraries,
+                        setupSymbolProviders = { session, newProviders ->
+                            if (baseRegularProviders != null) baseRegularProviders + newProviders + baseBuiltInsProviders!!
+                            else newProviders + makeBuiltInsProviders(session)
+                        },
+                        packagePartProvider = packagePartProvider,
+                        languageVersionSettings = languageVersionSettings,
+                        predefinedJavaComponents = predefinedJavaComponents,
                         registerExtraComponents = ::registerExtraComponents,
                     )
                 }

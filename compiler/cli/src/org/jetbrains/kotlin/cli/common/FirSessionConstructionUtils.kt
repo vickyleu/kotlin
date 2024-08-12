@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.fir.checkers.registerExtendedCommonCheckers
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
 import org.jetbrains.kotlin.fir.session.*
+import org.jetbrains.kotlin.fir.session.FirCommonSessionFactory.createBuiltInsProviders
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
 import org.jetbrains.kotlin.incremental.components.LookupTracker
@@ -80,7 +81,6 @@ fun <F> prepareJvmSessions(
                 extensionRegistrars,
                 librariesScope,
                 emptyList<KotlinResolvedLibrary>(),
-                null,
                 projectEnvironment.getPackagePartProvider(librariesScope),
                 configuration.languageVersionSettings,
                 predefinedJavaComponents = predefinedJavaComponents,
@@ -297,7 +297,13 @@ fun <F> prepareCommonSessions(
                 extensionRegistrars,
                 librariesScope,
                 resolvedLibraries,
-                null,
+                { session, newProviders ->
+                    newProviders +
+                            createBuiltInsProviders(
+                                session,
+                                makeBuiltInsModuleData(session, rootModuleName.asString(), libraryList.moduleDataProvider)
+                            )
+                },
                 projectEnvironment.getPackagePartProvider(librariesScope) as PackageAndMetadataPartProvider,
                 configuration.languageVersionSettings,
             ) {}

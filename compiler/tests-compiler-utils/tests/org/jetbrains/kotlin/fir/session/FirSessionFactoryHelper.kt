@@ -52,7 +52,6 @@ object FirSessionFactoryHelper {
             extensionRegistrars,
             librariesScope,
             emptyList<KotlinResolvedLibrary>(),
-            null,
             packagePartProvider,
             languageVersionSettings,
             predefinedJavaComponents = null

@@ -16,11 +16,14 @@ import org.jetbrains.kotlin.fir.checkers.registerNativeCheckers
 import org.jetbrains.kotlin.fir.deserialization.ModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
+import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirBuiltinSyntheticFunctionInterfaceProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.FirExtensionSyntheticFunctionInterfaceProvider
 import org.jetbrains.kotlin.fir.scopes.FirDefaultImportProviderHolder
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.fir.scopes.FirOverrideChecker
 import org.jetbrains.kotlin.fir.scopes.FirPlatformClassMapper
+import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinResolvedLibrary
 import org.jetbrains.kotlin.name.Name
@@ -48,7 +51,7 @@ object FirNativeSessionFactory : FirAbstractSessionFactory() {
                 registerExtraComponents(session)
             },
             createKotlinScopeProvider = { FirKotlinScopeProvider() },
-            createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
+            createProviders = { session, kotlinScopeProvider ->
                 val forwardDeclarationsModuleData = BinaryModuleData.createDependencyModuleData(
                     FORWARD_DECLARATIONS_MODULE_NAME,
                     moduleDataProvider.platform,
@@ -56,13 +59,20 @@ object FirNativeSessionFactory : FirAbstractSessionFactory() {
                     bindSession(session)
                 }
                 val resolvedKotlinLibraries = resolvedLibraries.map { it.library }
-                listOfNotNull(
+                listOf(
                     KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, resolvedKotlinLibraries),
                     NativeForwardDeclarationsSymbolProvider(session, forwardDeclarationsModuleData, kotlinScopeProvider, resolvedKotlinLibraries),
-                    FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                    syntheticFunctionInterfaceProvider,
-                )
+                ) +
+                        createBuiltInsProviders(session, makeBuiltInsModuleData(session, mainModuleName.asString(), moduleDataProvider))
             })
+    }
+
+    fun createBuiltInsProviders(session: FirSession, builtInsModuleData: FirModuleData): List<FirSymbolProvider> {
+        val kotlinScopeProvider = session.kotlinScopeProvider
+        return listOfNotNull(
+            FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtInsModuleData, kotlinScopeProvider),
+            FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(session, builtInsModuleData, kotlinScopeProvider)
+        )
     }
 
     fun createModuleBasedSession(

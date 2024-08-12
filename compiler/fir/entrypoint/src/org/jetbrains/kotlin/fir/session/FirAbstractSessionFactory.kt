@@ -38,7 +38,7 @@ abstract class FirAbstractSessionFactory {
         extensionRegistrars: List<FirExtensionRegistrar>,
         registerExtraComponents: ((FirSession) -> Unit),
         createKotlinScopeProvider: () -> FirKotlinScopeProvider,
-        createProviders: (FirSession, FirModuleData, FirKotlinScopeProvider, FirExtensionSyntheticFunctionInterfaceProvider?) -> List<FirSymbolProvider>
+        createProviders: (FirSession, FirKotlinScopeProvider) -> List<FirSymbolProvider>
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply session@{
             moduleDataProvider.allModuleData.forEach {
@@ -53,12 +53,6 @@ abstract class FirAbstractSessionFactory {
             val kotlinScopeProvider = createKotlinScopeProvider.invoke()
             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
 
-            val builtinsModuleData = BinaryModuleData.createDependencyModuleData(
-                Name.special("<builtins of ${mainModuleName.asString()}"),
-                moduleDataProvider.platform,
-            )
-            builtinsModuleData.bindSession(this)
-
             FirSessionConfigurator(this).apply {
                 for (extensionRegistrar in extensionRegistrars) {
                     registerExtensions(extensionRegistrar.configure())
@@ -66,9 +60,7 @@ abstract class FirAbstractSessionFactory {
             }.configure()
             registerCommonComponentsAfterExtensionsAreConfigured()
 
-            val syntheticFunctionInterfaceProvider =
-                FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(this, builtinsModuleData, kotlinScopeProvider)
-            val providers = createProviders(this, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider)
+            val providers = createProviders(this, kotlinScopeProvider)
 
             val symbolProvider = FirCachingCompositeSymbolProvider(this, providers)
             register(FirSymbolProvider::class, symbolProvider)
@@ -220,3 +212,12 @@ abstract class FirAbstractSessionFactory {
         return result
     }
 }
+
+fun makeBuiltInsModuleData(session: FirSession, moduleName: String, moduleDataProvider: ModuleDataProvider): FirModuleData =
+    BinaryModuleData.createDependencyModuleData(
+        Name.special("<builtins of ${moduleName}"),
+        moduleDataProvider.platform,
+    ).also {
+        it.bindSession(session)
+    }
+
