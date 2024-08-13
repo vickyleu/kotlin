@@ -1,11 +1,9 @@
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProjectModules
 
 plugins {
-    kotlin("js")
-}
-
-dependencies {
-    implementation(kotlin("stdlib-js"))
+    kotlin("multiplatform")
 }
 
 repositories {
@@ -14,41 +12,101 @@ repositories {
 }
 
 kotlin {
+    wasmJs {
+        binaries.executable()
+        browser {
+            webpackTask {
+                generateConfigOnly = true
+            }
+            runTask {
+                generateConfigOnly = true
+            }
+        }
+        val nodeJs = project.rootProject.kotlinNodeJsRootExtension
+        val npmToolingDest = nodeJs.toolingInstallTaskProvider.flatMap { it.destination }
+        val modules = NpmProjectModules(npmToolingDest.get().asFile)
+        val compilation = compilations.getByName("main")
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigDevelopmentWebpack") {
+            inputFileProperty.set(provider { modules.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
+            dependsOn("wasmJsBrowserDevelopmentWebpack")
+            args("configtest")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserDevelopmentWebpack").flatMap { it.configFile }
+            environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+
+            doFirst {
+                args(configFile.get().absolutePath)
+            }
+        }
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigProductionWebpack") {
+            inputFileProperty.set(provider { modules.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
+            dependsOn("wasmJsBrowserProductionWebpack")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserProductionWebpack").flatMap { it.configFile }
+            environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+
+            args("configtest")
+            doFirst {
+                args(configFile.get().absolutePath)
+            }
+        }
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigDevelopmentRun") {
+            inputFileProperty.set(provider { modules.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
+            dependsOn("wasmJsBrowserDevelopmentRun")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserDevelopmentRun").flatMap { it.configFile }
+            args("configtest")
+            environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+
+            doFirst {
+                args(configFile.get().absolutePath)
+            }
+        }
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigProductionRun") {
+            inputFileProperty.set(provider { modules.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
+            dependsOn("wasmJsBrowserProductionRun")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserProductionRun").flatMap { it.configFile }
+            args("configtest")
+            environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+
+            doFirst {
+                args(configFile.get().absolutePath)
+            }
+        }
+    }
+
     js {
         val compilation = compilations.getByName("main")
-        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "checkConfigDevelopmentWebpack") {
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigDevelopmentWebpack") {
             inputFileProperty.set(provider { compilation.npmProject.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
-            dependsOn("browserDevelopmentWebpack")
+            dependsOn("jsBrowserDevelopmentWebpack")
             args("configtest")
-            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("browserDevelopmentWebpack").flatMap { it.configFile }
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("jsBrowserDevelopmentWebpack").flatMap { it.configFile }
 
             doFirst {
                 args(configFile.get().absolutePath)
             }
         }
-        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "checkConfigProductionWebpack") {
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigProductionWebpack") {
             inputFileProperty.set(provider { compilation.npmProject.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
-            dependsOn("browserProductionWebpack")
-            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("browserProductionWebpack").flatMap { it.configFile }
+            dependsOn("jsBrowserProductionWebpack")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("jsBrowserProductionWebpack").flatMap { it.configFile }
 
             args("configtest")
             doFirst {
                 args(configFile.get().absolutePath)
             }
         }
-        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "checkConfigDevelopmentRun") {
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigDevelopmentRun") {
             inputFileProperty.set(provider { compilation.npmProject.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
-            dependsOn("browserDevelopmentRun")
-            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("browserDevelopmentRun").flatMap { it.configFile }
+            dependsOn("jsBrowserDevelopmentRun")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("jsBrowserDevelopmentRun").flatMap { it.configFile }
             args("configtest")
             doFirst {
                 args(configFile.get().absolutePath)
             }
         }
-        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "checkConfigProductionRun") {
+        org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec.create(compilation, "${this.name}CheckConfigProductionRun") {
             inputFileProperty.set(provider { compilation.npmProject.require("webpack/bin/webpack.js") }.map { RegularFile { File(it) } })
-            dependsOn("browserProductionRun")
-            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("browserProductionRun").flatMap { it.configFile }
+            dependsOn("jsBrowserProductionRun")
+            val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("jsBrowserProductionRun").flatMap { it.configFile }
             args("configtest")
             doFirst {
                 args(configFile.get().absolutePath)

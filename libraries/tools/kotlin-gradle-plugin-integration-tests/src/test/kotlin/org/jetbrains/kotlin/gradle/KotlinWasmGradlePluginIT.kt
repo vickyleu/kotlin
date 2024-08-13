@@ -345,4 +345,20 @@ class KotlinWasmGradlePluginIT : KGPBaseTest() {
             }
         }
     }
+
+    @DisplayName("webpack configuration is valid")
+    @GradleTest
+    fun testWebpackConfig(gradleVersion: GradleVersion) {
+        project("kotlin-js-test-webpack-config", gradleVersion) {
+            build("wasmJsBrowserDevelopmentWebpack")
+
+            build("wasmJsCheckConfigDevelopmentWebpack")
+
+            build("wasmJsCheckConfigProductionWebpack")
+
+            build("wasmJsCheckConfigDevelopmentRun")
+
+            build("wasmJsCheckConfigProductionRun")
+        }
+    }
 }
