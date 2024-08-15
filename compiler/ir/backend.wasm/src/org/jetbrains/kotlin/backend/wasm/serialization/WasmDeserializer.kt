@@ -635,6 +635,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         jsModuleAndQualifierReferences = deserializeJsModuleAndQualifierReferences(),
         classAssociatedObjectsInstanceGetters = deserializeClassAssociatedObjectInstanceGetters(),
         builtinIdSignatures = deserializeBuiltinIdSignatures(),
+        wasmAnyArrayType = deserializeWasmAnyArrayType(),
     )
 
     private fun deserializeFunctions() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunction)
@@ -675,6 +676,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
                 runRootSuites = deserializeNullable(::deserializeIdSignature),
             )
         }
+    private fun deserializeWasmAnyArrayType() = deserializeNullable { deserializeSymbol(::deserializeArrayDeclaration) }
 
     private fun deserializeFieldInitializer(): FieldInitializer = withFlags {
         val field = deserializeIdSignature()

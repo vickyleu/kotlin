@@ -652,6 +652,7 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeSet(jsModuleAndQualifierReferences, ::serializeJsModuleAndQualifierReference)
             serializeList(classAssociatedObjectsInstanceGetters, ::serializeClassAssociatedObjects)
             serializeNullable(builtinIdSignatures, ::serializeBuiltinIdSignatures)
+            serializeNullable(wasmAnyArrayType) { serializeWasmSymbolReadOnly(it, ::serializeWasmArrayDeclaration) }
         }
 
     private fun serializeBuiltinIdSignatures(builtinIdSignatures: BuiltinIdSignatures) {

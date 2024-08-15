@@ -199,6 +199,10 @@ class WasmFileCodegenContext(
             )
         }
     }
+
+    val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration>
+        get() = wasmFileFragment.wasmAnyArrayType
+            ?: WasmSymbol<WasmArrayDeclaration>().also { wasmFileFragment.wasmAnyArrayType = it }
 }
 
 class WasmModuleMetadataCache(private val backendContext: WasmBackendContext) {

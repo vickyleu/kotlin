@@ -61,6 +61,7 @@ class WasmCompiledFileFragment(
     val equivalentFunctions: MutableList<Pair<String, IdSignature>> = mutableListOf(),
     val jsModuleAndQualifierReferences: MutableSet<JsModuleAndQualifierReference> = mutableSetOf(),
     val classAssociatedObjectsInstanceGetters: MutableList<ClassAssociatedObjects> = mutableListOf(),
+    var wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration>? = null,
     var builtinIdSignatures: BuiltinIdSignatures? = null,
 ) : IrICProgramFragment()
 
@@ -249,11 +250,17 @@ class WasmCompiledModuleFragment(
         val (importedTags, definedTags) = tags.partition { it.importPair != null }
         val importsInOrder = importedFunctions + importedTags
 
+        val wasmAnyArrayType = WasmArrayDeclaration(
+            name = "itable",
+            field = WasmStructFieldDeclaration("", WasmRefType(WasmHeapType.Simple.Any), false)
+        )
+        wasmCompiledFileFragments.forEach { it.wasmAnyArrayType?.bind(wasmAnyArrayType) }
+
         val additionalTypes = mutableListOf<WasmTypeDeclaration>()
         additionalTypes.add(parameterlessNoReturnFunctionType)
         tags.forEach { additionalTypes.add(it.type) }
 
-        val recursiveTypeGroups = getTypes(canonicalFunctionTypes, additionalTypes)
+        val recursiveTypeGroups = getTypes(wasmAnyArrayType, canonicalFunctionTypes, additionalTypes)
 
         return WasmModule(
             recGroups = recursiveTypeGroups,
@@ -305,6 +312,7 @@ class WasmCompiledModuleFragment(
     }
 
     private fun getTypes(
+        wasmAnyArrayType: WasmTypeDeclaration,
         canonicalFunctionTypes: Map<WasmFunctionType, WasmFunctionType>,
         additionalTypes: RecursiveTypeGroup,
     ): List<RecursiveTypeGroup> {
@@ -313,6 +321,7 @@ class WasmCompiledModuleFragment(
                     wasmCompiledFileFragments.flatMap { it.gcTypes.elements }
 
         val recGroupTypes = sequence {
+            yield(wasmAnyArrayType)
             yieldAll(vTablesAndGcTypes)
             wasmCompiledFileFragments.forEach { fragment ->
                 yieldAll(fragment.classITableGcType.unbound.values.mapNotNull { it.takeIf { it.isBound() }?.owner })
