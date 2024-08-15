@@ -636,6 +636,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         classAssociatedObjectsInstanceGetters = deserializeClassAssociatedObjectInstanceGetters(),
         tryGetAssociatedObjectFun = deserializeTryGetAssociatedObject(),
         jsToKotlinAnyAdapterFun = deserializeJsToKotlinAnyAdapter(),
+        wasmAnyArrayType = deserializeWasmAnyArrayType(),
     )
 
     private fun deserializeFunctions() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunction)
@@ -668,6 +669,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
     private fun deserializeClassAssociatedObjectInstanceGetters() = deserializeList(::deserializeClassAssociatedObjects)
     private fun deserializeTryGetAssociatedObject() = deserializeNullable(::deserializeIdSignature)
     private fun deserializeJsToKotlinAnyAdapter() = deserializeNullable(::deserializeIdSignature)
+    private fun deserializeWasmAnyArrayType() = deserializeNullable { deserializeSymbol(::deserializeArrayDeclaration) }
 
     private fun deserializeFieldInitializer(): FieldInitializer = withFlags {
         val field = deserializeIdSignature()
