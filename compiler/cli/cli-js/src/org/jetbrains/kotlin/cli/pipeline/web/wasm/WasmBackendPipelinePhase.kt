@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.cli.pipeline.web.wasm
 
+import org.jetbrains.kotlin.backend.wasm.WasmBackendContext
 import org.jetbrains.kotlin.backend.wasm.WasmCompilerResult
 import org.jetbrains.kotlin.backend.wasm.compileToLoweredIr
 import org.jetbrains.kotlin.backend.wasm.compileWasm
@@ -26,6 +27,7 @@ import org.jetbrains.kotlin.ir.backend.js.WholeWorldStageController
 import org.jetbrains.kotlin.ir.backend.js.dce.DceDumpNameCache
 import org.jetbrains.kotlin.ir.backend.js.dce.dumpDeclarationIrSizesIfNeed
 import org.jetbrains.kotlin.ir.backend.js.loadIr
+import org.jetbrains.kotlin.ir.symbols.UnsafeDuringIrConstructionAPI
 import org.jetbrains.kotlin.js.config.*
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.wasm.config.WasmConfigurationKeys
@@ -73,6 +75,7 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
 
         val res = compileWasm(
             wasmCompiledFileFragments = wasmArtifacts,
+            specialITableTypes = emptyList(),//!!!!!
             moduleName = moduleName,
             configuration = configuration,
             typeScriptFragment = null,
@@ -168,8 +171,14 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
         )
         val wasmCompiledFileFragments = allModules.map { codeGenerator.generateModuleAsSingleFileFragment(it) }
 
+        @OptIn(UnsafeDuringIrConstructionAPI::class)
+        val specialITableTypes = WasmBackendContext.getSpecialITableTypes(backendContext.irBuiltIns).map {
+            irFactory.declarationSignature(it.owner)
+        }
+
         val res = compileWasm(
             wasmCompiledFileFragments = wasmCompiledFileFragments,
+            specialITableTypes = specialITableTypes,
             moduleName = allModules.last().descriptor.name.asString(),
             configuration = configuration,
             typeScriptFragment = typeScriptFragment,
