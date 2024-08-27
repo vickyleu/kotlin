@@ -39844,6 +39844,28 @@ public class LLFirBlackBoxCodegenBasedTestGenerated extends AbstractLLFirBlackBo
       }
 
       @Nested
+      @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype")
+      @TestDataPath("$PROJECT_ROOT")
+      public class KmpCpPrototype {
+        @Test
+        public void testAllFilesPresentInKmpCpPrototype() {
+          KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype"), Pattern.compile("^(.+)\\.kt$"), null, true);
+        }
+
+        @Test
+        @TestMetadata("classes1.kt")
+        public void testClasses1() {
+          runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/classes1.kt");
+        }
+
+        @Test
+        @TestMetadata("expectMM3.kt")
+        public void testExpectMM3() {
+          runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/expectMM3.kt");
+        }
+      }
+
+      @Nested
       @TestMetadata("compiler/testData/codegen/box/multiplatform/k2/migratedOldTests")
       @TestDataPath("$PROJECT_ROOT")
       public class MigratedOldTests {
