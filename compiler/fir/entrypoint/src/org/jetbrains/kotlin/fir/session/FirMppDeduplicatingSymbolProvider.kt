@@ -30,7 +30,7 @@ class FirMppDeduplicatingSymbolProvider(
 ) : FirSymbolProvider(session) {
     val providers: List<FirSymbolProvider> = listOf(commonSymbolProvider, platformSymbolProvider)
 
-    class ClassPair(val commonClass: FirClassLikeSymbol<*>, val platformClass: FirClassLikeSymbol<*>)
+    data class ClassPair(val commonClass: FirClassLikeSymbol<*>, val platformClass: FirClassLikeSymbol<*>)
 
     val classMapping: MutableMap<ClassId, ClassPair> = mutableMapOf()
 
@@ -41,6 +41,9 @@ class FirMppDeduplicatingSymbolProvider(
     override val symbolNamesProvider: FirSymbolNamesProvider = FirCompositeSymbolNamesProvider.fromSymbolProviders(providers)
 
     override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? {
+        if (classId.shortClassName.asString() == "Bar") {
+            Unit
+        }
         val commonSymbol = commonSymbolProvider.getClassLikeSymbolByClassId(classId)
         val platformSymbol = platformSymbolProvider.getClassLikeSymbolByClassId(classId)
 

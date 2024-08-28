@@ -34,6 +34,7 @@ class IrActualizer(
     val mainFragment: IrModuleFragment,
     val dependentFragments: List<IrModuleFragment>,
     extraActualClassExtractors: List<IrExtraActualDeclarationExtractor> = emptyList(),
+    expectActualMapPreFiller: IrExpectActualMapPreFiller?
 ) {
     private val collector = ExpectActualCollector(
         mainFragment,
@@ -42,6 +43,7 @@ class IrActualizer(
         ktDiagnosticReporter,
         expectActualTracker,
         extraActualClassExtractors,
+        expectActualMapPreFiller
     )
 
     val classActualizationInfo: ClassActualizationInfo = collector.collectClassActualizationInfo()
@@ -73,7 +75,8 @@ class IrActualizer(
 
         // 3. Actualize expect calls in dependent fragments using info obtained in the previous steps
         val actualizerVisitor = ActualizerVisitor(symbolRemapper)
-        dependentFragments.forEach { it.transform(actualizerVisitor, null) }
+        dependentFragments.forEach { it.transform(actualizerVisitor, data = null) }
+        mainFragment.transform(actualizerVisitor, data = null)
 
         // 4. Move all declarations to mainFragment
         mergeIrFragments(mainFragment, dependentFragments)

@@ -257,9 +257,13 @@ private class Fir2IrPipeline(
                 mainIrFragment,
                 dependentIrFragments,
                 this@Fir2IrPipeline.extraActualDeclarationExtractorsInitializer(componentsStorage),
+                IrCommonToPlatformDependencyExpectActualMapPreFiller.create(
+                    outputs.last().session,
+                    componentsStorage.classifierStorage,
+                    componentsStorage.declarationStorage
+                )
             )
         }
-
     }
 
     private fun Fir2IrConversionResult.generateSyntheticBodiesOfDataValueMembers() {

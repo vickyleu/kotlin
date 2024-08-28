@@ -23,3 +23,8 @@ abstract class IrExtraActualDeclarationExtractor {
      */
     abstract fun extract(expectTopLevelCallables: List<IrDeclarationWithName>, expectCallableId: CallableId): List<IrSymbol>
 }
+
+abstract class IrExpectActualMapPreFiller {
+    abstract fun collectClassesMap(): Map<IrClassSymbol, IrClassSymbol>
+    abstract fun collectTopLevelCallablesMap(): Map<IrSymbol, IrSymbol>
+}

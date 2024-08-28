@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.ir.util.parentsWithSelf
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
 
 class IrExpectActualMap() {
-    val expectToActual: Map<IrSymbol, IrSymbol> get() = _expectToActual
+    val expectToActual: MutableMap<IrSymbol, IrSymbol> get() = _expectToActual
     private val _expectToActual: MutableMap<IrSymbol, IrSymbol> = mutableMapOf()
 
     /**
