@@ -26,16 +26,18 @@ import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.container.topologicalSort
 import org.jetbrains.kotlin.fir.*
-import org.jetbrains.kotlin.fir.checkers.registerExperimentalCheckers
 import org.jetbrains.kotlin.fir.checkers.registerExtraCommonCheckers
 import org.jetbrains.kotlin.fir.deserialization.ModuleDataProvider
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
 import org.jetbrains.kotlin.fir.session.*
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
+import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
+import org.jetbrains.kotlin.fir.session.new.NewFirJvmSessionFactory
 import org.jetbrains.kotlin.library.metadata.resolver.impl.KotlinResolvedLibraryImpl
 import org.jetbrains.kotlin.library.resolveSingleFileKlib
 import org.jetbrains.kotlin.load.kotlin.PackageAndMetadataPartProvider
+import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.platform.TargetPlatform
 import org.jetbrains.kotlin.platform.isCommon
@@ -66,11 +68,13 @@ import kotlin.collections.filterIsInstance
 import kotlin.collections.orEmpty
 import org.jetbrains.kotlin.konan.file.File as KFile
 
-open class OldFirFrontendFacade(
+open class FirFrontendFacade(
     testServices: TestServices,
     private val additionalSessionConfiguration: SessionConfiguration?
 ) : FrontendFacade<FirOutputArtifact>(testServices, FrontendKinds.FIR) {
-    private val testModulesByName by lazy { testServices.moduleStructure.modules.associateBy { it.name } }
+    // TODO: there might be more than one root
+    // Ideally need to use leaf instead of root
+    private val sharedDependencySessionsByRootModule: MutableMap<TestModule, FirSession> = mutableMapOf()
 
     // Separate constructor is needed for creating callable references to it
     constructor(testServices: TestServices) : this(testServices, additionalSessionConfiguration = null)
@@ -82,17 +86,6 @@ open class OldFirFrontendFacade(
 
     override val directiveContainers: List<DirectivesContainer>
         get() = listOf(FirDiagnosticsDirectives)
-
-    override fun shouldRunAnalysis(module: TestModule): Boolean {
-        if (!super.shouldRunAnalysis(module)) return false
-
-        return if (module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)) {
-            testServices.moduleStructure
-                .modules.none { testModule -> testModule.dependsOnDependencies.any { testModulesByName[it.moduleName] == module } }
-        } else {
-            true
-        }
-    }
 
     private fun registerExtraComponents(session: FirSession) {
         testServices.firSessionComponentRegistrar?.registerAdditionalComponent(session)
@@ -107,26 +100,44 @@ open class OldFirFrontendFacade(
 
         val project = testServices.compilerConfigurationProvider.getProject(module)
         val extensionRegistrars = FirExtensionRegistrar.getInstances(project)
+        val projectEnvironment = createProjectEnvironment(module, project)
+
+        val moduleInfoProvider = testServices.firModuleInfoProvider
+        val sessionProvider = moduleInfoProvider.firSessionProvider
+        val dependencySearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
+        val packagePartProvider = projectEnvironment!!.getPackagePartProvider(dependencySearchScope)
+        val sharedDependencySession = sharedDependencySessionsByRootModule.getOrPut(sortedModules.first()) {
+            NewFirJvmSessionFactory.createSharedDependencySession(
+                sessionProvider,
+                moduleDataProvider,
+                projectEnvironment,
+                extensionRegistrars,
+                dependencySearchScope,
+                packagePartProvider,
+                module.languageVersionSettings,
+                FirSharableJavaComponents(firCachesFactoryForCliMode)
+            )
+        }
+
         val targetPlatform = module.targetPlatform
         val predefinedJavaComponents = runIf(targetPlatform.isJvm()) {
             FirSharableJavaComponents(firCachesFactoryForCliMode)
         }
-        val projectEnvironment = createLibrarySession(
+
+        val firOutput = analyze(
             module,
-            project,
-            Name.special("<${module.name}>"),
-            testServices.firModuleInfoProvider.firSessionProvider,
-            moduleDataProvider,
-            testServices.compilerConfigurationProvider.getCompilerConfiguration(module),
+            moduleDataMap[module]!!,
+            targetPlatform,
+            projectEnvironment,
             extensionRegistrars,
-            predefinedJavaComponents
+            predefinedJavaComponents,
+            sharedDependencySession,
+            libraryScope = dependencySearchScope,
+            packagePartProvider,
+            moduleDataProvider
         )
 
-        val firOutputPartForDependsOnModules = sortedModules.map {
-            analyze(it, moduleDataMap[it]!!, targetPlatform, projectEnvironment, extensionRegistrars, predefinedJavaComponents)
-        }
-
-        return FirOutputArtifactImpl(firOutputPartForDependsOnModules)
+        return FirOutputArtifactImpl(listOf(firOutput))
     }
 
     protected fun sortDependsOnTopologically(module: TestModule): List<TestModule> {
@@ -175,105 +186,17 @@ open class OldFirFrontendFacade(
         return moduleDataMap to libraryList.moduleDataProvider
     }
 
-    private fun createLibrarySession(
-        module: TestModule,
-        project: Project,
-        moduleName: Name,
-        sessionProvider: FirProjectSessionProvider,
-        moduleDataProvider: ModuleDataProvider,
-        configuration: CompilerConfiguration,
-        extensionRegistrars: List<FirExtensionRegistrar>,
-        predefinedJavaComponents: FirSharableJavaComponents?
-    ): AbstractProjectEnvironment? {
-        val compilerConfigurationProvider = testServices.compilerConfigurationProvider
-        val projectEnvironment: AbstractProjectEnvironment?
-        val languageVersionSettings = module.languageVersionSettings
-        val isCommon = module.targetPlatform.isCommon()
-        when {
-            isCommon || module.targetPlatform.isJvm() -> {
+    private fun createProjectEnvironment(module: TestModule, project: Project): AbstractProjectEnvironment? {
+        return when {
+            module.targetPlatform.isCommon() || module.targetPlatform.isJvm() -> {
+                val compilerConfigurationProvider = testServices.compilerConfigurationProvider
                 val packagePartProviderFactory = compilerConfigurationProvider.getPackagePartProviderFactory(module)
-                projectEnvironment = VfsBasedProjectEnvironment(
+                VfsBasedProjectEnvironment(
                     project, VirtualFileManager.getInstance().getFileSystem(StandardFileSystems.FILE_PROTOCOL),
                 ) { packagePartProviderFactory.invoke(it) }
-                val projectFileSearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
-                val packagePartProvider = projectEnvironment.getPackagePartProvider(projectFileSearchScope)
-
-                if (isCommon) {
-                    val klibFiles = configuration.get(CLIConfigurationKeys.CONTENT_ROOTS).orEmpty()
-                        .filterIsInstance<JvmClasspathRoot>()
-                        .filter { it.file.isDirectory || it.file.extension == "klib" }
-                        .map { it.file.absolutePath }
-
-                    val resolvedKLibs = klibFiles.map {
-                        KotlinResolvedLibraryImpl(resolveSingleFileKlib(KFile(it), configuration.getLogger()))
-                    }
-
-                    FirCommonSessionFactory.createLibrarySession(
-                        mainModuleName = moduleName,
-                        sessionProvider = sessionProvider,
-                        moduleDataProvider = moduleDataProvider,
-                        projectEnvironment = projectEnvironment,
-                        extensionRegistrars = extensionRegistrars,
-                        librariesScope = projectFileSearchScope,
-                        resolvedKLibs = resolvedKLibs,
-                        packageAndMetadataPartProvider = packagePartProvider as PackageAndMetadataPartProvider,
-                        languageVersionSettings = languageVersionSettings,
-                    ).also(::registerExtraComponents)
-                } else {
-                    FirJvmSessionFactory.createLibrarySession(
-                        moduleName,
-                        sessionProvider,
-                        moduleDataProvider,
-                        projectEnvironment,
-                        extensionRegistrars,
-                        projectFileSearchScope,
-                        packagePartProvider,
-                        languageVersionSettings,
-                        predefinedJavaComponents,
-                    ).also(::registerExtraComponents)
-                }
             }
-            module.targetPlatform.isJs() -> {
-                projectEnvironment = null
-                TestFirJsSessionFactory.createLibrarySession(
-                    moduleName,
-                    sessionProvider,
-                    moduleDataProvider,
-                    module,
-                    testServices,
-                    configuration,
-                    extensionRegistrars,
-                ).also(::registerExtraComponents)
-            }
-            module.targetPlatform.isNative() -> {
-                projectEnvironment = null
-                TestFirNativeSessionFactory.createLibrarySession(
-                    moduleName,
-                    module,
-                    testServices,
-                    sessionProvider,
-                    moduleDataProvider,
-                    configuration,
-                    extensionRegistrars,
-                    languageVersionSettings,
-                ).also(::registerExtraComponents)
-            }
-            module.targetPlatform.isWasm() -> {
-                projectEnvironment = null
-                TestFirWasmSessionFactory.createLibrarySession(
-                    moduleName,
-                    sessionProvider,
-                    moduleDataProvider,
-                    module,
-                    testServices,
-                    configuration,
-                    extensionRegistrars,
-                    languageVersionSettings,
-                ).also(::registerExtraComponents)
-            }
-            else -> error("Unsupported")
+            else -> null
         }
-        return projectEnvironment
     }
 
     private fun analyze(
@@ -283,6 +206,10 @@ open class OldFirFrontendFacade(
         projectEnvironment: AbstractProjectEnvironment?,
         extensionRegistrars: List<FirExtensionRegistrar>,
         predefinedJavaComponents: FirSharableJavaComponents?,
+        sharedDependencySession: FirSession,
+        libraryScope: AbstractProjectFileSearchScope,
+        packagePartProvider: PackagePartProvider,
+        moduleDataProvider: ModuleDataProvider
     ): FirOutputPartForDependsOnModule {
         val compilerConfigurationProvider = testServices.compilerConfigurationProvider
         val moduleInfoProvider = testServices.firModuleInfoProvider
@@ -305,9 +232,6 @@ open class OldFirFrontendFacade(
             if (FirDiagnosticsDirectives.WITH_EXTRA_CHECKERS in module.directives) {
                 registerExtraCommonCheckers()
             }
-            if (FirDiagnosticsDirectives.WITH_EXPERIMENTAL_CHECKERS in module.directives) {
-                registerExperimentalCheckers()
-            }
             additionalSessionConfiguration?.invoke(this)
         }
 
@@ -321,7 +245,11 @@ open class OldFirFrontendFacade(
             sessionConfigurator,
             predefinedJavaComponents,
             project,
-            ktFiles.values
+            ktFiles.values,
+            sharedDependencySession,
+            libraryScope,
+            packagePartProvider,
+            moduleDataProvider
         )
 
         val firAnalyzerFacade = FirAnalyzerFacade(
@@ -357,27 +285,35 @@ open class OldFirFrontendFacade(
         predefinedJavaComponents: FirSharableJavaComponents?,
         project: Project,
         ktFiles: Collection<KtFile>,
+        sharedDependencySession: FirSession,
+        libraryScope: AbstractProjectFileSearchScope,
+        packagePartProvider: PackagePartProvider,
+        moduleDataProvider: ModuleDataProvider
     ): FirSession {
         val languageVersionSettings = module.languageVersionSettings
         return when {
             targetPlatform.isCommon() -> {
-                FirCommonSessionFactory.createModuleBasedSession(
-                    moduleData = moduleData,
-                    sessionProvider = sessionProvider,
-                    projectEnvironment = projectEnvironment!!,
-                    incrementalCompilationContext = null,
-                    extensionRegistrars = extensionRegistrars,
-                    languageVersionSettings = languageVersionSettings,
-                    init = sessionConfigurator,
-                ).also(::registerExtraComponents)
+                TODO()
+//                FirCommonSessionFactory.createModuleBasedSession(
+//                    moduleData = moduleData,
+//                    sessionProvider = sessionProvider,
+//                    projectEnvironment = projectEnvironment!!,
+//                    incrementalCompilationContext = null,
+//                    extensionRegistrars = extensionRegistrars,
+//                    languageVersionSettings = languageVersionSettings,
+//                    init = sessionConfigurator,
+//                ).also(::registerExtraComponents)
             }
             targetPlatform.isJvm() -> {
-                FirJvmSessionFactory.createModuleBasedSession(
+                NewFirJvmSessionFactory.createModuleBasedSession(
                     moduleData,
                     sessionProvider,
-                    PsiBasedProjectFileSearchScope(TopDownAnalyzerFacadeForJVM.newModuleSearchScope(project, ktFiles)),
-                    projectEnvironment!!,
-                    createIncrementalCompilationSymbolProviders = { null },
+                    sharedDependencySession,
+                    moduleDataProvider,
+                    javaSourcesScope = PsiBasedProjectFileSearchScope(TopDownAnalyzerFacadeForJVM.newModuleSearchScope(project, ktFiles)),
+                    libraryScope = libraryScope,
+                    packagePartProvider = packagePartProvider,
+                    projectEnvironment = projectEnvironment!!,
                     extensionRegistrars,
                     languageVersionSettings,
                     jvmTarget = testServices.compilerConfigurationProvider.getCompilerConfiguration(module)
@@ -391,34 +327,37 @@ open class OldFirFrontendFacade(
                 ).also(::registerExtraComponents)
             }
             targetPlatform.isJs() -> {
-                TestFirJsSessionFactory.createModuleBasedSession(
-                    moduleData,
-                    sessionProvider,
-                    extensionRegistrars,
-                    testServices.compilerConfigurationProvider.getCompilerConfiguration(module),
-                    lookupTracker = null,
-                    sessionConfigurator,
-                ).also(::registerExtraComponents)
+                TODO()
+//                TestFirJsSessionFactory.createModuleBasedSession(
+//                    moduleData,
+//                    sessionProvider,
+//                    extensionRegistrars,
+//                    testServices.compilerConfigurationProvider.getCompilerConfiguration(module),
+//                    lookupTracker = null,
+//                    sessionConfigurator,
+//                ).also(::registerExtraComponents)
             }
             targetPlatform.isNative() -> {
-                FirNativeSessionFactory.createModuleBasedSession(
-                    moduleData,
-                    sessionProvider,
-                    extensionRegistrars,
-                    languageVersionSettings,
-                    init = sessionConfigurator
-                ).also(::registerExtraComponents)
+                TODO()
+//                FirNativeSessionFactory.createModuleBasedSession(
+//                    moduleData,
+//                    sessionProvider,
+//                    extensionRegistrars,
+//                    languageVersionSettings,
+//                    init = sessionConfigurator
+//                ).also(::registerExtraComponents)
             }
             targetPlatform.isWasm() -> {
-                TestFirWasmSessionFactory.createModuleBasedSession(
-                    moduleData,
-                    sessionProvider,
-                    extensionRegistrars,
-                    languageVersionSettings,
-                    testServices.compilerConfigurationProvider.getCompilerConfiguration(module).wasmTarget,
-                    lookupTracker = null,
-                    sessionConfigurator,
-                ).also(::registerExtraComponents)
+                TODO()
+//                TestFirWasmSessionFactory.createModuleBasedSession(
+//                    moduleData,
+//                    sessionProvider,
+//                    extensionRegistrars,
+//                    languageVersionSettings,
+//                    testServices.compilerConfigurationProvider.getCompilerConfiguration(module).wasmTarget,
+//                    lookupTracker = null,
+//                    sessionConfigurator,
+//                ).also(::registerExtraComponents)
             }
             else -> error("Unsupported")
         }
