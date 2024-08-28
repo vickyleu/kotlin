@@ -16,13 +16,11 @@ import org.jetbrains.kotlin.fir.java.FirJvmTargetProvider
 import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider
 import org.jetbrains.kotlin.fir.java.JavaSymbolProvider
 import org.jetbrains.kotlin.fir.java.deserialization.JvmClassFileBasedSymbolProvider
-import org.jetbrains.kotlin.fir.java.deserialization.OptionalAnnotationClassesProvider
 import org.jetbrains.kotlin.fir.resolve.FirJvmActualizingBuiltinSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.*
 import org.jetbrains.kotlin.fir.resolve.scopes.wrapScopeWithJvmMapped
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
-import org.jetbrains.kotlin.fir.session.FirAbstractSessionFactory
 import org.jetbrains.kotlin.fir.session.FirJvmIncrementalCompilationSymbolProviders
 import org.jetbrains.kotlin.fir.session.FirSessionConfigurator
 import org.jetbrains.kotlin.fir.session.FirSharableJavaComponents
@@ -35,17 +33,15 @@ import org.jetbrains.kotlin.incremental.components.ImportTracker
 import org.jetbrains.kotlin.incremental.components.LookupTracker
 import org.jetbrains.kotlin.load.kotlin.KotlinClassFinder
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
-import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.utils.addToStdlib.runUnless
 
 @OptIn(SessionConfiguration::class)
-object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFactory.LibraryContext, NewFirJvmSessionFactory.SourceContext>() {
+object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFactory.LibraryContext, NewFirJvmSessionFactory.SourceContext>() {
 
-    // ==================================== Library session ====================================
+    // ==================================== Shared dependency session ====================================
 
-    fun createLibrarySession(
-        mainModuleName: Name,
+    fun createSharedDependencySession(
         sessionProvider: FirProjectSessionProvider,
         moduleDataProvider: ModuleDataProvider,
         projectEnvironment: AbstractProjectEnvironment,
@@ -55,40 +51,57 @@ object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFacto
         languageVersionSettings: LanguageVersionSettings,
         predefinedJavaComponents: FirSharableJavaComponents?,
     ): FirSession {
-        val kotlinClassFinder = projectEnvironment.getKotlinClassFinder(scope)
-        val context = LibraryContext(predefinedJavaComponents, projectEnvironment)
-        return createLibrarySession(
-            mainModuleName,
+        val context = LibraryContext(
+            predefinedJavaComponents,
+            projectEnvironment,
+            languageVersionSettings,
+            scope,
+            projectEnvironment.getKotlinClassFinder(scope),
+            packagePartProvider
+        )
+        return createSharedDependencySession(
+            moduleDataProvider,
             context,
             sessionProvider,
-            moduleDataProvider,
-            languageVersionSettings,
             extensionRegistrars,
-            createProviders = { session, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider ->
-                listOfNotNull(
-                    JvmClassFileBasedSymbolProvider(
-                        session,
-                        moduleDataProvider,
-                        kotlinScopeProvider,
-                        packagePartProvider,
-                        kotlinClassFinder,
-                        projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), scope)
-                    ),
-                    runUnless(languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
-                        initializeBuiltinsProvider(session, builtinsModuleData, kotlinScopeProvider, kotlinClassFinder)
-                    },
-                    FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, builtinsModuleData, kotlinScopeProvider),
-                    syntheticFunctionInterfaceProvider,
-                    FirCloneableSymbolProvider(session, builtinsModuleData, kotlinScopeProvider),
-                    OptionalAnnotationClassesProvider(
-                        session,
-                        moduleDataProvider,
-                        kotlinScopeProvider,
-                        packagePartProvider
-                    )
-                )
-            }
         )
+    }
+
+    override fun setupSharedDependencySymbolProviders(
+        session: FirSession,
+        moduleData: FirModuleData,
+        moduleDataProvider: ModuleDataProvider,
+        kotlinScopeProvider: FirKotlinScopeProvider,
+        syntheticFunctionInterfaceProvider: FirExtensionSyntheticFunctionInterfaceProvider?,
+        c: LibraryContext
+    ): List<FirSymbolProvider> {
+        return listOfNotNull(
+            runUnless(c.languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
+                initializeBuiltinsProvider(session, moduleData, kotlinScopeProvider, c.kotlinClassFinder)
+            },
+            FirBuiltinSyntheticFunctionInterfaceProvider.initialize(session, moduleData, kotlinScopeProvider),
+            syntheticFunctionInterfaceProvider,
+            FirCloneableSymbolProvider(session, moduleData, kotlinScopeProvider),
+        )
+    }
+
+    // ==================================== Library session ====================================
+
+    override fun setupDependencySymbolProviders(
+        session: FirSession,
+        moduleDataProvider: ModuleDataProvider,
+        kotlinScopeProvider: FirKotlinScopeProvider,
+        c: LibraryContext
+    ): List<FirSymbolProvider> {
+        val provider = JvmClassFileBasedSymbolProvider(
+            session,
+            moduleDataProvider,
+            kotlinScopeProvider,
+            c.packagePartProvider,
+            c.kotlinClassFinder,
+            c.projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), c.scope)
+        )
+        return listOf(provider)
     }
 
     override fun createKotlinScopeProviderForLibrarySession(): FirKotlinScopeProvider {
@@ -105,9 +118,12 @@ object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFacto
     fun createModuleBasedSession(
         moduleData: FirModuleData,
         sessionProvider: FirProjectSessionProvider,
+        sharedDependencySession: FirSession,
+        moduleDataProvider: ModuleDataProvider,
         javaSourcesScope: AbstractProjectFileSearchScope,
+        libraryScope: AbstractProjectFileSearchScope,
+        packagePartProvider: PackagePartProvider,
         projectEnvironment: AbstractProjectEnvironment,
-        createIncrementalCompilationSymbolProviders: (FirSession) -> FirJvmIncrementalCompilationSymbolProviders?,
         extensionRegistrars: List<FirExtensionRegistrar>,
         languageVersionSettings: LanguageVersionSettings,
         jvmTarget: JvmTarget,
@@ -118,10 +134,21 @@ object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFacto
         needRegisterJavaElementFinder: Boolean,
         init: FirSessionConfigurator.() -> Unit,
     ): FirSession {
-        val context = SourceContext(jvmTarget, predefinedJavaComponents, projectEnvironment)
+        val libraryContext = LibraryContext(
+            predefinedJavaComponents,
+            projectEnvironment,
+            languageVersionSettings,
+            libraryScope,
+            projectEnvironment.getKotlinClassFinder(libraryScope),
+            packagePartProvider
+        )
+        val sourceContext = SourceContext(jvmTarget, predefinedJavaComponents, projectEnvironment, javaSourcesScope)
         return createModuleBasedSession(
             moduleData,
-            context = context,
+            sharedDependencySession,
+            moduleDataProvider,
+            libraryContext,
+            sourceContext,
             sessionProvider,
             extensionRegistrars,
             languageVersionSettings,
@@ -129,24 +156,6 @@ object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFacto
             enumWhenTracker,
             importTracker,
             init,
-            createProviders = { session, kotlinScopeProvider, symbolProvider, generatedSymbolsProvider, dependencies ->
-                val javaSymbolProvider =
-                    JavaSymbolProvider(session, projectEnvironment.getFirJavaFacade(session, moduleData, javaSourcesScope))
-                session.register(JavaSymbolProvider::class, javaSymbolProvider)
-
-                val incrementalCompilationSymbolProviders = createIncrementalCompilationSymbolProviders(session)
-
-                listOfNotNull(
-                    symbolProvider,
-                    *(incrementalCompilationSymbolProviders?.previousFirSessionsSymbolProviders?.toTypedArray() ?: emptyArray()),
-                    incrementalCompilationSymbolProviders?.symbolProviderForBinariesFromIncrementalCompilation,
-                    generatedSymbolsProvider,
-                    javaSymbolProvider,
-                    initializeForStdlibIfNeeded(projectEnvironment, session, kotlinScopeProvider, dependencies),
-                    *dependencies.toTypedArray(),
-                    incrementalCompilationSymbolProviders?.optionalAnnotationClassesProviderForBinariesFromIncrementalCompilation,
-                )
-            }
         ).also {
             if (needRegisterJavaElementFinder) {
                 projectEnvironment.registerAsJavaElementFinder(it)
@@ -175,19 +184,34 @@ object NewFirJvmSessionFactory : FirAbstractSessionFactory<NewFirJvmSessionFacto
         register(FirJvmTargetProvider::class, FirJvmTargetProvider(c.jvmTarget))
     }
 
-    // ==================================== Common parts ====================================
+    override fun setupPlatformSpecificSourceSessionProviders(
+        session: FirSession,
+        moduleData: FirModuleData,
+        c: SourceContext
+    ): List<FirSymbolProvider> {
+        val javaSymbolProvider = JavaSymbolProvider(session, c.projectEnvironment.getFirJavaFacade(session, moduleData, c.javaSourcesScope))
+        session.register(JavaSymbolProvider::class, javaSymbolProvider)
+        return listOf(javaSymbolProvider)
+    }
+
+// ==================================== Common parts ====================================
 
     // ==================================== Utilities ====================================
 
     class LibraryContext(
         val predefinedJavaComponents: FirSharableJavaComponents?,
         val projectEnvironment: AbstractProjectEnvironment,
+        val languageVersionSettings: LanguageVersionSettings,
+        val scope: AbstractProjectFileSearchScope,
+        val kotlinClassFinder: KotlinClassFinder,
+        val packagePartProvider: PackagePartProvider
     )
 
     class SourceContext(
         val jvmTarget: JvmTarget,
         val predefinedJavaComponents: FirSharableJavaComponents?,
         val projectEnvironment: AbstractProjectEnvironment,
+        val javaSourcesScope: AbstractProjectFileSearchScope,
     )
 
     private fun initializeForStdlibIfNeeded(

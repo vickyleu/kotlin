@@ -17,35 +17,87 @@ import org.jetbrains.kotlin.fir.resolve.providers.DEPENDENCIES_SYMBOL_PROVIDER_Q
 import org.jetbrains.kotlin.fir.resolve.providers.FirProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirCachingCompositeSymbolProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.FirCompositeSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirExtensionSyntheticFunctionInterfaceProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirLibrarySessionProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirProviderImpl
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
-import org.jetbrains.kotlin.fir.session.FirSessionConfigurator
-import org.jetbrains.kotlin.fir.session.registerCliCompilerOnlyComponents
-import org.jetbrains.kotlin.fir.session.registerCommonComponents
-import org.jetbrains.kotlin.fir.session.registerCommonComponentsAfterExtensionsAreConfigured
-import org.jetbrains.kotlin.fir.session.registerModuleData
-import org.jetbrains.kotlin.fir.session.registerResolveComponents
+import org.jetbrains.kotlin.fir.session.*
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
 import org.jetbrains.kotlin.incremental.components.ImportTracker
 import org.jetbrains.kotlin.incremental.components.LookupTracker
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.utils.addIfNotNull
 
 @OptIn(PrivateSessionConstructor::class, SessionConfiguration::class)
 abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
+    // ==================================== Shared dependency session ====================================
+
+    protected fun createSharedDependencySession(
+        moduleDataProvider: ModuleDataProvider,
+        context: LIBRARY_CONTEXT,
+        sessionProvider: FirProjectSessionProvider,
+        extensionRegistrars: List<FirExtensionRegistrar>,
+    ): FirSession {
+        return FirCliSession(sessionProvider, FirSession.Kind.Library).apply {
+            registerCliCompilerOnlyComponents()
+            registerCommonComponents(languageVersionSettings)
+            registerLibrarySessionComponents(context)
+
+            val kotlinScopeProvider = createKotlinScopeProviderForLibrarySession()
+            register(FirKotlinScopeProvider::class, kotlinScopeProvider)
+
+            val builtinsModuleData = BinaryModuleData.createDependencyModuleData(
+                Name.special("<shared dependencies>"),
+                moduleDataProvider.platform,
+            )
+            builtinsModuleData.bindSession(this)
+
+            FirSessionConfigurator(this).apply {
+                for (extensionRegistrar in extensionRegistrars) {
+                    registerExtensions(extensionRegistrar.configure())
+                }
+            }.configure()
+            registerCommonComponentsAfterExtensionsAreConfigured()
+
+            val syntheticFunctionInterfaceProvider = FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(
+                this,
+                builtinsModuleData,
+                kotlinScopeProvider
+            )
+
+            val providers = setupSharedDependencySymbolProviders(
+                this,
+                builtinsModuleData,
+                moduleDataProvider,
+                kotlinScopeProvider,
+                syntheticFunctionInterfaceProvider,
+                context
+            )
+            val symbolProvider = FirCachingCompositeSymbolProvider.create(this, providers)
+            register(FirSymbolProvider::class, symbolProvider)
+            register(FirProvider::class, FirLibrarySessionProvider(symbolProvider))
+        }
+    }
+
+    protected abstract fun setupSharedDependencySymbolProviders(
+        session: FirSession,
+        moduleData: FirModuleData,
+        moduleDataProvider: ModuleDataProvider,
+        kotlinScopeProvider: FirKotlinScopeProvider,
+        syntheticFunctionInterfaceProvider: FirExtensionSyntheticFunctionInterfaceProvider?,
+        c: LIBRARY_CONTEXT
+    ): List<FirSymbolProvider>
+
     // ==================================== Library session ====================================
 
     protected fun createLibrarySession(
-        mainModuleName: Name,
         context: LIBRARY_CONTEXT,
         sessionProvider: FirProjectSessionProvider,
         moduleDataProvider: ModuleDataProvider,
         languageVersionSettings: LanguageVersionSettings,
-        extensionRegistrars: List<FirExtensionRegistrar>,
-        createProviders: (FirSession, FirModuleData, FirKotlinScopeProvider, FirExtensionSyntheticFunctionInterfaceProvider?) -> List<FirSymbolProvider>
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply session@{
             moduleDataProvider.allModuleData.forEach {
@@ -60,22 +112,12 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             val kotlinScopeProvider = createKotlinScopeProviderForLibrarySession()
             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
 
-            val builtinsModuleData = BinaryModuleData.createDependencyModuleData(
-                Name.special("<builtins of ${mainModuleName.asString()}"),
-                moduleDataProvider.platform,
+            val providers = setupDependencySymbolProviders(
+                this,
+                moduleDataProvider,
+                kotlinScopeProvider,
+                context
             )
-            builtinsModuleData.bindSession(this)
-
-            FirSessionConfigurator(this).apply {
-                for (extensionRegistrar in extensionRegistrars) {
-                    registerExtensions(extensionRegistrar.configure())
-                }
-            }.configure()
-            registerCommonComponentsAfterExtensionsAreConfigured()
-
-            val syntheticFunctionInterfaceProvider =
-                FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(this, builtinsModuleData, kotlinScopeProvider)
-            val providers = createProviders(this, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider)
 
             val symbolProvider = FirCachingCompositeSymbolProvider.create(this, providers)
             register(FirSymbolProvider::class, symbolProvider)
@@ -85,12 +127,21 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
     protected abstract fun createKotlinScopeProviderForLibrarySession(): FirKotlinScopeProvider
     protected abstract fun FirSession.registerLibrarySessionComponents(c: LIBRARY_CONTEXT)
+    protected abstract fun setupDependencySymbolProviders(
+        session: FirSession,
+        moduleDataProvider: ModuleDataProvider,
+        kotlinScopeProvider: FirKotlinScopeProvider,
+        c: LIBRARY_CONTEXT
+    ): List<FirSymbolProvider>
 
     // ==================================== Platform session ====================================
 
     protected fun createModuleBasedSession(
         moduleData: FirModuleData,
-        context: SOURCE_CONTEXT,
+        sharedDependencySession: FirSession,
+        moduleDataProvider: ModuleDataProvider,
+        libraryContext: LIBRARY_CONTEXT,
+        sourceContext: SOURCE_CONTEXT,
         sessionProvider: FirProjectSessionProvider,
         extensionRegistrars: List<FirExtensionRegistrar>,
         languageVersionSettings: LanguageVersionSettings,
@@ -98,12 +149,9 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
         enumWhenTracker: EnumWhenTracker?,
         importTracker: ImportTracker?,
         init: FirSessionConfigurator.() -> Unit,
-        createProviders: (
-            FirSession, FirKotlinScopeProvider, FirSymbolProvider,
-            FirSwitchableExtensionDeclarationsSymbolProvider?,
-            dependencies: List<FirSymbolProvider>,
-        ) -> List<FirSymbolProvider>
     ): FirSession {
+        val librarySession = createLibrarySession(libraryContext, sessionProvider, moduleDataProvider, languageVersionSettings)
+
         return FirCliSession(sessionProvider, FirSession.Kind.Source).apply session@{
             moduleData.bindSession(this@session)
             sessionProvider.registerSession(moduleData, this@session)
@@ -111,7 +159,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             registerCliCompilerOnlyComponents()
             registerCommonComponents(languageVersionSettings)
             registerResolveComponents(lookupTracker, enumWhenTracker, importTracker)
-            registerSourceSessionComponents(context)
+            registerSourceSessionComponents(sourceContext)
 
             val kotlinScopeProvider = createKotlinScopeProviderForSourceSession(moduleData, languageVersionSettings)
             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
@@ -121,7 +169,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
             FirSessionConfigurator(this).apply {
                 registerCommonCheckers()
-                registerPlatformCheckers(context)
+                registerPlatformCheckers(sourceContext)
 
                 for (extensionRegistrar in extensionRegistrars) {
                     registerExtensions(extensionRegistrar.configure())
@@ -130,26 +178,52 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             }.configure()
             registerCommonComponentsAfterExtensionsAreConfigured()
 
-            val dependencyProviders = computeDependencyProviderList(moduleData)
             val generatedSymbolsProvider = FirSwitchableExtensionDeclarationsSymbolProvider.createIfNeeded(this)
 
-            val providers = createProviders(
-                this,
-                kotlinScopeProvider,
-                firProvider.symbolProvider,
-                generatedSymbolsProvider,
-                dependencyProviders,
-            )
+            val sourceProviders = buildList {
+                add(firProvider.symbolProvider)
+                addIfNotNull(generatedSymbolsProvider)
+                addAll(setupPlatformSpecificSourceSessionProviders(this@session, moduleData, sourceContext))
+            }
+
+            val dependsOnSessions = findDependsOnSessions(moduleData)
+            val dependsOnSourceProviders = dependsOnSessions.flatMap {
+                it.structuredSymbolProviders.sourceProviders
+            }
+
+            val libraryProviders = librarySession.symbolProvider.decompose()
+
+            val sharedProviders = sharedDependencySession.symbolProvider.decompose()
+
+            val allProviders = buildList {
+                addAll(sourceProviders)
+                addAll(dependsOnSourceProviders)
+                addAll(libraryProviders)
+                addAll(sharedProviders)
+            }
 
             register(
                 FirSymbolProvider::class,
                 FirCachingCompositeSymbolProvider.create(
-                    this, providers,
+                    this, allProviders,
                     expectedCachesToBeCleanedOnce = generatedSymbolsProvider != null
                 )
             )
 
             generatedSymbolsProvider?.let { register(FirSwitchableExtensionDeclarationsSymbolProvider::class, it) }
+
+            register(
+                SessionProvidersStructure::class,
+                SessionProvidersStructure(sourceProviders, libraryProviders)
+            )
+
+            val dependencyProviders = buildList {
+                addAll(sourceProviders)
+                addAll(dependsOnSourceProviders)
+                addAll(libraryProviders)
+                addAll(sharedProviders)
+            }
+
             register(DEPENDENCIES_SYMBOL_PROVIDER_QUALIFIED_KEY, FirCachingCompositeSymbolProvider.create(this, dependencyProviders))
         }
     }
@@ -161,49 +235,27 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
     protected abstract fun FirSessionConfigurator.registerPlatformCheckers(c: SOURCE_CONTEXT)
     protected abstract fun FirSession.registerSourceSessionComponents(c: SOURCE_CONTEXT)
 
+    protected abstract fun setupPlatformSpecificSourceSessionProviders(
+        session: FirSession,
+        moduleData: FirModuleData,
+        c: SOURCE_CONTEXT
+    ): List<FirSymbolProvider>
+
     // ==================================== Common parts ====================================
 
     // ==================================== Utilities ====================================
 
-    private fun FirSession.computeDependencyProviderList(moduleData: FirModuleData): List<FirSymbolProvider> {
-        // dependsOnDependencies can actualize declarations from their dependencies. Because actual declarations can be more specific
-        // (e.g. have additional supertypes), the modules must be ordered from most specific (i.e. actual) to most generic (i.e. expect)
-        // to prevent false positive resolution errors (see KT-57369 for an example).
-        return (moduleData.dependencies + moduleData.friendDependencies + moduleData.allDependsOnDependencies)
+    private fun FirSession.findDependsOnSessions(moduleData: FirModuleData): List<FirSession> {
+        return (moduleData.allDependsOnDependencies)
             .mapNotNull { sessionProvider?.getSession(it) }
-            .flatMap { it.symbolProvider.flatten() }
-            .distinct()
-            .sortedBy { it.session.kind }
+            .onEach { check(it.kind == FirSession.Kind.Source) }
     }
 
-    /* It eliminates dependency and composite providers since the current dependency provider is composite in fact.
-    *  To prevent duplications and resolving errors, library or source providers from other modules should be filtered out during flattening.
-    *  It depends on the session's kind of the top-level provider */
-    private fun FirSymbolProvider.flatten(): List<FirSymbolProvider> {
-        val originalSession = session.takeIf { it.kind == FirSession.Kind.Source }
-        val result = mutableListOf<FirSymbolProvider>()
-
-        fun FirSymbolProvider.collectProviders() {
-            when {
-                // When provider is composite, unwrap all contained providers and recurse.
-                this is FirCachingCompositeSymbolProvider -> {
-                    for (provider in providers) {
-                        provider.collectProviders()
-                    }
-                }
-
-                // Make sure only source symbol providers from the same session as the original symbol provider are flattened. A composite
-                // symbol provider can contain source symbol providers from multiple sessions that may represent dependency symbol providers
-                // which should not be propagated transitively.
-                originalSession != null && session.kind == FirSession.Kind.Source && session == originalSession ||
-                        originalSession == null && session.kind == FirSession.Kind.Library -> {
-                    result.add(this)
-                }
-            }
+    private fun FirSymbolProvider.decompose(): List<FirSymbolProvider> {
+        return when (this) {
+            is FirCompositeSymbolProvider -> providers
+            is FirCachingCompositeSymbolProvider -> providers
+            else -> listOf(this)
         }
-
-        collectProviders()
-
-        return result
     }
 }
