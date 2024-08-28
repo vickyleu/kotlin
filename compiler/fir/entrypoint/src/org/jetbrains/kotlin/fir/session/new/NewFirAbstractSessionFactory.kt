@@ -40,6 +40,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
         context: LIBRARY_CONTEXT,
         sessionProvider: FirProjectSessionProvider,
         extensionRegistrars: List<FirExtensionRegistrar>,
+        languageVersionSettings: LanguageVersionSettings
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply {
             registerCliCompilerOnlyComponents()
@@ -111,6 +112,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
             val kotlinScopeProvider = createKotlinScopeProviderForLibrarySession()
             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
+            registerCommonComponentsAfterExtensionsAreConfigured()
 
             val providers = setupDependencySymbolProviders(
                 this,
@@ -218,7 +220,6 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             )
 
             val dependencyProviders = buildList {
-                addAll(sourceProviders)
                 addAll(dependsOnSourceProviders)
                 addAll(libraryProviders)
                 addAll(sharedProviders)

@@ -24,6 +24,7 @@ import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.fir.session.FirJvmIncrementalCompilationSymbolProviders
 import org.jetbrains.kotlin.fir.session.FirSessionConfigurator
 import org.jetbrains.kotlin.fir.session.FirSharableJavaComponents
+import org.jetbrains.kotlin.fir.session.KlibBasedSymbolProvider
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
 import org.jetbrains.kotlin.fir.session.registerDefaultComponents
@@ -31,6 +32,8 @@ import org.jetbrains.kotlin.fir.session.registerJavaComponents
 import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
 import org.jetbrains.kotlin.incremental.components.ImportTracker
 import org.jetbrains.kotlin.incremental.components.LookupTracker
+import org.jetbrains.kotlin.library.KotlinLibrary
+import org.jetbrains.kotlin.library.metadata.resolver.KotlinResolvedLibrary
 import org.jetbrains.kotlin.load.kotlin.KotlinClassFinder
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
@@ -57,13 +60,15 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             languageVersionSettings,
             scope,
             projectEnvironment.getKotlinClassFinder(scope),
-            packagePartProvider
+            packagePartProvider,
+            resolvedLibraries = emptyList()
         )
         return createSharedDependencySession(
             moduleDataProvider,
             context,
             sessionProvider,
             extensionRegistrars,
+            languageVersionSettings
         )
     }
 
@@ -93,6 +98,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         kotlinScopeProvider: FirKotlinScopeProvider,
         c: LibraryContext
     ): List<FirSymbolProvider> {
+        val klibProvider = KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, c.resolvedLibraries)
         val provider = JvmClassFileBasedSymbolProvider(
             session,
             moduleDataProvider,
@@ -101,7 +107,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             c.kotlinClassFinder,
             c.projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), c.scope)
         )
-        return listOf(provider)
+        return listOf(provider, klibProvider)
     }
 
     override fun createKotlinScopeProviderForLibrarySession(): FirKotlinScopeProvider {
@@ -123,6 +129,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         javaSourcesScope: AbstractProjectFileSearchScope,
         libraryScope: AbstractProjectFileSearchScope,
         packagePartProvider: PackagePartProvider,
+        resolvedLibraries: List<KotlinLibrary>,
         projectEnvironment: AbstractProjectEnvironment,
         extensionRegistrars: List<FirExtensionRegistrar>,
         languageVersionSettings: LanguageVersionSettings,
@@ -140,7 +147,8 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             languageVersionSettings,
             libraryScope,
             projectEnvironment.getKotlinClassFinder(libraryScope),
-            packagePartProvider
+            packagePartProvider,
+            resolvedLibraries
         )
         val sourceContext = SourceContext(jvmTarget, predefinedJavaComponents, projectEnvironment, javaSourcesScope)
         return createModuleBasedSession(
@@ -194,7 +202,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         return listOf(javaSymbolProvider)
     }
 
-// ==================================== Common parts ====================================
+    // ==================================== Common parts ====================================
 
     // ==================================== Utilities ====================================
 
@@ -204,7 +212,8 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         val languageVersionSettings: LanguageVersionSettings,
         val scope: AbstractProjectFileSearchScope,
         val kotlinClassFinder: KotlinClassFinder,
-        val packagePartProvider: PackagePartProvider
+        val packagePartProvider: PackagePartProvider,
+        val resolvedLibraries: List<KotlinLibrary>
     )
 
     class SourceContext(

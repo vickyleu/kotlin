@@ -59,6 +59,18 @@ abstract class Frontend2BackendConverter<FrontendOutputArtifact, BackendInputArt
     }
 }
 
+abstract class Frontend2BinaryConverter<FrontendOutputArtifact, BinaryOutputArtifact>(
+    val testServices: TestServices,
+    final override val inputKind: FrontendKind<FrontendOutputArtifact>,
+    final override val outputKind: BinaryKind<BinaryOutputArtifact>,
+) : AbstractTestFacade<FrontendOutputArtifact, BinaryOutputArtifact>()
+        where FrontendOutputArtifact : ResultingArtifact.FrontendOutput<FrontendOutputArtifact>,
+              BinaryOutputArtifact : ResultingArtifact.Binary<BinaryOutputArtifact> {
+    override fun shouldRunAnalysis(module: TestModule): Boolean {
+        return module.frontendKind == inputKind // && module.binaryKind == outputKind // TODO: either configure binary kind or prove that the check is skipped correctly
+    }
+}
+
 abstract class BackendFacade<BackendInputArtifact, BinaryOutputArtifact>(
     val testServices: TestServices,
     final override val inputKind: BackendKind<BackendInputArtifact>,
