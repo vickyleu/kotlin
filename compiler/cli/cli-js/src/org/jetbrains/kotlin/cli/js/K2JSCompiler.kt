@@ -373,8 +373,6 @@ class K2JSCompiler : CLICompiler<K2JSCompilerArguments>() {
                     .mapNotNull { it.loadIrFragments()?.mainFragment }
                     .let { fragments -> if (arguments.preserveIcOrder) fragments.sortedBy { it.fragmentTag } else fragments }
 
-                performanceManager?.notifyGenerationFinished()
-
                 val res = compileWasm(
                     wasmCompiledFileFragments = wasmArtifacts,
                     moduleName = moduleName,
@@ -385,6 +383,8 @@ class K2JSCompiler : CLICompiler<K2JSCompilerArguments>() {
                     generateWat = arguments.wasmGenerateWat,
                     generateSourceMaps = configuration.getBoolean(JSConfigurationKeys.SOURCE_MAP),
                 )
+
+                performanceManager?.notifyGenerationFinished()
 
                 writeCompilationResult(
                     result = res,
