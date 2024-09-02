@@ -209,10 +209,21 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
         val sharedProviders = sharedDependencySession.symbolProvider.decompose()
 
+        // TODO: should we use deduplicating providers from intermediate sessions here?
+        val libraryProvidersFromDependsOnSessions = dependsOnSessions.flatMap {
+            it.structuredSymbolProviders.libraryProviders
+        }
+
+        val deduplicatingProviderForLibraries = FirMppDeduplicatingSymbolProvider(
+            session,
+            commonSymbolProvider = FirCompositeSymbolProvider.create(session, libraryProvidersFromDependsOnSessions),
+            platformSymbolProvider = FirCompositeSymbolProvider.create(session, libraryProviders)
+        )
+
         val allProviders = buildList {
             addAll(sourceProviders)
             addAll(dependsOnSourceProviders)
-            addAll(libraryProviders)
+            add(deduplicatingProviderForLibraries)
             addAll(sharedProviders)
         }
 
