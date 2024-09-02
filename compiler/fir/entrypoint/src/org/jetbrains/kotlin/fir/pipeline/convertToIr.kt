@@ -247,6 +247,8 @@ private class Fir2IrPipeline(
 
     private fun Fir2IrConversionResult.createIrActualizer(): IrActualizer? {
         return runIf(dependentIrFragments.isNotEmpty()) {
+            referenceAllCommonDependencies(outputs)
+
             IrActualizer(
                 KtDiagnosticReporterWithImplicitIrBasedContext(
                     fir2IrConfiguration.diagnosticReporter,

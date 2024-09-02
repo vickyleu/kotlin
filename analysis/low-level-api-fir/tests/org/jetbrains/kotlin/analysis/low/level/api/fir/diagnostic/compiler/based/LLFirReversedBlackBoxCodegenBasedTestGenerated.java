@@ -39859,6 +39859,12 @@ public class LLFirReversedBlackBoxCodegenBasedTestGenerated extends AbstractLLFi
         }
 
         @Test
+        @TestMetadata("commonDependencyNoReferenceFromPlatform.kt")
+        public void testCommonDependencyNoReferenceFromPlatform() {
+          runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/commonDependencyNoReferenceFromPlatform.kt");
+        }
+
+        @Test
         @TestMetadata("expectMM3.kt")
         public void testExpectMM3() {
           runTest("compiler/testData/codegen/box/multiplatform/k2/kmpCpPrototype/expectMM3.kt");
