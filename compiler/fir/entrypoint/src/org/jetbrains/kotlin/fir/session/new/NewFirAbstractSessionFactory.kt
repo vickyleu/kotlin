@@ -180,53 +180,64 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             }.configure()
             registerCommonComponentsAfterExtensionsAreConfigured()
 
-            val generatedSymbolsProvider = FirSwitchableExtensionDeclarationsSymbolProvider.createIfNeeded(this)
-
-            val sourceProviders = buildList {
-                add(firProvider.symbolProvider)
-                addIfNotNull(generatedSymbolsProvider)
-                addAll(setupPlatformSpecificSourceSessionProviders(this@session, moduleData, sourceContext))
-            }
-
-            val dependsOnSessions = findDependsOnSessions(moduleData)
-            val dependsOnSourceProviders = dependsOnSessions.flatMap {
-                it.structuredSymbolProviders.sourceProviders
-            }
-
-            val libraryProviders = librarySession.symbolProvider.decompose()
-
-            val sharedProviders = sharedDependencySession.symbolProvider.decompose()
-
-            val allProviders = buildList {
-                addAll(sourceProviders)
-                addAll(dependsOnSourceProviders)
-                addAll(libraryProviders)
-                addAll(sharedProviders)
-            }
-
-            register(
-                FirSymbolProvider::class,
-                FirCachingCompositeSymbolProvider.create(
-                    this, allProviders,
-                    expectedCachesToBeCleanedOnce = generatedSymbolsProvider != null
-                )
-            )
-
-            generatedSymbolsProvider?.let { register(FirSwitchableExtensionDeclarationsSymbolProvider::class, it) }
-
-            register(
-                SessionProvidersStructure::class,
-                SessionProvidersStructure(sourceProviders, libraryProviders)
-            )
-
-            val dependencyProviders = buildList {
-                addAll(dependsOnSourceProviders)
-                addAll(libraryProviders)
-                addAll(sharedProviders)
-            }
-
-            register(DEPENDENCIES_SYMBOL_PROVIDER_QUALIFIED_KEY, FirCachingCompositeSymbolProvider.create(this, dependencyProviders))
+            setupSymbolProviders(this, firProvider, moduleData, sourceContext, librarySession, sharedDependencySession)
         }
+    }
+
+    private fun setupSymbolProviders(
+        session: FirCliSession,
+        firProvider: FirProviderImpl,
+        moduleData: FirModuleData,
+        sourceContext: SOURCE_CONTEXT,
+        librarySession: FirSession,
+        sharedDependencySession: FirSession,
+    ) {
+        val generatedSymbolsProvider = FirSwitchableExtensionDeclarationsSymbolProvider.createIfNeeded(session)
+
+        val sourceProviders = buildList {
+            add(firProvider.symbolProvider)
+            addIfNotNull(generatedSymbolsProvider)
+            addAll(setupPlatformSpecificSourceSessionProviders(session, moduleData, sourceContext))
+        }
+
+        val dependsOnSessions = session.findDependsOnSessions(moduleData)
+        val dependsOnSourceProviders = dependsOnSessions.flatMap {
+            it.structuredSymbolProviders.sourceProviders
+        }
+
+        val libraryProviders = librarySession.symbolProvider.decompose()
+
+        val sharedProviders = sharedDependencySession.symbolProvider.decompose()
+
+        val allProviders = buildList {
+            addAll(sourceProviders)
+            addAll(dependsOnSourceProviders)
+            addAll(libraryProviders)
+            addAll(sharedProviders)
+        }
+
+        session.register(
+            FirSymbolProvider::class,
+            FirCachingCompositeSymbolProvider.create(
+                session, allProviders,
+                expectedCachesToBeCleanedOnce = generatedSymbolsProvider != null
+            )
+        )
+
+        generatedSymbolsProvider?.let { session.register(FirSwitchableExtensionDeclarationsSymbolProvider::class, it) }
+
+        session.register(
+            SessionProvidersStructure::class,
+            SessionProvidersStructure(sourceProviders, libraryProviders)
+        )
+
+        val dependencyProviders = buildList {
+            addAll(dependsOnSourceProviders)
+            addAll(libraryProviders)
+            addAll(sharedProviders)
+        }
+
+        session.register(DEPENDENCIES_SYMBOL_PROVIDER_QUALIFIED_KEY, FirCachingCompositeSymbolProvider.create(session, dependencyProviders))
     }
 
     protected abstract fun createKotlinScopeProviderForSourceSession(
