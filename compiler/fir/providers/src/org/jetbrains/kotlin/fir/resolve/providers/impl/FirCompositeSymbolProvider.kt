@@ -20,7 +20,20 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
 @NoMutableState
-class FirCompositeSymbolProvider(session: FirSession, val providers: List<FirSymbolProvider>) : FirSymbolProvider(session) {
+class FirCompositeSymbolProvider private constructor(
+    session: FirSession,
+    val providers: List<FirSymbolProvider>,
+) : FirSymbolProvider(session) {
+    companion object {
+        fun create(session: FirSession, providers: List<FirSymbolProvider>): FirSymbolProvider {
+            return when (providers.size) {
+                0 -> Empty(session)
+                1 -> providers.single()
+                else -> FirCompositeSymbolProvider(session, providers)
+            }
+        }
+    }
+
     override val symbolNamesProvider: FirSymbolNamesProvider = FirCompositeSymbolNamesProvider.fromSymbolProviders(providers)
 
     override fun getTopLevelCallableSymbols(packageFqName: FqName, name: Name): List<FirCallableSymbol<*>> {

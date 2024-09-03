@@ -63,8 +63,8 @@ private fun LLFirSession.createResolveExtensionTool(): LLFirResolveExtensionTool
 internal inline fun createCompositeSymbolProvider(
     session: FirSession,
     createSubProviders: MutableList<FirSymbolProvider>.() -> Unit
-): FirCompositeSymbolProvider =
-    FirCompositeSymbolProvider(session, buildList(createSubProviders))
+): FirSymbolProvider =
+    FirCompositeSymbolProvider.create(session, buildList(createSubProviders))
 
 @SessionConfiguration
 internal fun FirSession.registerCompilerPluginExtensions(project: Project, module: KaSourceModule) {

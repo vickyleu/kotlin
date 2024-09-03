@@ -55,6 +55,23 @@ abstract class FirSymbolProvider(val session: FirSession) : FirSessionComponent 
     abstract fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name)
 
     abstract fun getPackage(fqName: FqName): FqName? // TODO: Replace to symbol sometime
+
+    class Empty(session: FirSession) : FirSymbolProvider(session) {
+        override val symbolNamesProvider: FirSymbolNamesProvider
+            get() = FirEmptySymbolNamesProvider
+
+        override fun getPackage(fqName: FqName): FqName? = null
+        override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? = null
+
+        @FirSymbolProviderInternals
+        override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {}
+
+        @FirSymbolProviderInternals
+        override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {}
+
+        @FirSymbolProviderInternals
+        override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {}
+    }
 }
 
 private fun FirSession.getClassDeclaredMemberScope(classId: ClassId): FirScope? {

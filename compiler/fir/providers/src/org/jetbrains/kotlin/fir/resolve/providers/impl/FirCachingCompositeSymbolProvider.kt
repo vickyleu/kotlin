@@ -25,13 +25,26 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
 @NoMutableState
-class FirCachingCompositeSymbolProvider(
+class FirCachingCompositeSymbolProvider private constructor(
     session: FirSession,
     val providers: List<FirSymbolProvider>,
     // This property is necessary just to make sure we don't use the hack at `createCopyWithCleanCaches` more than once or in cases
     // we are not assumed to use it.
-    private val expectedCachesToBeCleanedOnce: Boolean = false,
+    private val expectedCachesToBeCleanedOnce: Boolean,
 ) : FirSymbolProvider(session) {
+    companion object {
+        fun create(
+            session: FirSession,
+            providers: List<FirSymbolProvider>,
+            expectedCachesToBeCleanedOnce: Boolean = false,
+        ): FirSymbolProvider {
+            return when (providers.size) {
+                0 -> Empty(session)
+                1 -> providers.single()
+                else -> FirCachingCompositeSymbolProvider(session, providers, expectedCachesToBeCleanedOnce)
+            }
+        }
+    }
 
     private val classLikeCache = session.firCachesFactory.createCache(::computeClass)
     private val topLevelCallableCache = session.firCachesFactory.createCache(::computeTopLevelCallables)

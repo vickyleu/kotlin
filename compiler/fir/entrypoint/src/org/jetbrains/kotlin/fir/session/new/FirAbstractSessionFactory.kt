@@ -77,7 +77,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
                 FirExtensionSyntheticFunctionInterfaceProvider.createIfNeeded(this, builtinsModuleData, kotlinScopeProvider)
             val providers = createProviders(this, builtinsModuleData, kotlinScopeProvider, syntheticFunctionInterfaceProvider)
 
-            val symbolProvider = FirCachingCompositeSymbolProvider(this, providers)
+            val symbolProvider = FirCachingCompositeSymbolProvider.create(this, providers)
             register(FirSymbolProvider::class, symbolProvider)
             register(FirProvider::class, FirLibrarySessionProvider(symbolProvider))
         }
@@ -143,14 +143,14 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
 
             register(
                 FirSymbolProvider::class,
-                FirCachingCompositeSymbolProvider(
+                FirCachingCompositeSymbolProvider.create(
                     this, providers,
                     expectedCachesToBeCleanedOnce = generatedSymbolsProvider != null
                 )
             )
 
             generatedSymbolsProvider?.let { register(FirSwitchableExtensionDeclarationsSymbolProvider::class, it) }
-            register(DEPENDENCIES_SYMBOL_PROVIDER_QUALIFIED_KEY, FirCachingCompositeSymbolProvider(this, dependencyProviders))
+            register(DEPENDENCIES_SYMBOL_PROVIDER_QUALIFIED_KEY, FirCachingCompositeSymbolProvider.create(this, dependencyProviders))
         }
     }
 
