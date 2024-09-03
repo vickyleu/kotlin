@@ -129,6 +129,7 @@ class FirSharableJavaComponents(
 fun FirSession.registerJavaComponents(
     javaModuleResolver: JavaModuleResolver,
     predefinedComponents: FirSharableJavaComponents? = null,
+    isLeafModule: Boolean = true
 ) {
     register(FirJavaModuleResolverProvider::class, FirJavaModuleResolverProvider(javaModuleResolver))
     val jsr305State = languageVersionSettings.getFlag(JvmAnalysisFlags.javaTypeEnhancementState)
@@ -145,7 +146,9 @@ fun FirSession.registerJavaComponents(
     )
     register(PlatformSupertypeUpdater::class, JvmSupertypeUpdater(this))
     register(PlatformSpecificOverridabilityRules::class, JavaOverridabilityRules(this))
-    register(FirDeserializationExtension::class, FirJvmDeserializationExtension(this))
+    if (isLeafModule) {
+        register(FirDeserializationExtension::class, FirJvmDeserializationExtension(this))
+    }
     register(FirEnumEntriesSupport::class, FirJvmEnumEntriesSupport(this))
     register(CompilerRequiredAnnotationEnhancementProvider::class, JavaCompilerRequiredAnnotationEnhancementProvider)
     register(FirAnnotationsPlatformSpecificSupportComponent::class, FirJvmAnnotationsPlatformSpecificSupportComponent)

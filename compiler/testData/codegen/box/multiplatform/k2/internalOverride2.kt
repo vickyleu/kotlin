@@ -1,5 +1,6 @@
 // LANGUAGE: +MultiPlatformProjects
 // DUMP_IR
+// WITH_STDLIB
 
 // MODULE: common
 // FILE: common.kt

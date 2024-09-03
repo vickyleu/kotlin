@@ -31,7 +31,6 @@ import org.jetbrains.kotlin.fir.session.*
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchScope
 import org.jetbrains.kotlin.fir.session.new.NewFirJvmSessionFactory
-import org.jetbrains.kotlin.konan.file.File
 import org.jetbrains.kotlin.library.resolveSingleFileKlib
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.name.Name
@@ -59,6 +58,8 @@ import org.jetbrains.kotlin.test.services.configuration.NativeEnvironmentConfigu
 import org.jetbrains.kotlin.test.services.configuration.WasmEnvironmentConfigurator
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.wasm.config.WasmConfigurationKeys
+import java.io.File
+import java.nio.file.Path
 import java.nio.file.Paths
 import org.jetbrains.kotlin.konan.file.File as KFile
 
@@ -88,7 +89,7 @@ open class FirFrontendFacade(
     override fun analyze(module: TestModule): FirOutputArtifact {
         val isMppSupported = module.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)
 
-        val sortedModules = if (isMppSupported) sortDependsOnTopologically(module) else listOf(module)
+        val sortedModules = listOf(module)
 
         val (moduleDataMap, moduleDataProvider) = initializeModuleData(sortedModules)
 
@@ -100,7 +101,7 @@ open class FirFrontendFacade(
         val sessionProvider = moduleInfoProvider.firSessionProvider
         val dependencySearchScope = PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
         val packagePartProvider = projectEnvironment!!.getPackagePartProvider(dependencySearchScope)
-        val sharedDependencySession = sharedDependencySessionsByRootModule.getOrPut(sortedModules.first()) {
+        val sharedDependencySession = sharedDependencySessionsByRootModule.getOrPut(module.findLeaf(testServices)) {
             NewFirJvmSessionFactory.createSharedDependencySession(
                 sessionProvider,
                 moduleDataProvider,
@@ -268,6 +269,8 @@ open class FirFrontendFacade(
         return FirOutputPartForDependsOnModule(module, moduleBasedSession, firAnalyzerFacade, filesMap)
     }
 
+
+
     private fun createModuleBasedSession(
         module: TestModule,
         moduleData: FirModuleData,
@@ -299,15 +302,10 @@ open class FirFrontendFacade(
 //                ).also(::registerExtraComponents)
 //            }
             targetPlatform.isCommon() || targetPlatform.isJvm() -> {
+                val isLeafModule = module.isLeaf(testServices)
                 val (libraryScope, resolvedLibraries) = when {
-                    targetPlatform.isCommon() -> {
-                        val commonStdlib = File("libraries/stdlib/build/libs/kotlin-stdlib-metadata-2.1.255-SNAPSHOT.klib")
-                        val dependentModules = module.regularDependencies.map { testServices.dependencyProvider.getTestModule(it.moduleName) }
-                        val artifacts = dependentModules.mapNotNull { testServices.dependencyProvider.getArtifactSafe(it, ArtifactKinds.KLib) }
-                        val kLibs = buildList {
-                            artifacts.mapTo(this) { resolveSingleFileKlib(KFile(it.outputFile.toPath())) }
-                            add(resolveSingleFileKlib(commonStdlib))
-                        }
+                    !isLeafModule -> {
+                        val kLibs = commonKlibDependencies(module, testServices).map { resolveSingleFileKlib(KFile(it)) }
                         AbstractProjectFileSearchScope.EMPTY to kLibs
                     }
                     else -> libraryScope to emptyList()
@@ -332,6 +330,7 @@ open class FirFrontendFacade(
                     importTracker = null,
                     predefinedJavaComponents,
                     needRegisterJavaElementFinder = true,
+                    isLeafModule,
                     init = sessionConfigurator,
                 ).also(::registerExtraComponents)
             }
@@ -372,6 +371,7 @@ open class FirFrontendFacade(
         }
     }
 
+
     companion object {
         fun initializeLibraryList(
             mainModule: TestModule,
@@ -383,9 +383,13 @@ open class FirFrontendFacade(
             return DependencyListForCliModule.build(binaryModuleData) {
                 when {
                     targetPlatform.isCommon() || targetPlatform.isJvm() -> {
-                        dependencies(configuration.jvmModularRoots.map { it.toPath() })
-                        dependencies(configuration.jvmClasspathRoots.map { it.toPath() })
-                        friendDependencies(configuration[JVMConfigurationKeys.FRIEND_PATHS] ?: emptyList())
+                        if (mainModule.isLeaf(testServices)) {
+                            dependencies(configuration.jvmModularRoots.map { it.toPath() })
+                            dependencies(configuration.jvmClasspathRoots.map { it.toPath() })
+                            friendDependencies(configuration[JVMConfigurationKeys.FRIEND_PATHS] ?: emptyList())
+                        } else {
+                            dependencies(commonKlibDependencies(mainModule, testServices))
+                        }
                     }
                     targetPlatform.isJs() -> {
                         val runtimeKlibsPaths = JsEnvironmentConfigurator.getRuntimePathsForModule(mainModule, testServices)
@@ -414,5 +418,38 @@ open class FirFrontendFacade(
                 }
             }
         }
+
+        private fun commonKlibDependencies(module: TestModule, testServices: TestServices): List<Path> {
+            val commonStdlib = File("libraries/stdlib/build/libs/kotlin-stdlib-metadata-2.1.255-SNAPSHOT.klib").toPath()
+            val dependentModules = module.regularDependencies.map { testServices.dependencyProvider.getTestModule(it.moduleName) }
+            val artifacts = dependentModules.mapNotNull { testServices.dependencyProvider.getArtifactSafe(it, ArtifactKinds.KLib) }
+            val kLibs = buildList {
+                artifacts.mapTo(this) { it.outputFile.toPath() }
+                add(commonStdlib)
+            }
+            return kLibs
+        }
     }
+}
+
+fun TestModule.isLeaf(testServices: TestServices): Boolean {
+    return testServices.moduleStructure.modules.none { module ->
+        if (module === this) return@none false
+        module.dependsOnDependencies.any { it.moduleName == this.name }
+    }
+}
+
+fun TestModule.findLeaf(testServices: TestServices): TestModule {
+    var result = this
+    var counter = 0
+    while (true) {
+        result = testServices.moduleStructure.modules.firstOrNull { module ->
+            if (module === result) return@firstOrNull false
+            module.dependsOnDependencies.any { it.moduleName == result.name }
+        } ?: break
+        if (counter++ > 100) {
+            error("Infinite loop")
+        }
+    }
+    return result
 }

@@ -77,7 +77,11 @@ class FirExtensionSyntheticFunctionInterfaceProvider(
 
 class FirBuiltinSyntheticFunctionInterfaceProviderImpl internal constructor(
     session: FirSession, moduleData: FirModuleData, kotlinScopeProvider: FirKotlinScopeProvider
-) : FirBuiltinSyntheticFunctionInterfaceProvider(session, moduleData, kotlinScopeProvider)
+) : FirBuiltinSyntheticFunctionInterfaceProvider(session, moduleData, kotlinScopeProvider) {
+    init {
+        Unit
+    }
+}
 
 /**
  * This class puts generated classes into a list.

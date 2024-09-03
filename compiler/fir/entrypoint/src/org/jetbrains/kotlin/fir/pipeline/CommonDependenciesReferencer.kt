@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.fir.expressions.FirResolvedQualifier
 import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.resolve.toSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.ConeClassLookupTagWithFixedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitorVoid
@@ -51,6 +52,7 @@ private class Visitor(val session: FirSession) : FirDefaultVisitorVoid() {
 
     private fun lookupType(type: ConeKotlinType) {
         val lookupTag = type.classLikeLookupTagIfAny ?: return
-        lookupTag.toSymbol(session)
+        if (lookupTag is ConeClassLookupTagWithFixedSymbol) return
+        session.symbolProvider.getClassLikeSymbolByClassId(lookupTag.classId)
     }
 }

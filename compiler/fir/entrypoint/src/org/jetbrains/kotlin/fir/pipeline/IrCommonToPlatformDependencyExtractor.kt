@@ -15,6 +15,10 @@ import org.jetbrains.kotlin.fir.session.FirMppDeduplicatingSymbolProvider
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrSymbol
+import org.jetbrains.kotlin.ir.symbols.IrTypeAliasSymbol
+import org.jetbrains.kotlin.ir.symbols.UnsafeDuringIrConstructionAPI
+import org.jetbrains.kotlin.ir.types.classOrFail
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
 
@@ -40,12 +44,23 @@ class IrCommonToPlatformDependencyExpectActualMapPreFiller(
         }
     }
 
-    override fun collectClassesMap(): Map<IrClassSymbol, IrClassSymbol> {
-        return deduplicatingProvider.classMapping.values.associate { (commonFirClassSymbol, platformFirClassSymbol) ->
-            val commonIrClassSymbol = commonFirClassSymbol.toIrSymbol()
-            val platformIrClassSymbol = platformFirClassSymbol.toIrSymbol()
-            commonIrClassSymbol to platformIrClassSymbol
+    override fun collectClassesMap(): ActualClassInfo {
+        val classMapping = mutableMapOf<IrClassSymbol, IrClassSymbol>()
+        val actualTypeAliases = mutableMapOf<ClassId, IrTypeAliasSymbol>()
+        for ((commonFirClassSymbol, platformFirClassSymbol) in deduplicatingProvider.classMapping.values) {
+            val commonIrClassSymbol = commonFirClassSymbol.toIrSymbol() as IrClassSymbol
+            val platformClassSymbol = when (val platformSymbol = platformFirClassSymbol.toIrSymbol()) {
+                is IrClassSymbol -> platformSymbol
+                is IrTypeAliasSymbol -> {
+                    actualTypeAliases[platformFirClassSymbol.classId] = platformSymbol
+                    @OptIn(UnsafeDuringIrConstructionAPI::class)
+                    platformSymbol.owner.expandedType.type.classOrFail
+                }
+                else -> error("Unexpected symbol: $commonIrClassSymbol")
+            }
+            classMapping[commonIrClassSymbol] = platformClassSymbol
         }
+        return ActualClassInfo(classMapping, actualTypeAliases)
     }
 
     override fun collectTopLevelCallablesMap(): Map<IrSymbol, IrSymbol> {
@@ -56,8 +71,11 @@ class IrCommonToPlatformDependencyExpectActualMapPreFiller(
         }
     }
 
-    private fun FirClassLikeSymbol<*>.toIrSymbol(): IrClassSymbol {
-        return classifierStorage.getIrClassSymbol(this as FirClassSymbol)
+    private fun FirClassLikeSymbol<*>.toIrSymbol(): IrSymbol {
+        return when (this) {
+            is FirClassSymbol -> classifierStorage.getIrClassSymbol(this)
+            is FirTypeAliasSymbol -> classifierStorage.getIrTypeAliasSymbol(this)
+        }
     }
 
     private fun FirCallableSymbol<*>.toIrSymbol(): IrSymbol {

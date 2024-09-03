@@ -28,7 +28,7 @@ actual annotation class WithActual(actual val x: Int)
 
 actual fun k() = "K"
 
-// MODULE: common2
+// MODULE: common2(common)
 // TARGET_PLATFORM: Common
 // FILE: common2.kt
 

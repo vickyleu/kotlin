@@ -71,7 +71,7 @@ internal class ExpectActualCollector(
         linkCollector.collectAndCheckMapping(mainFragment, linkCollectorContext)
         val expectActualMap = linkCollectorContext.expectActualMap
         if (expectActualMapPreFiller != null) {
-            expectActualMap.expectToActual += expectActualMapPreFiller.collectClassesMap()
+            expectActualMap.expectToActual += expectActualMapPreFiller.collectClassesMap().classMapping
             expectActualMap.expectToActual += expectActualMapPreFiller.collectTopLevelCallablesMap()
         }
         return expectActualMap
@@ -172,12 +172,12 @@ private class ActualDeclarationsCollector(
     private val actualTypeAliasesWithoutExpansion: MutableMap<ClassId, IrTypeAliasSymbol>
 
     init {
-        val knownClassMapping = expectActualMapPreFiller?.collectClassesMap() ?: emptyMap()
-        actualClasses = knownClassMapping.entries.associateTo(mutableMapOf()) { (expectClassSymbol, actualClassSymbol) ->
+        val knownClassMapping = expectActualMapPreFiller?.collectClassesMap()
+            ?: IrExpectActualMapPreFiller.ActualClassInfo(emptyMap(), emptyMap())
+        actualClasses = knownClassMapping.classMapping.entries.associateTo(mutableMapOf()) { (expectClassSymbol, actualClassSymbol) ->
             expectClassSymbol.owner.classId!! to actualClassSymbol
         }
-        // TODO: properly handle
-        actualTypeAliasesWithoutExpansion = mutableMapOf()
+        actualTypeAliasesWithoutExpansion = knownClassMapping.actualTypeAliases.toMutableMap()
     }
 
     private val actualTopLevels: MutableMap<CallableId, MutableList<IrSymbol>> = mutableMapOf()
@@ -388,14 +388,14 @@ private class ExpectActualLinkCollector {
         typeSystemContext: IrTypeSystemContext,
         private val diagnosticsReporter: IrDiagnosticReporter,
         private val expectActualTracker: ExpectActualTracker?,
-        internal val classActualizationInfo: ClassActualizationInfo,
+        val classActualizationInfo: ClassActualizationInfo,
         private val currentExpectFile: IrFile?,
         val expectActualMap: IrExpectActualMap = IrExpectActualMap(),
     ) : IrExpectActualMatchingContext(typeSystemContext, classActualizationInfo.actualClasses) {
 
         private val currentExpectIoFile by lazy(LazyThreadSafetyMode.PUBLICATION) { currentExpectFile?.toIoFile() }
 
-        internal val languageVersionSettings: LanguageVersionSettings get() = diagnosticsReporter.languageVersionSettings
+        val languageVersionSettings: LanguageVersionSettings get() = diagnosticsReporter.languageVersionSettings
 
         fun withNewCurrentFile(newCurrentFile: IrFile) =
             MatchingContext(

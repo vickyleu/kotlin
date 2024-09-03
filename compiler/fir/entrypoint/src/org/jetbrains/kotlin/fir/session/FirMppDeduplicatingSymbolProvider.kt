@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.fir.session
 
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.declarations.*
+import org.jetbrains.kotlin.fir.declarations.utils.isExpect
 import org.jetbrains.kotlin.fir.resolve.providers.FirCompositeSymbolNamesProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolNamesProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
@@ -41,7 +42,7 @@ class FirMppDeduplicatingSymbolProvider(
     override val symbolNamesProvider: FirSymbolNamesProvider = FirCompositeSymbolNamesProvider.fromSymbolProviders(providers)
 
     override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? {
-        if (classId.shortClassName.asString() == "Bar") {
+        if (classId.shortClassName.asString() == "Any") {
             Unit
         }
         val commonSymbol = commonSymbolProvider.getClassLikeSymbolByClassId(classId)
@@ -53,7 +54,10 @@ class FirMppDeduplicatingSymbolProvider(
             commonSymbol == platformSymbol -> commonSymbol
             else -> {
                 classMapping[classId] = ClassPair(commonSymbol, platformSymbol)
-                commonSymbol
+                when {
+                    commonSymbol.isExpect -> platformSymbol
+                    else -> commonSymbol
+                }
             }
         }
     }

@@ -156,6 +156,13 @@ class FirCachingCompositeSymbolProvider private constructor(
     private fun computePackage(it: FqName): FqName? =
         providers.firstNotNullOfOrNull { provider -> provider.getPackage(it) }
 
-    private fun computeClass(classId: ClassId): FirClassLikeSymbol<*>? =
-        providers.firstNotNullOfOrNull { provider -> provider.getClassLikeSymbolByClassId(classId) }
+    private fun computeClass(classId: ClassId): FirClassLikeSymbol<*>? {
+        return providers.firstNotNullOfOrNull { provider ->
+            val result = provider.getClassLikeSymbolByClassId(classId)
+            if (result != null && classId.shortClassName.asString() == "Any") {
+                Unit
+            }
+            result
+        }
+    }
 }

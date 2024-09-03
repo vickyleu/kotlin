@@ -75,6 +75,12 @@ sealed class FirClassSymbol<out C : FirClass>(classId: ClassId) : FirClassLikeSy
 }
 
 class FirRegularClassSymbol(classId: ClassId) : FirClassSymbol<FirRegularClass>(classId), RegularClassSymbolMarker {
+    init {
+        if (classId.asString() == "kotlin/Function0") {
+            Unit
+        }
+    }
+
     val companionObjectSymbol: FirRegularClassSymbol?
         get() = fir.companionObjectSymbol
 

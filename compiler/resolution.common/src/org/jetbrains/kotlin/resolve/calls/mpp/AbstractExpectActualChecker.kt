@@ -151,6 +151,7 @@ object AbstractExpectActualChecker {
             ?.let { return it }
 
         if (!areCompatibleSupertypes(expectClassSymbol, actualClass, substitutor)) {
+            areCompatibleSupertypes(expectClassSymbol, actualClass, substitutor)
             return ExpectActualCheckingCompatibility.Supertypes
         }
 

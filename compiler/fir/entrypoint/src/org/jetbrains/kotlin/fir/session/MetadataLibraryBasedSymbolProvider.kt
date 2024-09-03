@@ -101,7 +101,10 @@ abstract class MetadataLibraryBasedSymbolProvider<L : MetadataLibrary>(
     override fun knownTopLevelClassesInPackage(packageFqName: FqName): Set<String> =
         buildSet {
             forEachFragmentInPackage(packageFqName) { _, fragment, nameResolver ->
-                for (classNameId in fragment.getExtension(KlibMetadataProtoBuf.className).orEmpty()) {
+                val extension = fragment.getExtension(KlibMetadataProtoBuf.className)
+                val s = extension.orEmpty().map { nameResolver.getClassId(it).shortClassName.asString() }
+                Unit
+                for (classNameId in extension.orEmpty()) {
                     add(nameResolver.getClassId(classNameId).shortClassName.asString())
                 }
             }

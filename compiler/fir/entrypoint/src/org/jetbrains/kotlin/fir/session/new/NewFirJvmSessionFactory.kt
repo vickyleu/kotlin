@@ -61,7 +61,8 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             scope,
             projectEnvironment.getKotlinClassFinder(scope),
             packagePartProvider,
-            resolvedLibraries = emptyList()
+            resolvedLibraries = emptyList(),
+                    isLeafModule = true,
         )
         return createSharedDependencySession(
             moduleDataProvider,
@@ -98,16 +99,20 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         kotlinScopeProvider: FirKotlinScopeProvider,
         c: LibraryContext
     ): List<FirSymbolProvider> {
-        val klibProvider = KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, c.resolvedLibraries)
-        val provider = JvmClassFileBasedSymbolProvider(
-            session,
-            moduleDataProvider,
-            kotlinScopeProvider,
-            c.packagePartProvider,
-            c.kotlinClassFinder,
-            c.projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), c.scope)
-        )
-        return listOf(provider, klibProvider)
+        val klibProvider = runIf(c.resolvedLibraries.isNotEmpty()) {
+            KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, c.resolvedLibraries)
+        }
+        val provider = runIf(!c.scope.isEmpty) {
+            JvmClassFileBasedSymbolProvider(
+                session,
+                moduleDataProvider,
+                kotlinScopeProvider,
+                c.packagePartProvider,
+                c.kotlinClassFinder,
+                c.projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), c.scope)
+            )
+        }
+        return listOfNotNull(provider, klibProvider)
     }
 
     override fun createKotlinScopeProviderForLibrarySession(): FirKotlinScopeProvider {
@@ -116,7 +121,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
 
     override fun FirSession.registerLibrarySessionComponents(c: LibraryContext) {
         registerDefaultComponents()
-        registerJavaComponents(c.projectEnvironment.getJavaModuleResolver(), c.predefinedJavaComponents)
+        registerJavaComponents(c.projectEnvironment.getJavaModuleResolver(), c.predefinedJavaComponents, c.isLeafModule)
     }
 
     // ==================================== Platform session ====================================
@@ -139,6 +144,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         importTracker: ImportTracker?,
         predefinedJavaComponents: FirSharableJavaComponents?,
         needRegisterJavaElementFinder: Boolean,
+        isLeafModule: Boolean = true,
         init: FirSessionConfigurator.() -> Unit,
     ): FirSession {
         val libraryContext = LibraryContext(
@@ -148,9 +154,10 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             libraryScope,
             projectEnvironment.getKotlinClassFinder(libraryScope),
             packagePartProvider,
-            resolvedLibraries
+            resolvedLibraries,
+            isLeafModule
         )
-        val sourceContext = SourceContext(jvmTarget, predefinedJavaComponents, projectEnvironment, javaSourcesScope)
+        val sourceContext = SourceContext(jvmTarget, predefinedJavaComponents, projectEnvironment, javaSourcesScope, isLeafModule)
         return createModuleBasedSession(
             moduleData,
             sharedDependencySession,
@@ -188,7 +195,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
 
     override fun FirSession.registerSourceSessionComponents(c: SourceContext) {
         registerDefaultComponents()
-        registerJavaComponents(c.projectEnvironment.getJavaModuleResolver(), c.predefinedJavaComponents)
+        registerJavaComponents(c.projectEnvironment.getJavaModuleResolver(), c.predefinedJavaComponents, c.isLeafModule)
         register(FirJvmTargetProvider::class, FirJvmTargetProvider(c.jvmTarget))
     }
 
@@ -213,7 +220,8 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         val scope: AbstractProjectFileSearchScope,
         val kotlinClassFinder: KotlinClassFinder,
         val packagePartProvider: PackagePartProvider,
-        val resolvedLibraries: List<KotlinLibrary>
+        val resolvedLibraries: List<KotlinLibrary>,
+        val isLeafModule: Boolean,
     )
 
     class SourceContext(
@@ -221,6 +229,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         val predefinedJavaComponents: FirSharableJavaComponents?,
         val projectEnvironment: AbstractProjectEnvironment,
         val javaSourcesScope: AbstractProjectFileSearchScope,
+        val isLeafModule: Boolean,
     )
 
     private fun initializeForStdlibIfNeeded(
