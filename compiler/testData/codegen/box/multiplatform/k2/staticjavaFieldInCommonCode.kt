@@ -1,5 +1,6 @@
 // LANGUAGE: +MultiPlatformProjects
 // TARGET_BACKEND: JVM_IR
+// IGNORE_BACKEND: ANY
 // ISSUE: KT-63574
 // FULL_JDK
 

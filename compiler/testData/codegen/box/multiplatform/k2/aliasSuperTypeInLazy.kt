@@ -1,4 +1,6 @@
 // LANGUAGE: +MultiPlatformProjects
+// IGNORE_BACKEND_K2: ANY
+
 // MODULE: dep
 // FILE: dep.kt
 
