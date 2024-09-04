@@ -62,7 +62,7 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
             projectEnvironment.getKotlinClassFinder(scope),
             packagePartProvider,
             resolvedLibraries = emptyList(),
-                    isLeafModule = true,
+            isLeafModule = true,
         )
         return createSharedDependencySession(
             moduleDataProvider,
@@ -99,20 +99,33 @@ object NewFirJvmSessionFactory : NewFirAbstractSessionFactory<NewFirJvmSessionFa
         kotlinScopeProvider: FirKotlinScopeProvider,
         c: LibraryContext
     ): List<FirSymbolProvider> {
-        val klibProvider = runIf(c.resolvedLibraries.isNotEmpty()) {
-            KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, c.resolvedLibraries)
+        return buildList {
+            if (c.resolvedLibraries.isNotEmpty()) {
+                this += KlibBasedSymbolProvider(session, moduleDataProvider, kotlinScopeProvider, c.resolvedLibraries)
+            }
+
+            val regularDependencyModuleData = moduleDataProvider.allModuleData.first()
+            if (!c.scope.isEmpty) {
+                this += JvmClassFileBasedSymbolProvider(
+                    session,
+                    moduleDataProvider,
+                    kotlinScopeProvider,
+                    c.packagePartProvider,
+                    c.kotlinClassFinder,
+                    c.projectEnvironment.getFirJavaFacade(session, regularDependencyModuleData, c.scope)
+                )
+            }
+            if (c.isLeafModule) {
+                this += FirBuiltinsSymbolProvider(
+                    session, FirClasspathBuiltinSymbolProvider(
+                        session,
+                        regularDependencyModuleData,
+                        kotlinScopeProvider
+                    ) { c.kotlinClassFinder.findBuiltInsData(it) },
+                    FirFallbackBuiltinSymbolProvider(session, regularDependencyModuleData, kotlinScopeProvider)
+                )
+            }
         }
-        val provider = runIf(!c.scope.isEmpty) {
-            JvmClassFileBasedSymbolProvider(
-                session,
-                moduleDataProvider,
-                kotlinScopeProvider,
-                c.packagePartProvider,
-                c.kotlinClassFinder,
-                c.projectEnvironment.getFirJavaFacade(session, moduleDataProvider.allModuleData.last(), c.scope)
-            )
-        }
-        return listOfNotNull(provider, klibProvider)
     }
 
     override fun createKotlinScopeProviderForLibrarySession(): FirKotlinScopeProvider {
