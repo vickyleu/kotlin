@@ -99,6 +99,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
         sessionProvider: FirProjectSessionProvider,
         moduleDataProvider: ModuleDataProvider,
         languageVersionSettings: LanguageVersionSettings,
+        sharedDependencySession: FirSession
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply session@{
             moduleDataProvider.allModuleData.forEach {
@@ -114,14 +115,17 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
             registerCommonComponentsAfterExtensionsAreConfigured()
 
-            val providers = setupDependencySymbolProviders(
+            val realLibraryProviders = setupDependencySymbolProviders(
                 this,
                 moduleDataProvider,
                 kotlinScopeProvider,
                 context
             )
+            register(LibrarySessionRealProviders::class, LibrarySessionRealProviders(realLibraryProviders))
 
-            val symbolProvider = FirCachingCompositeSymbolProvider.create(this, providers)
+            val allProviders = realLibraryProviders + sharedDependencySession.symbolProvider.decompose()
+
+            val symbolProvider = FirCachingCompositeSymbolProvider.create(this, allProviders)
             register(FirSymbolProvider::class, symbolProvider)
             register(FirProvider::class, FirLibrarySessionProvider(symbolProvider))
         }
@@ -152,7 +156,13 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
         importTracker: ImportTracker?,
         init: FirSessionConfigurator.() -> Unit,
     ): FirSession {
-        val librarySession = createLibrarySession(libraryContext, sessionProvider, moduleDataProvider, languageVersionSettings)
+        val librarySession = createLibrarySession(
+            libraryContext,
+            sessionProvider,
+            moduleDataProvider,
+            languageVersionSettings,
+            sharedDependencySession
+        )
 
         return FirCliSession(sessionProvider, FirSession.Kind.Source).apply session@{
             moduleData.bindSession(this@session)
@@ -205,7 +215,7 @@ abstract class NewFirAbstractSessionFactory<LIBRARY_CONTEXT, SOURCE_CONTEXT> {
             it.structuredSymbolProviders.sourceProviders
         }
 
-        val libraryProviders = librarySession.symbolProvider.decompose()
+        val libraryProviders = librarySession.realLibraryProviders.providers
 
         val sharedProviders = sharedDependencySession.symbolProvider.decompose()
 

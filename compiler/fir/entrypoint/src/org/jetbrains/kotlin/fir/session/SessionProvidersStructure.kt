@@ -15,3 +15,12 @@ class SessionProvidersStructure(
 ) : FirSessionComponent
 
 val FirSession.structuredSymbolProviders: SessionProvidersStructure by FirSession.sessionComponentAccessor()
+
+/**
+ * Includes only direct library providers, which don't belong to shared session
+ */
+class LibrarySessionRealProviders(
+    val providers: List<FirSymbolProvider>,
+) : FirSessionComponent
+
+val FirSession.realLibraryProviders: LibrarySessionRealProviders by FirSession.sessionComponentAccessor()
