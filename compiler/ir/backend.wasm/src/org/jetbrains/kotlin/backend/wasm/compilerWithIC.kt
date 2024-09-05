@@ -97,10 +97,13 @@ class WasmCompilerWithICForTesting(
     safeFragmentTags: Boolean = false,
 ) : WasmCompilerWithIC(mainModule, configuration, allowIncompleteImplementations, safeFragmentTags) {
     override fun compile(allModules: Collection<IrModuleFragment>, dirtyFiles: Collection<IrFile>): List<() -> IrProgramFragments> {
-        dirtyFiles.find { it.declarations.find { it is IrFunction && it.name.asString() == "box" } != null }?.let {
-            val packageFqName = it.packageFqName.asString().takeIf { it.isNotEmpty() }
-            markExportedDeclarations(context, it, setOf(FqName.fromSegments(listOfNotNull(packageFqName, "box"))))
-        }
+        val testFile = dirtyFiles.firstOrNull { file ->
+            file.declarations.any { declaration -> declaration is IrFunction && declaration.name.asString() == "box" }
+        } ?: return super.compile(allModules, dirtyFiles)
+
+        val packageFqName = testFile.packageFqName.asString().takeIf { it.isNotEmpty() }
+        markExportedDeclarations(context, testFile, setOf(FqName.fromSegments(listOfNotNull(packageFqName, "box"))))
+
         return super.compile(allModules, dirtyFiles)
     }
 }
