@@ -210,7 +210,7 @@ fun compileWasm(
             jsModuleAndQualifierReferences,
             useJsTag,
         )
-        jsWrapper = wasmCompiledModuleFragment.generateEsmExportsWrapper(
+        jsWrapper = generateEsmExportsWrapper(
             jsModuleImports,
             "./$baseFileName.uninstantiated.mjs",
             jsModuleAndQualifierReferences,
@@ -400,7 +400,7 @@ For more information, see https://kotl.in/wasm-help
 """
 }
 
-fun WasmCompiledModuleFragment.generateEsmExportsWrapper(
+fun generateEsmExportsWrapper(
     jsModuleImports: Set<String>,
     asyncWrapperFileName: String,
     jsModuleAndQualifierReferences: MutableSet<JsModuleAndQualifierReference>,
@@ -494,7 +494,7 @@ fun writeCompilationResult(
     }
 }
 
-fun WasmCompiledModuleFragment.generateExports(exports: List<WasmExport<*>>): String {
+fun generateExports(exports: List<WasmExport<*>>): String {
     // TODO: necessary to move export check onto common place
     val exportNames = exports
         .filterNot { it.name.startsWith(JsInteropFunctionsLowering.CALL_FUNCTION) }
