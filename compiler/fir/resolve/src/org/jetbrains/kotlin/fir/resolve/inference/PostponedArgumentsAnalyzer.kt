@@ -127,7 +127,7 @@ class PostponedArgumentsAnalyzer(
                     ?.let { pclaInferenceSession.semiFixCurrentResultIfTypeVariableAndReturnBinding(it, candidate.system) }
             }
 
-        val unitType = components.session.builtinTypes.unitType.coneType
+        val typeExpectedForUnit = components.session.builtinTypes.unitType.coneType.takeIf { withPCLASession }
         val currentSubstitutor = c.buildCurrentSubstitutor(additionalBinding) as ConeSubstitutor
 
         fun substitute(type: ConeKotlinType) = currentSubstitutor.safeSubstitute(c, type) as ConeKotlinType
@@ -138,10 +138,12 @@ class PostponedArgumentsAnalyzer(
         val lambdaReturnType = lambda.returnType
 
         val expectedTypeForReturnArguments = when {
+            lambdaReturnType.isUnitOrFlexibleUnit -> typeExpectedForUnit
+
             c.canBeProper(lambdaReturnType) -> substitute(lambdaReturnType)
 
             // For Unit-coercion
-            !lambdaReturnType.isMarkedNullable && c.hasUpperOrEqualUnitConstraint(lambdaReturnType) -> unitType
+            !lambdaReturnType.isMarkedNullable && c.hasUpperOrEqualUnitConstraint(lambdaReturnType) -> typeExpectedForUnit
 
             // Supplying the expected type for lambda effectively makes it being resolved in the FULL completion mode.
             // For non-PCLA lambdas using expected types with non-fixed type variables would lead to illegal state: calls inside return
@@ -229,10 +231,10 @@ class PostponedArgumentsAnalyzer(
                     //    put("a", 1) // While `put` returns V, we should not enforce the latter to be a subtype of Unit
                     // }
                     // See KT-63602 for details.
-                    builder.addSubtypeConstraintIfCompatible(
-                        expression.resolvedType, returnTypeRef.coneType,
-                        ConeLambdaArgumentConstraintPosition(lambda.anonymousFunction)
-                    )
+//                    builder.addSubtypeConstraintIfCompatible(
+//                        expression.resolvedType, returnTypeRef.coneType,
+//                        ConeLambdaArgumentConstraintPosition(lambda.anonymousFunction)
+//                    )
                 }
                 continue
             }
