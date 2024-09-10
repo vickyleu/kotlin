@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.ir.backend.js.ic.*
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.fileOrNull
+import org.jetbrains.kotlin.backend.common.compilationException
 import java.io.File
 import java.util.*
 
@@ -71,5 +72,5 @@ class IrFactoryImplForWasmIC(stageController: StageController) : IrFactory(stage
         declarationToSignature[declaration]
             ?: declaration.symbol.signature?.let { eraseSignature(it, declaration) }
             ?: declaration.symbol.privateSignature?.let { eraseSignature(it, declaration) }
-            ?: error("Can't retrieve a signature for $declaration")
+            ?: compilationException("Can't retrieve a signature", declaration)
 }
