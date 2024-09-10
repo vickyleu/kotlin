@@ -73,10 +73,7 @@ private fun buildRoots(modules: List<IrModuleFragment>, context: WasmBackendCont
 
     addAll(context.testFunsPerFile.values)
     context.fileContexts.values.forEach {
-        val mainFunctionWrapper = it.mainFunctionWrapper
-        if (mainFunctionWrapper != null) {
-            add(mainFunctionWrapper)
-        }
+        it.mainFunctionWrapper?.let(::add)
     }
 
     if (context.isWasmJsTarget) {
