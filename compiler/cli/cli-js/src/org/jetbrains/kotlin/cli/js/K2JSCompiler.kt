@@ -774,7 +774,6 @@ class K2JSCompiler : CLICompiler<K2JSCompilerArguments>() {
                 WasmICContext(
                     allowIncompleteImplementations = false,
                     skipLocalNames = !arguments.wasmDebug,
-                    skipSourceLocations = !arguments.wasmGenerateWat,
                     safeFragmentTags = arguments.preserveIcOrder
                 )
             } else {
