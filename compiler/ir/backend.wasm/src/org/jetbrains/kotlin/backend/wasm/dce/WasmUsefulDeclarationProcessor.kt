@@ -20,7 +20,7 @@ internal class WasmUsefulDeclarationProcessor(
     override val context: WasmBackendContext,
     printReachabilityInfo: Boolean,
     dumpReachabilityInfoToFile: String?,
-    removeUnusedAssociatedObjects: Boolean = true,
+    removeUnusedAssociatedObjects: Boolean = false,
 ) : UsefulDeclarationProcessor(printReachabilityInfo, removeUnusedAssociatedObjects, dumpReachabilityInfoToFile) {
 
     // The mapping from function for wrapping a kotlin closure/lambda with JS closure to function used to call a kotlin closure from JS side.
