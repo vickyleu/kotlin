@@ -135,7 +135,7 @@ abstract class InfoParser<Info>(protected val infoFile: File) {
 
 private fun String.splitAndTrim() = split(",").map { it.trim() }.filter { it.isNotBlank() }
 
-class ProjectInfoParser(infoFile: File, private val target: String) : InfoParser<ProjectInfo>(infoFile) {
+class ProjectInfoParser(infoFile: File, private val target: String?) : InfoParser<ProjectInfo>(infoFile) {
     private val moduleKindMap = mapOf(
         "plain" to ModuleKind.PLAIN,
         "commonjs" to ModuleKind.COMMON_JS,
