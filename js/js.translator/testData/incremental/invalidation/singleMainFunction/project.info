@@ -1,0 +1,8 @@
+MODULES: main
+CALL_MAIN: true
+
+STEP 0:
+    libs: main
+    dirty js modules: main
+STEP 1:
+    libs: main

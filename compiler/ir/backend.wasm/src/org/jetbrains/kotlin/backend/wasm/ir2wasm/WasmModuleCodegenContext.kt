@@ -150,8 +150,8 @@ class WasmFileCodegenContext(
         wasmFileFragment.fieldInitializers.add(FieldInitializer(irField.getReferenceKey(), instructions, isObjectInstanceField))
     }
 
-    fun addMainFunctionWrapper(mainFunctionWrapper: IrFunctionSymbol) {
-        wasmFileFragment.mainFunctionWrappers.add(mainFunctionWrapper.getReferenceKey())
+    fun setMainFunctionWrapper(packageName: String, mainFunctionWrapper: IrFunctionSymbol) {
+        wasmFileFragment.mainFunctionWrapper = packageName to mainFunctionWrapper.getReferenceKey()
     }
 
     fun defineTestFun(testFun: IrFunctionSymbol) {

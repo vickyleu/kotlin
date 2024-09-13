@@ -47,7 +47,7 @@ class WasmCompiledFileFragment(
     var throwableTagIndex: WasmSymbol<Int>? = null,
     var jsExceptionTagIndex: WasmSymbol<Int>? = null,
     val fieldInitializers: MutableList<FieldInitializer> = mutableListOf(),
-    val mainFunctionWrappers: MutableList<IdSignature> = mutableListOf(),
+    var mainFunctionWrapper: Pair<String, IdSignature>? = null,
     var testFun: IdSignature? = null,
     val equivalentFunctions: MutableList<Pair<String, IdSignature>> = mutableListOf(),
     val jsModuleAndQualifierReferences: MutableSet<JsModuleAndQualifierReference> = mutableSetOf(),
@@ -353,17 +353,36 @@ class WasmCompiledModuleFragment(
         return memory
     }
 
+    private fun findMainFunctionWrapper(): WasmFunction? {
+        var currentFragment: WasmCompiledFileFragment? = null
+
+        for (fragment in wasmCompiledFileFragments) {
+            val mainWrapper = fragment.mainFunctionWrapper ?: continue
+            if (currentFragment == null) {
+                currentFragment = fragment
+            } else {
+                if (mainWrapper.first < currentFragment.mainFunctionWrapper!!.first) {
+                    currentFragment = fragment
+                }
+            }
+        }
+
+        val resultFragment = currentFragment
+        val resultWrapper = resultFragment?.mainFunctionWrapper?.second
+
+        return resultWrapper?.let { wrapper ->
+            resultFragment.functions.defined[wrapper]
+                ?: compilationException("Cannot find symbol for main wrapper", type = null)
+        }
+    }
+
     private fun createAndExportMasterInitFunction(fieldInitializerFunction: WasmFunction): WasmFunction.Defined {
         val masterInitFunction = WasmFunction.Defined("_initialize", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(masterInitFunction.instructions)) {
             buildCall(WasmSymbol(getUnitGetInstance()), serviceCodeLocation)
             buildCall(WasmSymbol(fieldInitializerFunction), serviceCodeLocation)
-            wasmCompiledFileFragments.forEach { fragment ->
-                fragment.mainFunctionWrappers.forEach { signature ->
-                    val wrapperFunction = fragment.functions.defined[signature]
-                        ?: compilationException("Cannot find symbol for main wrapper", type = null)
-                    buildCall(WasmSymbol(wrapperFunction), serviceCodeLocation)
-                }
+            findMainFunctionWrapper()?.let {
+                buildCall(WasmSymbol(it), serviceCodeLocation)
             }
             buildInstr(WasmOp.RETURN, serviceCodeLocation)
         }

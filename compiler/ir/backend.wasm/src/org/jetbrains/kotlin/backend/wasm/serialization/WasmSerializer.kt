@@ -653,7 +653,7 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeNullable(throwableTagIndex) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeNullable(jsExceptionTagIndex) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeList(fieldInitializers, ::serializeFieldInitializer)
-            serializeList(mainFunctionWrappers, ::serializeIdSignature)
+            serializeNullable(mainFunctionWrapper) { serializePair(it, ::serializeString, ::serializeIdSignature) }
             serializeNullable(testFun, ::serializeIdSignature)
             serializeList(equivalentFunctions) { serializePair(it, ::serializeString, ::serializeIdSignature) }
             serializeSet(jsModuleAndQualifierReferences, ::serializeJsModuleAndQualifierReference)

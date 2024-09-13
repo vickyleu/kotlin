@@ -62,8 +62,9 @@ internal fun compileIrFile(
     }
 
     val fileContext = backendContext.getFileContext(irFile)
-    fileContext.mainFunctionWrapper?.apply {
-        wasmFileCodegenContext.addMainFunctionWrapper(symbol)
+    fileContext.mainFunctionWrapper?.let { mainFunction ->
+        val packageName = mainFunction.fileOrNull?.packageFqName?.asString() ?: ""
+        wasmFileCodegenContext.setMainFunctionWrapper(packageName, mainFunction.symbol)
     }
     fileContext.closureCallExports.forEach { (exportSignature, function) ->
         wasmFileCodegenContext.addEquivalentFunction("<1>_$exportSignature", function.symbol)

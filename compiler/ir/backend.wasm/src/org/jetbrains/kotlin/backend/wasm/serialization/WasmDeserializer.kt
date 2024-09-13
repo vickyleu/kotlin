@@ -634,7 +634,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         throwableTagIndex = deserializeNullableIntSymbol(),
         jsExceptionTagIndex = deserializeNullableIntSymbol(),
         fieldInitializers = deserializeFieldInitializers(),
-        mainFunctionWrappers = deserializeMainFunctionWrappers(),
+        mainFunctionWrapper = deserializeMainFunctionWrapper(),
         testFun = deserializeTestFun(),
         equivalentFunctions = deserializeClosureCallExports(),
         jsModuleAndQualifierReferences = deserializeJsModuleAndQualifierReferences(),
@@ -666,7 +666,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
     private fun deserializeExports() = deserializeList(::deserializeExport)
     private fun deserializeNullableIntSymbol() = deserializeNullable { deserializeSymbol(::deserializeInt) }
     private fun deserializeFieldInitializers(): MutableList<FieldInitializer> = deserializeList(::deserializeFieldInitializer)
-    private fun deserializeMainFunctionWrappers() = deserializeList(::deserializeIdSignature)
+    private fun deserializeMainFunctionWrapper() = deserializeNullable { deserializePair(::deserializeString, ::deserializeIdSignature) }
     private fun deserializeTestFun() = deserializeNullable(::deserializeIdSignature)
     private fun deserializeClosureCallExports() = deserializeList { deserializePair(::deserializeString, ::deserializeIdSignature) }
     private fun deserializeJsModuleAndQualifierReferences() = deserializeSet(::deserializeJsModuleAndQualifierReference)

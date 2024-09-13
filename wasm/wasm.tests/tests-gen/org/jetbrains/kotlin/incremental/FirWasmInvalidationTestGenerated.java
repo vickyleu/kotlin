@@ -451,6 +451,12 @@ public class FirWasmInvalidationTestGenerated extends AbstractFirWasmInvalidatio
   }
 
   @Test
+  @TestMetadata("singleMainFunction")
+  public void testSingleMainFunction() {
+    runTest("js/js.translator/testData/incremental/invalidation/singleMainFunction/");
+  }
+
+  @Test
   @TestMetadata("splitJoinModule")
   public void testSplitJoinModule() {
     runTest("js/js.translator/testData/incremental/invalidation/splitJoinModule/");
@@ -514,5 +520,11 @@ public class FirWasmInvalidationTestGenerated extends AbstractFirWasmInvalidatio
   @TestMetadata("variance")
   public void testVariance() {
     runTest("js/js.translator/testData/incremental/invalidation/variance/");
+  }
+
+  @Test
+  @TestMetadata(".DS_Store")
+  public void test_DS_Store() {
+    runTest("js/js.translator/testData/incremental/invalidation/.DS_Store");
   }
 }
