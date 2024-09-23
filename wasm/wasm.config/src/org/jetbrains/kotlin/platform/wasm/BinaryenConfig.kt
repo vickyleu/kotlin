@@ -15,7 +15,7 @@ object BinaryenConfig {
 
         // Other options
         "--enable-nontrapping-float-to-int",
-        "--closed-world",
+//        "--closed-world",
 
         // Optimizations:
         // Note the order and repetition of the next options matter.
@@ -34,7 +34,7 @@ object BinaryenConfig {
         "--gufa",
         "-O3",
         // requires --closed-world
-        "--type-merging",
+//        "--type-merging",
         "-O3",
         "-Oz",
     )
