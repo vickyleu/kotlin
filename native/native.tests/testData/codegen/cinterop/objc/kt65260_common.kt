@@ -3,6 +3,7 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 // TARGET_BACKEND: NATIVE
+// FREE_COMPILER_ARGS: -Xbinary=genericSafeCasts=false
 // DISABLE_NATIVE: isAppleTarget=false
 
 // MODULE: cinterop
