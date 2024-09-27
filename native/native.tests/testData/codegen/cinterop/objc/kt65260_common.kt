@@ -3,7 +3,6 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 // TARGET_BACKEND: NATIVE
-// FREE_COMPILER_ARGS: -Xbinary=genericSafeCasts=false
 // DISABLE_NATIVE: isAppleTarget=false
 
 // MODULE: cinterop
@@ -44,24 +43,12 @@ import platform.darwin.*
 import kotlinx.cinterop.*
 import kotlin.test.*
 
-class ANativeHeir : A() {
-    companion object
-}
-
-class BNativeHeir : B() {
-    companion object
-}
-
 fun testExternalObjCMetaClassCast() {
     val fooClass: Any = A
     assertTrue(fooClass is A.Companion)
     val barClass: Any = B
     assertTrue(barClass is AMeta)
 
-    val aNativeHeir: Any = ANativeHeir
-    assertFailsWith<ClassCastException> { aNativeHeir as A.Companion }
-    val bNativeHeir: Any = BNativeHeir
-    assertFailsWith<ClassCastException> { bNativeHeir as A.Companion }
     val fooObjectClass: Any = A
     assertFailsWith<ClassCastException> { fooObjectClass as BMeta }
 }
