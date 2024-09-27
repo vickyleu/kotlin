@@ -1,2 +1,9 @@
-KtNameReferenceExpression(36,39): 'Foo'
-  null
+<caret>:
+  KtNameReferenceExpression(36,39): 'Foo'
+    null
+
+<caret_lambda>:
+  KtNameReferenceExpression(114,117): 'Foo'
+    KaErrorCallInfo:
+      candidateCalls = []
+      diagnostic = ERROR<SYNTAX: Syntax error: Incomplete user type.>

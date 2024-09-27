@@ -6,4 +6,4 @@
 <caret_lambda>:
   KtNameReferenceExpression(113,116): 'Foo'
     KtSimpleNameReference:
-      Nothing (Unresolved reference)
+      (in ROOT) class Foo

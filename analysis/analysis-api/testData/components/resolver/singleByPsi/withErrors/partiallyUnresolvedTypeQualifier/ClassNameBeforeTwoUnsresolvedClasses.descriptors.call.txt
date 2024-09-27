@@ -1,7 +1,7 @@
 <caret>:
   KtNameReferenceExpression(36,39): 'Foo'
-    NO_CANDIDATES
+    null
 
 <caret_lambda>:
   KtNameReferenceExpression(117,120): 'Foo'
-    NO_CANDIDATES
+    null

@@ -1,2 +1,7 @@
-KtNameReferenceExpression(57,60): 'Bar'
-  NO_CANDIDATES
+<caret>:
+  KtNameReferenceExpression(57,60): 'Bar'
+    NO_CANDIDATES
+
+<caret_lambda>:
+  KtNameReferenceExpression(139,142): 'Bar'
+    NO_CANDIDATES

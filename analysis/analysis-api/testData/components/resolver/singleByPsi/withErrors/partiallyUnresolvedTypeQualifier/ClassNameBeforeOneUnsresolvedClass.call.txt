@@ -1,2 +1,9 @@
-KtNameReferenceExpression(36,39): 'Foo'
-  null
+<caret>:
+  KtNameReferenceExpression(36,39): 'Foo'
+    null
+
+<caret_lambda>:
+  KtNameReferenceExpression(113,116): 'Foo'
+    KaErrorCallInfo:
+      candidateCalls = []
+      diagnostic = ERROR<UNRESOLVED_REFERENCE: Unresolved reference 'Bar'.>

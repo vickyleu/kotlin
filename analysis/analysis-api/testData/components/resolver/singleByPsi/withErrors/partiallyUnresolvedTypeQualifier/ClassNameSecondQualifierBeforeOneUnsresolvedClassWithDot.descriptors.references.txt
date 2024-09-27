@@ -4,6 +4,6 @@
       (in Foo) class Bar
 
 <caret_lambda>:
-  KtNameReferenceExpression(139,142): 'Bar'
+  KtNameReferenceExpression(140,143): 'Bar'
     KtSimpleNameReference:
-      Nothing (Unresolved reference)
+      (in Foo) class Bar
