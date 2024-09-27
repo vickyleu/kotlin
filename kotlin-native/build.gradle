@@ -63,6 +63,9 @@ allprojects {
         maven {
             url project.bootstrapKotlinRepo
         }
+        maven {
+            url project.property("kotlin.dev.repo")
+        }
     }
 }
 
@@ -131,6 +134,12 @@ dependencies {
     implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:$bootstrapKotlinVersion:macos-x86_64@tar.gz")
     implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:$bootstrapKotlinVersion:linux-x86_64@tar.gz")
     implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:$bootstrapKotlinVersion:windows-x86_64@zip")
+
+    def kgpVersion = project.property("kotlin.native.default.kgp.version")
+    implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:${kgpVersion}:macos-aarch64@tar.gz")
+    implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:${kgpVersion}:macos-x86_64@tar.gz")
+    implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:${kgpVersion}:linux-x86_64@tar.gz")
+    implicitDependencies("org.jetbrains.kotlin:kotlin-native-prebuilt:${kgpVersion}:windows-x86_64@zip")
 }
 
 apply plugin: GitClangFormatPlugin
