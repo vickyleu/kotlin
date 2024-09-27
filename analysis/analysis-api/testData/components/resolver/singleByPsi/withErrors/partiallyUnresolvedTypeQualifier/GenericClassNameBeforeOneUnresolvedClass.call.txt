@@ -4,6 +4,4 @@
 
 <caret_lambda>:
   KtNameReferenceExpression(116,119): 'Foo'
-    KaErrorCallInfo:
-      candidateCalls = []
-      diagnostic = ERROR<UNRESOLVED_REFERENCE: Unresolved reference 'Bar'.>
+    null

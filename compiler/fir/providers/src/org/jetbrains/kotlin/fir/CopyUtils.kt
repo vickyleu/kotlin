@@ -49,6 +49,7 @@ fun FirTypeRef.resolvedTypeFromPrototype(
             this.coneType = type
             diagnostic = type.diagnostic
             annotations += this@resolvedTypeFromPrototype.annotations
+            partiallyResolvedTypeRef = (this@resolvedTypeFromPrototype as? FirErrorTypeRef)?.partiallyResolvedTypeRef
         }
     } else {
         buildResolvedTypeRef {

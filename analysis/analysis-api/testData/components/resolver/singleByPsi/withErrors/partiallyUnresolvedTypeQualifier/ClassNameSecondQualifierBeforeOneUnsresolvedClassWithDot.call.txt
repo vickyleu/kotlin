@@ -4,6 +4,4 @@
 
 <caret_lambda>:
   KtNameReferenceExpression(140,143): 'Bar'
-    KaErrorCallInfo:
-      candidateCalls = []
-      diagnostic = ERROR<SYNTAX: Syntax error: Incomplete user type.>
+    null

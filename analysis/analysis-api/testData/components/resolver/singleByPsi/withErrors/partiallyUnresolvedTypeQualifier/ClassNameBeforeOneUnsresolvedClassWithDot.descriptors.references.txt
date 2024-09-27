@@ -1,9 +1,0 @@
-<caret>:
-  KtNameReferenceExpression(36,39): 'Foo'
-    KtSimpleNameReference:
-      (in ROOT) class Foo
-
-<caret_lambda>:
-  KtNameReferenceExpression(114,117): 'Foo'
-    KtSimpleNameReference:
-      (in ROOT) class Foo

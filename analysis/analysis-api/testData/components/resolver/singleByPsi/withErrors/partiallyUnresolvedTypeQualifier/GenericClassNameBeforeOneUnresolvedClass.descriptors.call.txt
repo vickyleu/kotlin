@@ -1,7 +1,0 @@
-<caret>:
-  KtNameReferenceExpression(39,42): 'Foo'
-    null
-
-<caret_lambda>:
-  KtNameReferenceExpression(116,119): 'Foo'
-    null
