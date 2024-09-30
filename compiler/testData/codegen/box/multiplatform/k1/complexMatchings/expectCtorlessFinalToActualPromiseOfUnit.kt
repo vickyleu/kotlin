@@ -1,8 +1,8 @@
 // LANGUAGE: +MultiPlatformProjects
+// TARGET_BACKEND: JS_IR, JS_IR_ES6
 // IGNORE_BACKEND_K2: ANY
 // FIR status: expect/actual in the same module
 //   also used as a workaround for no multi-module support in K1 box tests
-// TARGET_BACKEND: JS_IR, JS_IR_ES6
 // WITH_STDLIB
 
 // FILE: common.kt
