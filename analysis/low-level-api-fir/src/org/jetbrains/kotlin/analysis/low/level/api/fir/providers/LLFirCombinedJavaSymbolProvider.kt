@@ -8,7 +8,9 @@ package org.jetbrains.kotlin.analysis.low.level.api.fir.providers
 import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.analysis.api.platform.projectStructure.KotlinGlobalSearchScopeMerger
 import org.jetbrains.kotlin.analysis.low.level.api.fir.caches.NullableCaffeineCache
+import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.fir.java.FirJavaFacade
 import org.jetbrains.kotlin.fir.java.JavaSymbolProvider
 import org.jetbrains.kotlin.fir.java.hasMetadataAnnotation
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolNamesProvider
@@ -39,6 +41,7 @@ internal class LLFirCombinedJavaSymbolProvider private constructor(
     project: Project,
     providers: List<JavaSymbolProvider>,
     private val javaClassFinder: JavaClassFinder,
+    private val combinedFirJavaFacade: CombinedFirJavaFacade,
 ) : LLFirSelectingCombinedSymbolProvider<JavaSymbolProvider>(session, project, providers) {
     /**
      * The purpose of this cache is to avoid index access for frequently accessed `ClassId`s, including failures. Because Java symbol
@@ -88,14 +91,27 @@ internal class LLFirCombinedJavaSymbolProvider private constructor(
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
     }
 
-    override fun getPackage(fqName: FqName): FqName? = providers.firstNotNullOfOrNull { it.getPackage(fqName) }
+    override fun getPackage(fqName: FqName): FqName? = combinedFirJavaFacade.getPackage(fqName)
 
     companion object {
         fun merge(session: FirSession, project: Project, providers: List<LLFirJavaSymbolProvider>): FirSymbolProvider? =
             if (providers.size > 1) {
                 val combinedScope = KotlinGlobalSearchScopeMerger.getInstance(project).union(providers.map { it.searchScope })
                 val javaClassFinder = project.createJavaClassFinder(combinedScope)
-                LLFirCombinedJavaSymbolProvider(session, project, providers, javaClassFinder)
+                val firJavaFacade = CombinedFirJavaFacade(session, javaClassFinder)
+                LLFirCombinedJavaSymbolProvider(session, project, providers, javaClassFinder, firJavaFacade)
             } else providers.singleOrNull()
+    }
+}
+
+/**
+ * The *combined* [FirJavaFacade] only exists to optimize [getPackage]. It cannot be used to create FIR Java classes.
+ */
+private class CombinedFirJavaFacade(session: FirSession, javaClassFinder: JavaClassFinder) : FirJavaFacade(session, javaClassFinder) {
+    override fun getModuleDataForClass(javaClass: JavaClass): FirModuleData {
+        error(
+            "${CombinedFirJavaFacade::class.simpleName} does not support FIR Java class creation. Please delegate to an individual Java" +
+                    " symbol provider instead."
+        )
     }
 }
