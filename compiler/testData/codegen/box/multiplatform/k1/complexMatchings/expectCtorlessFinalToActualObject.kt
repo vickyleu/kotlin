@@ -1,5 +1,4 @@
 // LANGUAGE: +MultiPlatformProjects
-//   also used as a workaround for no multi-module support in K1 box tests
 
 // FILE: common.kt
 

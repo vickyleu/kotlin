@@ -1,6 +1,5 @@
 // LANGUAGE: +MultiPlatformProjects
 // TARGET_BACKEND: JS_IR, JS_IR_ES6
-//   also used as a workaround for no multi-module support in K1 box tests
 // WITH_STDLIB
 
 // FILE: common.kt
