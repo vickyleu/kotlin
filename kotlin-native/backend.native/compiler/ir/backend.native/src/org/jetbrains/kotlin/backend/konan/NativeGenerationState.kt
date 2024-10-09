@@ -100,8 +100,6 @@ internal class NativeGenerationState(
     val cStubsManager = CStubsManager(config.target, this)
     lateinit var llvmDeclarations: LlvmDeclarations
 
-    val virtualFunctionTrampolines = mutableMapOf<IrSimpleFunction, LlvmCallable>()
-
     lateinit var objCExport: ObjCExport
 
     fun hasDebugInfo() = debugInfoDelegate.isInitialized()
