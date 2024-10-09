@@ -326,6 +326,7 @@ import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.IMPLEMENTATION_BY
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.IMPLICIT_BOXING_IN_IDENTITY_EQUALS
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.IMPLICIT_NOTHING_PROPERTY_TYPE
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.IMPLICIT_NOTHING_RETURN_TYPE
+import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.IMPOSSIBLE_EARLY_INITIALIZATION
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.INAPPLICABLE_CANDIDATE
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.INAPPLICABLE_FILE_TARGET
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors.INAPPLICABLE_INFIX_MODIFIER
@@ -803,6 +804,7 @@ object FirErrorsDefaultMessages : BaseDiagnosticRendererFactory() {
         // Miscellaneous
         map.put(OTHER_ERROR, "Unknown error.")
         map.put(OTHER_ERROR_WITH_REASON, "Unknown error: {0}.", STRING)
+        map.put(IMPOSSIBLE_EARLY_INITIALIZATION, "IMPOSSIBLE_EARLY_INITIALIZATION")
 
         // General syntax
         map.put(ILLEGAL_CONST_EXPRESSION, "Incorrect const expression.")
