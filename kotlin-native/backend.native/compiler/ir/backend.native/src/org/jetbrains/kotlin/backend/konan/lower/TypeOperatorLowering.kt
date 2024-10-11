@@ -116,8 +116,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     }
 
     private class Disjunction(val terms: List<LeafTerm>) {
+        init {
+            require(terms.isNotEmpty())
+        }
+
         override fun toString() = when (terms.size) {
-            0 -> "false"
             1 -> terms.first().toString()
             else -> terms.joinToString(" | ") { "(${it})" }
         }
@@ -132,31 +135,34 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         }
     }
 
-    private class Conjunction(val terms: List<Disjunction>) {
+    private sealed class Predicate {
+        data object True : Predicate()
+        data object False : Predicate()
+        data object Empty : Predicate()
+    }
+
+    private class Conjunction(val terms: List<Disjunction>) : Predicate() {
+        init {
+            require(terms.isNotEmpty())
+        }
+
         override fun toString() = when (terms.size) {
-            0 -> "true"
             1 -> terms.first().toString()
             else -> terms.joinToString(separator = " & ") { "($it)" }
         }
     }
 
-    private object Predicate {
-        val True = Conjunction(emptyList())
-        val False = Conjunction(listOf(Disjunction(emptyList())))
-
-        fun isTrue(predicate: Conjunction) = predicate.terms.isEmpty()
-        fun isFalse(predicate: Conjunction) = predicate.terms.singleOrNull()?.terms?.isEmpty() == true
-
-        fun disjunctionOf(vararg terms: LeafTerm): Conjunction {
+    private object Predicates {
+        fun disjunctionOf(vararg terms: LeafTerm): Predicate {
             return disjunctionOf(terms.asList(), optimize = false)
         }
 
-        fun disjunctionOf(terms: List<LeafTerm>, optimize: Boolean = true): Conjunction {
+        fun disjunctionOf(terms: List<LeafTerm>, optimize: Boolean = true): Predicate {
             val optimizedTerms = if (optimize) optimizeTerms(terms) else terms
-            return if (optimizedTerms.isEmpty()) True else Conjunction(listOf(Disjunction(optimizedTerms)))
+            return if (optimizedTerms.isEmpty()) Predicate.True else Conjunction(listOf(Disjunction(optimizedTerms)))
         }
 
-        fun isSubtypeOf(value: IrValueDeclaration, type: IrType): Conjunction {
+        fun isSubtypeOf(value: IrValueDeclaration, type: IrType): Predicate {
             val valueIsNullable = value.type.isNullable()
             val typeIsNullable = type.isNullable()
             val dstClass = type.erasedUpperBound
@@ -166,7 +172,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 isSuperClassCast -> {
                     if (valueIsNullable && !typeIsNullable) // (value: A?) is A = value != null
                         disjunctionOf(SimpleTerm.IsNotNull(value))
-                    else True
+                    else Predicate.True
                 }
                 else -> {
                     if (valueIsNullable && typeIsNullable) // (value: A?) is B? = value == null || value is B
@@ -245,12 +251,12 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         }
     }
 
-    private data class PredicatePair(val ifTrue: Conjunction, val ifFalse: Conjunction)
+    private data class PredicatePair(val ifTrue: Predicate, val ifFalse: Predicate)
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
         if (container.fileOrNull?.path?.endsWith("z1.kt") != true) return
 
-        irBody.accept(object : IrElementVisitor<Conjunction, Conjunction> {
+        irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
             fun IrExpression.matchAndAnd(): Pair<IrExpression, IrExpression>? = when {
                 // a && b == if (a) b else false
                 (this as? IrWhen)?.branches?.size == 2
@@ -280,30 +286,45 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //            }
 
 
-            fun orPredicates(leftPredicate: Conjunction, rightPredicate: Conjunction): Conjunction = when {
-                leftPredicate.terms.size <= 1 && rightPredicate.terms.size <= 1 -> {
-                    val simpleTerms = mutableListOf<LeafTerm>()
-                    if (leftPredicate.terms.size == 1)
-                        simpleTerms.addAll(leftPredicate.terms[0].terms)
-                    if (rightPredicate.terms.size == 1)
-                        simpleTerms.addAll(rightPredicate.terms[0].terms)
-                    Predicate.disjunctionOf(simpleTerms)
+            fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate = when {
+                leftPredicate == Predicate.True || rightPredicate == Predicate.True -> {
+                    Predicate.True
                 }
-                rightPredicate.terms.size == 1 -> {
-                    // a | (b & c) = (a | b) & (a | c)
-                    // a = right.terms[0], b = left.terms[0], c = left.terms[1:]
-                    andPredicates(
-                            Predicate.disjunctionOf(leftPredicate.terms.first().terms + rightPredicate.terms.first().terms),
-                            orPredicates(rightPredicate, Conjunction(leftPredicate.terms.drop(1)))
-                    )
+                leftPredicate == Predicate.False || leftPredicate == Predicate.Empty -> {
+                    rightPredicate
+                }
+                rightPredicate == Predicate.False || rightPredicate == Predicate.Empty -> {
+                    leftPredicate
                 }
                 else -> {
-                    // a | (b & c) = (a | b) & (a | c)
-                    // a = left, b = right.terms[0], c = right.terms[1:]
-                    andPredicates(
-                            orPredicates(leftPredicate, Conjunction(listOf(rightPredicate.terms.first()))),
-                            orPredicates(leftPredicate, Conjunction(rightPredicate.terms.drop(1)))
-                    )
+                    leftPredicate as Conjunction
+                    rightPredicate as Conjunction
+                    when {
+                        leftPredicate.terms.size <= 1 && rightPredicate.terms.size <= 1 -> {
+                            val simpleTerms = mutableListOf<LeafTerm>()
+                            if (leftPredicate.terms.size == 1)
+                                simpleTerms.addAll(leftPredicate.terms[0].terms)
+                            if (rightPredicate.terms.size == 1)
+                                simpleTerms.addAll(rightPredicate.terms[0].terms)
+                            Predicates.disjunctionOf(simpleTerms)
+                        }
+                        rightPredicate.terms.size == 1 -> {
+                            // a | (b & c) = (a | b) & (a | c)
+                            // a = right.terms[0], b = left.terms[0], c = left.terms[1:]
+                            andPredicates(
+                                    Predicates.disjunctionOf(leftPredicate.terms.first().terms + rightPredicate.terms.first().terms),
+                                    orPredicates(rightPredicate, Conjunction(leftPredicate.terms.drop(1)))
+                            )
+                        }
+                        else -> {
+                            // a | (b & c) = (a | b) & (a | c)
+                            // a = left, b = right.terms[0], c = right.terms[1:]
+                            andPredicates(
+                                    orPredicates(leftPredicate, Conjunction(listOf(rightPredicate.terms.first()))),
+                                    orPredicates(leftPredicate, Conjunction(rightPredicate.terms.drop(1)))
+                            )
+                        }
+                    }
                 }
             }.also {
                 println("OR: $leftPredicate")
@@ -313,7 +334,16 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //                println(t.stackTraceToString())
             }
 
-            fun andPredicates(leftPredicate: Conjunction, rightPredicate: Conjunction): Conjunction {
+            fun andPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate {
+                if (leftPredicate == Predicate.False || rightPredicate == Predicate.False)
+                    return Predicate.False
+                if (leftPredicate == Predicate.True || leftPredicate == Predicate.Empty)
+                    return rightPredicate
+                if (rightPredicate == Predicate.True || rightPredicate == Predicate.Empty)
+                    return leftPredicate
+
+                leftPredicate as Conjunction
+                rightPredicate as Conjunction
                 val leftTerms = mutableListOf<Disjunction>()
                 for (term in leftPredicate.terms) {
                     if (rightPredicate.terms.any { term followsFrom it })
@@ -360,24 +390,28 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return Conjunction(leftTerms + rightTerms)
             }
 
-            fun invertPredicate(predicate: Conjunction): Conjunction {
-                return if (predicate.terms.isEmpty())
-                    Predicate.False
-                else if (predicate.terms.size == 1) {
-                    val simpleTerms = predicate.terms.first().terms
-                    if (simpleTerms.isEmpty())
-                        Predicate.True
-                    else
-                        Conjunction(simpleTerms.map { Disjunction(listOf(it.invert())) })
-                } else {
-                    orPredicates(
-                            invertPredicate(Conjunction(listOf(predicate.terms.first()))),
-                            invertPredicate(Conjunction(predicate.terms.drop(1)))
-                    )
+            fun invertPredicate(predicate: Predicate): Predicate = when (predicate) {
+                Predicate.True -> Predicate.False
+                Predicate.False -> Predicate.True
+                Predicate.Empty -> Predicate.Empty
+                is Conjunction -> when {
+                    predicate.terms.size == 1 -> {
+                        val simpleTerms = predicate.terms.first().terms
+                        if (simpleTerms.isEmpty())
+                            Predicate.True
+                        else
+                            Conjunction(simpleTerms.map { Disjunction(listOf(it.invert())) })
+                    }
+                    else -> {
+                        orPredicates(
+                                invertPredicate(Conjunction(listOf(predicate.terms.first()))),
+                                invertPredicate(Conjunction(predicate.terms.drop(1)))
+                        )
+                    }
                 }
             }
 
-            fun buildPredicate(expression: IrExpression, predicate: Conjunction): PredicatePair {
+            fun buildPredicate(expression: IrExpression, predicate: Predicate): PredicatePair {
                 val matchResultAndAnd = expression.matchAndAnd()
                 if (matchResultAndAnd != null) {
                     val (left, right) = matchResultAndAnd
@@ -422,7 +456,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 if (expression is IrTypeOperatorCall) {
                     val argument = expression.argument
                     if (argument is IrGetValue) {
-                        val isSubtypeOfPredicate = Predicate.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
+                        val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
                         return PredicatePair(
                                 ifTrue = andPredicates(predicate, isSubtypeOfPredicate),
                                 ifFalse = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate))
@@ -432,8 +466,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
                 val result = expression.accept(this, predicate)
                 return PredicatePair(
-                        ifTrue = andPredicates(Predicate.disjunctionOf(ComplexTerm(expression, value = true)), result),
-                        ifFalse = andPredicates(Predicate.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                        ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
+                        ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
                 )
             }
 
@@ -448,7 +482,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return result
             }
 
-            override fun visitElement(element: IrElement, data: Conjunction): Conjunction {
+            override fun visitElement(element: IrElement, data: Predicate): Predicate {
                 val children = element.getImmediateChildren()
                 var predicate = data
                 for (child in children)
@@ -475,7 +509,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 else initializerRootValue
             }
 
-            override fun visitTypeOperator(expression: IrTypeOperatorCall, data: Conjunction): Conjunction {
+            override fun visitTypeOperator(expression: IrTypeOperatorCall, data: Predicate): Predicate {
                 /*
                   TYPE_OP type=<root>.A origin=IMPLICIT_CAST typeOperand=<root>.A
                     TYPE_OP type=<root>.A? origin=CAST typeOperand=<root>.A?
@@ -489,14 +523,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     println()
                     val argument = expression.unwrapCasts()
                     if (argument is IrGetValue)
-                        return andPredicates(result, Predicate.isSubtypeOf(argument.getRootValue(), expression.typeOperand))
+                        return andPredicates(result, Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand))
                 }
                 return result
             }
 
-            override fun visitWhen(expression: IrWhen, data: Conjunction): Conjunction {
+            override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
                 var predicate = data
-                var result = Predicate.True
+                var result: Predicate = Predicate.Empty
                 for (branch in expression.branches) {
                     val branchPredicatePair = buildPredicate(branch.condition, predicate)
                     println("QXX: ${branch.condition.dump()}")
@@ -515,7 +549,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return result
             }
 
-        }, Predicate.True)
+        }, Predicate.Empty)
     }
 }
 
