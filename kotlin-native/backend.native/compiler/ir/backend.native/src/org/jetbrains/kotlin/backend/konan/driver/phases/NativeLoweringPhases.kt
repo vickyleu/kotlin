@@ -489,6 +489,12 @@ private val constructorsLoweringPhase = createFileLoweringPhase(
     lowering = ::ConstructorsLowering,
 )
 
+private val optimizeCastsPhase = createFileLoweringPhase(
+        name = "OptimizeCasts",
+        description = "Optimize away redundant cast operations",
+        lowering = ::CastsOptimization,
+)
+
 private val expressionBodyTransformPhase = createFileLoweringPhase(
         ::ExpressionBodyTransformer,
         name = "ExpressionBodyTransformer",
@@ -642,6 +648,7 @@ internal fun PhaseEngine<NativeGenerationState>.getLoweringsAfterInlining(): Low
         useInternalAbiPhase,
         autoboxPhase,
         constructorsLoweringPhase,
+        optimizeCastsPhase,
 )
 
 private fun createFileLoweringPhase(
