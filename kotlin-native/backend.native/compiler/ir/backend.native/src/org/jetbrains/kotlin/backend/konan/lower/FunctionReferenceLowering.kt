@@ -585,16 +585,7 @@ internal class FunctionReferenceLowering(val generationState: NativeGenerationSt
                                                     && extensionReceiverParameter != null)
                                                 irGet(extensionReceiverParameter!!)
                                             else {
-                                                // Sometimes FE resolves type as an intersection type which gets approximated to Nothing,
-                                                // so try to get the type from the referenced function in such a case.
-                                                // NOTE: the JVM counterpart of this lowering takes all the types from the referenced function
-                                                // for lambdas and SAM conversions, but it can't be done here because of the different
-                                                // lowerings order (in K/N the LocalDeclarationsLowering has already been applied by this point,
-                                                // and lambdas might have their own type parameters, copied from the outer scopes, and it
-                                                // gets really messy to try to substitute them to the correct ones).
-                                                val valueParameter = if ((samSuperType != null || isLambda)
-                                                        && functionParameterTypes[unboundIndex].isNothing()
-                                                ) {
+                                                val valueParameter = if (samSuperType != null || isLambda) {
                                                     parameter.copyTo(
                                                             function, DECLARATION_ORIGIN_FUNCTION_REFERENCE_IMPL,
                                                             type = parameter.type)
