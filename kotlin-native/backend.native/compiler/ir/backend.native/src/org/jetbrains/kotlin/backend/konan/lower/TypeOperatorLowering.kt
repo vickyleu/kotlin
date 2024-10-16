@@ -54,6 +54,8 @@ internal val IrType.erasedUpperBound get() = this.erasure().getClass() ?: error(
 
 internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     private val not = context.irBuiltIns.booleanNotSymbol
+    private val eqeqeq = context.irBuiltIns.eqeqeqSymbol
+    private val reinterpret = context.ir.symbols.reinterpret
 
     private sealed class LeafTerm {
         abstract fun invert(): LeafTerm
@@ -256,9 +258,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        if (container.fileOrNull?.path?.endsWith("z3.kt") != true) return
+        if (container.fileOrNull?.path?.endsWith("z2.kt") != true) return
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
+            //val variablePredicates = mutableMapOf<IrValueDeclaration, PredicatePair>()
+
             fun IrExpression.matchAndAnd(): Pair<IrExpression, IrExpression>? = when {
                 // a && b == if (a) b else false
                 (this as? IrWhen)?.branches?.size == 2
@@ -286,6 +290,31 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //            fun IrExpression.matchXor(): Pair<IrExpression, IrExpression>? = when {
 //                (this as? IrCall)?.symbol
 //            }
+
+            fun IrExpression.matchEqEqEq(): Pair<IrExpression, IrExpression>? = when {
+                (this as? IrCall)?.symbol == eqeqeq -> Pair(this.getValueArgument(0)!!, this.getValueArgument(1)!!)
+                else -> null
+            }
+
+            fun IrExpression.unwrapReinterpret(): IrExpression = when {
+                (this as? IrCall)?.symbol == reinterpret -> this.extensionReceiver!!
+                else -> this
+            }
+
+            fun IrExpression.matchSafeCast(): IrValueDeclaration? = when {
+                (this as? IrWhen)?.branches?.size == 2
+                        && this.branches[1].isUnconditional()
+                        && this.branches[1].result.let { it is IrConst && it.value == null }
+                -> {
+                    val condition = this.branches[0].condition
+                    val result = this.branches[0].result.unwrapCasts()
+                    (result as? IrGetValue)?.symbol?.owner?.takeIf {
+                        condition is IrTypeOperatorCall && condition.operator == IrTypeOperator.INSTANCEOF
+                                && (condition.argument as? IrGetValue)?.symbol == it.symbol
+                    }
+                }
+                else -> null
+            }
 
 
             fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate = when {
@@ -362,7 +391,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         if (rightPredicate.terms.any { it.terms.singleOrNull() == invertedLeafTerm })
                             falseLeafIndices.set(index)
                     }
-                    when (falseLeafIndices.size()) {
+                    when (falseLeafIndices.cardinality()) {
                         0 -> leftTerms.add(term)
                         term.terms.size -> return Predicate.False
                         else -> leftTerms.add(Disjunction(term.terms.filterIndexed { index, _ -> !falseLeafIndices.get(index) }))
@@ -447,7 +476,24 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     return buildPredicate(matchResultNot, predicate).invert()
                 }
 
-                // TODO: == null, === null
+                val matchResultEqEqEq = expression.matchEqEqEq()
+                if (matchResultEqEqEq != null) {
+                    val (left, right) = matchResultEqEqEq
+                    val nullCheckArgument = if (left is IrConst && left.value == null)
+                        right.unwrapReinterpret()
+                    else if (right is IrConst && right.value == null)
+                        left.unwrapReinterpret()
+                    else null
+                    val nullCheckVariable = ((nullCheckArgument as? IrBlock)?.statements?.singleOrNull() as? IrExpression)
+                            ?.matchSafeCast()?.getRootValue()
+                    if (nullCheckVariable != null) {
+                        val isSubtypeOfPredicate = Predicates.isSubtypeOf(nullCheckVariable, nullCheckArgument.type.makeNotNull())
+                        return PredicatePair(
+                                ifTrue = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate)),
+                                ifFalse = andPredicates(predicate, isSubtypeOfPredicate)
+                        )
+                    }
+                }
 
                 if ((expression as? IrConst)?.value == true) {
                     return PredicatePair(ifTrue = predicate, ifFalse = Predicate.False)
@@ -509,15 +555,16 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return result
             }
 
-            fun IrGetValue.getRootValue(): IrValueDeclaration {
-                val value = this.symbol.owner
-                if (value is IrValueParameter || (value as IrVariable).isVar)
-                    return value
-                val initializerRootValue = (value.initializer as? IrGetValue)?.getRootValue()
+            fun IrValueDeclaration.getRootValue(): IrValueDeclaration {
+                if (this is IrValueParameter || (this as IrVariable).isVar)
+                    return this
+                val initializerRootValue = (this.initializer as? IrGetValue)?.getRootValue()
                 return if (initializerRootValue == null || (initializerRootValue as? IrVariable)?.isVar == true)
-                    value
+                    this
                 else initializerRootValue
             }
+
+            fun IrGetValue.getRootValue() = this.symbol.owner.getRootValue()
 
             override fun visitTypeOperator(expression: IrTypeOperatorCall, data: Predicate): Predicate {
                 /*
