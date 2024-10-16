@@ -491,7 +491,6 @@ private val constructorsLoweringPhase = createFileLoweringPhase(
 
 private val optimizeCastsPhase = createFileLoweringPhase(
         name = "OptimizeCasts",
-        description = "Optimize away redundant cast operations",
         lowering = ::CastsOptimization,
 )
 
