@@ -261,7 +261,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        if (container.fileOrNull?.path?.endsWith("z.kt") != true) return
+        if (container.fileOrNull?.path?.endsWith("z2.kt") != true) return
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
             val variablePredicates = mutableMapOf<IrValueDeclaration, BooleanPredicate>()
@@ -456,23 +456,50 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     return buildBooleanPredicate(matchResultNot, predicate).invert()
                 }
 
-                // if (x as? String != null) ...  =  if (x is String) ...
+                // if (x as? A != null) ...  =  if (x is A) ...
+                // if ((x as? A)?.y == ..)
                 val matchResultEquality = expression.matchEquality()
                 if (matchResultEquality != null) {
                     val (left, right) = matchResultEquality
-                    val nullCheckArgument = if (left is IrConst && left.value == null)
-                        right
-                    else if (right is IrConst && right.value == null)
-                        left
-                    else null
-                    val nullablePredicate = if (nullCheckArgument != null)
-                        buildNullablePredicate(nullCheckArgument, predicate)
-                    else null
-                    if (nullablePredicate != null)
-                        return BooleanPredicate(
-                                ifTrue = nullablePredicate.ifNull,
-                                ifFalse = nullablePredicate.ifNotNull
-                        )
+                    val leftIsNullConst = left is IrConst && left.value == null
+                    val rightIsNullConst = right is IrConst && right.value == null
+                    return if ((leftIsNullConst || !left.type.isNullable()) && right.type.isNullable()) {
+                        val predicateAfterLeft = if (leftIsNullConst) predicate else visitElement(left, predicate)
+                        val nullablePredicate = buildNullablePredicate(right, predicateAfterLeft)
+                        if (nullablePredicate == null) {
+                            val result = visitElement(right, predicateAfterLeft)
+                            BooleanPredicate(ifTrue = result, ifFalse = result)
+                        } else if (leftIsNullConst) {
+                            BooleanPredicate(
+                                    ifTrue = nullablePredicate.ifNull,
+                                    ifFalse = nullablePredicate.ifNotNull
+                            )
+                        } else {
+                            BooleanPredicate(
+                                    ifTrue = nullablePredicate.ifNotNull,
+                                    ifFalse = nullablePredicate.ifNull
+                            )
+                        }
+                    } else if ((rightIsNullConst || !right.type.isNullable()) && left.type.isNullable()) {
+                        val nullablePredicate = buildNullablePredicate(left, predicate)
+                        return if (nullablePredicate == null) {
+                            val result = visitElement(expression, predicate)
+                            BooleanPredicate(ifTrue = result, ifFalse = result)
+                        } else if (rightIsNullConst) {
+                            BooleanPredicate(
+                                    ifTrue = nullablePredicate.ifNull,
+                                    ifFalse = nullablePredicate.ifNotNull
+                            )
+                        } else {
+                            BooleanPredicate(
+                                    ifTrue = visitElement(right, nullablePredicate.ifNotNull),
+                                    ifFalse = visitElement(right, nullablePredicate.ifNull)
+                            )
+                        }
+                    } else {
+                        val result = visitElement(expression, predicate)
+                        BooleanPredicate(ifTrue = result, ifFalse = result)
+                    }
                 }
 
                 if ((expression as? IrConst)?.value == true) {
