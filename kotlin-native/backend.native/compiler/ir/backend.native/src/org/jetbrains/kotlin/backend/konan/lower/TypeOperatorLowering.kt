@@ -16,10 +16,7 @@ import org.jetbrains.kotlin.ir.objcinterop.isObjCForwardDeclaration
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
-import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
-import org.jetbrains.kotlin.ir.symbols.IrClassifierSymbol
-import org.jetbrains.kotlin.ir.symbols.IrScriptSymbol
-import org.jetbrains.kotlin.ir.symbols.IrTypeParameterSymbol
+import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
@@ -54,8 +51,10 @@ internal val IrType.erasedUpperBound get() = this.erasure().getClass() ?: error(
 
 internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     private val not = context.irBuiltIns.booleanNotSymbol
+    private val eqeq = context.irBuiltIns.eqeqSymbol
     private val eqeqeq = context.irBuiltIns.eqeqeqSymbol
-    private val reinterpret = context.ir.symbols.reinterpret
+    private val ieee754EqualsSymbols: Set<IrSimpleFunctionSymbol> =
+            context.irBuiltIns.ieee754equalsFunByOperandType.values.toSet()
 
     private sealed class LeafTerm {
         abstract fun invert(): LeafTerm
@@ -253,15 +252,19 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         }
     }
 
-    private data class PredicatePair(val ifTrue: Predicate, val ifFalse: Predicate) {
-        fun invert() = PredicatePair(ifFalse, ifTrue)
+    private data class BooleanPredicate(val ifTrue: Predicate, val ifFalse: Predicate) {
+        fun invert() = BooleanPredicate(ifFalse, ifTrue)
+    }
+
+    private data class NullablePredicate(val ifNull: Predicate, val ifNotNull: Predicate) {
+        fun invert() = NullablePredicate(ifNotNull, ifNull)
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        if (container.fileOrNull?.path?.endsWith("z2.kt") != true) return
+        if (container.fileOrNull?.path?.endsWith("z.kt") != true) return
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
-            //val variablePredicates = mutableMapOf<IrValueDeclaration, PredicatePair>()
+            val variablePredicates = mutableMapOf<IrValueDeclaration, BooleanPredicate>()
 
             fun IrExpression.matchAndAnd(): Pair<IrExpression, IrExpression>? = when {
                 // a && b == if (a) b else false
@@ -291,28 +294,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //                (this as? IrCall)?.symbol
 //            }
 
-            fun IrExpression.matchEqEqEq(): Pair<IrExpression, IrExpression>? = when {
-                (this as? IrCall)?.symbol == eqeqeq -> Pair(this.getValueArgument(0)!!, this.getValueArgument(1)!!)
-                else -> null
-            }
+            private fun IrSimpleFunctionSymbol.isEqualityOperator() = this == eqeq || this == eqeqeq || this in ieee754EqualsSymbols
 
-            fun IrExpression.unwrapReinterpret(): IrExpression = when {
-                (this as? IrCall)?.symbol == reinterpret -> this.extensionReceiver!!
-                else -> this
-            }
-
-            fun IrExpression.matchSafeCast(): IrValueDeclaration? = when {
-                (this as? IrWhen)?.branches?.size == 2
-                        && this.branches[1].isUnconditional()
-                        && this.branches[1].result.let { it is IrConst && it.value == null }
-                -> {
-                    val condition = this.branches[0].condition
-                    val result = this.branches[0].result.unwrapCasts()
-                    (result as? IrGetValue)?.symbol?.owner?.takeIf {
-                        condition is IrTypeOperatorCall && condition.operator == IrTypeOperator.INSTANCEOF
-                                && (condition.argument as? IrGetValue)?.symbol == it.symbol
-                    }
-                }
+            fun IrExpression.matchEquality(): Pair<IrExpression, IrExpression>? = when {
+                (this as? IrCall)?.symbol?.isEqualityOperator() == true ->
+                    Pair(this.getValueArgument(0)!!, this.getValueArgument(1)!!)
                 else -> null
             }
 
@@ -444,87 +430,93 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 }
             }
 
-            fun buildPredicate(expression: IrExpression, predicate: Predicate): PredicatePair {
+            fun buildBooleanPredicate(expression: IrExpression, predicate: Predicate): BooleanPredicate {
                 val matchResultAndAnd = expression.matchAndAnd()
                 if (matchResultAndAnd != null) {
                     val (left, right) = matchResultAndAnd
-                    val leftPredicatePair = buildPredicate(left, predicate)
-                    val rightPredicatePair = buildPredicate(right, leftPredicatePair.ifTrue)
-                    return PredicatePair(
-                            ifTrue = rightPredicatePair.ifTrue,
-                            ifFalse = orPredicates(leftPredicatePair.ifFalse, rightPredicatePair.ifFalse)
+                    val leftBooleanPredicate = buildBooleanPredicate(left, predicate)
+                    val rightBooleanPredicate = buildBooleanPredicate(right, leftBooleanPredicate.ifTrue)
+                    return BooleanPredicate(
+                            ifTrue = rightBooleanPredicate.ifTrue,
+                            ifFalse = orPredicates(leftBooleanPredicate.ifFalse, rightBooleanPredicate.ifFalse)
                     )
                 }
                 val matchResultOrOr = expression.matchOrOr()
                 if (matchResultOrOr != null) {
                     val (left, right) = matchResultOrOr
-                    val leftPredicatePair = buildPredicate(left, predicate)
-//                    println("leftPredicatePair:")
-//                    println("    ${leftPredicatePair.ifTrue}")
-//                    println("    ${leftPredicatePair.ifFalse}")
-                    val rightPredicatePair = buildPredicate(right, leftPredicatePair.ifFalse)
-//                    println("rightPredicatePair:")
-//                    println("    ${rightPredicatePair.ifTrue}")
-//                    println("    ${rightPredicatePair.ifFalse}")
-                    return PredicatePair(
-                            ifTrue = orPredicates(leftPredicatePair.ifTrue, rightPredicatePair.ifTrue),
-                            ifFalse = rightPredicatePair.ifFalse
+                    val leftBooleanPredicate = buildBooleanPredicate(left, predicate)
+                    val rightBooleanPredicate = buildBooleanPredicate(right, leftBooleanPredicate.ifFalse)
+                    return BooleanPredicate(
+                            ifTrue = orPredicates(leftBooleanPredicate.ifTrue, rightBooleanPredicate.ifTrue),
+                            ifFalse = rightBooleanPredicate.ifFalse
                     )
                 }
                 val matchResultNot = expression.matchNot()
                 if (matchResultNot != null) {
-                    return buildPredicate(matchResultNot, predicate).invert()
+                    return buildBooleanPredicate(matchResultNot, predicate).invert()
                 }
 
-                val matchResultEqEqEq = expression.matchEqEqEq()
-                if (matchResultEqEqEq != null) {
-                    val (left, right) = matchResultEqEqEq
+                // if (x as? String != null) ...  =  if (x is String) ...
+                val matchResultEquality = expression.matchEquality()
+                if (matchResultEquality != null) {
+                    val (left, right) = matchResultEquality
                     val nullCheckArgument = if (left is IrConst && left.value == null)
-                        right.unwrapReinterpret()
+                        right
                     else if (right is IrConst && right.value == null)
-                        left.unwrapReinterpret()
+                        left
                     else null
-                    val nullCheckVariable = ((nullCheckArgument as? IrBlock)?.statements?.singleOrNull() as? IrExpression)
-                            ?.matchSafeCast()?.getRootValue()
-                    if (nullCheckVariable != null) {
-                        val isSubtypeOfPredicate = Predicates.isSubtypeOf(nullCheckVariable, nullCheckArgument.type.makeNotNull())
-                        return PredicatePair(
-                                ifTrue = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate)),
-                                ifFalse = andPredicates(predicate, isSubtypeOfPredicate)
+                    val nullablePredicate = if (nullCheckArgument != null)
+                        buildNullablePredicate(nullCheckArgument, predicate)
+                    else null
+                    if (nullablePredicate != null)
+                        return BooleanPredicate(
+                                ifTrue = nullablePredicate.ifNull,
+                                ifFalse = nullablePredicate.ifNotNull
                         )
-                    }
                 }
 
                 if ((expression as? IrConst)?.value == true) {
-                    return PredicatePair(ifTrue = predicate, ifFalse = Predicate.False)
+                    return BooleanPredicate(ifTrue = predicate, ifFalse = Predicate.False)
                 }
                 if ((expression as? IrConst)?.value == false) {
-                    return PredicatePair(ifTrue = Predicate.False, ifFalse = predicate)
+                    return BooleanPredicate(ifTrue = Predicate.False, ifFalse = predicate)
                 }
-                // if (x as? String != null) ...  =  if (x is String) ...
                 if (expression is IrTypeOperatorCall) {
                     val argument = expression.argument
                     if (argument is IrGetValue) {
                         val rootValue = argument.getRootValue()
                         if (expression.operator == IrTypeOperator.INSTANCEOF || expression.operator == IrTypeOperator.NOT_INSTANCEOF) {
                             val isSubtypeOfPredicate = Predicates.isSubtypeOf(rootValue, expression.typeOperand)
-                            val result = PredicatePair(
-                                    ifTrue = andPredicates(predicate, isSubtypeOfPredicate),
-                                    ifFalse = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate))
-                            )
+                            val fullIsSubtypeOfPredicate = andPredicates(predicate, isSubtypeOfPredicate)
+                            val fullIsNotSubtypeOfPredicate = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate))
                             return if (expression.operator == IrTypeOperator.INSTANCEOF)
-                                result
+                                BooleanPredicate(ifTrue = fullIsSubtypeOfPredicate, ifFalse = fullIsNotSubtypeOfPredicate)
                             else
-                                result.invert()
+                                BooleanPredicate(ifTrue = fullIsNotSubtypeOfPredicate, ifFalse = fullIsSubtypeOfPredicate)
                         }
                     }
                 }
 
                 val result = expression.accept(this, predicate)
-                return PredicatePair(
+                return BooleanPredicate(
                         ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
                         ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
                 )
+            }
+
+            private fun buildNullablePredicate(expression: IrExpression, predicate: Predicate): NullablePredicate? {
+                if (expression is IrTypeOperatorCall && expression.operator == IrTypeOperator.SAFE_CAST) {
+                    val argument = expression.argument
+                    if (argument is IrGetValue) {
+                        val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
+                        return NullablePredicate(
+                                ifNull = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate)),
+                                ifNotNull = andPredicates(predicate, isSubtypeOfPredicate)
+                        )
+                    }
+                }
+
+                return null
             }
 
             private fun IrElement.getImmediateChildren(): List<IrElement> {
@@ -589,14 +581,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 var predicate = data
                 var result: Predicate = Predicate.Empty
                 for (branch in expression.branches) {
-                    val branchPredicatePair = buildPredicate(branch.condition, predicate)
+                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, predicate)
                     println("QXX: ${branch.condition.dump()}")
-                    println("    ${branchPredicatePair.ifTrue}")
-                    println("    ${branchPredicatePair.ifFalse}")
+                    println("    ${conditionBooleanPredicate.ifTrue}")
+                    println("    ${conditionBooleanPredicate.ifFalse}")
                     println("    $result")
                     println()
-                    result = orPredicates(result, branch.result.accept(this, branchPredicatePair.ifTrue))
-                    predicate = branchPredicatePair.ifFalse
+                    result = orPredicates(result, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
+                    predicate = conditionBooleanPredicate.ifFalse
                 }
                 println("QXX")
                 println("    $result")
@@ -607,6 +599,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
                 return result
             }
+//
+//            override fun visitVariable(declaration: IrVariable, data: Predicate): Predicate {
+//                return super.visitVariable(declaration, data)
+//            }
+//
+//            override fun visitSetValue(expression: IrSetValue, data: Predicate): Predicate {
+//                return super.visitSetValue(expression, data)
+//            }
 
         }, Predicate.Empty)
     }

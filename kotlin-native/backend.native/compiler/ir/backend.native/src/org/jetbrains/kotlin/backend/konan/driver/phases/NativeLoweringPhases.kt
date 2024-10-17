@@ -637,17 +637,17 @@ internal fun PhaseEngine<NativeGenerationState>.getLoweringsAfterInlining(): Low
         coroutinesLivenessAnalysisPhase, // This is more optimal
         coroutinesLivenessAnalysisFallbackPhase, // While this is simple
         coroutinesVarSpillingPhase,
-        typeOperatorPhase,
         expressionBodyTransformPhase,
         objectClassesPhase,
         staticInitializersPhase,
+        optimizeCastsPhase,
+        typeOperatorPhase,
         builtinOperatorPhase,
         bridgesPhase,
         exportInternalAbiPhase.takeIf { context.config.produce.isCache },
         useInternalAbiPhase,
         autoboxPhase,
         constructorsLoweringPhase,
-        optimizeCastsPhase,
 )
 
 private fun createFileLoweringPhase(
