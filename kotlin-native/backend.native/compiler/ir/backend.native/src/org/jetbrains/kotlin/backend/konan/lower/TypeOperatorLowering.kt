@@ -304,13 +304,25 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 else -> null
             }
 
-            fun IrExpression.matchSafeCall(): Triple<IrValueDeclaration, IrType, IrExpression>? {
+            fun IrExpression.matchSafeCall(): Triple<IrValueDeclaration, IrType?, IrExpression>? {
                 val statements = (this as? IrBlock)?.statements?.takeIf { it.size == 2 } ?: return null
                 val safeReceiver = statements[0] as? IrVariable ?: return null
                 val initializer = safeReceiver.initializer
-                if (initializer !is IrTypeOperatorCall || initializer.operator != IrTypeOperator.SAFE_CAST)
-                    return null
-                val argument = initializer.argument as? IrGetValue ?: return null
+                val variableGetter: IrGetValue
+                val type: IrType?
+                when (initializer) {
+                    is IrGetValue -> {
+                        variableGetter = initializer
+                        type = null
+                    }
+                    is IrTypeOperatorCall -> {
+                        if (initializer.operator != IrTypeOperator.SAFE_CAST)
+                            return null
+                        variableGetter = initializer.argument as? IrGetValue ?: return null
+                        type = initializer.typeOperand
+                    }
+                    else -> return null
+                }
                 val safeCallResultWhen = (statements[1] as? IrWhen)?.takeIf { it.branches.size == 2 } ?: return null
                 val equalityMatchResult = safeCallResultWhen.branches[0].condition.matchEquality() ?: return null
                 if ((equalityMatchResult.first as? IrGetValue)?.symbol?.owner != safeReceiver
@@ -320,7 +332,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 if (!safeCallResultWhen.branches[1].isUnconditional())
                     return null
 
-                return Triple(argument.getRootValue(), initializer.typeOperand, safeCallResultWhen.branches[1].result)
+                return Triple(variableGetter.getRootValue(), type, safeCallResultWhen.branches[1].result)
             }
 
             fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate = when {
@@ -552,6 +564,13 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             }
 
             private fun buildNullablePredicate(expression: IrExpression, predicate: Predicate): NullablePredicate? {
+                if (expression is IrGetValue) {
+                    val variableIsNullPredicate = Predicates.disjunctionOf(SimpleTerm.IsNull(expression.getRootValue()))
+                    return NullablePredicate(
+                            ifNull = andPredicates(predicate, variableIsNullPredicate),
+                            ifNotNull = andPredicates(predicate, invertPredicate(variableIsNullPredicate))
+                    )
+                }
                 if (expression is IrTypeOperatorCall && expression.operator == IrTypeOperator.SAFE_CAST) {
                     val argument = expression.argument
                     if (argument is IrGetValue) {
@@ -565,10 +584,13 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 val matchResultSafeCall = expression.matchSafeCall()
                 if (matchResultSafeCall != null) {
                     val (variable, type, result) = matchResultSafeCall
-                    val isSubtypeOfPredicate = Predicates.isSubtypeOf(variable, type)
+                    val variablePredicate = if (type == null)
+                        Predicates.disjunctionOf(SimpleTerm.IsNotNull(variable))
+                    else
+                        Predicates.isSubtypeOf(variable, type)
                     return NullablePredicate(
-                            ifNull = andPredicates(predicate, invertPredicate(isSubtypeOfPredicate)),
-                            ifNotNull = visitElement(result, andPredicates(predicate, isSubtypeOfPredicate))
+                            ifNull = andPredicates(predicate, invertPredicate(variablePredicate)),
+                            ifNotNull = visitElement(result, andPredicates(predicate, variablePredicate))
                     )
                 }
 
