@@ -57,112 +57,109 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     private val ieee754EqualsSymbols: Set<IrSimpleFunctionSymbol> =
             context.irBuiltIns.ieee754equalsFunByOperandType.values.toSet()
 
-    private sealed class LeafTerm {
-        abstract fun invert(): LeafTerm
-    }
+    private sealed class LeafTerm
 
-    private data class ComplexTerm(val expression: IrExpression, val value: Boolean) : LeafTerm() {
-        override fun toString() = "[${expression::class.java.simpleName}@0x${System.identityHashCode(expression).toString(16)} is $value]"
-
-        override fun invert() = ComplexTerm(expression, !value)
+    private data class ComplexTerm(val expression: IrExpression) : LeafTerm() {
+        override fun toString() = "[${expression::class.java.simpleName}@0x${System.identityHashCode(expression).toString(16)}]"
     }
 
     private sealed class SimpleTerm(val variable: IrValueDeclaration) : LeafTerm() {
         class Is(value: IrValueDeclaration, val irClass: IrClass) : SimpleTerm(value) {
             override fun toString() = "${variable.name} is ${irClass.defaultType.render()}"
 
+            override fun hashCode(): Int {
+                return variable.hashCode() * 31 + irClass.hashCode()
+            }
+
             override fun equals(other: Any?): Boolean {
                 if (other === this) return true
                 if (other !is Is) return false
                 return variable == other.variable && irClass == other.irClass
             }
-
-            override fun invert() = IsNot(variable, irClass)
-        }
-
-        class IsNot(value: IrValueDeclaration, val irClass: IrClass) : SimpleTerm(value) {
-            override fun toString() = "${variable.name} !is ${irClass.defaultType.render()}"
-
-            override fun equals(other: Any?): Boolean {
-                if (other === this) return true
-                if (other !is IsNot) return false
-                return variable == other.variable && irClass == other.irClass
-            }
-
-            override fun invert() = Is(variable, irClass)
         }
 
         class IsNull(value: IrValueDeclaration) : SimpleTerm(value) {
             override fun toString() = "${variable.name} == null"
+
+            override fun hashCode(): Int {
+                return variable.hashCode()
+            }
 
             override fun equals(other: Any?): Boolean {
                 if (other === this) return true
                 if (other !is IsNull) return false
                 return variable == other.variable
             }
-
-            override fun invert() = IsNotNull(variable)
-        }
-
-        class IsNotNull(value: IrValueDeclaration) : SimpleTerm(value) {
-            override fun toString() = "${variable.name} != null"
-
-            override fun equals(other: Any?): Boolean {
-                if (other === this) return true
-                if (other !is IsNotNull) return false
-                return variable == other.variable
-            }
-
-            override fun invert() = IsNull(variable)
         }
     }
 
-    private class Disjunction(val terms: List<LeafTerm>) {
+    private class Conjunction(val terms: List<LeafTerm>) {
         init {
             require(terms.isNotEmpty())
         }
 
         override fun toString() = when (terms.size) {
             1 -> terms.first().toString()
-            else -> terms.joinToString(" | ") { "(${it})" }
+            else -> terms.joinToString("") { "(${it})" }
         }
 
-        // (a | b) & (a) = a
-        infix fun followsFrom(other: Disjunction): Boolean {
-            for (term in other.terms) {
-                if (!terms.contains(term))
-                    return false
+        override fun hashCode(): Int {
+            return terms.sumOf { it.hashCode() }
+        }
+
+        override fun equals(other: Any?): Boolean {
+            val otherTerms = (other as? Conjunction)?.terms ?: return false
+            if (terms.size != otherTerms.size) return false
+            val set = terms.toSet()
+            return otherTerms.all { it in set }
+        }
+    }
+
+    private class Predicate(val terms: List<Conjunction>, val inverted: Boolean) {
+        override fun toString(): String {
+            if (this === Zero) return "0"
+            if (this === One) return "1"
+            val termsFormatted = when (terms.size) {
+                1 -> terms.first().toString()
+                else -> terms.joinToString(separator = " + ") { "($it)" }
             }
-            return true
-        }
-    }
-
-    private sealed class Predicate {
-        //data object True : Predicate()
-        data object False : Predicate()
-        data object Empty : Predicate()
-    }
-
-    private class Conjunction(val terms: List<Disjunction>) : Predicate() {
-        init {
-            require(terms.isNotEmpty())
+            return if (inverted) "1 + ($termsFormatted)" else termsFormatted
         }
 
-        override fun toString() = when (terms.size) {
-            1 -> terms.first().toString()
-            else -> terms.joinToString(separator = " & ") { "($it)" }
+        companion object {
+            val Zero = Predicate(emptyList(), inverted = false)
+            val One = Predicate(emptyList(), inverted = true)
+
+            fun create(terms: List<Conjunction>, inverted: Boolean): Predicate {
+                val uniqueTerms = mutableSetOf<Conjunction>()
+                for (term in terms) {
+                    if (!uniqueTerms.add(term))
+                        uniqueTerms.remove(term)
+                }
+                return when {
+                    uniqueTerms.isEmpty() -> if (inverted) One else Zero
+                    else -> {
+                        Predicate(uniqueTerms.toList(), inverted)
+                    }
+                }
+            }
+
+            fun createSingleConjunction(terms: List<LeafTerm>, inverted: Boolean) = when {
+                terms.isEmpty() -> if (inverted) One else Zero
+                else -> Predicate(listOf(Conjunction(terms)), inverted)
+            }
         }
     }
 
     private object Predicates {
-        fun disjunctionOf(vararg terms: LeafTerm): Predicate {
-            return disjunctionOf(terms.asList(), optimize = false)
-        }
+        fun conjunctionOf(vararg terms: LeafTerm) =
+                conjunctionOf(terms.asList(), inverted = false, optimize = false)
 
-        fun disjunctionOf(terms: List<LeafTerm>, optimize: Boolean = true): Predicate {
-            val optimizedTerms = if (optimize) optimizeTerms(terms) else terms
-            return if (optimizedTerms.isEmpty()) Predicate.Empty else Conjunction(listOf(Disjunction(optimizedTerms)))
-        }
+        fun invertedConjunctionOf(vararg terms: LeafTerm) =
+                conjunctionOf(terms.asList(), inverted = true, optimize = false)
+
+        fun conjunctionOf(terms: List<LeafTerm>, inverted: Boolean, optimize: Boolean = true) =
+                Predicate.createSingleConjunction(if (optimize) optimizeTerms(terms) else terms, inverted)
 
         fun isSubtypeOf(value: IrValueDeclaration, type: IrType): Predicate {
             val valueIsNullable = value.type.isNullable()
@@ -173,14 +170,17 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             return when {
                 isSuperClassCast -> {
                     if (valueIsNullable && !typeIsNullable) // (value: A?) is A = value != null
-                        disjunctionOf(SimpleTerm.IsNotNull(value))
-                    else Predicate.Empty
+                        invertedConjunctionOf(SimpleTerm.IsNull(value))
+                    else Predicate.One
                 }
                 else -> {
                     if (valueIsNullable && typeIsNullable) // (value: A?) is B? = value == null || value is B
-                        disjunctionOf(SimpleTerm.IsNull(value), SimpleTerm.Is(value, dstClass))
+                        Predicate.create(listOf(
+                                Conjunction(listOf(SimpleTerm.IsNull(value))),
+                                Conjunction(listOf(SimpleTerm.Is(value, dstClass))),
+                        ), inverted = false)
                     else
-                        disjunctionOf(SimpleTerm.Is(value, dstClass))
+                        conjunctionOf(SimpleTerm.Is(value, dstClass))
                 }
             }
         }
@@ -197,57 +197,22 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             val result = mutableListOf<LeafTerm>()
             val groupedSimpleTerms = simpleTerms.groupBy { it.variable }
             groupedSimpleTerms.forEach { (variable, terms) ->
-                val classes = mutableMapOf<IrClass, Boolean>()
-                var isNull: Boolean? = null
+                val classes = mutableSetOf<IrClass>()
+                var isNull = false
                 for (term in terms) when (term) {
-                    is SimpleTerm.Is -> {
-                        val isSubtype = classes.getOrPut(term.irClass) { true }
-                        if (!isSubtype) {
-                            // x !is T || x is T => always true
-                            return emptyList()
-                        }
-                    }
-                    is SimpleTerm.IsNot -> {
-                        val isSubtype = classes.getOrPut(term.irClass) { false }
-                        if (isSubtype) {
-                            // x is T || x !is T => always true
-                            return emptyList()
-                        }
-                    }
-                    is SimpleTerm.IsNull -> {
-                        if (isNull == false) {
-                            // x != null || x == null => always true
-                            return emptyList()
-                        }
-                        isNull = true
-                    }
-                    is SimpleTerm.IsNotNull -> {
-                        if (isNull == true) {
-                            // x == null || x != null => always true
-                            return emptyList()
-                        }
-                        isNull = false
-                    }
+                    is SimpleTerm.Is -> classes.add(term.irClass)
+                    is SimpleTerm.IsNull -> isNull = true
                 }
-                if (isNull != null)
-                    result.add(if (isNull) SimpleTerm.IsNull(variable) else SimpleTerm.IsNotNull(variable))
-                classes.forEach { (irClass, isSubtype) ->
-                    result.add(if (isSubtype) SimpleTerm.Is(variable, irClass) else SimpleTerm.IsNot(variable, irClass))
+                if (isNull && classes.isNotEmpty()) // x == null && x is A -> always false
+                    return emptyList()
+                if (isNull)
+                    result.add(SimpleTerm.IsNull(variable))
+                classes.forEach { irClass ->
+                    result.add(SimpleTerm.Is(variable, irClass))
                 }
             }
 
-            val groupedComplexTerms = complexTerms.groupBy { it.expression }
-            groupedComplexTerms.forEach { (expression, terms) ->
-                var value: Boolean? = null
-                for (term in terms) {
-                    if (value != null && value != term.value) {
-                        // expression && !expression => always true
-                        return emptyList()
-                    }
-                    value = term.value
-                }
-                result.add(ComplexTerm(expression, value!!))
-            }
+            result.addAll(complexTerms.distinct())
 
             return result
         }
@@ -346,8 +311,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-//        if (container.fileOrNull?.path?.endsWith("z6.kt") != true) return
-        //val debugOutput = true
+//        if (container.fileOrNull?.path?.endsWith("z.kt") != true) return
+//        val debugOutput = true
         val debugOutput = container.fileOrNull?.path?.endsWith("collections/Arrays.kt") == true
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
@@ -422,201 +387,37 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return Triple(variableGetter.getRootValue(), type, safeCallResultWhen.branches[1].result)
             }
 
-            fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate = when {
-//                leftPredicate == Predicate.True || rightPredicate == Predicate.True -> {
-//                    Predicate.True
-//                }
-                leftPredicate == Predicate.False -> {
-                    rightPredicate
-                }
-                rightPredicate == Predicate.False -> {
-                    leftPredicate
-                }
-                leftPredicate == Predicate.Empty -> {
-                    rightPredicate
-                }
-                rightPredicate == Predicate.Empty -> {
-                    leftPredicate
-                }
-                else -> {
-                    leftPredicate as Conjunction
-                    rightPredicate as Conjunction
-                    when {
-                        leftPredicate.terms.size <= 1 && rightPredicate.terms.size <= 1 -> {
-                            val simpleTerms = mutableListOf<LeafTerm>()
-                            if (leftPredicate.terms.size == 1)
-                                simpleTerms.addAll(leftPredicate.terms[0].terms)
-                            if (rightPredicate.terms.size == 1)
-                                simpleTerms.addAll(rightPredicate.terms[0].terms)
-                            Predicates.disjunctionOf(simpleTerms)
-                        }
-                        rightPredicate.terms.size == 1 -> {
-                            // a | (b & c) = (a | b) & (a | c)
-                            // a = right.terms[0], b = left.terms[0], c = left.terms[1:]
-                            andPredicates(
-                                    Predicates.disjunctionOf(leftPredicate.terms.first().terms + rightPredicate.terms.first().terms),
-                                    orPredicates(rightPredicate, Conjunction(leftPredicate.terms.drop(1)))
-                            )
-                        }
-                        else -> {
-                            // a | (b & c) = (a | b) & (a | c)
-                            // a = left, b = right.terms[0], c = right.terms[1:]
-                            andPredicates(
-                                    orPredicates(leftPredicate, Conjunction(listOf(rightPredicate.terms.first()))),
-                                    orPredicates(leftPredicate, Conjunction(rightPredicate.terms.drop(1)))
-                            )
-                        }
-                    }
-                }
-            }.also {
-                if (debugOutput) {
-                    println("OR: $leftPredicate")
-                    println("    $rightPredicate")
-                    println(" =  $it")
-//                val t = IllegalStateException()
-//                println(t.stackTraceToString())
-                }
-            }
-
-//            fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate) = when {
-//                leftPredicate == Predicate.False -> {
-//                    rightPredicate
-//                }
-//                rightPredicate == Predicate.False -> {
-//                    leftPredicate
-//                }
-//                leftPredicate == Predicate.Empty -> {
-//                    rightPredicate
-//                }
-//                rightPredicate == Predicate.Empty -> {
-//                    leftPredicate
-//                }
-//                else -> invertPredicate(andPredicates(invertPredicate(leftPredicate), invertPredicate(rightPredicate)))
-//            }.also {
-//                if (debugOutput) {
-//                    println("OR: $leftPredicate")
-//                    println("    $rightPredicate")
-//                    println(" =  $it")
-//                    //                val t = IllegalStateException()
-//                    //                println(t.stackTraceToString())
-//                }
-//            }
-
-            fun andPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate {
-                if (leftPredicate == Predicate.False || rightPredicate == Predicate.False)
-                    return Predicate.False
-                if (/*leftPredicate == Predicate.True || */leftPredicate == Predicate.Empty)
-                    return rightPredicate
-                if (/*rightPredicate == Predicate.True || */rightPredicate == Predicate.Empty)
-                    return leftPredicate
-
-                leftPredicate as Conjunction
-                rightPredicate as Conjunction
-                val leftTerms = mutableListOf<Disjunction>()
-                for (term in leftPredicate.terms) {
-                    if (rightPredicate.terms.any { term followsFrom it })
-                        continue
-                    val falseLeafIndices = BitSet()
-                    term.terms.forEachIndexed { index, leafTerm ->
-                        val invertedLeafTerm = leafTerm.invert()
-                        if (rightPredicate.terms.any { it.terms.singleOrNull() == invertedLeafTerm })
-                            falseLeafIndices.set(index)
-                    }
-                    when (falseLeafIndices.cardinality()) {
-                        0 -> leftTerms.add(term)
-                        term.terms.size -> return Predicate.False
-                        else -> leftTerms.add(Disjunction(term.terms.filterIndexed { index, _ -> !falseLeafIndices.get(index) }))
-                    }
-                }
-                val rightTerms = mutableListOf<Disjunction>()
-                for (term in rightPredicate.terms) {
-                    if (leftTerms.any { term followsFrom it })
-                        continue
-                    val falseLeafIndices = BitSet()
-                    term.terms.forEachIndexed { index, leafTerm ->
-                        val invertedLeafTerm = leafTerm.invert()
-                        if (leftTerms.any { it.terms.singleOrNull() == invertedLeafTerm })
-                            falseLeafIndices.set(index)
-                    }
-                    when (falseLeafIndices.cardinality()) {
-                        0 -> rightTerms.add(term)
-                        term.terms.size -> return Predicate.False
-                        else -> rightTerms.add(Disjunction(term.terms.filterIndexed { index, _ -> !falseLeafIndices.get(index) }))
-                    }
-                }
-//                val leftTerms = leftPredicate.terms.filter { leftTerm ->
-//                    !rightPredicate.terms.any { leftTerm followsFrom it }
-//                }
-//                val rightTerms = rightPredicate.terms.filter { rightTerm ->
-//                    !leftTerms.any { rightTerm followsFrom it }
-//                }
-
-
-                // (a | b) & (!a) = b & !a
-                // (a1 | a2 | b) & !a1 & !a2 = (a1 | b) & !a1 & !a2 = b & !a1 & !a2
-
-                return Conjunction(leftTerms + rightTerms)/*.also {
+            fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate {
+                val result = invertPredicate(andPredicates(invertPredicate(leftPredicate), invertPredicate(rightPredicate)))
+                return result.also {
                     if (debugOutput) {
-                        println("AND: $leftPredicate")
+                        println("OR: $leftPredicate")
                         println("    $rightPredicate")
                         println(" =  $it")
-                        //                val t = IllegalStateException()
-                        //                println(t.stackTraceToString())
-                    }
-                }*/
-            }
-
-            fun invertPredicate(predicate: Predicate): Predicate = when (predicate) {
-                //Predicate.True -> Predicate.False
-                Predicate.False -> Predicate.Empty
-                Predicate.Empty -> Predicate.False
-//                is Conjunction -> {
-//                    // ~(() & () & .. ()) = ~() | ~() | .. ~()
-//                    val resultDisjunctions = mutableListOf<Disjunction?>()
-//
-//                    fun iterateOverTerms(k: Int, terms: Array<LeafTerm?>) {
-//                        for (term in predicate.terms[k].terms) {
-//                            terms[k] = term.invert()
-//                            val currentPredicate = Predicates.disjunctionOf(terms.take(k + 1).map { it!! })
-//                            if (currentPredicate == Predicate.Empty)
-//                                continue
-//                            val currentDisjunction = (currentPredicate as Conjunction).terms.singleOrNull()!!
-//                            if (resultDisjunctions.any { it != null && currentDisjunction followsFrom it })
-//                                continue
-//                            if (k < predicate.terms.size - 1)
-//                                iterateOverTerms(k + 1, terms)
-//                            else {
-//                                for (i in resultDisjunctions.indices) {
-//                                    val disjunction = resultDisjunctions[i]
-//                                    if (disjunction != null && disjunction followsFrom currentDisjunction)
-//                                        resultDisjunctions[i] = null
-//                                }
-//                                resultDisjunctions.add(currentDisjunction)
-//                            }
-//                        }
-//                    }
-//
-////                    println("INVERT: $predicate")
-//
-//                    iterateOverTerms(0, arrayOfNulls(predicate.terms.size))
-//
-//                    val nonNullDisjunctions = resultDisjunctions.filterNotNull()
-//                    if (nonNullDisjunctions.isEmpty())
-//                        Predicate.Empty
-//                    else Conjunction(nonNullDisjunctions)
-//                }
-                is Conjunction -> when {
-                    predicate.terms.size == 1 -> {
-                        Conjunction(predicate.terms.first().terms.map { Disjunction(listOf(it.invert())) })
-                    }
-                    else -> {
-                        orPredicates(
-                                invertPredicate(Conjunction(listOf(predicate.terms.first()))),
-                                invertPredicate(Conjunction(predicate.terms.drop(1)))
-                        )
+            //                val t = IllegalStateException()
+            //                println(t.stackTraceToString())
                     }
                 }
             }
+
+            fun andPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate {
+                val terms = mutableListOf<Conjunction>()
+                if (leftPredicate.inverted)
+                    terms.addAll(rightPredicate.terms)
+                if (rightPredicate.inverted)
+                    terms.addAll(leftPredicate.terms)
+                for (leftTerm in leftPredicate.terms) {
+                    for (rightTerm in rightPredicate.terms) {
+                        val andResult = Predicates.conjunctionOf(leftTerm.terms + rightTerm.terms, inverted = false)
+                        if (andResult != Predicate.Zero)
+                            terms.add(Conjunction(andResult.terms.singleOrNull()!!.terms))
+                    }
+                }
+
+                return Predicate.create(terms, inverted = leftPredicate.inverted && rightPredicate.inverted)
+            }
+
+            fun invertPredicate(predicate: Predicate): Predicate = Predicate.create(predicate.terms, !predicate.inverted)
 
             fun buildBooleanPredicate(expression: IrExpression, predicate: Predicate): BooleanPredicate {
                 val matchResultAndAnd = expression.matchAndAnd()
@@ -687,17 +488,17 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     } else {
                         val result = expression.accept(this, predicate)
                         return BooleanPredicate(
-                                ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
-                                ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                                ifTrue = andPredicates(Predicates.conjunctionOf(ComplexTerm(expression)), result),
+                                ifFalse = andPredicates(Predicates.invertedConjunctionOf(ComplexTerm(expression)), result)
                         )
                     }
                 }
 
                 if ((expression as? IrConst)?.value == true) {
-                    return BooleanPredicate(ifTrue = predicate, ifFalse = Predicate.False)
+                    return BooleanPredicate(ifTrue = predicate, ifFalse = Predicate.Zero)
                 }
                 if ((expression as? IrConst)?.value == false) {
-                    return BooleanPredicate(ifTrue = Predicate.False, ifFalse = predicate)
+                    return BooleanPredicate(ifTrue = Predicate.Zero, ifFalse = predicate)
                 }
                 if (expression is IrTypeOperatorCall) {
                     val argument = expression.argument
@@ -717,14 +518,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
                 val result = expression.accept(this, predicate)
                 return BooleanPredicate(
-                        ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
-                        ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                        ifTrue = andPredicates(Predicates.conjunctionOf(ComplexTerm(expression)), result),
+                        ifFalse = andPredicates(Predicates.invertedConjunctionOf(ComplexTerm(expression)), result)
                 )
             }
 
             private fun buildNullablePredicate(expression: IrExpression, predicate: Predicate): NullablePredicate? {
                 if (expression is IrGetValue) {
-                    val variableIsNullPredicate = Predicates.disjunctionOf(SimpleTerm.IsNull(expression.getRootValue()))
+                    val variableIsNullPredicate = Predicates.conjunctionOf(SimpleTerm.IsNull(expression.getRootValue()))
                     return NullablePredicate(
                             ifNull = andPredicates(predicate, variableIsNullPredicate),
                             ifNotNull = andPredicates(predicate, invertPredicate(variableIsNullPredicate))
@@ -744,7 +545,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 if (matchResultSafeCall != null) {
                     val (variable, type, result) = matchResultSafeCall
                     val variablePredicate = if (type == null)
-                        Predicates.disjunctionOf(SimpleTerm.IsNotNull(variable))
+                        Predicates.invertedConjunctionOf(SimpleTerm.IsNull(variable))
                     else
                         Predicates.isSubtypeOf(variable, type)
                     return NullablePredicate(
@@ -818,7 +619,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
 //            override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
 //                var predicate = data
-//                var result: Predicate = Predicate.Empty
+//                var result: Predicate = Predicate.Zero
 //                for (branch in expression.branches) {
 //                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, predicate)
 //                    if (debugOutput) {
@@ -864,7 +665,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
                 return data
             }
-//
+
 //            override fun visitVariable(declaration: IrVariable, data: Predicate): Predicate {
 //                return super.visitVariable(declaration, data)
 //            }
@@ -873,7 +674,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //                return super.visitSetValue(expression, data)
 //            }
 
-        }, Predicate.Empty)
+        }, Predicate.One)
     }
 }
 
