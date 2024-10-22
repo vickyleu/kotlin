@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.ir.objcinterop.isObjCForwardDeclaration
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
+import org.jetbrains.kotlin.ir.expressions.impl.IrConstImpl
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.*
@@ -260,8 +261,94 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         fun invert() = NullablePredicate(ifNotNull, ifNull)
     }
 
+    private fun findBlocks(irBody: IrBody, container: IrDeclaration) {
+        var hasBlocks = false
+        irBody.acceptChildrenVoid(object : IrElementVisitorVoid {
+            override fun visitElement(element: IrElement) {
+                element.acceptChildrenVoid(this)
+            }
+
+            fun IrExpression.isNullConst() = this is IrConst && this.value == null
+
+            fun IrSimpleFunctionSymbol.isEqualityOperator() = this == eqeq || this == eqeqeq || this in ieee754EqualsSymbols
+
+            fun IrExpression.matchEquality(): Pair<IrExpression, IrExpression>? = when {
+                (this as? IrCall)?.symbol?.isEqualityOperator() == true ->
+                    Pair(this.getValueArgument(0)!!, this.getValueArgument(1)!!)
+                else -> null
+            }
+
+            fun IrExpression.matchSafeCall(): Triple<IrValueDeclaration, IrType?, IrExpression>? {
+                val statements = (this as? IrBlock)?.statements?.takeIf { it.size == 2 } ?: return null
+                val safeReceiver = statements[0] as? IrVariable ?: return null
+                val initializer = safeReceiver.initializer
+                val variableGetter: IrGetValue
+                val type: IrType?
+                when (initializer) {
+                    is IrGetValue -> {
+                        variableGetter = initializer
+                        type = null
+                    }
+                    is IrTypeOperatorCall -> {
+                        if (initializer.operator != IrTypeOperator.SAFE_CAST)
+                            return null
+                        variableGetter = initializer.argument as? IrGetValue ?: return null
+                        type = initializer.typeOperand
+                    }
+                    else -> return null
+                }
+                val safeCallResultWhen = (statements[1] as? IrWhen)?.takeIf { it.branches.size == 2 } ?: return null
+                val equalityMatchResult = safeCallResultWhen.branches[0].condition.matchEquality() ?: return null
+                if ((equalityMatchResult.first as? IrGetValue)?.symbol?.owner != safeReceiver
+                        || !equalityMatchResult.second.isNullConst()
+                        || !safeCallResultWhen.branches[0].result.isNullConst())
+                    return null
+                if (!safeCallResultWhen.branches[1].isUnconditional())
+                    return null
+
+                return Triple(variableGetter.symbol.owner, type, safeCallResultWhen.branches[1].result)
+            }
+
+            override fun visitCall(expression: IrCall) {
+                expression.acceptChildrenVoid(this)
+
+                if (expression.symbol == eqeq) {
+                    val left = expression.getValueArgument(0)!!
+                    val right = expression.getValueArgument(1)!!
+                    val leftIsNullConst = left.isNullConst()
+                    val rightIsNullConst = right.isNullConst()
+                    if ((leftIsNullConst || !left.type.isNullable()) && right.type.isNullable()) {
+                        if (right is IrBlock && right !is IrReturnableBlock && right.origin != LoweredStatementOrigins.INLINE_ARGS_CONTAINER
+                                && right.matchSafeCall() == null
+                        ) {
+                            hasBlocks = true
+                            println(expression.dump())
+                            println()
+                        }
+                    }
+                    if ((rightIsNullConst || !right.type.isNullable()) && left.type.isNullable()) {
+                        if (left is IrBlock && left !is IrReturnableBlock && left.origin != LoweredStatementOrigins.INLINE_ARGS_CONTAINER
+                                && left.matchSafeCall() == null
+                        ) {
+                            hasBlocks = true
+                            println(expression.dump())
+                            println()
+                        }
+                    }
+                }
+            }
+        })
+        if (hasBlocks) {
+            println("ZZZ: ${container.render()}")
+            println()
+            println()
+        }
+    }
+
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        if (container.fileOrNull?.path?.endsWith("z6.kt") != true) return
+//        if (container.fileOrNull?.path?.endsWith("z6.kt") != true) return
+        //val debugOutput = true
+        val debugOutput = container.fileOrNull?.path?.endsWith("collections/Arrays.kt") == true
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
             val variablePredicates = mutableMapOf<IrValueDeclaration, BooleanPredicate>()
@@ -382,12 +469,38 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     }
                 }
             }.also {
-                println("OR: $leftPredicate")
-                println("    $rightPredicate")
-                println(" =  $it")
+                if (debugOutput) {
+                    println("OR: $leftPredicate")
+                    println("    $rightPredicate")
+                    println(" =  $it")
 //                val t = IllegalStateException()
 //                println(t.stackTraceToString())
+                }
             }
+
+//            fun orPredicates(leftPredicate: Predicate, rightPredicate: Predicate) = when {
+//                leftPredicate == Predicate.False -> {
+//                    rightPredicate
+//                }
+//                rightPredicate == Predicate.False -> {
+//                    leftPredicate
+//                }
+//                leftPredicate == Predicate.Empty -> {
+//                    rightPredicate
+//                }
+//                rightPredicate == Predicate.Empty -> {
+//                    leftPredicate
+//                }
+//                else -> invertPredicate(andPredicates(invertPredicate(leftPredicate), invertPredicate(rightPredicate)))
+//            }.also {
+//                if (debugOutput) {
+//                    println("OR: $leftPredicate")
+//                    println("    $rightPredicate")
+//                    println(" =  $it")
+//                    //                val t = IllegalStateException()
+//                    //                println(t.stackTraceToString())
+//                }
+//            }
 
             fun andPredicates(leftPredicate: Predicate, rightPredicate: Predicate): Predicate {
                 if (leftPredicate == Predicate.False || rightPredicate == Predicate.False)
@@ -425,7 +538,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         if (leftTerms.any { it.terms.singleOrNull() == invertedLeafTerm })
                             falseLeafIndices.set(index)
                     }
-                    when (falseLeafIndices.size()) {
+                    when (falseLeafIndices.cardinality()) {
                         0 -> rightTerms.add(term)
                         term.terms.size -> return Predicate.False
                         else -> rightTerms.add(Disjunction(term.terms.filterIndexed { index, _ -> !falseLeafIndices.get(index) }))
@@ -442,13 +555,56 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 // (a | b) & (!a) = b & !a
                 // (a1 | a2 | b) & !a1 & !a2 = (a1 | b) & !a1 & !a2 = b & !a1 & !a2
 
-                return Conjunction(leftTerms + rightTerms)
+                return Conjunction(leftTerms + rightTerms)/*.also {
+                    if (debugOutput) {
+                        println("AND: $leftPredicate")
+                        println("    $rightPredicate")
+                        println(" =  $it")
+                        //                val t = IllegalStateException()
+                        //                println(t.stackTraceToString())
+                    }
+                }*/
             }
 
             fun invertPredicate(predicate: Predicate): Predicate = when (predicate) {
                 //Predicate.True -> Predicate.False
                 Predicate.False -> Predicate.Empty
                 Predicate.Empty -> Predicate.False
+//                is Conjunction -> {
+//                    // ~(() & () & .. ()) = ~() | ~() | .. ~()
+//                    val resultDisjunctions = mutableListOf<Disjunction?>()
+//
+//                    fun iterateOverTerms(k: Int, terms: Array<LeafTerm?>) {
+//                        for (term in predicate.terms[k].terms) {
+//                            terms[k] = term.invert()
+//                            val currentPredicate = Predicates.disjunctionOf(terms.take(k + 1).map { it!! })
+//                            if (currentPredicate == Predicate.Empty)
+//                                continue
+//                            val currentDisjunction = (currentPredicate as Conjunction).terms.singleOrNull()!!
+//                            if (resultDisjunctions.any { it != null && currentDisjunction followsFrom it })
+//                                continue
+//                            if (k < predicate.terms.size - 1)
+//                                iterateOverTerms(k + 1, terms)
+//                            else {
+//                                for (i in resultDisjunctions.indices) {
+//                                    val disjunction = resultDisjunctions[i]
+//                                    if (disjunction != null && disjunction followsFrom currentDisjunction)
+//                                        resultDisjunctions[i] = null
+//                                }
+//                                resultDisjunctions.add(currentDisjunction)
+//                            }
+//                        }
+//                    }
+//
+////                    println("INVERT: $predicate")
+//
+//                    iterateOverTerms(0, arrayOfNulls(predicate.terms.size))
+//
+//                    val nonNullDisjunctions = resultDisjunctions.filterNotNull()
+//                    if (nonNullDisjunctions.isEmpty())
+//                        Predicate.Empty
+//                    else Conjunction(nonNullDisjunctions)
+//                }
                 is Conjunction -> when {
                     predicate.terms.size == 1 -> {
                         Conjunction(predicate.terms.first().terms.map { Disjunction(listOf(it.invert())) })
@@ -529,8 +685,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                             )
                         }
                     } else {
-                        val result = visitElement(expression, predicate)
-                        BooleanPredicate(ifTrue = result, ifFalse = result)
+                        val result = expression.accept(this, predicate)
+                        return BooleanPredicate(
+                                ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
+                                ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                        )
                     }
                 }
 
@@ -645,9 +804,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                  */
                 val result = expression.argument.accept(this, data)
                 if (expression.isCast()) {
-                    println("ZZZ: ${expression.dump()}")
-                    println("    $result")
-                    println()
+                    if (debugOutput) {
+                        println("ZZZ: ${expression.dump()}")
+                        println("    $result")
+                        println()
+                    }
                     val argument = expression.unwrapCasts()
                     if (argument is IrGetValue)
                         return andPredicates(result, Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand))
@@ -655,27 +816,53 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return result
             }
 
+//            override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
+//                var predicate = data
+//                var result: Predicate = Predicate.Empty
+//                for (branch in expression.branches) {
+//                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, predicate)
+//                    if (debugOutput) {
+//                        println("QXX: ${branch.condition.dump()}")
+//                        println("    ${conditionBooleanPredicate.ifTrue}")
+//                        println("    ${conditionBooleanPredicate.ifFalse}")
+//                        println("    $result")
+//                        println()
+//                    }
+//                    result = orPredicates(result, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
+//                    predicate = conditionBooleanPredicate.ifFalse
+//                }
+//                if (debugOutput) {
+//                    println("QXX")
+//                    println("    $result")
+//                    println("    $predicate")
+//                    result = orPredicates(result, predicate)
+//                    println("    $result")
+//                    println()
+//                }
+//
+//                return result
+//            }
+
             override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
                 var predicate = data
-                var result: Predicate = Predicate.Empty
                 for (branch in expression.branches) {
                     val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, predicate)
-                    println("QXX: ${branch.condition.dump()}")
-                    println("    ${conditionBooleanPredicate.ifTrue}")
-                    println("    ${conditionBooleanPredicate.ifFalse}")
-                    println("    $result")
-                    println()
-                    result = orPredicates(result, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
+                    if (debugOutput) {
+                        println("QXX: ${branch.condition.dump()}")
+                        println("    ${conditionBooleanPredicate.ifTrue}")
+                        println("    ${conditionBooleanPredicate.ifFalse}")
+                        println()
+                    }
+                    branch.result.accept(this, conditionBooleanPredicate.ifTrue)
                     predicate = conditionBooleanPredicate.ifFalse
                 }
-                println("QXX")
-                println("    $result")
-                println("    $predicate")
-                result = orPredicates(result, predicate)
-                println("    $result")
-                println()
+                if (debugOutput) {
+                    println("QXX")
+                    println("    $predicate")
+                    println()
+                }
 
-                return result
+                return data
             }
 //
 //            override fun visitVariable(declaration: IrVariable, data: Predicate): Predicate {
