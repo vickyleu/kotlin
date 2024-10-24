@@ -628,8 +628,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         val predicateAfterLeft = if (leftIsNullConst) predicate else visitElement(left, predicate)
                         val nullablePredicate = buildNullablePredicate(right, predicateAfterLeft)
                         if (nullablePredicate == null) {
-                            val result = visitElement(right, predicateAfterLeft)
-                            BooleanPredicate(ifTrue = result, ifFalse = result)
+                            val result = expression.accept(this, predicate)
+                            BooleanPredicate(
+                                    ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
+                                    ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                            )
                         } else if (leftIsNullConst) {
                             BooleanPredicate(
                                     ifTrue = nullablePredicate.ifNull,
@@ -644,8 +647,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     } else if ((rightIsNullConst || !right.type.isNullable()) && left.type.isNullable()) {
                         val nullablePredicate = buildNullablePredicate(left, predicate)
                         return if (nullablePredicate == null) {
-                            val result = visitElement(expression, predicate)
-                            BooleanPredicate(ifTrue = result, ifFalse = result)
+                            val result = expression.accept(this, predicate)
+                            BooleanPredicate(
+                                    ifTrue = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = true)), result),
+                                    ifFalse = andPredicates(Predicates.disjunctionOf(ComplexTerm(expression, value = false)), result)
+                            )
                         } else if (rightIsNullConst) {
                             BooleanPredicate(
                                     ifTrue = nullablePredicate.ifNull,
@@ -748,7 +754,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return predicate
             }
 
-            fun IrTypeOperatorCall.isCast() = operator == IrTypeOperator.CAST || operator == IrTypeOperator.IMPLICIT_CAST
+            fun IrTypeOperatorCall.isCast() =
+                    operator == IrTypeOperator.CAST || operator == IrTypeOperator.IMPLICIT_CAST || operator == IrTypeOperator.SAFE_CAST
 
             fun IrExpression.unwrapCasts(): IrExpression {
                 var result = this
@@ -780,11 +787,22 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     if (debugOutput) {
                         println("ZZZ: ${expression.dump()}")
                         println("    $result")
-                        println()
                     }
                     val argument = expression.unwrapCasts()
-                    if (argument is IrGetValue)
-                        return andPredicates(result, Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand))
+                    if (argument is IrGetValue) {
+                        val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
+                        val predicate = andPredicates(result, invertPredicate(isSubtypeOfPredicate))
+                        if (debugOutput) {
+                            println("    $predicate")
+                            println()
+                        }
+                        return if (expression.operator == IrTypeOperator.SAFE_CAST)
+                            result
+                        else andPredicates(result, isSubtypeOfPredicate)
+                    }
+                    if (debugOutput) {
+                        println()
+                    }
                 }
                 return result
             }
