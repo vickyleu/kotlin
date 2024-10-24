@@ -49,7 +49,7 @@ internal fun IrType.erasure(): IrType {
 
 internal val IrType.erasedUpperBound get() = this.erasure().getClass() ?: error(this.render())
 
-internal class CastsOptimization(val context: Context) : BodyLoweringPass {
+internal class CastsOptimization(val context: Context, val computePreciseResultForWhens: Boolean) : BodyLoweringPass {
     private val not = context.irBuiltIns.booleanNotSymbol
     private val eqeq = context.irBuiltIns.eqeqSymbol
     private val eqeqeq = context.irBuiltIns.eqeqeqSymbol
@@ -810,6 +810,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
                 var predicate: Predicate = data
                 var result: Predicate = Predicate.Empty
+                var isFirstBranch = true
                 for (branch in expression.branches) {
                     val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, predicate)
                     if (debugOutput) {
@@ -819,7 +820,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         println("    result = $result")
                         println()
                     }
-                    result = orPredicates(result, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
+                    val branchResultPredicate = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
+                    if (computePreciseResultForWhens)
+                        result = orPredicates(result, branchResultPredicate)
+                    else {
+                        if (isFirstBranch)
+                            result = orPredicates(conditionBooleanPredicate.ifTrue, conditionBooleanPredicate.ifFalse)
+                    }
+                    isFirstBranch = false
                     predicate = conditionBooleanPredicate.ifFalse
                 }
                 if (debugOutput) {
@@ -827,7 +835,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     println("    result = $result")
                     println("    predicate = $predicate")
                 }
-                result = orPredicates(result, predicate)
+                if (computePreciseResultForWhens)
+                    result = orPredicates(result, predicate)
                 if (debugOutput) {
                     println("    result = $result")
                     println()
