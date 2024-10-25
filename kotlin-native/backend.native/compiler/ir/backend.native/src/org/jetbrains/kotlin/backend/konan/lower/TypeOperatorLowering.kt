@@ -16,13 +16,11 @@ import org.jetbrains.kotlin.ir.objcinterop.isObjCForwardDeclaration
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
+import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.*
-import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
-import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
-import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
-import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
+import org.jetbrains.kotlin.ir.visitors.*
 import java.util.*
 
 // TODO: Similar to IrType.erasedUpperBound from jvm.ir
@@ -49,12 +47,15 @@ internal fun IrType.erasure(): IrType {
 
 internal val IrType.erasedUpperBound get() = this.erasure().getClass() ?: error(this.render())
 
+internal val STATEMENT_ORIGIN_NO_CAST_NEEDED = IrStatementOriginImpl("NO_CAST_NEEDED")
+
 internal class CastsOptimization(val context: Context, val computePreciseResultForWhens: Boolean) : BodyLoweringPass {
     private val not = context.irBuiltIns.booleanNotSymbol
     private val eqeq = context.irBuiltIns.eqeqSymbol
     private val eqeqeq = context.irBuiltIns.eqeqeqSymbol
     private val ieee754EqualsSymbols: Set<IrSimpleFunctionSymbol> =
             context.irBuiltIns.ieee754equalsFunByOperandType.values.toSet()
+    private val throwClassCastException = context.ir.symbols.throwClassCastException
 
     private sealed class LeafTerm {
         abstract fun invert(): LeafTerm
@@ -345,10 +346,13 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z10.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z.kt") != true) return
+        if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
         val debugOutput = false
         //val debugOutput = container.fileOrNull?.path?.endsWith("collections/Arrays.kt") == true && (container as? IrFunction)?.name?.asString() == "contentDeepEqualsImpl"
+
+        val typeCheckResults = mutableMapOf<IrTypeOperatorCall, Boolean>()
 
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
             val variablePredicates = mutableMapOf<IrValueDeclaration, BooleanPredicate>()
@@ -755,7 +759,11 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             fun IrTypeOperatorCall.isCast() =
-                    operator == IrTypeOperator.CAST || operator == IrTypeOperator.IMPLICIT_CAST || operator == IrTypeOperator.SAFE_CAST
+                    operator == IrTypeOperator.CAST || operator == IrTypeOperator.IMPLICIT_CAST
+
+            fun IrTypeOperatorCall.isCastOrTypeCheck() =
+                    isCast() || operator == IrTypeOperator.SAFE_CAST
+                            || operator == IrTypeOperator.INSTANCEOF || operator == IrTypeOperator.NOT_INSTANCEOF
 
             fun IrExpression.unwrapCasts(): IrExpression {
                 var result = this
@@ -783,7 +791,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         GET_VAR 'x: kotlin.Any declared in <root>.foo' type=kotlin.Any origin=null
                  */
                 val result = expression.argument.accept(this, data)
-                if (expression.isCast()) {
+                if (expression.isCastOrTypeCheck()) {
                     if (debugOutput) {
                         println("ZZZ: ${expression.dump()}")
                         println("    $result")
@@ -791,14 +799,29 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     val argument = expression.unwrapCasts()
                     if (argument is IrGetValue) {
                         val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
-                        val predicate = andPredicates(result, invertPredicate(isSubtypeOfPredicate))
+                        // Check if (result & (v !is T)) is identically equal to false: meaning the cast will always succeed.
+                        // Similarly, if (result & (v is T)) is identically equal to false, then the cast will never succeed.
+                        // Note: further improvement will be to check not only for identical equality to false but actually try to
+                        // find the combination of leaf terms satisfying the predicate (though it can be computationally unfeasible).
+                        val castIsFailedPredicate = andPredicates(result, invertPredicate(isSubtypeOfPredicate))
                         if (debugOutput) {
-                            println("    $predicate")
+                            println("    castIsFailedPredicate: $castIsFailedPredicate")
+                        }
+                        if (castIsFailedPredicate == Predicate.False) {
+                            // The cast will always succeed.
+                            typeCheckResults[expression] = true
+                        }
+                        val castIsSuccessfulPredicate = andPredicates(result, isSubtypeOfPredicate)
+                        if (debugOutput) {
+                            println("    castIsSuccessfulPredicate: $castIsSuccessfulPredicate")
                             println()
                         }
-                        return if (expression.operator == IrTypeOperator.SAFE_CAST)
-                            result
-                        else andPredicates(result, isSubtypeOfPredicate)
+                        if (castIsSuccessfulPredicate == Predicate.False) {
+                            // The cast will never succeed.
+                            typeCheckResults[expression] = false
+                        }
+
+                        return if (expression.isCast()) castIsSuccessfulPredicate else result
                     }
                     if (debugOutput) {
                         println()
@@ -853,6 +876,40 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //            }
 
         }, Predicate.Empty)
+
+        if (typeCheckResults.isEmpty()) return
+        val irBuilder = context.createIrBuilder(container.symbol)
+        irBody.transformChildrenVoid(object : IrElementTransformerVoid() {
+            override fun visitTypeOperator(expression: IrTypeOperatorCall): IrExpression {
+                expression.transformChildrenVoid()
+
+                val typeCheckResult = typeCheckResults[expression] ?: return expression
+                return when (expression.operator) {
+                    IrTypeOperator.INSTANCEOF -> irBuilder.at(expression).irBoolean(typeCheckResult)
+                    IrTypeOperator.NOT_INSTANCEOF -> irBuilder.at(expression).irBoolean(!typeCheckResult)
+                    IrTypeOperator.CAST, IrTypeOperator.IMPLICIT_CAST, IrTypeOperator.SAFE_CAST -> when {
+                        typeCheckResult -> irBuilder.at(expression).irBlock(origin = STATEMENT_ORIGIN_NO_CAST_NEEDED) {
+                            +irImplicitCast(expression.argument, expression.typeOperand)
+                        }
+                        else -> if (expression.operator == IrTypeOperator.SAFE_CAST)
+                            irBuilder.at(expression).irNull()
+                        else
+                            irBuilder.at(expression).irCall(throwClassCastException).apply {
+                                val typeOperandClass = expression.typeOperand.erasedUpperBound
+                                val typeOperandClassReference = IrClassReferenceImpl(
+                                        startOffset, endOffset,
+                                        context.ir.symbols.nativePtrType,
+                                        typeOperandClass.symbol,
+                                        typeOperandClass.defaultType
+                                )
+                                putValueArgument(0, expression.argument)
+                                putValueArgument(1, typeOperandClassReference)
+                            }
+                    }
+                    else -> error("Unexpected type operator: ${expression.operator}")
+                }
+            }
+        })
     }
 }
 
@@ -888,7 +945,9 @@ internal class TypeOperatorLowering(val context: CommonBackendContext) : FileLow
             +irLetS(expression.argument) { variable ->
                 irIfThenElse(expression.type,
                         condition = irIs(irGet(variable.owner), typeOperand),
-                        thenPart = irImplicitCast(irGet(variable.owner), typeOperand),
+                        thenPart = irBlock(origin = STATEMENT_ORIGIN_NO_CAST_NEEDED) {
+                            +irImplicitCast(irGet(variable.owner), typeOperand)
+                        },
                         elsePart = irNull())
             }
         }

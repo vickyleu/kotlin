@@ -71,6 +71,23 @@ private class AutoboxingTransformer(val context: Context) : AbstractValueUsageTr
         }
     }
 
+    override fun visitBlock(expression: IrBlock): IrExpression {
+        if (expression.origin != STATEMENT_ORIGIN_NO_CAST_NEEDED)
+            return super.visitBlock(expression)
+        val irTypeOperatorCall = expression.statements.singleOrNull()
+                ?: error("Expected exactly one statement in IrBlock marked with $STATEMENT_ORIGIN_NO_CAST_NEEDED")
+        check(irTypeOperatorCall is IrTypeOperatorCall) {
+            "Expected a type operator call: ${irTypeOperatorCall::class.java}"
+        }
+        check(irTypeOperatorCall.operator == IrTypeOperator.IMPLICIT_CAST) {
+            "Expected an implicit cast: ${irTypeOperatorCall.operator}"
+        }
+        irTypeOperatorCall.argument.transformChildrenVoid()
+        // Codegen expects the argument of type-checking operator to be an object reference:
+        irTypeOperatorCall.argument = irTypeOperatorCall.argument.useAs(context.irBuiltIns.anyNType)
+        return irTypeOperatorCall
+    }
+
     private var currentFunction: IrFunction? = null
     private val irBuilders = mutableListOf<DeclarationIrBuilder>()
 
