@@ -8,12 +8,23 @@ fun test1(o: Any): Int {
 // CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
 // CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
-    return (o as? String)?.length ?: 42
+    return if (o is String) o.length else 42
 // CHECK-LABEL: epilogue:
 }
 
 // CHECK-LABEL: define i32 @"kfun:#test2(kotlin.Any){}kotlin.Int
 fun test2(o: Any): Int {
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+    return (o as? String)?.length ?: 42
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test3(kotlin.Any){}kotlin.Int
+fun test3(o: Any): Int {
 // CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
     val temp = when (o) {
@@ -34,5 +45,6 @@ fun test2(o: Any): Int {
 fun box(): String {
     println(test1("zzz"))
     println(test2("zzz"))
+    println(test3("zzz"))
     return "OK"
 }
