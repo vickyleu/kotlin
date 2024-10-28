@@ -29,7 +29,7 @@ internal fun test(name: String, ignored: Boolean, testFn: () -> Any?) {
     adapter().test(name, ignored, testFn)
 }
 
-internal val testRunners: MutableMap<String, MutableList<() -> Unit>> = mutableMapOf()
+private val testRunners: MutableMap<String, MutableList<() -> Unit>> = mutableMapOf()
 
 internal fun addSuitedTestFun(suiteName: String, testFun: () -> Unit) {
     testRunners.getOrPut(suiteName, ::mutableListOf).add(testFun)
