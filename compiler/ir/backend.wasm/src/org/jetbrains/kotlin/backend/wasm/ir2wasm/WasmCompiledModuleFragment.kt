@@ -621,14 +621,14 @@ class WasmCompiledModuleFragment(
     }
 
     private fun rebindEquivalentFunctions() {
-        val existingClosureCallAdapters = mutableMapOf<String, WasmFunction>()
+        val equivalentFunctions = mutableMapOf<String, WasmFunction>()
         wasmCompiledFileFragments.forEach { fragment ->
             for ((signatureString, idSignature) in fragment.equivalentFunctions) {
-                val func = existingClosureCallAdapters[signatureString]
+                val func = equivalentFunctions[signatureString]
                 if (func == null) {
                     // First occurrence of the adapter, register it (if not removed by DCE).
                     val functionToUse = fragment.functions.defined[idSignature] ?: continue
-                    existingClosureCallAdapters[signatureString] = functionToUse
+                    equivalentFunctions[signatureString] = functionToUse
                 } else {
                     // Adapter already exists, remove this one and use the existing adapter.
                     fragment.functions.defined.remove(idSignature)?.let { duplicate ->
