@@ -176,12 +176,28 @@ class WasmFileCodegenContext(
         wasmFileFragment.jsModuleAndQualifierReferences.add(reference)
     }
 
-    fun defineTryGetAssociatedObjectFun(func: IrFunctionSymbol) {
-        wasmFileFragment.tryGetAssociatedObjectFun = func.getReferenceKey()
-    }
-
-    fun defineJsToKotlinAnyAdapterFun(jsToKotlinAnyAdapterFun: IrSimpleFunctionSymbol) {
-        wasmFileFragment.jsToKotlinAnyAdapterFun = jsToKotlinAnyAdapterFun.getReferenceKey()
+    fun defineBuiltinIdSignatures(
+        throwable: IrClassSymbol?,
+        tryGetAssociatedObject: IrFunctionSymbol?,
+        jsToKotlinAnyAdapter: IrFunctionSymbol?,
+        unitGetInstance: IrFunctionSymbol?,
+        executeTestRunners: IrFunctionSymbol?,
+    ) {
+        if (throwable != null || tryGetAssociatedObject != null || jsToKotlinAnyAdapter != null || unitGetInstance != null || executeTestRunners != null) {
+            val originalSignatures = wasmFileFragment.builtinIdSignatures
+            wasmFileFragment.builtinIdSignatures = BuiltinIdSignatures(
+                throwable = originalSignatures?.throwable
+                    ?: throwable?.getReferenceKey(),
+                tryGetAssociatedObject = originalSignatures?.tryGetAssociatedObject
+                    ?: tryGetAssociatedObject?.getReferenceKey(),
+                jsToKotlinAnyAdapter = originalSignatures?.jsToKotlinAnyAdapter
+                    ?: jsToKotlinAnyAdapter?.getReferenceKey(),
+                unitGetInstance = originalSignatures?.unitGetInstance
+                    ?: unitGetInstance?.getReferenceKey(),
+                executeTestRunners = originalSignatures?.executeTestRunners
+                    ?: executeTestRunners?.getReferenceKey(),
+            )
+        }
     }
 }
 

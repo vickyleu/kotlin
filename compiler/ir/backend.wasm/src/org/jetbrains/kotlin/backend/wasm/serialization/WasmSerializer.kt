@@ -658,9 +658,16 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeList(equivalentFunctions) { serializePair(it, ::serializeString, ::serializeIdSignature) }
             serializeSet(jsModuleAndQualifierReferences, ::serializeJsModuleAndQualifierReference)
             serializeList(classAssociatedObjectsInstanceGetters, ::serializeClassAssociatedObjects)
-            serializeNullable(tryGetAssociatedObjectFun, ::serializeIdSignature)
-            serializeNullable(jsToKotlinAnyAdapterFun, ::serializeIdSignature)
+            serializeNullable(builtinIdSignatures, ::serializeBuiltinIdSignatures)
         }
+
+    private fun serializeBuiltinIdSignatures(builtinIdSignatures: BuiltinIdSignatures) {
+        serializeNullable(builtinIdSignatures.throwable, ::serializeIdSignature)
+        serializeNullable(builtinIdSignatures.tryGetAssociatedObject, ::serializeIdSignature)
+        serializeNullable(builtinIdSignatures.jsToKotlinAnyAdapter, ::serializeIdSignature)
+        serializeNullable(builtinIdSignatures.unitGetInstance, ::serializeIdSignature)
+        serializeNullable(builtinIdSignatures.executeTestRunners, ::serializeIdSignature)
+    }
 
     private fun serializeFieldInitializer(fieldInitializer: FieldInitializer) {
         withFlags(fieldInitializer.isObjectInstanceField) {
