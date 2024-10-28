@@ -239,8 +239,6 @@ class WasmCompiledModuleFragment(
 
         val exports = mutableListOf<WasmExport<*>>()
         wasmCompiledFileFragments.flatMapTo(exports) { it.exports }
-        // TODO: Remove after bootstrap
-        exports.removeAll { it.name == "startUnitTests" }
 
         val memory = createAndExportMemory(scratchAddress, exports)
 
