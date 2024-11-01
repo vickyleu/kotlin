@@ -491,7 +491,7 @@ private val constructorsLoweringPhase = createFileLoweringPhase(
 
 private val optimizeCastsPhase = createFileLoweringPhase(
         name = "OptimizeCasts",
-        lowering = { context: Context -> CastsOptimization(context, computePreciseResultForWhens = false) },
+        lowering = { context: Context -> CastsOptimization(context, computePreciseResultForWhens = true) },
 )
 
 private val expressionBodyTransformPhase = createFileLoweringPhase(

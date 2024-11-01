@@ -346,7 +346,8 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z11.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
         if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
         val debugOutput = false
@@ -758,6 +759,16 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 return predicate
             }
 
+            override fun visitBlock(expression: IrBlock, data: Predicate): Predicate {
+                val result = super.visitBlock(expression, data)
+                return if (expression is IrReturnableBlock) data else result
+            }
+
+            override fun visitReturn(expression: IrReturn, data: Predicate): Predicate {
+                expression.value.accept(this, data)
+                return Predicate.False
+            }
+
             fun IrTypeOperatorCall.isCast() =
                     operator == IrTypeOperator.CAST || operator == IrTypeOperator.IMPLICIT_CAST
 
@@ -796,7 +807,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         println("ZZZ: ${expression.dump()}")
                         println("    $result")
                     }
-                    val argument = expression.unwrapCasts()
+                    val argument = expression.argument.unwrapCasts()
                     if (argument is IrGetValue) {
                         val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
                         // Check if (result & (v !is T)) is identically equal to false: meaning the cast will always succeed.
