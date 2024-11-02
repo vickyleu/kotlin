@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.builtins.functions.FunctionTypeKind
 import org.jetbrains.kotlin.fakeElement
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.declarations.*
+import org.jetbrains.kotlin.fir.declarations.builder.buildReceiverParameter
 import org.jetbrains.kotlin.fir.declarations.synthetic.FirSyntheticProperty
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
 import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
@@ -79,6 +80,7 @@ class FirCallCompletionResultsWriterTransformer(
     private val integerOperatorApproximator: IntegerLiteralAndOperatorApproximationTransformer,
     private val samResolver: FirSamResolver,
     private val context: BodyResolveContext,
+    private val transformer: FirAbstractBodyResolveTransformerDispatcher,
     private val mode: Mode = Mode.Normal,
 ) : FirAbstractTreeTransformer<ExpectedArgumentType?>(phase = FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE) {
 
@@ -931,11 +933,32 @@ class FirCallCompletionResultsWriterTransformer(
         anonymousFunction: FirAnonymousFunction,
         data: ExpectedArgumentType?,
     ): FirStatement {
-        // The case where we can't find any return expressions not common, and happens when there are anonymous function arguments
-        // that aren't mapped to any parameter in the call. So, we don't run body resolve transformation for them, thus there's
-        // no control flow info either. Example: second lambda in the call like list.filter({}, {})
-        val returnExpressions = dataFlowAnalyzer.returnExpressionsOfAnonymousFunctionOrNull(anonymousFunction)
-            ?: return transformImplicitTypeRefInAnonymousFunction(anonymousFunction)
+        // The case where we can't find any return expressions is not common (it's erroneous code),
+        // and happens when there are anonymous function arguments that aren't mapped to any parameter in the call.
+        // So, we run body resolve transformation in `ContextIndependent` mode for them to build a CFG at first
+        // Example: a lambda with `ILLEGAL_SELECTOR` error like
+        //
+        // ```kt
+        // fun foo(block: (Int.() -> Unit)) {
+        //    block(1.<!ILLEGAL_SELECTOR!>{  }<!>)
+        // }
+        // ```
+        if (anonymousFunction.controlFlowGraphReference == null) {
+            transformer.transformFunction(anonymousFunction, ResolutionMode.ContextIndependent)
+
+            if (anonymousFunction.receiverParameter?.typeRef is FirImplicitTypeRef) {
+                anonymousFunction.replaceReceiverParameter(
+                    buildReceiverParameter {
+                        source = anonymousFunction.receiverParameter?.source
+                        typeRef = buildErrorTypeRef {
+                            source = anonymousFunction.receiverParameter?.typeRef?.source
+                            diagnostic = ConeSimpleDiagnostic("Incorrect receiver parameter", DiagnosticKind.InferenceError)
+                        }
+                    }
+                )
+            }
+        }
+        val returnExpressions = dataFlowAnalyzer.returnExpressionsOfAnonymousFunction(anonymousFunction)
 
         val expectedType = data?.getExpectedType(anonymousFunction)?.let { expectedArgumentType ->
             // From the argument mapping, the expected type of this anonymous function would be:
@@ -1006,37 +1029,6 @@ class FirCallCompletionResultsWriterTransformer(
         val coneClassLikeType = this as? ConeClassLikeType ?: return null
         val classId = coneClassLikeType.classId ?: return null
         return session.functionTypeService.extractSingleExtensionKindForDeserializedConeType(classId, coneClassLikeType.customAnnotations)
-    }
-
-    private fun transformImplicitTypeRefInAnonymousFunction(
-        anonymousFunction: FirAnonymousFunction,
-    ): FirStatement {
-        val implicitTypeTransformer = object : FirDefaultTransformer<Any?>() {
-            override fun <E : FirElement> transformElement(element: E, data: Any?): E {
-                @Suppress("UNCHECKED_CAST")
-                return (element.transformChildren(this, data) as E)
-            }
-
-            override fun transformImplicitTypeRef(
-                implicitTypeRef: FirImplicitTypeRef,
-                data: Any?,
-            ): FirTypeRef =
-                buildErrorTypeRef {
-                    source = implicitTypeRef.source
-                    // NB: this error message assumes that it is used only if CFG for the anonymous function is not available
-                    diagnostic = ConeSimpleDiagnostic("Cannot infer type w/o CFG", DiagnosticKind.InferenceError)
-                }
-
-        }
-        anonymousFunction.transformChildren(implicitTypeTransformer, null)
-
-        anonymousFunction.body?.let {
-            if (!it.isResolved) {
-                it.resultType = session.builtinTypes.unitType.coneType
-            }
-        }
-
-        return anonymousFunction
     }
 
     override fun transformReturnExpression(

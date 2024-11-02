@@ -128,6 +128,7 @@ class FirCallCompleter(
                         components.integerLiteralAndOperatorApproximationTransformer,
                         components.samResolver,
                         components.context,
+                        components.transformer,
                     ),
                     null
                 )
@@ -304,6 +305,7 @@ class FirCallCompleter(
             components.integerLiteralAndOperatorApproximationTransformer,
             components.samResolver,
             components.context,
+            components.transformer,
             mode,
         )
     }
