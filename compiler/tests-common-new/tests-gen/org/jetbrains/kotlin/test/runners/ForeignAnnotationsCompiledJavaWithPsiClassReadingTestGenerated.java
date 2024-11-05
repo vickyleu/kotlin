@@ -1071,6 +1071,12 @@ public class ForeignAnnotationsCompiledJavaWithPsiClassReadingTestGenerated exte
         }
 
         @Test
+        @TestMetadata("forkPointCausedByWarnAnnotationCurrentLV.kt")
+        public void testForkPointCausedByWarnAnnotationCurrentLV() {
+          runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/warnMode/forkPointCausedByWarnAnnotationCurrentLV.kt");
+        }
+
+        @Test
         @TestMetadata("IgnoreAnnotations.kt")
         public void testIgnoreAnnotations() {
           runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/warnMode/IgnoreAnnotations.kt");
