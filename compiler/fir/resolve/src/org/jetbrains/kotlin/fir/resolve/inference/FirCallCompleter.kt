@@ -475,13 +475,21 @@ class FirCallCompleter(
 
             val returnArguments = components.dataFlowAnalyzer.returnExpressionsOfAnonymousFunction(lambda)
                 .map {
+                    val rawAtom = ConeResolutionAtom.createRawAtom(it.expression)
                     when {
-                        // If return statements of lambda analyzed with an expected type (so, not in dependent mode)
-                        // There should be no complex atom left
-                        expectedReturnType != null && session.languageVersionSettings.supportsFeature(LanguageFeature.PCLAEnhancementsIn21) ->
-                            ConeSimpleLeafResolutionAtom(it.expression, allowUnresolvedExpression = false)
+                        expectedReturnType == null ->
+                            rawAtom
+                        !session.languageVersionSettings.supportsFeature(LanguageFeature.PCLAEnhancementsIn21) ->
+                            rawAtom
+                        // Both these checks are needed for addSubsystemFromAtom to work properly
+                        rawAtom is ConeAtomWithCandidate ->
+                            rawAtom
+                        rawAtom is ConeResolutionAtomWithSingleChild ->
+                            rawAtom
                         else ->
-                            ConeResolutionAtom.createRawAtom(it.expression)
+                            // If return statements of lambda analyzed with an expected type (so, not in dependent mode)
+                            // There should be no complex atom left
+                            ConeSimpleLeafResolutionAtom(it.expression, allowUnresolvedExpression = false)
                     }
                 }
 
