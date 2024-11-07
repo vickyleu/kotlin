@@ -183,6 +183,12 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
         }
 
+        fun optimizeAwayComplexTerms(predicate: Predicate): Predicate {
+            val conjunction = predicate as? Conjunction ?: return predicate
+            val terms = conjunction.terms.filterNot { disjunction -> disjunction.terms.any { it is ComplexTerm } }
+            return if (terms.isEmpty()) Predicate.Empty else Conjunction(terms)
+        }
+
         private fun optimizeTerms(leafTerms: List<LeafTerm>): List<LeafTerm> {
             val simpleTerms = mutableListOf<SimpleTerm>()
             val complexTerms = mutableListOf<ComplexTerm>()
@@ -350,7 +356,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z8.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z11.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
         if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
@@ -370,13 +376,13 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 return result
             }
 
-            fun getFullPredicate(currentPredicate: Predicate): Predicate {
-                val initialPredicate: Predicate = Predicate.Empty
-                return andPredicates(
-                        upperLevelPredicates.fold(initialPredicate) { acc, predicate -> andPredicates(acc, predicate) },
-                        currentPredicate
-                )
-            }
+            fun getFullPredicate(currentPredicate: Predicate, optimizeAwayComplexTerms: Boolean) =
+                    usingUpperLevelPredicate(currentPredicate) {
+                        val initialPredicate: Predicate = Predicate.Empty
+                        upperLevelPredicates.fold(initialPredicate) { acc, predicate ->
+                            andPredicates(acc, if (optimizeAwayComplexTerms) Predicates.optimizeAwayComplexTerms(predicate) else predicate)
+                        }
+                    }
 
             fun IrExpression.isNullConst() = this is IrConst && this.value == null
 
@@ -616,12 +622,21 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 }
             }
 
-            fun buildBooleanPredicate(expression: IrExpression, predicate: Predicate): BooleanPredicate {
+            fun buildBooleanPredicate(expression: IrExpression): BooleanPredicate {
+                return buildBooleanPredicateImpl(expression, Predicate.Empty)
+//                val result = buildBooleanPredicateImpl(expression, Predicate.Empty)
+//                return BooleanPredicate(
+//                        ifTrue = Predicates.optimizeAwayComplexTerms(result.ifTrue),
+//                        ifFalse = Predicates.optimizeAwayComplexTerms(result.ifFalse),
+//                )
+            }
+
+            fun buildBooleanPredicateImpl(expression: IrExpression, predicate: Predicate): BooleanPredicate {
                 val matchResultAndAnd = expression.matchAndAnd()
                 if (matchResultAndAnd != null) {
                     val (left, right) = matchResultAndAnd
-                    val leftBooleanPredicate = buildBooleanPredicate(left, predicate)
-                    val rightBooleanPredicate = buildBooleanPredicate(right, leftBooleanPredicate.ifTrue)
+                    val leftBooleanPredicate = buildBooleanPredicateImpl(left, predicate)
+                    val rightBooleanPredicate = buildBooleanPredicateImpl(right, leftBooleanPredicate.ifTrue)
                     return BooleanPredicate(
                             ifTrue = rightBooleanPredicate.ifTrue,
                             ifFalse = orPredicates(leftBooleanPredicate.ifFalse, rightBooleanPredicate.ifFalse)
@@ -630,8 +645,8 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 val matchResultOrOr = expression.matchOrOr()
                 if (matchResultOrOr != null) {
                     val (left, right) = matchResultOrOr
-                    val leftBooleanPredicate = buildBooleanPredicate(left, predicate)
-                    val rightBooleanPredicate = buildBooleanPredicate(right, leftBooleanPredicate.ifFalse)
+                    val leftBooleanPredicate = buildBooleanPredicateImpl(left, predicate)
+                    val rightBooleanPredicate = buildBooleanPredicateImpl(right, leftBooleanPredicate.ifFalse)
                     return BooleanPredicate(
                             ifTrue = orPredicates(leftBooleanPredicate.ifTrue, rightBooleanPredicate.ifTrue),
                             ifFalse = rightBooleanPredicate.ifFalse
@@ -639,7 +654,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 }
                 val matchResultNot = expression.matchNot()
                 if (matchResultNot != null) {
-                    return buildBooleanPredicate(matchResultNot, predicate).invert()
+                    return buildBooleanPredicateImpl(matchResultNot, predicate).invert()
                 }
 
                 // if (x as? A != null) ...  =  if (x is A) ...
@@ -850,13 +865,13 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                  */
                 val result = expression.argument.accept(this, data)
                 if (expression.isCastOrTypeCheck()) {
+                    val fullPredicate = getFullPredicate(result, true)
                     if (debugOutput) {
                         println("ZZZ: ${expression.dump()}")
-                        println("    ${getFullPredicate(result)}")
+                        println("    $fullPredicate")
                     }
                     val argument = expression.argument.unwrapCasts()
                     if (argument is IrGetValue) {
-                        val fullPredicate = getFullPredicate(result)
                         val isSubtypeOfPredicate = Predicates.isSubtypeOf(argument.getRootValue(), expression.typeOperand)
                         // Check if (result & (v !is T)) is identically equal to false: meaning the cast will always succeed.
                         // Similarly, if (result & (v is T)) is identically equal to false, then the cast will never succeed.
@@ -896,19 +911,19 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 var isFirstBranch = true
                 for (branch in expression.branches) {
                     upperLevelPredicates.push(predicate)
-                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition, Predicate.Empty)
+                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
                     if (debugOutput) {
                         println("QXX: ${branch.condition.dump()}")
-                        println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty)}")
+                        println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false)}")
                         println("    condition = ${conditionBooleanPredicate.ifTrue}")
                         println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
                         println("    result = $result")
                         println()
                     }
                     val branchResultPredicate = andPredicates(predicate, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
-                    if (computePreciseResultForWhens)
+                    if (computePreciseResultForWhens) {
                         result = orPredicates(result, branchResultPredicate)
-                    else {
+                    } else {
                         if (isFirstBranch)
                             result = orPredicates(conditionBooleanPredicate.ifTrue, conditionBooleanPredicate.ifFalse)
                     }
@@ -926,6 +941,9 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 if (debugOutput) {
                     println("    result = $result")
                 }
+                result = Predicates.optimizeAwayComplexTerms(result)
+                if (debugOutput)
+                    println("    result = $result")
                 upperLevelPredicates.pop()
                 result = andPredicates(data, result)
                 if (debugOutput) {
