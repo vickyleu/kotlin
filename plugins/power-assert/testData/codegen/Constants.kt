@@ -1,3 +1,4 @@
+// FIR_NOT_IDENTICAL
 // MODULE: lib
 const val A = "Hello"
 const val B = ", World"

@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.test.TestJdkKind
 import org.jetbrains.kotlin.test.backend.codegenSuppressionChecker
 import org.jetbrains.kotlin.test.clientserver.TestProxy
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.ATTACH_DEBUGGER
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.FIR_NOT_IDENTICAL
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.REQUIRES_SEPARATE_PROCESS
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.JDK_KIND
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.ENABLE_JVM_PREVIEW
@@ -25,6 +26,7 @@ import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.PREFER_IN
 import org.jetbrains.kotlin.test.directives.model.singleOrZeroValue
 import org.jetbrains.kotlin.test.model.BinaryArtifacts
 import org.jetbrains.kotlin.test.model.DependencyKind
+import org.jetbrains.kotlin.test.model.FrontendKinds
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.model.nameWithoutExtension
 import org.jetbrains.kotlin.test.services.*
@@ -151,12 +153,23 @@ open class JvmBoxRunner(testServices: TestServices) : JvmBinaryArtifactHandler(t
             TestCase.assertNotSame(DEFAULT_EXPECTED_RESULT, result)
         } else {
             val originalFile = testServices.moduleStructure.originalTestDataFiles.first()
-            val outputFile = originalFile.withExtension(OUTPUT_EXTENSION)
+            val outputFile = originalFile.withExtension(computeDumpExtension(module, OUTPUT_EXTENSION))
             if (outputFile.exists()) {
                 assertions.assertEqualsToFile(outputFile, result)
             } else {
                 assertions.assertEquals(DEFAULT_EXPECTED_RESULT, result)
             }
+        }
+    }
+
+    private fun computeDumpExtension(module: TestModule, defaultExtension: String): String {
+        return if (
+            module.frontendKind == FrontendKinds.ClassicFrontend ||
+            (FIR_NOT_IDENTICAL !in module.directives)
+        ) {
+            defaultExtension
+        } else {
+            "fir.$defaultExtension"
         }
     }
 
