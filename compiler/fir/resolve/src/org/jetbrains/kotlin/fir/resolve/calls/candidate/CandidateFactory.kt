@@ -41,8 +41,8 @@ class CandidateFactory private constructor(
     companion object {
         private fun buildBaseSystem(context: ResolutionContext, callInfo: CallInfo): ConstraintStorage {
             val system = context.inferenceComponents.createConstraintSystem()
-            callInfo.arguments.forEach {
-                system.addSubsystemFromAtom(createRawAtom(it))
+            callInfo.argumentAtoms.forEach {
+                system.addSubsystemFromAtom(it)
             }
             return system.asReadOnlyStorage()
         }

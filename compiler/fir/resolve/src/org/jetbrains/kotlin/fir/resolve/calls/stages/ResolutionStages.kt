@@ -478,6 +478,7 @@ internal object MapArguments : ResolutionStage() {
     override suspend fun check(candidate: Candidate, callInfo: CallInfo, sink: CheckerSink, context: ResolutionContext) {
         val symbol = candidate.symbol as? FirFunctionSymbol<*> ?: return sink.reportDiagnostic(HiddenCandidate)
         val function = symbol.fir
+        // We have to re-create atoms here for each candidate, otherwise we can encounter a problem "subAtom already initialized"
         val arguments = callInfo.arguments.map { ConeResolutionAtom.createRawAtom(it) }
         val mapping = context.bodyResolveComponents.mapArguments(
             arguments,
