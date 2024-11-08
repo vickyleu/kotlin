@@ -122,6 +122,20 @@ fun test8(o: Any): Int {
 // CHECK-LABEL: epilogue:
 }
 
+// CHECK-LABEL: define i32 @"kfun:#test9(kotlin.String?){}kotlin.Int
+fun test9(s: String?): Int {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+    return if (s?.length == 5)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+        s[0].code
+    else 42
+// CHECK-LABEL: epilogue:
+}
+
 // CHECK-LABEL: define ptr @"kfun:#box(){}kotlin.String"
 fun box(): String {
     println(test1("zzz"))
@@ -132,5 +146,6 @@ fun box(): String {
     println(test6(1, "zzz"))
     println(test7(1, "zzz"))
     println(test8(A("abcda", 1)))
+    println(test9("abcda"))
     return "OK"
 }
