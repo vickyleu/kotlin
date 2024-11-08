@@ -214,10 +214,10 @@ class Fir2IrClassifierStorage(
             firClass.symbol,
             firClass.origin
         )!!
-
-        classCache[firClass] = symbol
         check(irParent.isExternalParent()) { "Source classes should be created separately before referencing" }
-        return lazyDeclarationsGenerator.createIrLazyClass(firClass, irParent, symbol)
+        return lazyDeclarationsGenerator.createIrLazyClass(firClass, irParent, symbol).also {
+            classCache[firClass] = symbol
+        }
     }
 
     private fun getIrClass(lookupTag: ConeClassLikeLookupTag): IrClass? {
