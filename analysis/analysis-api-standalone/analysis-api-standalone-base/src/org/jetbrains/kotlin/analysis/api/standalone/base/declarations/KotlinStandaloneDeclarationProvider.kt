@@ -48,6 +48,7 @@ import org.jetbrains.kotlin.psi.stubs.impl.*
 import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
 import org.jetbrains.kotlin.utils.addIfNotNull
 import org.jetbrains.kotlin.utils.addToStdlib.flattenTo
+import org.jetbrains.kotlin.utils.addToStdlib.popLast
 import java.util.concurrent.ConcurrentHashMap
 
 class KotlinStandaloneDeclarationProvider internal constructor(
@@ -202,6 +203,32 @@ class KotlinStandaloneDeclarationProviderFactory(
     ) : SingleRootFileViewProvider(psiManager, virtualFile, true, KotlinLanguage.INSTANCE)
 
     private inner class KtDeclarationRecorder : KtVisitorVoid() {
+
+        private fun treeToStack(expression: KtBinaryExpression): MutableList<PsiElement> {
+            val result = mutableListOf<PsiElement>(expression)
+            var currIdx = 0
+            while (currIdx < result.size) {
+                val currNode = result[currIdx]
+                if (currNode is KtBinaryExpression) {
+                    var insertPos = currIdx + 1
+                    currNode.children.forEach { result.add(insertPos++, it) }
+                }
+                currIdx++
+            }
+            return result
+        }
+
+        override fun visitBinaryExpression(expression: KtBinaryExpression) {
+            val evaluationStack = treeToStack(expression)
+            while (evaluationStack.isNotEmpty()) {
+                val currNode = evaluationStack.popLast()
+                if (currNode is KtBinaryExpression) {
+                    continue
+                } else {
+                    currNode.accept(this)
+                }
+            }
+        }
 
         override fun visitElement(element: PsiElement) {
             element.acceptChildren(this)
