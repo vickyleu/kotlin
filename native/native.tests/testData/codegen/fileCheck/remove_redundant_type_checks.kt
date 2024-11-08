@@ -27,6 +27,19 @@ fun test2(o: Any): Int {
 fun test3(o: Any): Int {
 // CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    return if (o as? String != null)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        o.length
+    else 42
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test4(kotlin.Any){}kotlin.Int
+fun test4(o: Any): Int {
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
     val temp = when (o) {
 // CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
@@ -41,8 +54,8 @@ fun test3(o: Any): Int {
 // CHECK-LABEL: epilogue:
 }
 
-// CHECK-LABEL: define i32 @"kfun:#test4(kotlin.Int;kotlin.Any){}kotlin.Int
-fun test4(x: Int, o: Any): Int {
+// CHECK-LABEL: define i32 @"kfun:#test5(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test5(x: Int, o: Any): Int {
 // CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
     val result = if (x == 42 || o is String)
@@ -60,8 +73,8 @@ fun test4(x: Int, o: Any): Int {
 fun baz(s: String) = s.length == 3
 // CHECK-LABEL: epilogue:
 
-// CHECK-LABEL: define i32 @"kfun:#test5(kotlin.Int;kotlin.Any){}kotlin.Int
-fun test5(x: Int, o: Any): Int {
+// CHECK-LABEL: define i32 @"kfun:#test6(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test6(x: Int, o: Any): Int {
 // CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
     val result = if (x == 42 || baz(o as String))
@@ -78,8 +91,8 @@ fun test5(x: Int, o: Any): Int {
 // CHECK-LABEL: epilogue:
 }
 
-// CHECK-LABEL: define i32 @"kfun:#test6(kotlin.Int;kotlin.Any){}kotlin.Int
-fun test6(x: Int, o: Any): Int {
+// CHECK-LABEL: define i32 @"kfun:#test7(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test7(x: Int, o: Any): Int {
 // CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
     if (x == 42 || baz(o as String))
@@ -99,8 +112,9 @@ fun box(): String {
     println(test1("zzz"))
     println(test2("zzz"))
     println(test3("zzz"))
-    println(test4(1, "zzz"))
+    println(test4("zzz"))
     println(test5(1, "zzz"))
     println(test6(1, "zzz"))
+    println(test7(1, "zzz"))
     return "OK"
 }
