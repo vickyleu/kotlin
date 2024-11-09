@@ -59,10 +59,13 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
         abstract fun invert(): LeafTerm
     }
 
-    private data class ComplexTerm(val expression: IrExpression, val value: Boolean) : LeafTerm() {
-        override fun toString() = "[${expression::class.java.simpleName}@0x${System.identityHashCode(expression).toString(16)} is $value]"
+    private data class ComplexTerm(val element: IrElement, val value: Boolean) : LeafTerm() {
+        override fun toString() = when (element) {
+            is IrValueDeclaration -> if (value) "${element.name}" else "!${element.name}"
+            else -> "[${element::class.java.simpleName}@0x${System.identityHashCode(element).toString(16)} is $value]"
+        }
 
-        override fun invert() = ComplexTerm(expression, !value)
+        override fun invert() = ComplexTerm(element, !value)
     }
 
     private sealed class SimpleTerm(val variable: IrValueDeclaration) : LeafTerm() {
@@ -240,7 +243,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 }
             }
 
-            val groupedComplexTerms = complexTerms.groupBy { it.expression }
+            val groupedComplexTerms = complexTerms.groupBy { it.element }
             groupedComplexTerms.forEach { (expression, terms) ->
                 var value: Boolean? = null
                 for (term in terms) {
@@ -356,7 +359,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
     }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z10.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z12.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
         if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
@@ -631,7 +634,33 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //                )
             }
 
+            fun buildNullablePredicate(expression: IrExpression): NullablePredicate? {
+                return buildNullablePredicateImpl(expression, Predicate.Empty)
+            }
+
             fun buildBooleanPredicateImpl(expression: IrExpression, predicate: Predicate): BooleanPredicate {
+                if (expression is IrGetValue) {
+                    val variable = expression.symbol.owner
+                    return when (val variableValue = variableValues[variable]) {
+                        null -> {
+                            val variableIsTruePredicate = Predicates.disjunctionOf(ComplexTerm(expression.getRootValue(), true))
+                            BooleanPredicate(
+                                    ifTrue = andPredicates(predicate, variableIsTruePredicate),
+                                    ifFalse = andPredicates(predicate, invertPredicate(variableIsTruePredicate))
+                            )
+                        }
+                        VariableValue.Ordinary -> {
+                            val variableIsTruePredicate = Predicates.disjunctionOf(ComplexTerm(variable, true))
+                            BooleanPredicate(
+                                    ifTrue = andPredicates(predicate, variableIsTruePredicate),
+                                    ifFalse = andPredicates(predicate, invertPredicate(variableIsTruePredicate))
+                            )
+                        }
+                        is VariableValue.BooleanPredicate -> variableValue.predicate
+                        is VariableValue.NullablePredicate -> error("Unexpected nullable predicate for ${variable.render()}")
+                    }
+                }
+
                 val matchResultAndAnd = expression.matchAndAnd()
                 if (matchResultAndAnd != null) {
                     val (left, right) = matchResultAndAnd
@@ -669,7 +698,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                             Predicate.Empty
                         else
                             left.accept(this, predicate)
-                        val nullablePredicate = buildNullablePredicate(right, leftPredicate)
+                        val nullablePredicate = buildNullablePredicateImpl(right, leftPredicate)
                         if (nullablePredicate == null) {
                             val result = right.accept(this, leftPredicate)
                             BooleanPredicate(
@@ -694,7 +723,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                             )
                         }
                     } else if ((rightIsNullConst || !right.type.isNullable()) && left.type.isNullable()) {
-                        val nullablePredicate = buildNullablePredicate(left, predicate)
+                        val nullablePredicate = buildNullablePredicateImpl(left, predicate)
                         return if (nullablePredicate == null) {
                             val result = expression.accept(this, predicate)
                             BooleanPredicate(
@@ -768,7 +797,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 )
             }
 
-            private fun buildNullablePredicate(expression: IrExpression, predicate: Predicate): NullablePredicate? {
+            private fun buildNullablePredicateImpl(expression: IrExpression, predicate: Predicate): NullablePredicate? {
                 if (expression is IrGetValue) {
                     val variable = expression.symbol.owner
                     return when (val variableValue = variableValues[variable]) {
@@ -885,8 +914,8 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     println("    $fullPredicate")
                 }
                 val isSubtypeOfPredicate = Predicates.isSubtypeOf(variable, expression.typeOperand)
-                // Check if (result & (v !is T)) is identically equal to false: meaning the cast will always succeed.
-                // Similarly, if (result & (v is T)) is identically equal to false, then the cast will never succeed.
+                // Check if (predicate & (v !is T)) is identically equal to false: meaning the cast will always succeed.
+                // Similarly, if (predicate & (v is T)) is identically equal to false, then the cast will never succeed.
                 // Note: further improvement will be to check not only for identical equality to false but actually try to
                 // find the combination of leaf terms satisfying the predicate (though it can be computationally unfeasible).
                 val castIsFailedPredicate = andPredicates(fullPredicate, invertPredicate(isSubtypeOfPredicate))
@@ -1012,11 +1041,15 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             override fun visitVariable(declaration: IrVariable, data: Predicate): Predicate {
                 val initializer = declaration.initializer ?: return data
                 if (declaration.type.isNullable()) {
-                    val predicate = usingUpperLevelPredicate(data) { buildNullablePredicate(initializer, Predicate.Empty) }
+                    val predicate = usingUpperLevelPredicate(data) { buildNullablePredicate(initializer) }
                     if (predicate != null) {
                         variableValues[declaration] = VariableValue.NullablePredicate(predicate)
                         return data
                     }
+                } else if (declaration.type.isBoolean()) {
+                    val predicate = usingUpperLevelPredicate(data) { buildBooleanPredicate(initializer) }
+                    variableValues[declaration] = VariableValue.BooleanPredicate(predicate)
+                    return data
                 }
 
                 return initializer.accept(this, data)
