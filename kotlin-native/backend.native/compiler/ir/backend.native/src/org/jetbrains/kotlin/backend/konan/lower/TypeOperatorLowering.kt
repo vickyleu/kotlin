@@ -13,12 +13,15 @@ import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.objcinterop.isObjCForwardDeclaration
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.declarations.impl.IrVariableImpl
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.symbols.*
+import org.jetbrains.kotlin.ir.symbols.impl.IrVariableSymbolImpl
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.*
+import org.jetbrains.kotlin.name.Name
 import java.util.*
 
 // TODO: Similar to IrType.erasedUpperBound from jvm.ir
@@ -352,23 +355,102 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
         }
     }
 
+    @JvmInline
+    private value class MutableVariablesValues(val array: IntArray)
+
     private sealed class VariableValue {
         data object Ordinary : VariableValue()
         class BooleanPredicate(val predicate: CastsOptimization.BooleanPredicate) : VariableValue()
         class NullablePredicate(val predicate: CastsOptimization.NullablePredicate) : VariableValue()
     }
 
+//    fun foo(x: Int, o: Any) {
+//        var mutO = o
+//        val y = x + x
+//        if (mutO is String)
+//            println((mutO as String).length)
+//        else
+//            println(y)
+//        mutO = Any()
+//        if (s != null)
+//            println((mutO as? String)?.get(0)?.code ?: y)
+//        else
+//            println(x)
+//    }
+
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z12.kt") != true) return
+        if (container.fileOrNull?.path?.endsWith("z13.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
-        if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
-        val debugOutput = false
+        val debugOutput = true
         //val debugOutput = container.fileOrNull?.path?.endsWith("collections/Arrays.kt") == true && (container as? IrFunction)?.name?.asString() == "contentDeepEqualsImpl"
 
-        val typeCheckResults = mutableMapOf<IrTypeOperatorCall, Boolean>()
+        val immutableVariables = mutableSetOf<IrValueDeclaration>()
+        val mutableVariables = mutableSetOf<IrVariable>()
+        val phantomVariables = mutableListOf<IrVariable>()
+        val variableValueCounters = mutableMapOf<IrVariable, Int>()
+        irBody.accept(object : IrElementVisitorVoid {
+            override fun visitElement(element: IrElement) {
+                element.acceptChildrenVoid(this)
+            }
 
+            fun createPhantomVariable(variable: IrVariable, value: IrExpression): IrVariable {
+                val counter = variableValueCounters.getOrPut(variable) { 0 }
+                variableValueCounters[variable] = counter + 1
+                return IrVariableImpl(
+                        value.startOffset, value.endOffset,
+                        IrDeclarationOrigin.DEFINED,
+                        IrVariableSymbolImpl(),
+                        Name.identifier("${variable.name}\$$counter"),
+                        value.type,
+                        isVar = false,
+                        isConst = false,
+                        isLateinit = false,
+                )
+            }
+
+            val IrVariable.isMutable: Boolean
+                get() = isVar || initializer == null
+
+            override fun visitVariable(declaration: IrVariable) {
+                val initializer = declaration.initializer
+                if (declaration.isMutable)
+                    mutableVariables.add(declaration)
+                else
+                    immutableVariables.add(declaration)
+                if (declaration.isVar && initializer != null)
+                    phantomVariables.add(createPhantomVariable(declaration, initializer))
+
+                declaration.acceptChildrenVoid(this)
+            }
+
+            override fun visitGetValue(expression: IrGetValue) {
+                val value = expression.symbol.owner
+                if ((value as? IrVariable)?.isMutable == true)
+                    mutableVariables.add(value)
+                else
+                    immutableVariables.add(value)
+
+                expression.acceptChildrenVoid(this)
+            }
+
+            override fun visitSetValue(expression: IrSetValue) {
+                val variable = expression.symbol.owner as? IrVariable ?: error("Unexpected set to ${expression.symbol.owner.render()}")
+                if (variable.isMutable)
+                    phantomVariables.add(createPhantomVariable(variable, expression.value))
+
+                expression.acceptChildrenVoid(this)
+            }
+        }, null)
+
+        val immutableVariablesCount = immutableVariables.size + phantomVariables.size
+        val zzz = (immutableVariablesCount + 31) / 32
+        val mutableVariablesValuesSize = mutableVariables.size * zzz
+
+        val typeCheckResults = mutableMapOf<IrTypeOperatorCall, Boolean>()
         irBody.accept(object : IrElementVisitor<Predicate, Predicate> {
+            var phantomVariableIndex = 0
             val upperLevelPredicates = mutableListOf<Predicate>()
             val variableValues = mutableMapOf<IrValueDeclaration, VariableValue>()
 
@@ -625,7 +707,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 }
             }
 
-            fun buildBooleanPredicate(expression: IrExpression): BooleanPredicate {
+            fun buildBooleanPredicate(expression: IrExpression, variablesValues: MutableVariablesValues): BooleanPredicate {
                 return buildBooleanPredicateImpl(expression, Predicate.Empty)
 //                val result = buildBooleanPredicateImpl(expression, Predicate.Empty)
 //                return BooleanPredicate(
@@ -1038,6 +1120,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 return result
             }
 
+            // TODO: If initializer is IrWhen with a bunch of IrGetValue, should we get a phi node here?
             override fun visitVariable(declaration: IrVariable, data: Predicate): Predicate {
                 val initializer = declaration.initializer ?: return data
                 if (declaration.type.isNullable()) {
