@@ -212,6 +212,7 @@ fun TestConfigurationBuilder.configureCommonDiagnosticTestPaths(
         defaultDirectives {
             +FIR_DUMP
         }
+        useAfterAnalysisCheckers(::FirFailingTestSuppressor)
     }
 
     forTestsMatching("compiler/fir/analysis-tests/testData/resolve/vfir/*") {
