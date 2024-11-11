@@ -10,14 +10,13 @@ package org.jetbrains.kotlin
 import com.intellij.lang.LighterASTNode
 import com.intellij.lang.TreeBackedLighterAST
 import com.intellij.openapi.util.Ref
-import com.intellij.psi.PsiComment
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiWhiteSpace
+import com.intellij.psi.*
 import com.intellij.psi.tree.IElementType
 import com.intellij.util.diff.FlyweightCapableTreeStructure
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.util.OperatorNameConventions
+import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
+import org.jetbrains.kotlin.utils.exceptions.withVirtualFileEntry
 import org.jetbrains.kotlin.utils.getElementTextWithContext
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater
 
@@ -527,7 +526,7 @@ sealed class KtSourceElement : AbstractKtSourceElement() {
 
 // NB: in certain situations, psi.node could be null (see e.g. KT-44152)
 // Potentially exceptions can be provoked by elementType / lighterASTNode
-sealed class KtPsiSourceElement(val psi: PsiElement) : KtSourceElement() {
+sealed class KtPsiSourceElement(psi: PsiElement) : KtSourceElement() {
     companion object {
         @JvmStatic
         private val lighterASTNodeUpdater = AtomicReferenceFieldUpdater.newUpdater(
@@ -543,6 +542,21 @@ sealed class KtPsiSourceElement(val psi: PsiElement) : KtSourceElement() {
             "_treeStructure"
         )
     }
+
+    private val psiPointer = SmartPointerManager.createPointer(psi)
+
+    val psi: PsiElement
+        get() {
+            val element = psiPointer.element
+            if (element == null) {
+                errorWithAttachment(
+                    "Couldn't restore a PSI element from its PSI element pointer. The source element should have been invalidated.",
+                ) {
+                    withVirtualFileEntry("PSI virtual file", psiPointer.virtualFile)
+                }
+            }
+            return element
+        }
 
     override val elementType: IElementType?
         get() = psi.node?.elementType

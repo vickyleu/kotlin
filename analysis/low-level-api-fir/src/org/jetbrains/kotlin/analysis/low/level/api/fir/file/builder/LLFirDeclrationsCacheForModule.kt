@@ -5,13 +5,14 @@
 
 package org.jetbrains.kotlin.analysis.low.level.api.fir.file.builder
 
-import com.google.common.collect.MapMaker
+import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.kotlin.analysis.low.level.api.fir.LLFirModuleResolveComponents
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.psi
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.utils.ThreadSafe
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 /**
@@ -33,11 +34,25 @@ internal abstract class ModuleFileCache {
 }
 
 internal class ModuleFileCacheImpl(override val moduleComponents: LLFirModuleResolveComponents) : ModuleFileCache() {
-    private val ktFileToFirFile: ConcurrentMap<KtFile, FirFile> = MapMaker().weakKeys().makeMap()
-    override fun fileCached(file: KtFile, createValue: () -> FirFile): FirFile =
-        ktFileToFirFile.computeIfAbsent(file) { createValue() }
+//    private val ktFileToFirFile: ConcurrentMap<KtFile, FirFile> = MapMaker().weakKeys().makeMap()
 
-    override fun getCachedFirFile(ktFile: KtFile): FirFile? = ktFileToFirFile[ktFile]
+    private val virtualFileToFirFile: ConcurrentMap<VirtualFile, FirFile> = ConcurrentHashMap()
+
+    private val ktFileToFirFile: ConcurrentMap<KtFile, FirFile> = ConcurrentHashMap()
+
+    override fun fileCached(file: KtFile, createValue: () -> FirFile): FirFile {
+        val virtualFile = file.virtualFile
+        return if (virtualFile != null) {
+            virtualFileToFirFile.computeIfAbsent(virtualFile) { createValue() }
+        } else {
+            ktFileToFirFile.computeIfAbsent(file) { createValue() }
+        }
+    }
+
+    override fun getCachedFirFile(ktFile: KtFile): FirFile? {
+        val virtualFile = ktFile.virtualFile
+        return if (virtualFile != null) virtualFileToFirFile[virtualFile] else ktFileToFirFile[ktFile]
+    }
 
     override fun getContainerFirFile(declaration: FirDeclaration): FirFile? {
         val ktFile = declaration.psi?.containingFile as? KtFile ?: return null
