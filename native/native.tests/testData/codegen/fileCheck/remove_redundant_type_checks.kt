@@ -116,7 +116,8 @@ fun test8(o: Any): Int {
     return if ((o as? A)?.s?.length == 5)
 // CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
 // CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
-// CHECK: call i32 @"kfun:A#<get-x>(){}kotlin.Int
+// CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
         o.x
     else 42
 // CHECK-LABEL: epilogue:
@@ -166,6 +167,106 @@ fun test11(x: Int, o: Any): Int {
 // CHECK-LABEL: epilogue:
 }
 
+fun getAny(): Any = A("zzz", 42)
+
+// CHECK-LABEL: define i32 @"kfun:#test12(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test12(x: Int, o: Any): Int {
+    var mutO = o
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    val s = mutO as? String
+    val y = x + x
+    val z = if (s != null)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        (mutO as String).length
+    else y
+
+// CHECK: call ptr @"kfun:#getAny(){}kotlin.Any
+    mutO = getAny()
+    return if (s != null)
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+        (mutO as? String)?.get(0)?.code ?: y
+    else z
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test13(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test13(x: Int, o: Any): Int {
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    var s = o as? String
+    val y = x + x
+    val z = if (s != null)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        (o as String).length
+    else y
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    s = getAny() as? String
+    return if (s != null)
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+        (o as? String)?.get(0)?.code ?: y
+    else z
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test14(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test14(x: Int, o: Any): Int {
+    var mutO = o
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    val f = mutO is String
+    val y = x + x
+    val z = if (f)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        (mutO as String).length
+    else y
+
+// CHECK: call ptr @"kfun:#getAny(){}kotlin.Any
+    mutO = getAny()
+    return if (f)
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+        (mutO as? String)?.get(0)?.code ?: y
+    else z
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test15(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test15(x: Int, o: Any): Int {
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    var f = o is String
+    val y = x + x
+    val z = if (f)
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        (o as String).length
+    else y
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    f = getAny() is String
+    return if (f)
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+        (o as? String)?.get(0)?.code ?: y
+    else z
+// CHECK-LABEL: epilogue:
+}
+
 // CHECK-LABEL: define ptr @"kfun:#box(){}kotlin.String"
 fun box(): String {
     println(test1("zzz"))
@@ -179,5 +280,9 @@ fun box(): String {
     println(test9("abcda"))
     println(test10(1, "zzz"))
     println(test11(1, "zzz"))
+    println(test12(1, "zzz"))
+    println(test13(1, "zzz"))
+    println(test14(1, "zzz"))
+    println(test15(1, "zzz"))
     return "OK"
 }
