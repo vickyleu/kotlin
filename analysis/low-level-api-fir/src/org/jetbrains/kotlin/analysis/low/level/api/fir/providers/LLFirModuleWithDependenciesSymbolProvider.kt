@@ -145,7 +145,7 @@ internal class LLFirModuleWithDependenciesSymbolProvider(
 
 internal class LLFirDependenciesSymbolProvider(
     session: FirSession,
-    val computeProviders: () -> List<FirSymbolProvider>,
+    computeProviders: () -> List<FirSymbolProvider>,
 ) : FirSymbolProvider(session) {
     /**
      * Dependency symbol providers are lazy to support cyclic dependencies between modules. If a module A and a module B depend on each
