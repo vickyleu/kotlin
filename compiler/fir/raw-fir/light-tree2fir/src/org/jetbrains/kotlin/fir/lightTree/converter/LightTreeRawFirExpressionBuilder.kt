@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.fir.lightTree.converter
 
 import com.intellij.lang.LighterASTNode
-import com.intellij.psi.PsiElement
 import com.intellij.psi.TokenType
 import com.intellij.util.diff.FlyweightCapableTreeStructure
 import org.jetbrains.kotlin.*
@@ -49,18 +48,13 @@ import org.jetbrains.kotlin.fir.types.builder.buildErrorTypeRef
 import org.jetbrains.kotlin.lexer.KtTokens.*
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.SpecialNames
-import org.jetbrains.kotlin.psi.KtBinaryExpression
-import org.jetbrains.kotlin.psi.KtElement
-import org.jetbrains.kotlin.psi.KtExpression
-import org.jetbrains.kotlin.psi.KtParenthesizedExpression
-import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 import org.jetbrains.kotlin.psi.psiUtil.UNWRAPPABLE_TOKEN_TYPES
 import org.jetbrains.kotlin.psi.stubs.elements.KtConstantExpressionElementType
 import org.jetbrains.kotlin.psi.stubs.elements.KtNameReferenceExpressionElementType
 import org.jetbrains.kotlin.types.expressions.OperatorConventions
 import org.jetbrains.kotlin.util.OperatorNameConventions
-import org.jetbrains.kotlin.utils.addToStdlib.popLast
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
+import java.util.Stack
 import kotlin.collections.contains
 
 class LightTreeRawFirExpressionBuilder(
@@ -70,7 +64,7 @@ class LightTreeRawFirExpressionBuilder(
     context: Context<LighterASTNode> = Context(),
 ) : AbstractLightTreeRawFirBuilder(session, tree, context) {
 
-    inline fun <reified R : FirExpression> getAsFirExpression(
+    internal inline fun <reified R : FirExpression> getAsFirExpression(
         expression: LighterASTNode?,
         errorReason: String = "",
         sourceWhenInvalidExpression: LighterASTNode? = expression,
@@ -78,6 +72,16 @@ class LightTreeRawFirExpressionBuilder(
     ): R {
         val converted = expression?.let { convertExpression(it, errorReason) }
 
+        return wrapExpressionIfNeeded(expression, converted, isValidExpression, sourceWhenInvalidExpression, errorReason)
+    }
+
+    private inline fun <reified R : FirExpression> wrapExpressionIfNeeded(
+        expression: LighterASTNode?,
+        converted: FirElement?,
+        isValidExpression: (R) -> Boolean = { !it.isStatementLikeExpression },
+        sourceWhenInvalidExpression: LighterASTNode? = expression,
+        errorReason: String = "",
+    ): R {
         return when {
             converted is R -> when {
                 isValidExpression(converted) -> converted
@@ -276,15 +280,18 @@ class LightTreeRawFirExpressionBuilder(
         }
     }
 
-    private fun convertTreeToStack(tree: LighterASTNode, data: StackVisitorData<LighterASTNode>) {
-        data.treeToStack.add(Pair(tree, null))
-        var currentNodeIdx = 0
+    private fun convertTreeToStack(tree: LighterASTNode): StackVisitorData<LighterASTNode> {
+        val treeToStack: MutableList<LighterASTNode?> = mutableListOf()
+        var stringLiteralConcatenationAnalysis = true
 
-        while (currentNodeIdx < data.treeToStack.count()) {
-            var node = data.treeToStack[currentNodeIdx].first
+        treeToStack.add(tree)
+        var currentNodeIndex = 0
+
+        while (currentNodeIndex < treeToStack.count()) {
+            var node = treeToStack[currentNodeIndex]
             when (node?.tokenType) {
                 BINARY_EXPRESSION -> {
-                    val (leftNode, opNode, rightNode) = parseBinaryExpression(node)
+                    val (leftNode, opNode, rightNode) = extractBinaryExpression(node)
                     val operationTokenName = opNode.asText
                     val operationToken = operationTokenName.getOperationSymbol()
 
@@ -295,109 +302,85 @@ class LightTreeRawFirExpressionBuilder(
                     }
 
                     if (operationToken != PLUS) {
-                        data.stringLiteralConcatenationAnalysis = false
+                        stringLiteralConcatenationAnalysis = false
                     }
 
-                    data.treeToStack.add(currentNodeIdx + 1, Pair(rightNode, "No right operand"))
-                    data.treeToStack.add(currentNodeIdx + 2, Pair(leftNode, "No left operand"))
+                    treeToStack.add(currentNodeIndex + 1, rightNode)
+                    treeToStack.add(currentNodeIndex + 2, leftNode)
                 }
                 PARENTHESIZED -> {
                     val content = node.getExpressionInParentheses()
                     context.forwardLabelUsagePermission(node, content)
-                    data.treeToStack.add(currentNodeIdx + 1, Pair(content, "Empty parentheses"))
+                    treeToStack.add(currentNodeIndex + 1, content)
                 }
                 else -> {
                     if (node?.tokenType != STRING_TEMPLATE) {
-                        data.stringLiteralConcatenationAnalysis = false
+                        stringLiteralConcatenationAnalysis = false
                     }
                 }
             }
-            currentNodeIdx++
+            currentNodeIndex++
         }
-    }
 
-    private fun convertToExpression(fir: FirElement, node: LighterASTNode, errMsg: String): FirExpression {
-        return when (fir) {
-            is FirExpression -> {
-                when {
-                    !fir.isStatementLikeExpression -> {
-                        fir
-                    }
-                    else -> {
-                        buildErrorExpression {
-                            nonExpressionElement = fir
-                            diagnostic = ConeSimpleDiagnostic(errMsg, DiagnosticKind.ExpressionExpected)
-                            source = node.toFirSourceElement()
-                        }
-                    }
-                }
-            }
-            else -> {
-                buildErrorExpression {
-                    nonExpressionElement = fir
-                    diagnostic = ConeSimpleDiagnostic(errMsg, DiagnosticKind.ExpressionExpected)
-                    source = fir.source?.realElement() ?: node.toFirSourceElement()
-                }
-            }
-        }
+        return StackVisitorData<LighterASTNode>(treeToStack, stringLiteralConcatenationAnalysis)
     }
 
     private fun buildFirFromStack(data: StackVisitorData<LighterASTNode>): FirStatement {
-        var currentNodeIdx = 0
-        while (data.treeToStack.isNotEmpty()) {
-            val (node, errMsg) = data.treeToStack.popLast()
-            when (node?.tokenType) {
-                BINARY_EXPRESSION -> {
+        val evaluationStack: Stack<FirExpression?> = Stack()
+        lateinit var result: FirStatement
+        val last = data.treeToStack.first()
+        for (node in data.treeToStack.reversed()) {
+            when {
+                node?.tokenType == BINARY_EXPRESSION -> {
                     context.calleeNamesForLambda.removeLast()
 
-                    val right = data.evaluationStack.popLast()
-                    val left = data.evaluationStack.popLast()
-                    val fir = createBinaryExpression(node, left as FirExpression, right as FirExpression)
-                    data.evaluationStack.add(
-                        if (errMsg != null) {
-                            convertToExpression(fir, node, errMsg)
-                        } else {
-                            fir
-                        }
+                    val right = evaluationStack.pop() ?: buildErrorExpression(null, ConeSyntaxDiagnostic("No right operand"))
+                    val left = evaluationStack.pop() ?: buildErrorExpression(null, ConeSyntaxDiagnostic("No left operand"))
+                    val statement = createBinaryExpression(node, left, right)
+                    if (node === last) { // The last expression could be a statement unlike other ones
+                        assert(evaluationStack.isEmpty())
+                        result = statement
+                    } else {
+                        evaluationStack.push(wrapExpressionIfNeeded(node, statement, errorReason = "Not an expression"))
+                    }
+                }
+                node?.tokenType == PARENTHESIZED -> {
+                    evaluationStack.push(
+                        evaluationStack.pop() ?: buildErrorExpression(
+                            null,
+                            ConeSimpleDiagnostic("Empty parentheses", DiagnosticKind.ExpressionExpected)
+                        )
                     )
                 }
-                PARENTHESIZED -> { /*Just consume node*/
+                node != null -> {
+                    evaluationStack.push(getAsFirExpression<FirExpression>(node))
                 }
                 else -> {
-                    data.evaluationStack.add(getAsFirExpression<FirExpression>(node, errMsg!!))
+                    evaluationStack.push(null)
                 }
             }
-
-            currentNodeIdx++
         }
 
-        return data.validateStackResult()
+        return result
     }
 
     private fun buildStringConcatenationCallFromStack(data: StackVisitorData<LighterASTNode>): FirStatement {
-        val args = data.treeToStack.mapNotNull {
-            val (node, errMsg) = it
+        val args = data.treeToStack.reversed().mapNotNull {
+            val node = it
             when (node?.tokenType) {
                 BINARY_EXPRESSION -> {
                     context.calleeNamesForLambda.removeLast()
                     null
                 }
                 PARENTHESIZED -> null
-                else -> getAsFirExpression<FirExpression>(node, errMsg!!)
+                else -> getAsFirExpression<FirExpression>(node)
             }
         }
-        data.evaluationStack.add(
-            buildStringConcatenationCall {
-                argumentList = buildArgumentList {
-                    arguments += args.reversed()
-                }
-                source = data.treeToStack.first().first?.toFirSourceElement()
-                interpolationPrefix = ""
-            }
-        )
-
-        data.treeToStack.clear()
-        return data.validateStackResult()
+        return buildStringConcatenationCall {
+            argumentList = buildArgumentList { arguments += args }
+            source = data.treeToStack.first()!!.toFirSourceElement()
+            interpolationPrefix = ""
+        }
     }
 
     /**
@@ -405,9 +388,7 @@ class LightTreeRawFirExpressionBuilder(
      * @see org.jetbrains.kotlin.fir.builder.RawFirBuilder.Visitor.visitBinaryExpression
      */
     private fun convertBinaryExpression(binaryExpression: LighterASTNode): FirStatement {
-        val data = StackVisitorData<LighterASTNode>()
-        data.stringLiteralConcatenationAnalysis = true
-        convertTreeToStack(binaryExpression, data)
+        val data = convertTreeToStack(binaryExpression)
         return if (data.stringLiteralConcatenationAnalysis) {
             buildStringConcatenationCallFromStack(data)
         } else {
@@ -415,7 +396,7 @@ class LightTreeRawFirExpressionBuilder(
         }
     }
 
-    private fun parseBinaryExpression(binaryExpression: LighterASTNode): Triple<LighterASTNode?, LighterASTNode, LighterASTNode?> {
+    private fun extractBinaryExpression(binaryExpression: LighterASTNode): Triple<LighterASTNode?, LighterASTNode, LighterASTNode?> {
         var left: LighterASTNode? = null
         var op: LighterASTNode? = null
         var right: LighterASTNode? = null
@@ -439,7 +420,7 @@ class LightTreeRawFirExpressionBuilder(
     private fun createBinaryExpression(
         binaryExpression: LighterASTNode, leftArgAsFir: FirExpression, rightArgAsFir: FirExpression,
     ): FirStatement {
-        val (leftArgNode, opNode, rightArgNode) = parseBinaryExpression(binaryExpression)
+        val (leftArgNode, opNode, rightArgNode) = extractBinaryExpression(binaryExpression)
         val operationReferenceSource = opNode.toFirSourceElement()
         val operationTokenName = opNode.asText
         val operationToken = operationTokenName.getOperationSymbol()
@@ -460,7 +441,7 @@ class LightTreeRawFirExpressionBuilder(
             buildFunctionCall {
                 source = binaryExpression.toFirSourceElement()
                 calleeReference = buildSimpleNamedReference {
-                    source = operationReferenceSource ?: this@buildFunctionCall.source
+                    source = operationReferenceSource
                     name = conventionCallName ?: operationTokenName.nameAsSafeName()
                 }
                 explicitReceiver = leftArgAsFir
@@ -470,7 +451,7 @@ class LightTreeRawFirExpressionBuilder(
         } else {
             val firOperation = operationToken.toFirOperation()
             if (firOperation in FirOperation.ASSIGNMENTS) {
-                return leftArgNode.generateAssignment(
+                leftArgNode.generateAssignment(
                     binaryExpression.toFirSourceElement(),
                     leftArgNode?.toFirSourceElement(),
                     rightArgAsFir,
