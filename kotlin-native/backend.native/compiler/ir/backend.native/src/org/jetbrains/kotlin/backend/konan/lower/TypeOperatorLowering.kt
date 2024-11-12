@@ -376,7 +376,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //    }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z13.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z14.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
         if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
@@ -388,7 +388,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             val upperLevelPredicates = mutableListOf<Predicate>()
             val variableValueCounters = mutableMapOf<IrVariable, Int>()
             val variableValues = mutableMapOf<IrValueDeclaration, VariableValue>()
-            val variablePhiNodes = mutableMapOf<IrVariable, Set<IrValueDeclaration>>()
+            val variableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
 
             fun createPhantomVariable(variable: IrVariable, value: IrExpression): IrVariable {
                 val counter = variableValueCounters.getOrPut(variable) { 0 }
@@ -423,35 +423,39 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         }
                     }
 
-            fun buildForceSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
-                    (variablePhiNodes[variable] ?: listOf(variable))
-                            .fold(Predicate.Empty as Predicate) { acc, value ->
-                                andPredicates(acc, Predicates.isSubtypeOf(value, type))
-                            }
+//            fun buildForceSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
+//                    (variablePhiNodes[variable] ?: listOf(variable))
+//                            .fold(Predicate.Empty as Predicate) { acc, value ->
+//                                andPredicates(acc, Predicates.isSubtypeOf(value, type))
+//                            }
 
             fun buildIsNotSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
-                    (variablePhiNodes[variable] ?: listOf(variable))
-                            .fold(Predicate.False as Predicate) { acc, value ->
-                                orPredicates(acc, invertPredicate(Predicates.isSubtypeOf(value, type)))
-                            }
+                    invertPredicate(Predicates.isSubtypeOf((variableAliases[variable] ?: variable), type))
+//                    (variablePhiNodes[variable] ?: listOf(variable))
+//                            .fold(Predicate.False as Predicate) { acc, value ->
+//                                orPredicates(acc, invertPredicate(Predicates.isSubtypeOf(value, type)))
+//                            }
 
             fun buildIsSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
-                    (variablePhiNodes[variable] ?: listOf(variable))
-                            .fold(Predicate.False as Predicate) { acc, value ->
-                                orPredicates(acc, Predicates.isSubtypeOf(value, type))
-                            }
+                    Predicates.isSubtypeOf((variableAliases[variable] ?: variable), type)
+//                    (variablePhiNodes[variable] ?: listOf(variable))
+//                            .fold(Predicate.False as Predicate) { acc, value ->
+//                                orPredicates(acc, Predicates.isSubtypeOf(value, type))
+//                            }
 
             fun buildIsNullPredicate(variable: IrValueDeclaration): Predicate =
-                    (variablePhiNodes[variable] ?: listOf(variable))
-                            .fold(Predicate.False as Predicate) { acc, value ->
-                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNull(value)))
-                            }
+                    Predicates.disjunctionOf(SimpleTerm.IsNull(variableAliases[variable] ?: variable))
+//                    (variablePhiNodes[variable] ?: listOf(variable))
+//                            .fold(Predicate.False as Predicate) { acc, value ->
+//                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNull(value)))
+//                            }
 
             fun buildIsNotNullPredicate(variable: IrValueDeclaration): Predicate =
-                    (variablePhiNodes[variable] ?: listOf(variable))
-                            .fold(Predicate.False as Predicate) { acc, value ->
-                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNotNull(value)))
-                            }
+                    Predicates.disjunctionOf(SimpleTerm.IsNotNull(variableAliases[variable] ?: variable))
+//                    (variablePhiNodes[variable] ?: listOf(variable))
+//                            .fold(Predicate.False as Predicate) { acc, value ->
+//                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNotNull(value)))
+//                            }
 
             fun IrExpression.isNullConst() = this is IrConst && this.value == null
 
@@ -701,33 +705,29 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //                )
             }
 
-            /*
-            val o = if (f) a is T else b is T
-            if (o) => a is T | b is T
-            if (!o) => a !is T | b !is T
-            }
-             */
             fun buildBooleanPredicateImpl(variable: IrValueDeclaration): BooleanPredicate =
-                    variablePhiNodes[variable]?.let { phiNode ->
-                        val predicates = phiNode.map { buildBooleanPredicateImpl(it) }
-                        BooleanPredicate(
-                                ifTrue = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
-                                    orPredicates(acc, booleanPredicate.ifTrue)
-                                },
-                                ifFalse = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
-                                    orPredicates(acc, booleanPredicate.ifFalse)
+//                    variablePhiNodes[variable]?.let { phiNode ->
+//                        val predicates = phiNode.map { buildBooleanPredicateImpl(it) }
+//                        BooleanPredicate(
+//                                ifTrue = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
+//                                    orPredicates(acc, booleanPredicate.ifTrue)
+//                                },
+//                                ifFalse = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
+//                                    orPredicates(acc, booleanPredicate.ifFalse)
+//                                }
+//                        )
+//                    }
+                    variableAliases[variable]?.let { buildBooleanPredicateImpl(it) }
+                            ?: when (val variableValue = variableValues[variable]) {
+                                null, VariableValue.Ordinary -> {
+                                    BooleanPredicate(
+                                            ifTrue = Predicates.disjunctionOf(ComplexTerm(variable, true)),
+                                            ifFalse = Predicates.disjunctionOf(ComplexTerm(variable, false))
+                                    )
                                 }
-                        )
-                    } ?: when (val variableValue = variableValues[variable]) {
-                        null, VariableValue.Ordinary -> {
-                            BooleanPredicate(
-                                    ifTrue = Predicates.disjunctionOf(ComplexTerm(variable, true)),
-                                    ifFalse = Predicates.disjunctionOf(ComplexTerm(variable, false))
-                            )
-                        }
-                        is VariableValue.BooleanPredicate -> variableValue.predicate
-                        is VariableValue.NullablePredicate -> error("Unexpected nullable predicate for ${variable.render()}")
-                    }
+                                is VariableValue.BooleanPredicate -> variableValue.predicate
+                                is VariableValue.NullablePredicate -> error("Unexpected nullable predicate for ${variable.render()}")
+                            }
 
             fun buildBooleanPredicateImpl(expression: IrExpression, predicate: Predicate): BooleanPredicate {
                 if (expression is IrGetValue) {
@@ -877,32 +877,29 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 return buildNullablePredicateImpl(expression, Predicate.Empty)
             }
 
-            /*
-            val o = if (f) a as? T else b as? T
-            if (o == null) => a !is T | b !is T
-            if (o != null) => a is T | b is T
-             */
             fun buildNullablePredicateImpl(variable: IrValueDeclaration): NullablePredicate =
-                    variablePhiNodes[variable]?.let { phiNode ->
-                        val predicates = phiNode.map { buildNullablePredicateImpl(it) }
-                        NullablePredicate(
-                                ifNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
-                                    orPredicates(acc, nullablePredicate.ifNull)
-                                },
-                                ifNotNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
-                                    orPredicates(acc, nullablePredicate.ifNotNull)
+//                    variablePhiNodes[variable]?.let { phiNode ->
+//                        val predicates = phiNode.map { buildNullablePredicateImpl(it) }
+//                        NullablePredicate(
+//                                ifNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
+//                                    orPredicates(acc, nullablePredicate.ifNull)
+//                                },
+//                                ifNotNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
+//                                    orPredicates(acc, nullablePredicate.ifNotNull)
+//                                }
+//                        )
+//                    }
+                    variableAliases[variable]?.let { buildNullablePredicateImpl(it) }
+                            ?: when (val variableValue = variableValues[variable]) {
+                                null, VariableValue.Ordinary -> {
+                                    NullablePredicate(
+                                            ifNull = Predicates.disjunctionOf(SimpleTerm.IsNull(variable)),
+                                            ifNotNull = Predicates.disjunctionOf(SimpleTerm.IsNotNull(variable))
+                                    )
                                 }
-                        )
-                    } ?: when (val variableValue = variableValues[variable]) {
-                        null, VariableValue.Ordinary -> {
-                            NullablePredicate(
-                                    ifNull = Predicates.disjunctionOf(SimpleTerm.IsNull(variable)),
-                                    ifNotNull = Predicates.disjunctionOf(SimpleTerm.IsNotNull(variable))
-                            )
-                        }
-                        is VariableValue.NullablePredicate -> variableValue.predicate
-                        is VariableValue.BooleanPredicate -> error("Unexpected boolean predicate for ${variable.render()}")
-                    }
+                                is VariableValue.NullablePredicate -> variableValue.predicate
+                                is VariableValue.BooleanPredicate -> error("Unexpected boolean predicate for ${variable.render()}")
+                            }
 
             private fun buildNullablePredicateImpl(expression: IrExpression, predicate: Predicate): NullablePredicate? {
                 if (!expression.type.isNullable())
@@ -1068,7 +1065,8 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //                        }
 
                         return if (expression.isCast())
-                            andPredicates(argumentPredicate, buildForceSubtypeOfPredicate(variable, expression.typeOperand))
+                            //andPredicates(argumentPredicate, buildForceSubtypeOfPredicate(variable, expression.typeOperand))
+                            andPredicates(argumentPredicate, buildIsSubtypeOfPredicate(variable, expression.typeOperand))
                         else argumentPredicate
                     }
 //                    if (debugOutput) {
@@ -1131,12 +1129,12 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
                 if (value is IrGetValue) {
                     val delegatedVariable = value.symbol.owner
-                    variablePhiNodes[variable] = variablePhiNodes[delegatedVariable] ?: setOf(delegatedVariable)
+                    variableAliases[variable] = variableAliases[delegatedVariable] ?: delegatedVariable
                     return data
                 }
 
                 val actualVariable = if (variable.isMutable)
-                    createPhantomVariable(variable, value).also { variablePhiNodes[variable] = setOf(it) }
+                    createPhantomVariable(variable, value).also { variableAliases[variable] = it }
                 else variable
 
                 if (variable.type.isNullable()) {
