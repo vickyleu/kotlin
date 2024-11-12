@@ -906,7 +906,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 
             private fun buildNullablePredicateImpl(expression: IrExpression, predicate: Predicate): NullablePredicate? {
                 if (!expression.type.isNullable())
-                    return NullablePredicate(ifNull = Predicate.False, ifNotNull = predicate)
+                    return NullablePredicate(ifNull = Predicate.False, ifNotNull = expression.accept(this, predicate))
                 if (expression is IrGetValue) {
                     val variableNullablePredicate = buildNullablePredicateImpl(expression.symbol.owner)
                     return NullablePredicate(
