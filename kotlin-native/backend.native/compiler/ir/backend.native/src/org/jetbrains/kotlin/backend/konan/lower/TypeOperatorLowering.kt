@@ -390,20 +390,23 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             val variableValues = mutableMapOf<IrValueDeclaration, VariableValue>()
             val variableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
 
-            fun createPhantomVariable(variable: IrVariable, value: IrExpression): IrVariable {
+            fun createPhantomVariable(variable: IrVariable, startOffset: Int, endOffset: Int, type: IrType): IrVariable {
                 val counter = variableValueCounters.getOrPut(variable) { 0 }
                 variableValueCounters[variable] = counter + 1
                 return IrVariableImpl(
-                        value.startOffset, value.endOffset,
+                        startOffset, endOffset,
                         IrDeclarationOrigin.DEFINED,
                         IrVariableSymbolImpl(),
                         Name.identifier("${variable.name}\$$counter"),
-                        value.type,
+                        type,
                         isVar = false,
                         isConst = false,
                         isLateinit = false,
                 )
             }
+
+            fun createPhantomVariable(variable: IrVariable, value: IrExpression) =
+                    createPhantomVariable(variable, value.startOffset, value.endOffset, value.type)
 
             val IrVariable.isMutable: Boolean
                 get() = isVar || initializer == null
@@ -423,39 +426,17 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         }
                     }
 
-//            fun buildForceSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
-//                    (variablePhiNodes[variable] ?: listOf(variable))
-//                            .fold(Predicate.Empty as Predicate) { acc, value ->
-//                                andPredicates(acc, Predicates.isSubtypeOf(value, type))
-//                            }
-
             fun buildIsNotSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
                     invertPredicate(Predicates.isSubtypeOf((variableAliases[variable] ?: variable), type))
-//                    (variablePhiNodes[variable] ?: listOf(variable))
-//                            .fold(Predicate.False as Predicate) { acc, value ->
-//                                orPredicates(acc, invertPredicate(Predicates.isSubtypeOf(value, type)))
-//                            }
 
             fun buildIsSubtypeOfPredicate(variable: IrValueDeclaration, type: IrType): Predicate =
                     Predicates.isSubtypeOf((variableAliases[variable] ?: variable), type)
-//                    (variablePhiNodes[variable] ?: listOf(variable))
-//                            .fold(Predicate.False as Predicate) { acc, value ->
-//                                orPredicates(acc, Predicates.isSubtypeOf(value, type))
-//                            }
 
             fun buildIsNullPredicate(variable: IrValueDeclaration): Predicate =
                     Predicates.disjunctionOf(SimpleTerm.IsNull(variableAliases[variable] ?: variable))
-//                    (variablePhiNodes[variable] ?: listOf(variable))
-//                            .fold(Predicate.False as Predicate) { acc, value ->
-//                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNull(value)))
-//                            }
 
             fun buildIsNotNullPredicate(variable: IrValueDeclaration): Predicate =
                     Predicates.disjunctionOf(SimpleTerm.IsNotNull(variableAliases[variable] ?: variable))
-//                    (variablePhiNodes[variable] ?: listOf(variable))
-//                            .fold(Predicate.False as Predicate) { acc, value ->
-//                                orPredicates(acc, Predicates.disjunctionOf(SimpleTerm.IsNotNull(value)))
-//                            }
 
             fun IrExpression.isNullConst() = this is IrConst && this.value == null
 
@@ -706,17 +687,6 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             fun buildBooleanPredicateImpl(variable: IrValueDeclaration): BooleanPredicate =
-//                    variablePhiNodes[variable]?.let { phiNode ->
-//                        val predicates = phiNode.map { buildBooleanPredicateImpl(it) }
-//                        BooleanPredicate(
-//                                ifTrue = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
-//                                    orPredicates(acc, booleanPredicate.ifTrue)
-//                                },
-//                                ifFalse = predicates.fold(Predicate.False as Predicate) { acc, booleanPredicate ->
-//                                    orPredicates(acc, booleanPredicate.ifFalse)
-//                                }
-//                        )
-//                    }
                     variableAliases[variable]?.let { buildBooleanPredicateImpl(it) }
                             ?: when (val variableValue = variableValues[variable]) {
                                 null, VariableValue.Ordinary -> {
@@ -878,17 +848,6 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             fun buildNullablePredicateImpl(variable: IrValueDeclaration): NullablePredicate =
-//                    variablePhiNodes[variable]?.let { phiNode ->
-//                        val predicates = phiNode.map { buildNullablePredicateImpl(it) }
-//                        NullablePredicate(
-//                                ifNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
-//                                    orPredicates(acc, nullablePredicate.ifNull)
-//                                },
-//                                ifNotNull = predicates.fold(Predicate.False as Predicate) { acc, nullablePredicate ->
-//                                    orPredicates(acc, nullablePredicate.ifNotNull)
-//                                }
-//                        )
-//                    }
                     variableAliases[variable]?.let { buildNullablePredicateImpl(it) }
                             ?: when (val variableValue = variableValues[variable]) {
                                 null, VariableValue.Ordinary -> {
@@ -1065,7 +1024,6 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //                        }
 
                         return if (expression.isCast())
-                            //andPredicates(argumentPredicate, buildForceSubtypeOfPredicate(variable, expression.typeOperand))
                             andPredicates(argumentPredicate, buildIsSubtypeOfPredicate(variable, expression.typeOperand))
                         else argumentPredicate
                     }
@@ -1077,6 +1035,8 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
+                val branchesVariableAliases = mutableListOf<Map<IrVariable, IrValueDeclaration>>()
+                val savedVariableAliases = variableAliases.toMap()
                 upperLevelPredicates.push(data)
                 var predicate: Predicate = Predicate.Empty
                 var result: Predicate = Predicate.Empty
@@ -1092,9 +1052,15 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         println("    result = $result")
                         println()
                     }
-                    val branchResultPredicate = andPredicates(predicate, branch.result.accept(this, conditionBooleanPredicate.ifTrue))
+                    val branchResultPredicate = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
+                    if (branchResultPredicate != Predicate.False) { // The result is not unreachable.
+                        branchesVariableAliases.add(variableAliases.toMap())
+                    }
+                    variableAliases.clear()
+                    for (pair in savedVariableAliases)
+                        variableAliases[pair.key] = pair.value
                     if (computePreciseResultForWhens) {
-                        result = orPredicates(result, branchResultPredicate)
+                        result = orPredicates(result, andPredicates(predicate, branchResultPredicate))
                     } else {
                         if (isFirstBranch)
                             result = orPredicates(conditionBooleanPredicate.ifTrue, conditionBooleanPredicate.ifFalse)
@@ -1121,6 +1087,21 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 if (debugOutput) {
                     println("    result = $result")
                     println()
+                }
+                variableAliases.clear()
+                val variablesWithMultipleAliases = mutableSetOf<IrVariable>()
+                for (branchVariableAliases in branchesVariableAliases) {
+                    for ((variable, alias) in branchVariableAliases) {
+                        val prevAlias = variableAliases[variable]
+                        if (prevAlias == null)
+                            variableAliases[variable] = alias
+                        else if (prevAlias != alias)
+                            variablesWithMultipleAliases.add(variable)
+                    }
+                }
+                for (variable in variablesWithMultipleAliases) {
+                    val phantomVariable = createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
+                    variableAliases[variable] = phantomVariable
                 }
                 return result
             }
