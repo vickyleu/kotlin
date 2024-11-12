@@ -336,6 +336,80 @@ fun test18(x: Int, a: Any): Int {
 // CHECK-LABEL: epilogue:
 }
 
+inline fun <T> inlineFun(x: Int, block: (Boolean) -> T): T = block(x > 0)
+
+// CHECK-LABEL: define i32 @"kfun:#test19(kotlin.Int;kotlin.Any;kotlin.Any){}kotlin.Int
+fun test19(x: Int, a: Any, b: Any): Int {
+    val o = inlineFun(x) {
+        if (it)
+            return@inlineFun a
+        else
+            return@inlineFun b
+    }
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    if (o is String) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        return o.length +
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+                ((a as? String)?.get(0)?.code ?: x) +
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+                ((b as? String)?.get(0)?.code ?: x)
+    }
+    return 0
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test20(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test20(x: Int, a: Any): Int {
+    val o = inlineFun(x) {
+        if (it)
+            return@inlineFun a
+        else return 0
+    }
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    return if (o is String) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        o.length +
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+                ((a as? String)?.get(0)?.code ?: x)
+    } else -1
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test21(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test21(x: Int, a: Any): Int {
+    val o = inlineFun(x) {
+        if (it)
+            return@inlineFun a
+        else return 0
+    }
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    return if (a is String) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: call i32 @"kfun:kotlin.String#<get-length>(){}kotlin.Int
+        a.length +
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK: {{call|call zeroext}} i16 @Kotlin_String_get
+                ((o as? String)?.get(0)?.code ?: x)
+    } else -1
+// CHECK-LABEL: epilogue:
+}
+
 // CHECK-LABEL: define ptr @"kfun:#box(){}kotlin.String"
 fun box(): String {
     println(test1("zzz"))
@@ -356,5 +430,8 @@ fun box(): String {
     println(test16(1, "zzz", "qxx"))
     println(test17(1, "zzz"))
     println(test18(1, "zzz"))
+    println(test19(1, "zzz", "qxx"))
+    println(test20(1, "zzz"))
+    println(test21(1, "zzz"))
     return "OK"
 }
