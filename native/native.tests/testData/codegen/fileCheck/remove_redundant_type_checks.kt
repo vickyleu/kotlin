@@ -385,9 +385,8 @@ fun test19(x: Int, a: Any, b: Any): Int {
 // CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
                 ((a as? A)?.y ?: x) +
-// TODO
-// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
-// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
 // CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
                 ((b as? A)?.y ?: x)
