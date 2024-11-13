@@ -57,6 +57,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
     private val ieee754EqualsSymbols: Set<IrSimpleFunctionSymbol> =
             context.irBuiltIns.ieee754equalsFunByOperandType.values.toSet()
     private val throwClassCastException = context.ir.symbols.throwClassCastException
+    private val unitType = context.irBuiltIns.unitType
 
     private sealed class LeafTerm {
         abstract fun invert(): LeafTerm
@@ -376,7 +377,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //    }
 
     override fun lower(irBody: IrBody, container: IrDeclaration) {
-        //if (container.fileOrNull?.path?.endsWith("z14.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("z15.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
         if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
         //println("${container.fileOrNull?.path} ${container.render()}")
@@ -388,25 +389,40 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             val upperLevelPredicates = mutableListOf<Predicate>()
             val variableValueCounters = mutableMapOf<IrVariable, Int>()
             val variableValues = mutableMapOf<IrValueDeclaration, VariableValue>()
+
+            val multipleValuesMarker = createVariable(irBody.startOffset, irBody.endOffset, "\$TheMarker", unitType)
             val variableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
+
+            fun createVariable(startOffset: Int, endOffset: Int, name: String, type: IrType) =
+                    IrVariableImpl(
+                            startOffset, endOffset,
+                            IrDeclarationOrigin.DEFINED,
+                            IrVariableSymbolImpl(),
+                            Name.identifier(name),
+                            type,
+                            isVar = false,
+                            isConst = false,
+                            isLateinit = false,
+                    )
 
             fun createPhantomVariable(variable: IrVariable, startOffset: Int, endOffset: Int, type: IrType): IrVariable {
                 val counter = variableValueCounters.getOrPut(variable) { 0 }
                 variableValueCounters[variable] = counter + 1
-                return IrVariableImpl(
-                        startOffset, endOffset,
-                        IrDeclarationOrigin.DEFINED,
-                        IrVariableSymbolImpl(),
-                        Name.identifier("${variable.name}\$$counter"),
-                        type,
-                        isVar = false,
-                        isConst = false,
-                        isLateinit = false,
-                )
+                return createVariable(startOffset, endOffset, "${variable.name}\$$counter", type)
             }
 
             fun createPhantomVariable(variable: IrVariable, value: IrExpression) =
                     createPhantomVariable(variable, value.startOffset, value.endOffset, value.type)
+
+            fun controlFlowMergePoint(accumulatedVariableAliases: MutableMap<IrVariable, IrValueDeclaration>) {
+                for ((variable, alias) in variableAliases) {
+                    val accumulatedAlias = accumulatedVariableAliases[variable]
+                    if (accumulatedAlias == null)
+                        accumulatedVariableAliases[variable] = alias
+                    else if (accumulatedAlias != alias && accumulatedAlias != multipleValuesMarker)
+                        accumulatedVariableAliases[variable] = multipleValuesMarker
+                }
+            }
 
             val IrVariable.isMutable: Boolean
                 get() = isVar || initializer == null
@@ -1035,8 +1051,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             override fun visitWhen(expression: IrWhen, data: Predicate): Predicate {
-                val branchesVariableAliases = mutableListOf<Map<IrVariable, IrValueDeclaration>>()
-                val savedVariableAliases = variableAliases.toMap()
+                val resultVariableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
                 upperLevelPredicates.push(data)
                 var predicate: Predicate = Predicate.Empty
                 var result: Predicate = Predicate.Empty
@@ -1052,13 +1067,14 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         println("    result = $result")
                         println()
                     }
+                    val savedVariableAliases = variableAliases.toMap()
                     val branchResultPredicate = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
                     if (branchResultPredicate != Predicate.False) { // The result is not unreachable.
-                        branchesVariableAliases.add(variableAliases.toMap())
+                        controlFlowMergePoint(resultVariableAliases)
                     }
                     variableAliases.clear()
-                    for (pair in savedVariableAliases)
-                        variableAliases[pair.key] = pair.value
+                    for ((variable, alias) in savedVariableAliases)
+                        variableAliases[variable] = alias
                     if (computePreciseResultForWhens) {
                         result = orPredicates(result, andPredicates(predicate, branchResultPredicate))
                     } else {
@@ -1074,8 +1090,12 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     println("    result = $result")
                     println("    predicate = $predicate")
                 }
-                if (computePreciseResultForWhens)
-                    result = orPredicates(result, predicate)
+                val isExhaustive = expression.branches.last().isUnconditional()
+                if (!isExhaustive) {
+                    if (computePreciseResultForWhens)
+                        result = orPredicates(result, predicate)
+                    controlFlowMergePoint(resultVariableAliases)
+                }
                 if (debugOutput) {
                     println("    result = $result")
                 }
@@ -1089,19 +1109,11 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     println()
                 }
                 variableAliases.clear()
-                val variablesWithMultipleAliases = mutableSetOf<IrVariable>()
-                for (branchVariableAliases in branchesVariableAliases) {
-                    for ((variable, alias) in branchVariableAliases) {
-                        val prevAlias = variableAliases[variable]
-                        if (prevAlias == null)
-                            variableAliases[variable] = alias
-                        else if (prevAlias != alias)
-                            variablesWithMultipleAliases.add(variable)
-                    }
-                }
-                for (variable in variablesWithMultipleAliases) {
-                    val phantomVariable = createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
-                    variableAliases[variable] = phantomVariable
+                for ((variable, alias) in resultVariableAliases) {
+                    variableAliases[variable] = if (alias != multipleValuesMarker)
+                        alias
+                    else
+                        createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
                 }
                 return result
             }
