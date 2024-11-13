@@ -676,7 +676,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
                 tryGetAssociatedObject = deserializeNullable(::deserializeIdSignature),
                 jsToKotlinAnyAdapter = deserializeNullable(::deserializeIdSignature),
                 unitGetInstance = deserializeNullable(::deserializeIdSignature),
-                executeTestRunners = deserializeNullable(::deserializeIdSignature),
+                executeSuitRelatedBlocks = deserializeNullable(::deserializeIdSignature),
             )
         }
 

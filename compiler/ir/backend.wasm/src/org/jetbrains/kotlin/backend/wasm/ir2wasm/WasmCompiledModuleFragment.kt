@@ -24,7 +24,7 @@ class BuiltinIdSignatures(
     val tryGetAssociatedObject: IdSignature?,
     val jsToKotlinAnyAdapter: IdSignature?,
     val unitGetInstance: IdSignature?,
-    val executeTestRunners: IdSignature?,
+    val executeSuitRelatedBlocks: IdSignature?,
 )
 
 class WasmCompiledFileFragment(
@@ -413,7 +413,7 @@ class WasmCompiledModuleFragment(
     }
 
     private fun createStartUnitTestsFunction(): WasmFunction.Defined? {
-        val executeTestRunners = tryFindBuiltInFunction { it.executeTestRunners } ?: return null
+        val executeSuitRelatedBlocks = tryFindBuiltInFunction { it.executeSuitRelatedBlocks } ?: return null
         val startUnitTestsFunction = WasmFunction.Defined("startUnitTests", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(startUnitTestsFunction.instructions)) {
             wasmCompiledFileFragments.forEach { fragment ->
@@ -423,7 +423,7 @@ class WasmCompiledModuleFragment(
                     buildCall(WasmSymbol(declaratorFunction), serviceCodeLocation)
                 }
             }
-            buildCall(WasmSymbol(executeTestRunners), serviceCodeLocation)
+            buildCall(WasmSymbol(executeSuitRelatedBlocks), serviceCodeLocation)
         }
         return startUnitTestsFunction
     }

@@ -82,7 +82,7 @@ private fun buildRoots(modules: List<IrModuleFragment>, context: WasmBackendCont
     }
 
     if (hasTestDeclarator) {
-        context.wasmSymbols.executeTestRunners?.let {
+        context.wasmSymbols.executeSuitRelatedBlocks?.let {
             add(it.owner)
         }
     }

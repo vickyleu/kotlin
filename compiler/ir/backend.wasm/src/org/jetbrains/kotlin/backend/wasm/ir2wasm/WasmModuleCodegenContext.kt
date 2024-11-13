@@ -181,9 +181,9 @@ class WasmFileCodegenContext(
         tryGetAssociatedObject: IrFunctionSymbol?,
         jsToKotlinAnyAdapter: IrFunctionSymbol?,
         unitGetInstance: IrFunctionSymbol?,
-        executeTestRunners: IrFunctionSymbol?,
+        executeSuitRelatedBlocks: IrFunctionSymbol?,
     ) {
-        if (throwable != null || tryGetAssociatedObject != null || jsToKotlinAnyAdapter != null || unitGetInstance != null || executeTestRunners != null) {
+        if (throwable != null || tryGetAssociatedObject != null || jsToKotlinAnyAdapter != null || unitGetInstance != null || executeSuitRelatedBlocks != null) {
             val originalSignatures = wasmFileFragment.builtinIdSignatures
             wasmFileFragment.builtinIdSignatures = BuiltinIdSignatures(
                 throwable = originalSignatures?.throwable
@@ -194,8 +194,8 @@ class WasmFileCodegenContext(
                     ?: jsToKotlinAnyAdapter?.getReferenceKey(),
                 unitGetInstance = originalSignatures?.unitGetInstance
                     ?: unitGetInstance?.getReferenceKey(),
-                executeTestRunners = originalSignatures?.executeTestRunners
-                    ?: executeTestRunners?.getReferenceKey(),
+                executeSuitRelatedBlocks = originalSignatures?.executeSuitRelatedBlocks
+                    ?: executeSuitRelatedBlocks?.getReferenceKey(),
             )
         }
     }

@@ -52,7 +52,7 @@ internal class GenerateWasmTests(private val context: WasmBackendContext) : Modu
                 returnType = context.irBuiltIns.unitType
                 origin = JsIrBuilder.SYNTHESIZED_DECLARATION
             }.apply {
-                val call = context.createIrBuilder(symbol).irCall(context.wasmSymbols.addSuitedTestFun!!.owner).also { call ->
+                val call = context.createIrBuilder(symbol).irCall(context.wasmSymbols.addSuitRelatedBlock!!.owner).also { call ->
                     call.putValueArgument(0, suitName)
                     call.putValueArgument(1, testFunReference)
                 }

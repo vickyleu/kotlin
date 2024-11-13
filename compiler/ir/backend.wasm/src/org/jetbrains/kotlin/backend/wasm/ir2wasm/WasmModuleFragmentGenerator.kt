@@ -138,7 +138,7 @@ private fun WasmBackendContext.defineBuiltinSignatures(irFile: IrFile, wasmFileC
         irFile == it.fileOrNull
     }
 
-    val executeTestRunners = wasmSymbols.executeTestRunners?.takeIf {
+    val executeSuitRelatedBlocks = wasmSymbols.executeSuitRelatedBlocks?.takeIf {
         irFile == it.owner.fileOrNull
     }
 
@@ -147,6 +147,6 @@ private fun WasmBackendContext.defineBuiltinSignatures(irFile: IrFile, wasmFileC
         tryGetAssociatedObject = tryGetAssociatedObjectFunction,
         jsToKotlinAnyAdapter = jsToKotlinAnyAdapter,
         unitGetInstance = unitGetInstance?.symbol,
-        executeTestRunners = executeTestRunners,
+        executeSuitRelatedBlocks = executeSuitRelatedBlocks,
     )
 }

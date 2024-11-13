@@ -29,17 +29,17 @@ internal fun test(name: String, ignored: Boolean, testFn: () -> Any?) {
     adapter().test(name, ignored, testFn)
 }
 
-private val testRunners: MutableMap<String, MutableList<() -> Unit>> = mutableMapOf()
+private val suitRelatedBlocks: MutableMap<String, MutableList<() -> Unit>> = mutableMapOf()
 
-internal fun addSuitedTestFun(suiteName: String, testFun: () -> Unit) {
-    testRunners.getOrPut(suiteName, ::mutableListOf).add(testFun)
+internal fun addSuitRelatedBlock(suiteName: String, block: () -> Unit) {
+    suitRelatedBlocks.getOrPut(suiteName, ::mutableListOf).add(block)
 }
 
-internal fun executeTestRunners() {
-    testRunners.entries.forEach { (suiteName, runners) ->
+internal fun executeSuitRelatedBlocks() {
+    suitRelatedBlocks.entries.forEach { (suiteName, block) ->
         suite(name = suiteName, ignored = false) {
-            runners.forEach { it() }
+            block.forEach { it() }
         }
     }
-    testRunners.clear()
+    suitRelatedBlocks.clear()
 }

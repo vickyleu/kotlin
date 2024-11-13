@@ -666,7 +666,7 @@ class WasmSerializer(outputStream: OutputStream) {
         serializeNullable(builtinIdSignatures.tryGetAssociatedObject, ::serializeIdSignature)
         serializeNullable(builtinIdSignatures.jsToKotlinAnyAdapter, ::serializeIdSignature)
         serializeNullable(builtinIdSignatures.unitGetInstance, ::serializeIdSignature)
-        serializeNullable(builtinIdSignatures.executeTestRunners, ::serializeIdSignature)
+        serializeNullable(builtinIdSignatures.executeSuitRelatedBlocks, ::serializeIdSignature)
     }
 
     private fun serializeFieldInitializer(fieldInitializer: FieldInitializer) {
