@@ -376,6 +376,11 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 //            println(x)
 //    }
 
+    private class ControlFlowMergePointInfo(val level: Int) {
+        var predicate: Predicate = Predicate.Empty
+        val variableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
+    }
+
     override fun lower(irBody: IrBody, container: IrDeclaration) {
         //if (container.fileOrNull?.path?.endsWith("z15.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
@@ -392,6 +397,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
 
             val multipleValuesMarker = createVariable(irBody.startOffset, irBody.endOffset, "\$TheMarker", unitType)
             val variableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
+            val returnableBlockCFMPInfos = mutableMapOf<IrReturnableBlock, ControlFlowMergePointInfo>()
 
             fun createVariable(startOffset: Int, endOffset: Int, name: String, type: IrType) =
                     IrVariableImpl(
@@ -434,10 +440,10 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 return result
             }
 
-            fun getFullPredicate(currentPredicate: Predicate, optimizeAwayComplexTerms: Boolean) =
+            fun getFullPredicate(currentPredicate: Predicate, optimizeAwayComplexTerms: Boolean, level: Int) =
                     usingUpperLevelPredicate(currentPredicate) {
                         val initialPredicate: Predicate = Predicate.Empty
-                        upperLevelPredicates.fold(initialPredicate) { acc, predicate ->
+                        upperLevelPredicates.drop(level).fold(initialPredicate) { acc, predicate ->
                             andPredicates(acc, if (optimizeAwayComplexTerms) Predicates.optimizeAwayComplexTerms(predicate) else predicate)
                         }
                     }
@@ -946,12 +952,35 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             override fun visitBlock(expression: IrBlock, data: Predicate): Predicate {
-                val result = super.visitBlock(expression, data)
-                return if (expression is IrReturnableBlock) data else result
+                val returnableBlock = expression as? IrReturnableBlock
+                        ?: return super.visitBlock(expression, data)
+                val cfmpInfo = ControlFlowMergePointInfo(upperLevelPredicates.size)
+                returnableBlockCFMPInfos[returnableBlock] = cfmpInfo
+                super.visitBlock(expression, data)
+                variableAliases.clear()
+                for ((variable, alias) in cfmpInfo.variableAliases) {
+                    variableAliases[variable] = if (alias != multipleValuesMarker)
+                        alias
+                    else
+                        createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
+                }
+                returnableBlockCFMPInfos.remove(returnableBlock)
+                return Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate)
             }
 
             override fun visitReturn(expression: IrReturn, data: Predicate): Predicate {
-                expression.value.accept(this, data)
+                val result = expression.value.accept(this, data)
+                val returnableBlock = expression.returnTargetSymbol.owner as? IrReturnableBlock
+                if (returnableBlock != null) {
+                    val cfmpInfo = returnableBlockCFMPInfos[returnableBlock]!!
+                    cfmpInfo.predicate = orPredicates(
+                            cfmpInfo.predicate,
+                            getFullPredicate(result, false, cfmpInfo.level)
+                    )
+                    println("QXX: ${expression.dump()}")
+                    println("    result = ${cfmpInfo.predicate}")
+                    controlFlowMergePoint(cfmpInfo.variableAliases)
+                }
                 return Predicate.False
             }
 
@@ -969,7 +998,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             fun tryOptimizeTypeCheck(expression: IrTypeOperatorCall, variable: IrValueDeclaration, predicate: Predicate) {
-                val fullPredicate = getFullPredicate(predicate, true)
+                val fullPredicate = getFullPredicate(predicate, true, 0)
                 if (debugOutput) {
                     println("ZZZ: ${expression.dump()}")
                     println("    $fullPredicate")
@@ -1061,7 +1090,7 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
                     if (debugOutput) {
                         println("QXX: ${branch.condition.dump()}")
-                        println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false)}")
+                        println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false, 0)}")
                         println("    condition = ${conditionBooleanPredicate.ifTrue}")
                         println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
                         println("    result = $result")
