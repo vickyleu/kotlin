@@ -443,9 +443,8 @@ fun test21(x: Int, a: Any): Int {
 // CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
         o.x +
-// TODO
-// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
-// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
 // CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
                 ((a as? A)?.y ?: x)
@@ -468,9 +467,8 @@ fun test22(x: Int, a: Any): Int {
 // CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
         a.x +
-// TODO
-// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
-// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
 // CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
                 ((o as? A)?.y ?: x)
@@ -491,6 +489,72 @@ fun test23(x: Int, a: Any): Int {
 // CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
     val y = a.y
     return if (f) y else x
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test24(kotlin.Int;kotlin.Any;kotlin.Any){}kotlin.Int
+fun test24(x: Int, a: Any, b: Any): Int {
+    val o = if (x > 0) a else b
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    if (o is A) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+        return o.x +
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+                ((a as? A)?.y ?: x) +
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+                ((b as? A)?.y ?: x)
+    }
+    return 0
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test25(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test25(x: Int, a: Any): Int {
+    val o = if (x > 0) a else return 0
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    return if (o is A) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+        o.x +
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+                ((a as? A)?.y ?: x)
+    } else -1
+// CHECK-LABEL: epilogue:
+}
+
+// CHECK-LABEL: define i32 @"kfun:#test26(kotlin.Int;kotlin.Any){}kotlin.Int
+fun test26(x: Int, a: Any): Int {
+    val o = if (x > 0) a else return 0
+// CHECK-DEBUG: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT: {{call|call zeroext}} i1 @IsSubclassFast
+    return if (a is A) {
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-x>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+        a.x +
+// CHECK-DEBUG-NOT: {{call|call zeroext}} i1 @IsSubtype
+// CHECK-OPT-NOT: {{call|call zeroext}} i1 @IsSubclassFast
+// CHECK-DEBUG: call i32 @"kfun:A#<get-y>(){}kotlin.Int
+// CHECK-OPT: getelementptr inbounds %"kclassbody:A#internal
+                ((o as? A)?.y ?: x)
+    } else -1
 // CHECK-LABEL: epilogue:
 }
 
@@ -520,5 +584,8 @@ fun box(): String {
     println(test21(1, a))
     println(test22(1, a))
     println(test23(1, a))
+    println(test24(1, a, a))
+    println(test25(1, a))
+    println(test26(1, a))
     return "OK"
 }
