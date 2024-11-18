@@ -437,6 +437,20 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 )
             }
 
+            fun finishControlFlowMerging(irElement: IrElement, cfmpInfo: ControlFlowMergePointInfo): VisitorResult {
+                variableAliases.clear()
+                for ((variable, alias) in cfmpInfo.variableAliases) {
+                    variableAliases[variable] = if (alias != multipleValuesMarker)
+                        alias
+                    else
+                        createPhantomVariable(variable, irElement.startOffset, irElement.endOffset, variable.type)
+                }
+                return VisitorResult(
+                        Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate),
+                        cfmpInfo.phiNodeAlias.takeIf { it != multipleValuesMarker }
+                )
+            }
+
             val IrVariable.isMutable: Boolean
                 get() = isVar || initializer == null
 
@@ -967,17 +981,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 super.visitBlock(expression, data)
                 returnableBlockCFMPInfos.remove(returnableBlock)
 
-                variableAliases.clear()
-                for ((variable, alias) in cfmpInfo.variableAliases) {
-                    variableAliases[variable] = if (alias != multipleValuesMarker)
-                        alias
-                    else
-                        createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
-                }
-                return VisitorResult(
-                        Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate),
-                        cfmpInfo.phiNodeAlias.takeIf { it != multipleValuesMarker }
-                )
+                return finishControlFlowMerging(expression, cfmpInfo)
             }
 
             override fun visitReturn(expression: IrReturn, data: Predicate): VisitorResult {
@@ -1088,29 +1092,21 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     println("    result = ${cfmpInfo.predicate}")
                     println("    predicate = $predicate")
                 }
-                val isExhaustive = expression.branches.last().isUnconditional()
-                if (!isExhaustive)
+                if (!expression.branches.last().isUnconditional()) // Non-exhaustive when.
                     controlFlowMergePoint(cfmpInfo, VisitorResult(predicate, null))
                 if (debugOutput) {
                     println("    result = ${cfmpInfo.predicate}")
                 }
-                cfmpInfo.predicate = Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate)
+                val result = finishControlFlowMerging(expression, cfmpInfo)
                 if (debugOutput)
-                    println("    result = ${cfmpInfo.predicate}")
+                    println("    result = ${result.predicate}")
                 upperLevelPredicates.pop()
-                val resultPredicate = andPredicates(data, cfmpInfo.predicate)
+                val resultPredicate = andPredicates(data, result.predicate)
                 if (debugOutput) {
                     println("    result = $resultPredicate")
                     println()
                 }
-                variableAliases.clear()
-                for ((variable, alias) in cfmpInfo.variableAliases) {
-                    variableAliases[variable] = if (alias != multipleValuesMarker)
-                        alias
-                    else
-                        createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
-                }
-                return VisitorResult(resultPredicate, cfmpInfo.phiNodeAlias.takeIf { it != multipleValuesMarker })
+                return VisitorResult(resultPredicate, result.resultVariable)
             }
 
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
