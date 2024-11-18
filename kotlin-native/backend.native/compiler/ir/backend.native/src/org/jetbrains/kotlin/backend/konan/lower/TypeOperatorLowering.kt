@@ -50,7 +50,7 @@ internal val IrType.erasedUpperBound get() = this.erasure().getClass() ?: error(
 
 internal val STATEMENT_ORIGIN_NO_CAST_NEEDED = IrStatementOriginImpl("NO_CAST_NEEDED")
 
-internal class CastsOptimization(val context: Context, val computePreciseResultForWhens: Boolean) : BodyLoweringPass {
+internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     private val not = context.irBuiltIns.booleanNotSymbol
     private val eqeq = context.irBuiltIns.eqeqSymbol
     private val eqeqeq = context.irBuiltIns.eqeqeqSymbol
@@ -416,14 +416,25 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             fun createPhantomVariable(variable: IrVariable, value: IrExpression) =
                     createPhantomVariable(variable, value.startOffset, value.endOffset, value.type)
 
-            fun controlFlowMergePoint(accumulatedVariableAliases: MutableMap<IrVariable, IrValueDeclaration>) {
+            fun controlFlowMergePoint(cfmpInfo: ControlFlowMergePointInfo, result: VisitorResult) {
                 for ((variable, alias) in variableAliases) {
-                    val accumulatedAlias = accumulatedVariableAliases[variable]
+                    val accumulatedAlias = cfmpInfo.variableAliases[variable]
                     if (accumulatedAlias == null)
-                        accumulatedVariableAliases[variable] = alias
+                        cfmpInfo.variableAliases[variable] = alias
                     else if (accumulatedAlias != alias && accumulatedAlias != multipleValuesMarker)
-                        accumulatedVariableAliases[variable] = multipleValuesMarker
+                        cfmpInfo.variableAliases[variable] = multipleValuesMarker
                 }
+                val resultVariable = result.resultVariable
+                if (resultVariable != null) {
+                    if (cfmpInfo.phiNodeAlias == null)
+                        cfmpInfo.phiNodeAlias = resultVariable
+                    else if (cfmpInfo.phiNodeAlias != resultVariable)
+                        cfmpInfo.phiNodeAlias = multipleValuesMarker
+                }
+                cfmpInfo.predicate = orPredicates(
+                        cfmpInfo.predicate,
+                        getFullPredicate(result.predicate, false, cfmpInfo.level)
+                )
             }
 
             val IrVariable.isMutable: Boolean
@@ -950,9 +961,12 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     }
                     return VisitorResult(predicate, resultVariable)
                 }
+
                 val cfmpInfo = ControlFlowMergePointInfo(upperLevelPredicates.size)
                 returnableBlockCFMPInfos[returnableBlock] = cfmpInfo
                 super.visitBlock(expression, data)
+                returnableBlockCFMPInfos.remove(returnableBlock)
+
                 variableAliases.clear()
                 for ((variable, alias) in cfmpInfo.variableAliases) {
                     variableAliases[variable] = if (alias != multipleValuesMarker)
@@ -960,7 +974,6 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                     else
                         createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
                 }
-                returnableBlockCFMPInfos.remove(returnableBlock)
                 return VisitorResult(
                         Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate),
                         cfmpInfo.phiNodeAlias.takeIf { it != multipleValuesMarker }
@@ -972,22 +985,11 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                 val returnableBlock = expression.returnTargetSymbol.owner as? IrReturnableBlock
                 if (returnableBlock != null) {
                     val cfmpInfo = returnableBlockCFMPInfos[returnableBlock]!!
-                    cfmpInfo.predicate = orPredicates(
-                            cfmpInfo.predicate,
-                            getFullPredicate(result.predicate, false, cfmpInfo.level)
-                    )
+                    if (result.predicate != Predicate.False)
+                        controlFlowMergePoint(cfmpInfo, result)
                     if (debugOutput) {
                         println("QXX: ${expression.dump()}")
                         println("    result = ${cfmpInfo.predicate}")
-                    }
-                    controlFlowMergePoint(cfmpInfo.variableAliases)
-
-                    val resultVariable = result.resultVariable
-                    if (resultVariable != null) {
-                        if (cfmpInfo.phiNodeAlias == null)
-                            cfmpInfo.phiNodeAlias = resultVariable
-                        else if (cfmpInfo.phiNodeAlias != resultVariable)
-                            cfmpInfo.phiNodeAlias = multipleValuesMarker
                     }
                 }
                 return VisitorResult.Nothing
@@ -1056,12 +1058,9 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
             }
 
             override fun visitWhen(expression: IrWhen, data: Predicate): VisitorResult {
-                val resultVariableAliases = mutableMapOf<IrVariable, IrValueDeclaration>()
                 upperLevelPredicates.push(data)
+                val cfmpInfo = ControlFlowMergePointInfo(upperLevelPredicates.size)
                 var predicate: Predicate = Predicate.Empty
-                var resultPredicate: Predicate = Predicate.Empty
-                var resultVariable: IrValueDeclaration? = null
-                var isFirstBranch = true
                 for (branch in expression.branches) {
                     upperLevelPredicates.push(predicate)
                     val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
@@ -1070,64 +1069,48 @@ internal class CastsOptimization(val context: Context, val computePreciseResultF
                         println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false, 0)}")
                         println("    condition = ${conditionBooleanPredicate.ifTrue}")
                         println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
-                        println("    result = $resultPredicate")
+                        println("    result = ${cfmpInfo.predicate}")
                         println()
                     }
                     val savedVariableAliases = variableAliases.toMap()
-                    val (branchResultPredicate, branchResultVariable) = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
-                    if (branchResultPredicate != Predicate.False) { // The result is not unreachable.
-                        controlFlowMergePoint(resultVariableAliases)
-                        if (branchResultVariable != null) {
-                            if (resultVariable == null)
-                                resultVariable = branchResultVariable
-                            else if (resultVariable != branchResultVariable)
-                                resultVariable = multipleValuesMarker
-                        }
+                    val branchResult = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
+                    if (branchResult.predicate != Predicate.False) { // The result is not unreachable.
+                        controlFlowMergePoint(cfmpInfo, branchResult)
                     }
                     variableAliases.clear()
                     for ((variable, alias) in savedVariableAliases)
                         variableAliases[variable] = alias
-                    if (computePreciseResultForWhens) {
-                        resultPredicate = orPredicates(resultPredicate, andPredicates(predicate, branchResultPredicate))
-                    } else {
-                        if (isFirstBranch)
-                            resultPredicate = orPredicates(conditionBooleanPredicate.ifTrue, conditionBooleanPredicate.ifFalse)
-                    }
-                    isFirstBranch = false
                     predicate = andPredicates(predicate, conditionBooleanPredicate.ifFalse)
                     upperLevelPredicates.pop()
                 }
                 if (debugOutput) {
                     println("QXX")
-                    println("    result = $resultPredicate")
+                    println("    result = ${cfmpInfo.predicate}")
                     println("    predicate = $predicate")
                 }
                 val isExhaustive = expression.branches.last().isUnconditional()
-                if (!isExhaustive) {
-                    if (computePreciseResultForWhens)
-                        resultPredicate = orPredicates(resultPredicate, predicate)
-                    controlFlowMergePoint(resultVariableAliases)
-                }
+                if (!isExhaustive)
+                    controlFlowMergePoint(cfmpInfo, VisitorResult(predicate, null))
                 if (debugOutput) {
-                    println("    result = $resultPredicate")
+                    println("    result = ${cfmpInfo.predicate}")
                 }
-                resultPredicate = Predicates.optimizeAwayComplexTerms(resultPredicate)
+                cfmpInfo.predicate = Predicates.optimizeAwayComplexTerms(cfmpInfo.predicate)
                 if (debugOutput)
-                    println("    result = $resultPredicate")
+                    println("    result = ${cfmpInfo.predicate}")
                 upperLevelPredicates.pop()
-                resultPredicate = andPredicates(data, resultPredicate)
+                val resultPredicate = andPredicates(data, cfmpInfo.predicate)
                 if (debugOutput) {
                     println("    result = $resultPredicate")
                     println()
                 }
                 variableAliases.clear()
-                for ((variable, alias) in resultVariableAliases) {
+                for ((variable, alias) in cfmpInfo.variableAliases) {
                     variableAliases[variable] = if (alias != multipleValuesMarker)
                         alias
                     else
                         createPhantomVariable(variable, expression.startOffset, expression.endOffset, variable.type)
                 }
-                return VisitorResult(resultPredicate, resultVariable.takeIf { it != multipleValuesMarker })
+                return VisitorResult(resultPredicate, cfmpInfo.phiNodeAlias.takeIf { it != multipleValuesMarker })
             }
 
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
