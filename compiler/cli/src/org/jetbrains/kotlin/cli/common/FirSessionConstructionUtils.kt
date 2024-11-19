@@ -366,6 +366,74 @@ fun <F> prepareCommonSessions(
     }
 }
 
+/**
+ * Creates library session and sources session for klib compilation
+ * Number of created session depends on mode of MPP:
+ *   - disabled
+ *   - legacy (one platform and one common module)
+ *   - HMPP (multiple number of modules)
+ */
+fun <F> prepareJKlibSessions(
+    projectEnvironment: AbstractProjectEnvironment,
+    files: List<F>,
+    configuration: CompilerConfiguration,
+    rootModuleName: Name,
+    resolvedLibraries: List<KotlinResolvedLibrary>,
+    libraryList: DependencyListForCliModule,
+    extensionRegistrars: List<FirExtensionRegistrar>,
+    metadataCompilationMode: Boolean,
+    isCommonSource: (F) -> Boolean,
+    fileBelongsToModule: (F, String) -> Boolean,
+    createProviderAndScopeForIncrementalCompilation: (List<F>) -> IncrementalCompilationContext?,
+    ): List<SessionWithSources<F>> {
+    val predefinedJavaComponents = FirSharableJavaComponents(firCachesFactoryForCliMode)
+    var firJvmIncrementalCompilationSymbolProviders: FirJvmIncrementalCompilationSymbolProviders? = null
+    var firJvmIncrementalCompilationSymbolProvidersIsInitialized = false
+
+    return prepareSessions(
+        files, configuration, rootModuleName, NativePlatforms.unspecifiedNativePlatform,
+        metadataCompilationMode, libraryList, isCommonSource, isScript = { false },
+        fileBelongsToModule, createLibrarySession = { sessionProvider ->
+            FirJKlibSessionFactory.createLibrarySession(
+                rootModuleName,
+                resolvedLibraries,
+                sessionProvider,
+                libraryList.moduleDataProvider,
+                projectEnvironment,
+                extensionRegistrars,
+                configuration.languageVersionSettings,
+                predefinedJavaComponents = predefinedJavaComponents,
+            )
+        }
+    ) { moduleFiles, moduleData, sessionProvider, sessionConfigurator ->
+        FirJKlibSessionFactory.createModuleBasedSession(
+            moduleData,
+            sessionProvider,
+            libraryList.moduleDataProvider,
+            projectEnvironment,
+            createIncrementalCompilationSymbolProviders = { session ->
+                // Temporary solution for KT-61942 - we need to share the provider built on top of previously compiled files,
+                // because we do not distinguish classes generated from common and platform sources, so may end up with the
+                // same type loaded from both. And if providers are not shared, the types will not match on the actualizing.
+                // The proper solution would be to build IC providers only on class files generated for the currently compiled module.
+                // But to solve it we need to have a mapping from module to its class files.
+                // TODO: reimplement with splitted providers after fixing KT-62686
+                if (firJvmIncrementalCompilationSymbolProvidersIsInitialized) firJvmIncrementalCompilationSymbolProviders
+                else {
+                    firJvmIncrementalCompilationSymbolProvidersIsInitialized = true
+                    createProviderAndScopeForIncrementalCompilation(moduleFiles)?.createSymbolProviders(session, moduleData, projectEnvironment)?.also {
+                        firJvmIncrementalCompilationSymbolProviders = it
+                    }
+                }
+            },
+            extensionRegistrars,
+            configuration.languageVersionSettings,
+            sessionConfigurator,
+            predefinedJavaComponents,
+        )
+    }
+}
+
 // ---------------------------------------------------- Implementation ----------------------------------------------------
 
 private typealias FirSessionProducer<F> = (List<F>, FirModuleData, FirProjectSessionProvider, FirSessionConfigurator.() -> Unit) -> FirSession
