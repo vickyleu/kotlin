@@ -1034,7 +1034,6 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 }
             }
 
-            // TODO: Think about other possible arguments which might be optimized (IrWhen, IrReturnableBlock, ...)
             override fun visitTypeOperator(expression: IrTypeOperatorCall, data: Predicate): VisitorResult {
                 /*
                   TYPE_OP type=<root>.A origin=IMPLICIT_CAST typeOperand=<root>.A
@@ -1061,31 +1060,30 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 return VisitorResult(argumentPredicate, null)
             }
 
-            override fun visitWhen(expression: IrWhen, data: Predicate): VisitorResult {
-                upperLevelPredicates.push(data)
+            override fun visitWhen(expression: IrWhen, data: Predicate): VisitorResult = usingUpperLevelPredicate(data) {
                 val cfmpInfo = ControlFlowMergePointInfo(upperLevelPredicates.size)
                 var predicate: Predicate = Predicate.Empty
                 for (branch in expression.branches) {
-                    upperLevelPredicates.push(predicate)
-                    val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
-                    if (debugOutput) {
-                        println("QXX: ${branch.condition.dump()}")
-                        println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false, 0)}")
-                        println("    condition = ${conditionBooleanPredicate.ifTrue}")
-                        println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
-                        println("    result = ${cfmpInfo.predicate}")
-                        println()
+                    usingUpperLevelPredicate(predicate) {
+                        val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
+                        if (debugOutput) {
+                            println("QXX: ${branch.condition.dump()}")
+                            println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false, 0)}")
+                            println("    condition = ${conditionBooleanPredicate.ifTrue}")
+                            println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
+                            println("    result = ${cfmpInfo.predicate}")
+                            println()
+                        }
+                        val savedVariableAliases = variableAliases.toMap()
+                        val branchResult = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
+                        if (branchResult.predicate != Predicate.False) { // The result is not unreachable.
+                            controlFlowMergePoint(cfmpInfo, branchResult)
+                        }
+                        variableAliases.clear()
+                        for ((variable, alias) in savedVariableAliases)
+                            variableAliases[variable] = alias
+                        predicate = andPredicates(predicate, conditionBooleanPredicate.ifFalse)
                     }
-                    val savedVariableAliases = variableAliases.toMap()
-                    val branchResult = branch.result.accept(this, conditionBooleanPredicate.ifTrue)
-                    if (branchResult.predicate != Predicate.False) { // The result is not unreachable.
-                        controlFlowMergePoint(cfmpInfo, branchResult)
-                    }
-                    variableAliases.clear()
-                    for ((variable, alias) in savedVariableAliases)
-                        variableAliases[variable] = alias
-                    predicate = andPredicates(predicate, conditionBooleanPredicate.ifFalse)
-                    upperLevelPredicates.pop()
                 }
                 if (debugOutput) {
                     println("QXX")
@@ -1097,16 +1095,16 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 if (debugOutput) {
                     println("    result = ${cfmpInfo.predicate}")
                 }
+
                 val result = finishControlFlowMerging(expression, cfmpInfo)
                 if (debugOutput)
                     println("    result = ${result.predicate}")
-                upperLevelPredicates.pop()
                 val resultPredicate = andPredicates(data, result.predicate)
                 if (debugOutput) {
                     println("    result = $resultPredicate")
                     println()
                 }
-                return VisitorResult(resultPredicate, result.resultVariable)
+                VisitorResult(resultPredicate, result.resultVariable)
             }
 
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
