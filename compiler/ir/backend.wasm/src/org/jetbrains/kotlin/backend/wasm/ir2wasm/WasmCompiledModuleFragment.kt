@@ -27,6 +27,14 @@ class BuiltinIdSignatures(
     val executeSuitRelatedBlocks: IdSignature?,
 )
 
+private class BuiltinDefinitions(
+    val throwable: WasmTypeDeclaration,
+    val tryGetAssociatedObject: WasmFunction.Defined?,
+    val jsToKotlinAnyAdapter: WasmFunction.Defined?,
+    val unitGetInstance: WasmFunction.Defined,
+    val executeSuitRelatedBlocks: WasmFunction.Defined?,
+)
+
 class WasmCompiledFileFragment(
     val fragmentTag: String?,
     val functions: ReferencableAndDefinable<IdSignature, WasmFunction> = ReferencableAndDefinable(),
@@ -71,24 +79,6 @@ class WasmCompiledModuleFragment(
     // Used during linking
     private val serviceCodeLocation = SourceLocation.NoLocation("Generated service code")
     private val parameterlessNoReturnFunctionType = WasmFunctionType(emptyList(), emptyList())
-
-    private inline fun tryFindBuiltInFunction(select: (BuiltinIdSignatures) -> IdSignature?): WasmFunction.Defined? {
-        for (fragment in wasmCompiledFileFragments) {
-            val builtinSignatures = fragment.builtinIdSignatures ?: continue
-            val signature = select(builtinSignatures) ?: continue
-            return fragment.functions.defined[signature] as? WasmFunction.Defined
-        }
-        return null
-    }
-
-    private inline fun tryFindBuiltInType(select: (BuiltinIdSignatures) -> IdSignature?): WasmTypeDeclaration? {
-        for (fragment in wasmCompiledFileFragments) {
-            val builtinSignatures = fragment.builtinIdSignatures ?: continue
-            val signature = select(builtinSignatures) ?: continue
-            return fragment.gcTypes.defined[signature]
-        }
-        return null
-    }
 
     class JsCodeSnippet(val importName: WasmSymbol<String>, val jsCode: String)
 
@@ -206,19 +196,70 @@ class WasmCompiledModuleFragment(
         return definedFunctions to importedFunctions
     }
 
-    private fun createAndExportServiceFunctions(definedFunctions: MutableList<WasmFunction.Defined>, exports: MutableList<WasmExport<*>>) {
+    private fun createAndExportServiceFunctions(
+        definedFunctions: MutableList<WasmFunction.Defined>,
+        exports: MutableList<WasmExport<*>>,
+        builtinDefinitions: BuiltinDefinitions,
+    ) {
         val fieldInitializerFunction = createFieldInitializerFunction()
         definedFunctions.add(fieldInitializerFunction)
 
-        val masterInitFunction = createAndExportMasterInitFunction(fieldInitializerFunction)
+        val masterInitFunction = createAndExportMasterInitFunction(fieldInitializerFunction, builtinDefinitions)
         exports.add(WasmExport.Function("_initialize", masterInitFunction))
         definedFunctions.add(masterInitFunction)
 
-        val startUnitTestsFunction = createStartUnitTestsFunction()
+        val startUnitTestsFunction = createStartUnitTestsFunction(builtinDefinitions)
         if (startUnitTestsFunction != null) {
             exports.add(WasmExport.Function("startUnitTests", startUnitTestsFunction))
             definedFunctions.add(startUnitTestsFunction)
         }
+    }
+
+    private inline fun <T> selectSingleBuiltinValue(
+        map: Map<IdSignature, T>,
+        oldValue: T?,
+        selector: () -> IdSignature?,
+    ): T? {
+        val signature = selector() ?: return oldValue
+        if (oldValue != null) compilationException("Duplicate builtin found for $signature", null)
+        return map[signature]
+    }
+
+    private fun collectBuiltinDefinitions(): BuiltinDefinitions {
+        var throwable: WasmTypeDeclaration? = null
+        var tryGetAssociatedObject: WasmFunction? = null
+        var jsToKotlinAnyAdapter: WasmFunction? = null
+        var unitGetInstance: WasmFunction? = null
+        var executeSuitRelatedBlocks: WasmFunction? = null
+
+        for (fragment in wasmCompiledFileFragments) {
+            val builtinIdSignatures = fragment.builtinIdSignatures ?: continue
+
+            throwable = selectSingleBuiltinValue(fragment.gcTypes.defined, throwable) { builtinIdSignatures.throwable }
+
+            tryGetAssociatedObject =
+                selectSingleBuiltinValue(fragment.functions.defined, tryGetAssociatedObject) { builtinIdSignatures.tryGetAssociatedObject }
+
+            jsToKotlinAnyAdapter =
+                selectSingleBuiltinValue(fragment.functions.defined, jsToKotlinAnyAdapter) { builtinIdSignatures.jsToKotlinAnyAdapter }
+
+            unitGetInstance =
+                selectSingleBuiltinValue(fragment.functions.defined, unitGetInstance) { builtinIdSignatures.unitGetInstance }
+
+            executeSuitRelatedBlocks =
+                selectSingleBuiltinValue(fragment.functions.defined, executeSuitRelatedBlocks) { builtinIdSignatures.executeSuitRelatedBlocks }
+        }
+
+        throwable ?: compilationException("kotlin.Throwable is not found in fragments", null)
+        unitGetInstance as? WasmFunction.Defined ?: compilationException("kotlin.Unit_getInstance is not found in fragments", null)
+
+        return BuiltinDefinitions(
+            throwable = throwable,
+            tryGetAssociatedObject = tryGetAssociatedObject as? WasmFunction.Defined,
+            jsToKotlinAnyAdapter = jsToKotlinAnyAdapter as? WasmFunction.Defined,
+            unitGetInstance = unitGetInstance,
+            executeSuitRelatedBlocks = executeSuitRelatedBlocks as? WasmFunction.Defined
+        )
     }
 
     fun linkWasmCompiledFragments(): WasmModule {
@@ -228,7 +269,10 @@ class WasmCompiledModuleFragment(
 
         val (typeIds, scratchAddress) = bindTypeIds()
         bindScratchMemAddr(scratchAddress)
-        createTryGetAssociatedObjectFunction(typeIds)
+
+        val builtinDefinitions = collectBuiltinDefinitions()
+
+        createTryGetAssociatedObjectFunction(typeIds, builtinDefinitions)
 
         val data = mutableListOf<WasmData>()
         bindStringPoolSymbols(data)
@@ -242,9 +286,10 @@ class WasmCompiledModuleFragment(
 
         val memory = createAndExportMemory(scratchAddress, exports)
 
-        createAndExportServiceFunctions(definedFunctions, exports)
+        createAndExportServiceFunctions(definedFunctions, exports, builtinDefinitions)
 
-        val (recGroupTypes, nonRecursiveFunctionTypes, importsInOrder, definedTags) = getTypes(importedFunctions, canonicalFunctionTypes)
+        val (recGroupTypes, nonRecursiveFunctionTypes, importsInOrder, definedTags) =
+            getTypes(importedFunctions, canonicalFunctionTypes, builtinDefinitions)
 
         return WasmModule(
             functionTypes = nonRecursiveFunctionTypes,
@@ -266,13 +311,12 @@ class WasmCompiledModuleFragment(
 
     private fun getTypes(
         importedFunctions: List<WasmFunction.Imported>,
-        canonicalFunctionTypes: Map<WasmFunctionType, WasmFunctionType>
+        canonicalFunctionTypes: Map<WasmFunctionType, WasmFunctionType>,
+        builtinDefinitions: BuiltinDefinitions,
     ): WasmTypes {
         val recGroupTypes = getRecGroupTypesWithoutPotentiallyRecursiveFunctionTypes()
 
-        val throwableDeclaration = tryFindBuiltInType { it.throwable }
-            ?: compilationException("kotlin.Throwable is not found in fragments", null)
-        val tagFuncType = WasmRefNullType(WasmHeapType.Type(WasmSymbol(throwableDeclaration)))
+        val tagFuncType = WasmRefNullType(WasmHeapType.Type(WasmSymbol(builtinDefinitions.throwable)))
 
         val throwableTagFuncType = WasmFunctionType(
             parameterTypes = listOf(tagFuncType),
@@ -352,13 +396,13 @@ class WasmCompiledModuleFragment(
         return memory
     }
 
-    private fun createAndExportMasterInitFunction(fieldInitializerFunction: WasmFunction): WasmFunction.Defined {
-        val unitGetInstance = tryFindBuiltInFunction { it.unitGetInstance }
-            ?: compilationException("kotlin.Unit_getInstance is not found in fragments", null)
-
+    private fun createAndExportMasterInitFunction(
+        fieldInitializerFunction: WasmFunction,
+        builtinDefinitions: BuiltinDefinitions
+    ): WasmFunction.Defined {
         val masterInitFunction = WasmFunction.Defined("_initialize", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(masterInitFunction.instructions)) {
-            buildCall(WasmSymbol(unitGetInstance), serviceCodeLocation)
+            buildCall(WasmSymbol(builtinDefinitions.unitGetInstance), serviceCodeLocation)
             buildCall(WasmSymbol(fieldInitializerFunction), serviceCodeLocation)
             wasmCompiledFileFragments.forEach { fragment ->
                 fragment.mainFunctionWrappers.forEach { signature ->
@@ -372,10 +416,10 @@ class WasmCompiledModuleFragment(
         return masterInitFunction
     }
 
-    private fun createTryGetAssociatedObjectFunction(typeIds: Map<IdSignature, Int>) {
-        val tryGetAssociatedObject = tryFindBuiltInFunction { it.tryGetAssociatedObject } ?: return // Removed by DCE
+    private fun createTryGetAssociatedObjectFunction(typeIds: Map<IdSignature, Int>, builtinDefinitions: BuiltinDefinitions) {
+        val tryGetAssociatedObject = builtinDefinitions.tryGetAssociatedObject ?: return // Removed by DCE
         val jsToKotlinAnyAdapter by lazy {
-            tryFindBuiltInFunction { it.jsToKotlinAnyAdapter }
+            builtinDefinitions.jsToKotlinAnyAdapter
                 ?: compilationException("kotlin.jsToKotlinAnyAdapter is not found in fragments", null)
         }
 
@@ -412,8 +456,8 @@ class WasmCompiledModuleFragment(
         }
     }
 
-    private fun createStartUnitTestsFunction(): WasmFunction.Defined? {
-        val executeSuitRelatedBlocks = tryFindBuiltInFunction { it.executeSuitRelatedBlocks } ?: return null
+    private fun createStartUnitTestsFunction(builtinDefinitions: BuiltinDefinitions): WasmFunction.Defined? {
+        val executeSuitRelatedBlocks = builtinDefinitions.executeSuitRelatedBlocks ?: return null
         val startUnitTestsFunction = WasmFunction.Defined("startUnitTests", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(startUnitTestsFunction.instructions)) {
             wasmCompiledFileFragments.forEach { fragment ->
