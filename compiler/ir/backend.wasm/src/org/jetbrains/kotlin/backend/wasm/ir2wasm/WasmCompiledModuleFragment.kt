@@ -354,7 +354,7 @@ class WasmCompiledModuleFragment(
 
     private fun createAndExportMasterInitFunction(fieldInitializerFunction: WasmFunction): WasmFunction.Defined {
         val unitGetInstance = tryFindBuiltInFunction { it.unitGetInstance }
-            ?: compilationException("kotlin.Unit_getInstance is not file in fragments", null)
+            ?: compilationException("kotlin.Unit_getInstance is not found in fragments", null)
 
         val masterInitFunction = WasmFunction.Defined("_initialize", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(masterInitFunction.instructions)) {
