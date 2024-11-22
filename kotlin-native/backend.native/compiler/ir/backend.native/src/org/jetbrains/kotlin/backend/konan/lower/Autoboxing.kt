@@ -83,15 +83,14 @@ private class AutoboxingTransformer(val context: Context) : AbstractValueUsageTr
             "Expected an implicit cast: ${irTypeOperatorCall.operator}"
         }
         irTypeOperatorCall.argument = irTypeOperatorCall.argument.transform(this, null)
-        // Codegen expects the argument of type-checking operator to be an object reference:
-        //irTypeOperatorCall.argument = irTypeOperatorCall.argument.useAs(context.irBuiltIns.anyNType)
-        //return irTypeOperatorCall
+
         val expectedType = irTypeOperatorCall.typeOperand
         val actualType = irTypeOperatorCall.argument.type
         val expectedInlineClass = expectedType.getInlinedClassNative()
         val actualInlineClass = actualType.getInlinedClassNative()
         return when {
-            expectedInlineClass == null && actualInlineClass == null -> {
+            expectedInlineClass == actualInlineClass -> {
+                // No cast/box/unbox is needed.
                 if (expectedType == actualType)
                     irTypeOperatorCall.argument
                 else irBuilders.peek()!!.irCallWithSubstitutedType(symbols.reinterpret.owner, listOf(actualType, expectedType)).apply {
@@ -99,9 +98,11 @@ private class AutoboxingTransformer(val context: Context) : AbstractValueUsageTr
                 }
             }
             expectedInlineClass != null && actualInlineClass != null -> {
+                // This will be a ClassCastException at runtime.
                 visitTypeOperator(irTypeOperatorCall)
             }
             else -> {
+                // A box/unbox operation is still needed.
                 irTypeOperatorCall.argument.adaptIfNecessary(actualType, expectedType, skipTypeCheck = true)
             }
         }
