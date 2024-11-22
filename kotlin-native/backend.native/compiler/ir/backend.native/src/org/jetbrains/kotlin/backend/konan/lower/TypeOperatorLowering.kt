@@ -9,6 +9,7 @@ import org.jetbrains.kotlin.backend.common.*
 import org.jetbrains.kotlin.backend.common.ir.isUnconditional
 import org.jetbrains.kotlin.backend.common.lower.*
 import org.jetbrains.kotlin.backend.konan.Context
+import org.jetbrains.kotlin.backend.konan.getInlinedClassNative
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.objcinterop.isObjCForwardDeclaration
 import org.jetbrains.kotlin.ir.builders.*
@@ -175,6 +176,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             val dstClass = type.erasedUpperBound
             val isSuperClassCast = variable.type.classifierOrNull !is IrTypeParameterSymbol // Due to unsafe casts, see unchecked_cast8.kt as an example.
                     && variable.type.isSubtypeOfClass(dstClass.symbol)
+                    && variable.type.getInlinedClassNative() == dstClass.defaultType.getInlinedClassNative()
+            // TODO: Support never succeeding casts.
             return when {
                 isSuperClassCast -> {
                     if (variableIsNullable && !typeIsNullable) // (variable: A?) is A = variable != null
@@ -442,10 +445,6 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         fun invert() = NullablePredicate(ifNotNull, ifNull)
     }
 
-    private class PredicateHolder {
-        var predicate: Predicate = Predicate.Empty
-    }
-
     private fun findBlocks(irBody: IrBody, container: IrDeclaration) {
         var hasBlocks = false
         irBody.acceptChildrenVoid(object : IrElementVisitorVoid {
@@ -571,7 +570,12 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
         }
     }
 
-    private data class VisitorResult(val predicate: Predicate, val resultVariable: IrValueDeclaration?) {
+    private data class VisitorResult(var predicate: Predicate = Predicate.Empty, var variable: IrValueDeclaration? = null) {
+        fun copyFrom(other: VisitorResult) {
+            this.predicate = other.predicate
+            this.variable = other.variable
+        }
+
         companion object {
             val Nothing = VisitorResult(Predicate.False, null)
         }
@@ -586,9 +590,10 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
     override fun lower(irBody: IrBody, container: IrDeclaration) {
         //if (container.fileOrNull?.path?.endsWith("z15.kt") != true) return
         //if (container.fileOrNull?.path?.endsWith("tt.kt") != true) return
-        if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
-        //if (container.fileOrNull?.path?.endsWith("test/Assertions.kt") != true) return
-        //println(container.dump())
+        //if (container.fileOrNull?.path?.endsWith("remove_redundant_type_checks.kt") != true) return
+        //if (container.fileOrNull?.path?.endsWith("test/Assertions.kt") != true || (container as? IrFunction)?.name?.asString() != "assertContains") return
+        //if (container.fileOrNull?.path?.endsWith("FloatingPointParser.kt") != true || (container as? IrFunction)?.name?.asString() != "parseDouble") return
+        //println("BEFORE: ${container.dump()}")
         //println("${container.fileOrNull?.path} ${container.render()}")
         val debugOutput = false
         //val debugOutput = container.fileOrNull?.path?.endsWith("collections/Arrays.kt") == true && (container as? IrFunction)?.name?.asString() == "contentDeepEqualsImpl"
@@ -636,7 +641,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     else if (accumulatedAlias != alias && accumulatedAlias != multipleValuesMarker)
                         cfmpInfo.variableAliases[variable] = multipleValuesMarker
                 }
-                val resultVariable = result.resultVariable
+                val resultVariable = result.variable
                 if (resultVariable != null) {
                     if (cfmpInfo.phiNodeAlias == null)
                         cfmpInfo.phiNodeAlias = resultVariable
@@ -760,17 +765,17 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             fun buildBooleanPredicate(variable: IrValueDeclaration): BooleanPredicate =
                     variableAliases[variable]?.let { buildBooleanPredicate(it) }
                             ?: when (val variableValue = variableValues[variable]) {
-                                null -> {
+                                is VariableValue.BooleanPredicate -> variableValue.predicate
+                                else -> {
                                     BooleanPredicate(
                                             ifTrue = Predicates.disjunctionOf(ComplexTerm(variable, true)),
                                             ifFalse = Predicates.disjunctionOf(ComplexTerm(variable, false))
                                     )
                                 }
-                                is VariableValue.BooleanPredicate -> variableValue.predicate
-                                is VariableValue.NullablePredicate -> error("Unexpected nullable predicate for ${variable.render()}: ifNull = ${variableValue.predicate.ifNull}, ifNotNull = ${variableValue.predicate.ifNotNull}")
+                                //is VariableValue.NullablePredicate -> error("Unexpected nullable predicate for ${variable.render()}: ifNull = ${variableValue.predicate.ifNull}, ifNotNull = ${variableValue.predicate.ifNotNull}")
                             }
 
-            // TODO: Will it be simpler to add a PredicateHolder here?
+            // TODO: Will it be simpler to add a VisitorResult here to hold common predicate part?
             fun buildBooleanPredicate(expression: IrExpression): BooleanPredicate {
                 val matchResultAndAnd = expression.matchAndAnd()
                 if (matchResultAndAnd != null) {
@@ -815,9 +820,9 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                             Predicate.Empty
                         else
                             left.accept(this, Predicate.Empty).predicate
-                        val rightPredicateHolder = PredicateHolder()
-                        val nullablePredicate = usingUpperLevelPredicate(leftPredicate) { buildNullablePredicate(right, rightPredicateHolder) }
-                        val result = Predicates.and(leftPredicate, rightPredicateHolder.predicate)
+                        val rightResult = VisitorResult()
+                        val nullablePredicate = usingUpperLevelPredicate(leftPredicate) { buildNullablePredicate(right, rightResult) }
+                        val result = Predicates.and(leftPredicate, rightResult.predicate)
                         if (nullablePredicate == null) {
                             BooleanPredicate(
                                     ifTrue = Predicates.and(result, Predicates.disjunctionOf(ComplexTerm(expression, value = true))),
@@ -847,9 +852,9 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                             )
                         }
                     } else if ((rightIsNullConst || !right.type.isNullable()) && left.type.isNullable()) {
-                        val leftPredicateHolder = PredicateHolder()
-                        val nullablePredicate = buildNullablePredicate(left, leftPredicateHolder)
-                        val leftCommonPredicate = leftPredicateHolder.predicate
+                        val leftResult = VisitorResult()
+                        val nullablePredicate = buildNullablePredicate(left, leftResult)
+                        val leftCommonPredicate = leftResult.predicate
                         return if (nullablePredicate == null) {
                             val result = right.accept(this, leftCommonPredicate).predicate
                             BooleanPredicate(
@@ -946,14 +951,14 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                                 is VariableValue.BooleanPredicate -> error("Unexpected boolean predicate for ${variable.render()}")
                             }
 
-            private fun buildNullablePredicate(expression: IrExpression, predicateHolder: PredicateHolder): NullablePredicate? {
+            private fun buildNullablePredicate(expression: IrExpression, result: VisitorResult): NullablePredicate? {
                 if (!expression.type.isNullable()) {
-                    predicateHolder.predicate = expression.accept(this, Predicate.Empty).predicate
+                    result.copyFrom(expression.accept(this, Predicate.Empty))
                     return NullablePredicate(ifNull = Predicate.False, ifNotNull = Predicate.Empty)
                 }
                 if (expression is IrTypeOperatorCall && expression.operator == IrTypeOperator.SAFE_CAST) {
                     val (predicate, variable) = expression.argument.accept(this, Predicate.Empty)
-                    predicateHolder.predicate = predicate
+                    result.predicate = predicate
                     return if (variable == null) {
                         null
                     } else {
@@ -966,22 +971,22 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 }
                 val matchResultSafeCall = expression.matchSafeCall()
                 if (matchResultSafeCall != null) {
-                    val (safeReceiverInitializer, result) = matchResultSafeCall
-                    val safeReceiverPredicate = buildNullablePredicate(safeReceiverInitializer, predicateHolder)
+                    val (safeReceiverInitializer, safeCallResult) = matchResultSafeCall
+                    val safeReceiverPredicate = buildNullablePredicate(safeReceiverInitializer, result)
+                    result.variable = null
                     return if (safeReceiverPredicate == null) {
                         null
                     } else {
                         NullablePredicate(
                                 ifNull = safeReceiverPredicate.ifNull,
-                                ifNotNull = usingUpperLevelPredicate(predicateHolder.predicate) {
-                                    result.accept(this, safeReceiverPredicate.ifNotNull).predicate
+                                ifNotNull = usingUpperLevelPredicate(result.predicate) {
+                                    safeCallResult.accept(this, safeReceiverPredicate.ifNotNull).predicate
                                 }
                         )
                     }
                 }
-                val (predicate, variable) = expression.accept(this, Predicate.Empty)
-                predicateHolder.predicate = predicate
-                return variable?.let { buildNullablePredicate(it) }
+                result.copyFrom(expression.accept(this, Predicate.Empty))
+                return result.variable?.let { buildNullablePredicate(it) }
             }
 
             private fun IrElement.getImmediateChildren(): List<IrElement> {
@@ -1013,7 +1018,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         val result = statement.accept(this, predicate)
                         predicate = result.predicate
                         if (index == statements.lastIndex && expression.type != unitType)
-                            resultVariable = result.resultVariable
+                            resultVariable = result.variable
                     }
                     return VisitorResult(predicate, resultVariable)
                 }
@@ -1092,6 +1097,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     predicateBeforeBody = Predicates.and(predicateAfterBody, conditionPredicate.ifTrue)
                     controlFlowMergePoint(breaksCFMPInfo, VisitorResult(Predicates.and(predicateAfterBody, conditionPredicate.ifFalse), null))
 
+                    if (debugOutput) {
+                        println("QXX loop ${loop.condition.render()}")
+                        println("    ${breaksCFMPInfo.predicate}")
+                    }
+
                     var somethingChanged = false
                     for ((key, cfmpInfo) in returnableBlockCFMPInfos) {
                         if (!savedReturnableBlockCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
@@ -1118,6 +1128,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 
                     if (!somethingChanged) break
                 }
+                breaksCFMPInfos.remove(loop)
 
                 val result = finishControlFlowMerging(loop, breaksCFMPInfo)
                 VisitorResult(Predicates.and(data, Predicates.or(startPredicate.ifFalse, result.predicate)), null)
@@ -1201,7 +1212,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     usingUpperLevelPredicate(predicate) {
                         val conditionBooleanPredicate = buildBooleanPredicate(branch.condition)
                         if (debugOutput) {
-                            println("QXX: ${branch.condition.dump()}")
+                            println("QXX when: ${branch.condition.dump()}")
                             println("    upperLevelPredicate = ${getFullPredicate(Predicate.Empty, false, 0)}")
                             println("    condition = ${conditionBooleanPredicate.ifTrue}")
                             println("    ~condition = ${conditionBooleanPredicate.ifFalse}")
@@ -1220,7 +1231,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     }
                 }
                 if (debugOutput) {
-                    println("QXX")
+                    println("QXX when end")
                     println("    result = ${cfmpInfo.predicate}")
                     println("    predicate = $predicate")
                 }
@@ -1238,7 +1249,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     println("    result = $resultPredicate")
                     println()
                 }
-                VisitorResult(resultPredicate, result.resultVariable)
+                VisitorResult(resultPredicate, result.variable)
             }
 
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
@@ -1247,6 +1258,10 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 else variable
                 return if (variable.type.isBoolean()) {
                     val booleanPredicate = usingUpperLevelPredicate(data) { buildBooleanPredicate(value) }
+                    if (debugOutput) {
+                        println("QZZ: ${variable.render()} is a bool." +
+                                " ifTrue = ${booleanPredicate.ifTrue}, ifFalse = ${booleanPredicate.ifFalse}")
+                    }
 // TODO:
 //                    val (ifTrue, ifFalse) = booleanPredicate
 //                    val optimizedIfTrue = Predicates.optimizeAwayComplexTerms(ifTrue)
@@ -1262,11 +1277,19 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     variableValues[actualVariable] = VariableValue.BooleanPredicate(booleanPredicate)
                     Predicates.and(data, Predicates.or(booleanPredicate.ifTrue, booleanPredicate.ifFalse))
                 } else if (variable.type.isNullable()) {
-                    val predicateHolder = PredicateHolder()
-                    val nullablePredicate = usingUpperLevelPredicate(data) { buildNullablePredicate(value, predicateHolder) }
-                    val result = Predicates.and(data, predicateHolder.predicate)
+                    val result = VisitorResult()
+                    val nullablePredicate = usingUpperLevelPredicate(data) { buildNullablePredicate(value, result) }
+                    val predicate = Predicates.and(data, result.predicate)
+                    val delegatedVariable = result.variable
+                    if (delegatedVariable != null) {
+                        variableAliases[variable] = variableAliases[delegatedVariable] ?: delegatedVariable
+                    }
+                    if (debugOutput) {
+                        println("QZZ: ${variable.render()} is nullable and is delegated to ${delegatedVariable?.render()}." +
+                                " ifNull = ${nullablePredicate?.ifNull}, ifNotNull = ${nullablePredicate?.ifNotNull}")
+                    }
                     if (nullablePredicate == null)
-                        result
+                        predicate
                     else {
 // TODO:
 //                        val (ifNull, ifNotNull) = nullablePredicate
@@ -1281,12 +1304,16 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //                                else optimizedIfNotNull
 //                        )
                         variableValues[actualVariable] = VariableValue.NullablePredicate(nullablePredicate)
-                        Predicates.and(result, Predicates.or(nullablePredicate.ifNull, nullablePredicate.ifNotNull))
+                        Predicates.and(predicate, Predicates.or(nullablePredicate.ifNull, nullablePredicate.ifNotNull))
                     }
                 } else {
                     val (predicate, delegatedVariable) = value.accept(this, data)
-                    if (delegatedVariable != null)
+                    if (debugOutput) {
+                        println("QZZ: ${variable.render()} is delegated to ${delegatedVariable?.render()}")
+                    }
+                    if (delegatedVariable != null) {
                         variableAliases[variable] = variableAliases[delegatedVariable] ?: delegatedVariable
+                    }
                     predicate
                 }
             }
@@ -1314,7 +1341,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             override fun visitTypeOperator(expression: IrTypeOperatorCall): IrExpression {
                 expression.transformChildrenVoid()
 
-                val typeCheckResult = when(typeCheckResults[expression]) {
+                val typeCheckResult = when (typeCheckResults[expression]) {
                     null, TypeCheckResult.UNKNOWN -> return expression
                     TypeCheckResult.ALWAYS_SUCCEEDS -> true
                     TypeCheckResult.NEVER_SUCCEEDS -> false
@@ -1345,6 +1372,8 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 }
             }
         })
+
+        //println("AFTER: ${container.dump()}")
     }
 }
 

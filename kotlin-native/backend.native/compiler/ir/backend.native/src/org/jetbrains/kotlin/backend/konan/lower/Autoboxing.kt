@@ -88,10 +88,22 @@ private class AutoboxingTransformer(val context: Context) : AbstractValueUsageTr
         //return irTypeOperatorCall
         val expectedType = irTypeOperatorCall.typeOperand
         val actualType = irTypeOperatorCall.argument.type
-        return if (expectedType == actualType)
-            irTypeOperatorCall.argument
-        else irBuilders.peek()!!.irCallWithSubstitutedType(symbols.reinterpret.owner, listOf(actualType, expectedType)).apply {
-            extensionReceiver = irTypeOperatorCall.argument
+        val expectedInlineClass = expectedType.getInlinedClassNative()
+        val actualInlineClass = actualType.getInlinedClassNative()
+        return when {
+            expectedInlineClass == null && actualInlineClass == null -> {
+                if (expectedType == actualType)
+                    irTypeOperatorCall.argument
+                else irBuilders.peek()!!.irCallWithSubstitutedType(symbols.reinterpret.owner, listOf(actualType, expectedType)).apply {
+                    extensionReceiver = irTypeOperatorCall.argument
+                }
+            }
+            expectedInlineClass != null && actualInlineClass != null -> {
+                visitTypeOperator(irTypeOperatorCall)
+            }
+            else -> {
+                irTypeOperatorCall.argument.adaptIfNecessary(actualType, expectedType, skipTypeCheck = true)
+            }
         }
     }
 
