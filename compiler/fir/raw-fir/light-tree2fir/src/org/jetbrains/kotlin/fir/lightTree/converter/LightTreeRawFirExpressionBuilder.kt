@@ -1099,7 +1099,7 @@ class LightTreeRawFirExpressionBuilder(
         sourceElement: KtSourceElement,
         referenceExpression: LighterASTNode,
     ): FirNamedReference {
-        return buildSimpleNamedReference {
+        return buildSimpleNamedReference { // Foo.of. "Foo" is build here
             source = sourceElement
             name = referenceExpression.asText.nameAsSafeName()
         }
