@@ -574,9 +574,7 @@ private class ContextCollectorVisitor(
                     }
                 }
 
-                onActive {
-                    processChildren(constructor)
-                }
+                processChildren(constructor)
             }
         }
     }
@@ -610,17 +608,11 @@ private class ContextCollectorVisitor(
             context.withSimpleFunction(simpleFunction, holder.session) {
                 context.forFunctionBody(simpleFunction, holder) {
                     processList(simpleFunction.valueParameters)
-
                     dumpContext(simpleFunction, ContextKind.BODY)
-
-                    onActive {
-                        process(simpleFunction.body)
-                    }
+                    process(simpleFunction.body)
                 }
 
-                onActive {
-                    processChildren(simpleFunction)
-                }
+                processChildren(simpleFunction)
             }
         }
     }
@@ -639,20 +631,12 @@ private class ContextCollectorVisitor(
                 onActive {
                     context.forPropertyInitializerIfNonLocal(property) {
                         process(property.initializer)
-
-                        onActive {
-                            process(property.delegate)
-                        }
-
-                        onActive {
-                            process(property.backingField)
-                        }
+                        process(property.delegate)
+                        process(property.backingField)
                     }
                 }
 
-                onActive {
-                    processChildren(property)
-                }
+                processChildren(property)
             }
         }
 
@@ -707,10 +691,7 @@ private class ContextCollectorVisitor(
 
             context.withField(field) {
                 dumpContext(field, ContextKind.BODY)
-
-                onActive {
-                    process(field.initializer)
-                }
+                process(field.initializer)
             }
         }
     }
@@ -725,10 +706,7 @@ private class ContextCollectorVisitor(
 
             context.withPropertyAccessor(propertyAccessor.propertySymbol.fir, propertyAccessor, holder) {
                 dumpContext(propertyAccessor, ContextKind.BODY)
-
-                onActive {
-                    processChildren(propertyAccessor)
-                }
+                processChildren(propertyAccessor)
             }
         }
     }
@@ -741,10 +719,7 @@ private class ContextCollectorVisitor(
         onActiveBody {
             context.withValueParameter(valueParameter, valueParameter.moduleData.session) {
                 dumpContext(valueParameter, ContextKind.BODY)
-
-                onActive {
-                    processChildren(valueParameter)
-                }
+                processChildren(valueParameter)
             }
         }
 
@@ -781,13 +756,8 @@ private class ContextCollectorVisitor(
 
                 dumpContext(anonymousFunction, ContextKind.BODY)
 
-                onActive {
-                    process(anonymousFunction.body)
-                }
-
-                onActive {
-                    processChildren(anonymousFunction)
-                }
+                process(anonymousFunction.body)
+                processChildren(anonymousFunction)
             }
         }
 
@@ -803,10 +773,7 @@ private class ContextCollectorVisitor(
 
             context.withAnonymousObject(anonymousObject, bodyHolder) {
                 dumpContext(anonymousObject, ContextKind.BODY)
-
-                onActive {
-                    processChildren(anonymousObject)
-                }
+                processChildren(anonymousObject)
             }
         }
     }
@@ -817,7 +784,6 @@ private class ContextCollectorVisitor(
         onActiveBody {
             context.forBlock(bodyHolder.session) {
                 processChildren(block)
-
                 dumpContext(block, ContextKind.BODY)
             }
         }
@@ -826,9 +792,7 @@ private class ContextCollectorVisitor(
     @ContextCollectorDsl
     private fun Processor.processSignatureAnnotations(declaration: FirDeclaration) {
         for (annotation in declaration.annotations) {
-            onActive {
-                process(annotation)
-            }
+            process(annotation)
         }
     }
 
@@ -838,12 +802,12 @@ private class ContextCollectorVisitor(
         }
     }
 
-    private class Processor(private val delegate: FirVisitorVoid) {
+    private inner class Processor(private val delegate: FirVisitorVoid) {
         private val elementsToSkip = HashSet<FirElement>()
 
         @ContextCollectorDsl
         fun process(element: FirElement?) {
-            if (element != null) {
+            if (isActive && element != null) {
                 element.accept(delegate)
                 elementsToSkip += element
             }
@@ -852,6 +816,9 @@ private class ContextCollectorVisitor(
         @ContextCollectorDsl
         fun processList(elements: Collection<FirElement>) {
             for (element in elements) {
+                if (!isActive) {
+                    break
+                }
                 process(element)
                 elementsToSkip += element
             }
@@ -859,14 +826,17 @@ private class ContextCollectorVisitor(
 
         @ContextCollectorDsl
         fun processChildren(element: FirElement) {
+            if (!isActive) {
+                return
+            }
             val visitor = FilteringVisitor(delegate, elementsToSkip)
             element.acceptChildren(visitor)
         }
     }
 
-    private class FilteringVisitor(val delegate: FirVisitorVoid, val elementsToSkip: Set<FirElement>) : FirVisitorVoid() {
+    private inner class FilteringVisitor(val delegate: FirVisitorVoid, val elementsToSkip: Set<FirElement>) : FirVisitorVoid() {
         override fun visitElement(element: FirElement) {
-            if (element !in elementsToSkip) {
+            if (isActive && element !in elementsToSkip) {
                 element.accept(delegate)
             }
         }
