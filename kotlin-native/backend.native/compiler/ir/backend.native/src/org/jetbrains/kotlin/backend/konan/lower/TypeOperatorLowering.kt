@@ -1068,19 +1068,24 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 val breaksCFMPInfo = ControlFlowMergePointInfo(upperLevelPredicates.size)
                 breaksCFMPInfos[loop] = breaksCFMPInfo
                 var predicateBeforeBody = startPredicate.ifTrue
-                for (iter in 0..<10) {
-                    val savedReturnableBlockCFMPInfos = mutableMapOf<IrReturnableBlock, ControlFlowMergePointInfo>()
-                    val savedBreaksCFMPInfos = mutableMapOf<IrLoop, ControlFlowMergePointInfo>()
-                    val savedContinuesCFMPInfos = mutableMapOf<IrLoop, ControlFlowMergePointInfo>()
-                    returnableBlockCFMPInfos.forEach { (key, cfmpInfo) ->
-                        savedReturnableBlockCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
-                    }
-                    breaksCFMPInfos.forEach { (key, cfmpInfo) ->
-                        savedBreaksCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
-                    }
-                    continuesCFMPInfos.forEach { (key, cfmpInfo) ->
-                        savedContinuesCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
-                    }
+                if (debugOutput) {
+                    println("QXX loop start ${loop.condition.render()}")
+                    println("    $predicateBeforeBody")
+                }
+                // TODO: is it correct to run only one iteration?
+                for (iter in 0..<1) {
+//                    val savedReturnableBlockCFMPInfos = mutableMapOf<IrReturnableBlock, ControlFlowMergePointInfo>()
+//                    val savedBreaksCFMPInfos = mutableMapOf<IrLoop, ControlFlowMergePointInfo>()
+//                    val savedContinuesCFMPInfos = mutableMapOf<IrLoop, ControlFlowMergePointInfo>()
+//                    returnableBlockCFMPInfos.forEach { (key, cfmpInfo) ->
+//                        savedReturnableBlockCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
+//                    }
+//                    breaksCFMPInfos.forEach { (key, cfmpInfo) ->
+//                        savedBreaksCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
+//                    }
+//                    continuesCFMPInfos.forEach { (key, cfmpInfo) ->
+//                        savedContinuesCFMPInfos[key] = ControlFlowMergePointInfo(cfmpInfo)
+//                    }
 
                     val body = loop.body
                     val predicateAfterBody = if (body == null)
@@ -1102,31 +1107,31 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         println("    ${breaksCFMPInfo.predicate}")
                     }
 
-                    var somethingChanged = false
-                    for ((key, cfmpInfo) in returnableBlockCFMPInfos) {
-                        if (!savedReturnableBlockCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
-                            somethingChanged = true
-                            break
-                        }
-                    }
-                    if (!somethingChanged) {
-                        for ((key, cfmpInfo) in breaksCFMPInfos) {
-                            if (!savedBreaksCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
-                                somethingChanged = true
-                                break
-                            }
-                        }
-                    }
-                    if (!somethingChanged) {
-                        for ((key, cfmpInfo) in continuesCFMPInfos) {
-                            if (!savedContinuesCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
-                                somethingChanged = true
-                                break
-                            }
-                        }
-                    }
-
-                    if (!somethingChanged) break
+//                    var somethingChanged = false
+//                    for ((key, cfmpInfo) in returnableBlockCFMPInfos) {
+//                        if (!savedReturnableBlockCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
+//                            somethingChanged = true
+//                            break
+//                        }
+//                    }
+//                    if (!somethingChanged) {
+//                        for ((key, cfmpInfo) in breaksCFMPInfos) {
+//                            if (!savedBreaksCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
+//                                somethingChanged = true
+//                                break
+//                            }
+//                        }
+//                    }
+//                    if (!somethingChanged) {
+//                        for ((key, cfmpInfo) in continuesCFMPInfos) {
+//                            if (!savedContinuesCFMPInfos[key]!!.contentEquals(cfmpInfo)) {
+//                                somethingChanged = true
+//                                break
+//                            }
+//                        }
+//                    }
+//
+//                    if (!somethingChanged) break
                 }
                 breaksCFMPInfos.remove(loop)
 
@@ -1151,8 +1156,11 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                 // Note: further improvement will be to check not only for identical equality to false but actually try to
                 // find the combination of leaf terms satisfying the predicate (though it can be computationally unfeasible).
                 val castIsFailedPredicate = Predicates.and(fullPredicate, buildIsNotSubtypeOfPredicate(variable, expression.typeOperand))
+                val castIsSuccessfulPredicate = Predicates.and(fullPredicate, buildIsSubtypeOfPredicate(variable, expression.typeOperand))
                 if (debugOutput) {
                     println("    castIsFailedPredicate: $castIsFailedPredicate")
+                    println("    castIsSuccessfulPredicate: $castIsSuccessfulPredicate")
+                    println()
                 }
                 if (castIsFailedPredicate == Predicate.False) {
                     // The cast will always succeed.
@@ -1162,13 +1170,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     }
                     typeCheckResults[expression] = result
                     //typeCheckResults[expression] = true
-                }
-                val castIsSuccessfulPredicate = Predicates.and(fullPredicate, buildIsSubtypeOfPredicate(variable, expression.typeOperand))
-                if (debugOutput) {
-                    println("    castIsSuccessfulPredicate: $castIsSuccessfulPredicate")
-                    println()
-                }
-                if (castIsSuccessfulPredicate == Predicate.False) {
+                } else if (castIsSuccessfulPredicate == Predicate.False) {
                     // The cast will never succeed.
                     val result = when (typeCheckResults[expression]) {
                         null, TypeCheckResult.NEVER_SUCCEEDS -> TypeCheckResult.NEVER_SUCCEEDS
@@ -1176,6 +1178,10 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     }
                     typeCheckResults[expression] = result
                     //typeCheckResults[expression] = false
+                } else {
+                    // The cast is needed.
+                    if (typeCheckResults[expression] != null)
+                        typeCheckResults[expression] = TypeCheckResult.UNKNOWN
                 }
             }
 
@@ -1194,7 +1200,9 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                         return if (expression.isCast())
                             VisitorResult(
                                     Predicates.and(argumentPredicate, buildIsSubtypeOfPredicate(argumentVariable, expression.typeOperand)),
-                                    argumentVariable
+                                    argumentVariable.takeIf { // Only if no box/unbox operation is needed.
+                                        it.type.getInlinedClassNative() == expression.typeOperand.getInlinedClassNative()
+                                    }
                             )
                         else VisitorResult(argumentPredicate, null)
                     }
@@ -1253,13 +1261,13 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             }
 
             fun setVariable(variable: IrVariable, value: IrExpression, data: Predicate): Predicate {
-                val actualVariable = if (variable.isMutable)
-                    createPhantomVariable(variable, value).also { variableAliases[variable] = it }
-                else variable
                 return if (variable.type.isBoolean()) {
                     val booleanPredicate = usingUpperLevelPredicate(data) { buildBooleanPredicate(value) }
+                    val actualVariable = if (variable.isMutable)
+                        createPhantomVariable(variable, value).also { variableAliases[variable] = it }
+                    else variable
                     if (debugOutput) {
-                        println("QZZ: ${variable.render()} is a bool." +
+                        println("QZZ: ${variable.render()} is a bool and is delegated to ${actualVariable.takeIf { it != variable }?.render()}" +
                                 " ifTrue = ${booleanPredicate.ifTrue}, ifFalse = ${booleanPredicate.ifFalse}")
                     }
 // TODO:
@@ -1280,12 +1288,12 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     val result = VisitorResult()
                     val nullablePredicate = usingUpperLevelPredicate(data) { buildNullablePredicate(value, result) }
                     val predicate = Predicates.and(data, result.predicate)
-                    val delegatedVariable = result.variable
-                    if (delegatedVariable != null) {
-                        variableAliases[variable] = variableAliases[delegatedVariable] ?: delegatedVariable
-                    }
+                    val alias = result.variable
+                            ?: if (variable.isMutable) createPhantomVariable(variable, value) else variable
+                    if (alias != variable)
+                        variableAliases[variable] = alias
                     if (debugOutput) {
-                        println("QZZ: ${variable.render()} is nullable and is delegated to ${delegatedVariable?.render()}." +
+                        println("QZZ: ${variable.render()} is nullable and is delegated to ${alias.takeIf { it != variable }?.render()}." +
                                 " ifNull = ${nullablePredicate?.ifNull}, ifNotNull = ${nullablePredicate?.ifNotNull}")
                     }
                     if (nullablePredicate == null)
@@ -1303,16 +1311,17 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
 //                                    Predicates.disjunctionOf(ComplexTerm(value, false))
 //                                else optimizedIfNotNull
 //                        )
-                        variableValues[actualVariable] = VariableValue.NullablePredicate(nullablePredicate)
+                        variableValues[alias] = VariableValue.NullablePredicate(nullablePredicate)
                         Predicates.and(predicate, Predicates.or(nullablePredicate.ifNull, nullablePredicate.ifNotNull))
                     }
                 } else {
                     val (predicate, delegatedVariable) = value.accept(this, data)
+                    val alias = delegatedVariable
+                            ?: if (variable.isMutable) createPhantomVariable(variable, value) else variable
+                    if (alias != variable)
+                        variableAliases[variable] = alias
                     if (debugOutput) {
-                        println("QZZ: ${variable.render()} is delegated to ${delegatedVariable?.render()}")
-                    }
-                    if (delegatedVariable != null) {
-                        variableAliases[variable] = variableAliases[delegatedVariable] ?: delegatedVariable
+                        println("QZZ: ${variable.render()} is delegated to ${alias.takeIf { it != variable }?.render()}")
                     }
                     predicate
                 }
@@ -1330,7 +1339,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
             }
 
             override fun visitGetValue(expression: IrGetValue, data: Predicate): VisitorResult {
-                return VisitorResult(data, expression.symbol.owner)
+                return VisitorResult(data, variableAliases[expression.symbol.owner] ?: expression.symbol.owner)
             }
 
         }, Predicate.Empty)
