@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.LLPartialBody
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.LLPartialBodyAnalysisState
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.partialBodyAnalysisState
 import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.LLFirResolveDesignationCollector
+import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.declarationCanBeLazilyResolved
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirResolvableModuleSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.body
 import org.jetbrains.kotlin.fir.FirElement
@@ -18,6 +19,7 @@ import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
+import org.jetbrains.kotlin.fir.declarations.resolvePhase
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.psi.*
@@ -174,20 +176,11 @@ internal class PartialBodyDeclarationFirElementProvider(
             ElementContainer.Unknown -> return null
             ElementContainer.Signature -> return signatureMappings[psiElement]
             ElementContainer.SignatureBody -> {
-                run {
-                    // Fast track: the signature body is already analyzed.
-                    // Synchronization is not needed here as 'lastState'/'bodyMappings' are addition-only
-                    if (cachedState.performedAnalysesCount > 0) {
-                        // We performed at least one partial analysis, so we definitely analyzed the parameters
-                        return bodyMappings[psiElement]
-                    }
-                }
-
-                synchronized(this) {
-                    // Double-check to avoid more expensive 'performBodyAnalysis()' logic
-                    if (cachedState.performedAnalysesCount > 0) {
-                        return bodyMappings[psiElement]
-                    }
+                // Fast track: the signature body is already analyzed.
+                // Synchronization is not needed here as 'cachedState'/'bodyMappings' are addition-only
+                if (cachedState.performedAnalysesCount > 0) {
+                    // We performed at least one partial analysis, so we definitely analyzed the signature
+                    return bodyMappings[psiElement]
                 }
 
                 // We do not need to analyze any statements.
@@ -197,22 +190,12 @@ internal class PartialBodyDeclarationFirElementProvider(
             is ElementContainer.Body -> {
                 val psiStatementLimit = container.psiStatementIndex + 1
 
-                run {
-                    // Fast track: required statements are already analyzed.
-                    // Synchronization is not needed here as 'lastState'/'bodyMappings' are addition-only
-                    val cachedState = this.cachedState
-                    if (cachedState.performedAnalysesCount > 0 && cachedState.analyzedPsiStatementCount >= psiStatementLimit) {
-                        // The statement is already analyzed and its children are registered
-                        return bodyMappings[psiElement]
-                    }
-                }
-
-                synchronized(this) {
-                    // Double-check to avoid more expensive 'performBodyAnalysis()' logic
-                    val cachedState = this.cachedState
-                    if (cachedState.performedAnalysesCount > 0 && cachedState.analyzedPsiStatementCount >= psiStatementLimit) {
-                        return bodyMappings[psiElement]
-                    }
+                // Fast track: required statements are already analyzed.
+                // Synchronization is not needed here as 'cachedState'/'bodyMappings' are addition-only
+                val cachedState = this.cachedState
+                if (cachedState.performedAnalysesCount > 0 && cachedState.analyzedPsiStatementCount >= psiStatementLimit) {
+                    // The statement is already analyzed and its children are registered
+                    return bodyMappings[psiElement]
                 }
 
                 performBodyAnalysis(psiStatementLimit)
