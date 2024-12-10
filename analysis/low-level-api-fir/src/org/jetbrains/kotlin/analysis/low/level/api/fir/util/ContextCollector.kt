@@ -624,7 +624,6 @@ private class ContextCollectorVisitor(
                 }
 
                 context.forConstructorBody(constructor, holder.session) {
-                    processList(constructor.valueParameters)
                     dumpContext(constructor, ContextKind.BODY)
                     processBody(constructor)
                 }
@@ -636,7 +635,11 @@ private class ContextCollectorVisitor(
                 }
 
                 onActive {
-                    processChildren(constructor)
+                    processList(constructor.contextParameters)
+                }
+
+                onActive {
+                    process(constructor.contractDescription)
                 }
             }
         }
@@ -676,7 +679,11 @@ private class ContextCollectorVisitor(
                 }
 
                 onActive {
-                    processChildren(simpleFunction)
+                    processList(simpleFunction.contextParameters)
+                }
+
+                onActive {
+                    process(simpleFunction.contractDescription)
                 }
             }
         }
