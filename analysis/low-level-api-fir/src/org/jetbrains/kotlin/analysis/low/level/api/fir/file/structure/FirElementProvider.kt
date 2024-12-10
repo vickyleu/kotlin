@@ -91,6 +91,11 @@ internal class PartialBodyDeclarationFirElementProvider(
                                 checkWithAttachment(psiStatementIndex >= 0, { "The topmost statement was not found" }) {
                                     withPsiEntry("statement", previous)
                                     withPsiEntry("declaration", psiDeclaration)
+                                    withEntry("statements") {
+                                        for ((index, psiStatement) in psiStatements.withIndex()) {
+                                            println(index, ": ", psiStatement.text)
+                                        }
+                                    }
                                 }
                                 return ElementContainer.Body(psiStatementIndex)
                             }
