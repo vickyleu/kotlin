@@ -27,6 +27,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.*
+import java.net.URI
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -79,7 +80,15 @@ fun KGPBaseTest.project(
         .create()
         .withProjectDir(projectPath.toFile())
         .withTestKitDir(testKitDir.toAbsolutePath().toFile())
-        .withGradleVersion(gradleVersion.version)
+        .apply {
+            if (gradleVersion.version == "9.0") {
+                withGradleDistribution(
+                    URI("https://services.gradle.org/distributions-snapshots/gradle-9.0-branch-provider_api_migration_public_api_changes-20241209113537+0000-bin.zip")
+                )
+            } else {
+                withGradleVersion(gradleVersion.version)
+            }
+        }
 
     val testProject = TestProject(
         gradleRunner,

@@ -214,6 +214,8 @@ fun URI.maybeRedirect(): URI {
     }
 }
 
+fun Property<URI>.maybeRedirect(): URI = map { it.maybeRedirect() }.get()
+
 fun RepositoryHandler.redirect() = configureEach {
     when (this) {
         is MavenArtifactRepository -> url = url.maybeRedirect()
@@ -278,6 +280,7 @@ fun Project.addCheckRepositoriesTask() {
     }
 }
 
+fun Property<URI>.isCachedOrLocal(): Boolean = map { it.isCachedOrLocal() }.get()
 fun URI.isCachedOrLocal() = scheme == "file" ||
         host == "cache-redirector.jetbrains.com" ||
         host == "teamcity.jetbrains.com" ||
