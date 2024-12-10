@@ -251,13 +251,16 @@ internal class PartialBodyDeclarationFirElementProvider(
                 this.cachedState = newState
             }
         } else {
-            // The body has never been analyzed (otherwise the partial body resolve state should have been present)
-            bodyMappings = HashMap<KtElement, FirElement>()
-                .also { consumer ->
-                    bodyBlock.accept(DeclarationStructureElement.Recorder, consumer)
-                    registerDefaultParameterValues(newState = null, consumer)
-                    registerDelegatedConstructorCall(newState = null, consumer)
-                }
+            // Another thread might have already produced body mappings
+            if (bodyMappings.isEmpty()) {
+                // The body has never been analyzed (otherwise the partial body resolve state should have been present)
+                bodyMappings = HashMap<KtElement, FirElement>()
+                    .also { consumer ->
+                        bodyBlock.accept(DeclarationStructureElement.Recorder, consumer)
+                        registerDefaultParameterValues(newState = null, consumer)
+                        registerDelegatedConstructorCall(newState = null, consumer)
+                    }
+            }
         }
     }
 
