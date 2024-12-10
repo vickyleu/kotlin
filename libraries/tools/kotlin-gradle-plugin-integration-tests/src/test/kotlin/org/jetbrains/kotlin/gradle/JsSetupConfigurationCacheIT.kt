@@ -35,12 +35,10 @@ class JsSetupConfigurationCacheIT : KGPBaseTest() {
             buildOptions = defaultBuildOptions.copy(
                 jsOptions = defaultBuildOptions.jsOptions?.copy(
                     yarn = false
-                ),
-                fileLeaksReportFile = workingDir.resolve("report").toFile()
+                )
             )
         ) {
             checkNodeJsSetup("kotlinUpgradePackageLock")
-            println("STOP")
         }
     }
 
