@@ -11,7 +11,6 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.LLPartialBody
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.LLPartialBodyAnalysisState
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.targets.partialBodyAnalysisState
 import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.LLFirResolveDesignationCollector
-import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.declarationCanBeLazilyResolved
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirResolvableModuleSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.body
 import org.jetbrains.kotlin.fir.FirElement
@@ -19,14 +18,16 @@ import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
-import org.jetbrains.kotlin.fir.declarations.resolvePhase
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
+import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.parentsWithSelf
 import org.jetbrains.kotlin.utils.exceptions.buildErrorWithAttachment
 import org.jetbrains.kotlin.utils.exceptions.checkWithAttachment
+import org.jetbrains.kotlin.utils.exceptions.rethrowExceptionWithDetails
 import org.jetbrains.kotlin.utils.exceptions.withPsiEntry
+import java.lang.Exception
 
 internal typealias DeclarationFirElementProvider = (KtElement) -> FirElement?
 
@@ -170,7 +171,14 @@ internal class PartialBodyDeclarationFirElementProvider(
         get() = declaration.body ?: error("Partial body element provider supports only declarations with bodies")
 
     override fun invoke(psiElement: KtElement): FirElement? {
-        val container = findContainer(psiElement, psiDeclaration, psiBlock, psiStatements)
+        val container = try {
+            findContainer(psiElement, psiDeclaration, psiBlock, psiStatements)
+        } catch (e: Exception) {
+            rethrowExceptionWithDetails("Unable to find the element container", e) {
+                withEntry("session", session) { it.toString() }
+                withFirEntry("fir", declaration)
+            }
+        }
 
         when (container) {
             ElementContainer.Unknown -> return null
