@@ -74,9 +74,9 @@ interface TestVersions {
         AGP_82(AGP.AGP_82, GradleVersion.version(Gradle.G_8_2), GradleVersion.version(Gradle.G_8_4), JavaVersion.VERSION_17),
         AGP_83(AGP.AGP_83, GradleVersion.version(Gradle.G_8_4), GradleVersion.version(Gradle.G_8_8), JavaVersion.VERSION_17),
         AGP_84(AGP.AGP_84, GradleVersion.version(Gradle.G_8_6), GradleVersion.version(Gradle.G_8_8), JavaVersion.VERSION_17),
-        AGP_85(AGP.AGP_85, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_8_11), JavaVersion.VERSION_17),
-        AGP_86(AGP.AGP_86, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_8_11), JavaVersion.VERSION_17),
-        AGP_87(AGP.AGP_87, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_8_11), JavaVersion.VERSION_17),
+        AGP_85(AGP.AGP_85, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_9_0), JavaVersion.VERSION_17),
+        AGP_86(AGP.AGP_86, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_9_0), JavaVersion.VERSION_17),
+        AGP_87(AGP.AGP_87, GradleVersion.version(Gradle.G_8_7), GradleVersion.version(Gradle.G_9_0), JavaVersion.VERSION_17),
         AGP_88(AGP.AGP_88, GradleVersion.version(Gradle.G_8_8), GradleVersion.version(Gradle.G_9_0), JavaVersion.VERSION_17),
         ;
 
