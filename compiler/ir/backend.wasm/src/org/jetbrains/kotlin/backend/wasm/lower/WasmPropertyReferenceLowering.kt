@@ -119,7 +119,7 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
 
                 irBuilder.run {
                     val getterOrSetter = expression.getter ?: expression.setter ?: error("Property reference without getter and setter")
-                    val receiversCount = getterOrSetter.owner.parameters.count { it.kind != IrParameterKind.Regular }
+                    val receiversCount = getterOrSetter.owner.parameters.count { it.kind != IrParameterKind.Regular && it.kind != IrParameterKind.Context}
                     return when (receiversCount) {
                         0 -> { // Cache KProperties with no arguments.
                             val field = kProperties.getOrPut(expression.symbol.owner) {
@@ -146,7 +146,9 @@ internal class WasmPropertyReferenceLowering(val context: WasmBackendContext) : 
                 val endOffset = expression.endOffset
                 val irBuilder = context.createIrBuilder(currentScope!!.scope.scopeOwnerSymbol, startOffset, endOffset)
                 irBuilder.run {
-                    val receiversCount = expression.getter.owner.parameters.count { it.kind != IrParameterKind.Regular }
+                    val receiversCount = expression.getter.owner.parameters
+                        .count { it.kind != IrParameterKind.Regular && it.kind != IrParameterKind.Context }
+
                     if (receiversCount == 2)
                         error("Callable reference to properties with two receivers is not allowed: ${expression}")
                     else { // Cache KProperties with no arguments.
