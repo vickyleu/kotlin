@@ -97,13 +97,13 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
     fun transformExternalFunction(function: IrSimpleFunction): List<IrDeclaration>? {
         // External functions with default parameter values are already processed by
         // [ComplexExternalDeclarationsToTopLevelFunctionsLowering]
-        if (function.valueParameters.any { it.defaultValue != null })
+        if (function.parameters.any { it.defaultValue != null })
             return null
 
         // Patch function types for Number parameters as double
         function.returnType = doubleIfNumber(function.returnType)
 
-        val valueParametersAdapters = function.valueParameters.map { parameter ->
+        val valueParametersAdapters = function.parameters.map { parameter ->
             val varargElementType = parameter.varargElementType
             if (varargElementType != null) {
                 CopyToJsArrayAdapter(parameter.type, varargElementType)
@@ -124,7 +124,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
             remapMultiFieldValueClassStructure = context::remapMultiFieldValueClassStructure
         )
 
-        function.valueParameters.forEachIndexed { index, newParameter ->
+        function.parameters.forEachIndexed { index, newParameter ->
             val adapter = valueParametersAdapters[index]
             if (adapter != null) {
                 newParameter.type = adapter.toType
@@ -156,7 +156,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
      *  fun foo(x: KotlinType): KotlinType { <original-body> }
      */
     fun transformExportFunction(function: IrSimpleFunction): List<IrDeclaration>? {
-        val valueParametersAdapters = function.valueParameters.map {
+        val valueParametersAdapters = function.parameters.map {
             it.type.jsToKotlinAdapterIfNeeded(isReturn = false)
         }
         val resultAdapter =
@@ -172,7 +172,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
             remapMultiFieldValueClassStructure = context::remapMultiFieldValueClassStructure
         )
 
-        newFun.valueParameters.forEachIndexed { index, newParameter ->
+        newFun.parameters.forEachIndexed { index, newParameter ->
             val adapter = valueParametersAdapters[index]
             if (adapter != null) {
                 newParameter.type = adapter.fromType
@@ -187,7 +187,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
         newFun.body = createAdapterFunctionBody(builder, newFun, function, valueParametersAdapters, resultAdapter)
 
         newFun.annotations += builder.irCallConstructor(jsRelatedSymbols.jsNameConstructor, typeArguments = emptyList()).also {
-            it.putValueArgument(0, builder.irString(function.getJsNameOrKotlinName().identifier))
+            it.arguments[0] = builder.irString(function.getJsNameOrKotlinName().identifier)
         }
         function.annotations = function.annotations.filter { it.symbol != jsRelatedSymbols.jsExportConstructor }
 
@@ -203,9 +203,9 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
     ) = builder.irBlockBody {
         +irReturn(
             irCall(functionToCall).let { call ->
-                for ((index, valueParameter) in function.valueParameters.withIndex()) {
+                for ((index, valueParameter) in function.parameters.withIndex()) {
                     val get = irGet(valueParameter)
-                    call.putValueArgument(index, valueParametersAdapters[index].adaptIfNeeded(get, builder))
+                    call.arguments[index] = valueParametersAdapters[index].adaptIfNeeded(get, builder)
                 }
                 resultAdapter.adaptIfNeeded(call, builder)
             }
@@ -495,10 +495,10 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
             val callInvoke = irCall(invokeFun.symbol, info.originalResultType).also { call ->
                 call.dispatchReceiver =
                     ReceivingKotlinObjectFromJsAdapter(invokeFun.dispatchReceiverParameter!!.type)
-                        .adapt(irGet(result.valueParameters[0]), builder)
+                        .adapt(irGet(result.parameters[0]), builder)
 
                 for (i in info.adaptedParameterTypes.indices) {
-                    call.putValueArgument(i, info.parametersAdapters[i].adaptIfNeeded(irGet(result.valueParameters[i + 1]), builder))
+                    call.arguments[i + 1] = info.parametersAdapters[i].adaptIfNeeded(irGet(result.parameters[i + 1]), builder)
                 }
             }
             +irReturn(info.resultAdapter.adaptIfNeeded(callInvoke, builder))
@@ -538,7 +538,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
         }
 
         result.annotations += builder.irCallConstructor(jsRelatedSymbols.jsFunConstructor, typeArguments = emptyList()).also {
-            it.putValueArgument(0, builder.irString(jsCode))
+            it.arguments[0] = builder.irString(jsCode)
         }
 
         additionalDeclarations += result
@@ -605,15 +605,13 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
             val lambdaBuilder = context.createIrBuilder(symbol)
             body = lambdaBuilder.irBlockBody {
                 val jsClosureCallerCall = irCall(jsClosureCaller)
-                jsClosureCallerCall.putValueArgument(0, irGetField(irGet(dispatchReceiverParameter!!), closureClassField))
+                jsClosureCallerCall.arguments[0] = irGetField(irGet(dispatchReceiverParameter!!), closureClassField)
                 for ((adapterIndex, paramAdapter) in info.parametersAdapters.withIndex()) {
-                    jsClosureCallerCall.putValueArgument(
-                        adapterIndex + 1,
+                    jsClosureCallerCall.arguments[adapterIndex + 1] =
                         paramAdapter.adaptIfNeeded(
-                            irGet(valueParameters[adapterIndex]),
+                            irGet(parameters[adapterIndex + 1]),
                             lambdaBuilder
                         )
-                    )
                 }
                 +irReturn(info.resultAdapter.adaptIfNeeded(jsClosureCallerCall, lambdaBuilder))
             }
@@ -624,7 +622,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
 
         val builder = context.createIrBuilder(result.symbol)
         result.body = builder.irBlockBody {
-            +irReturn(irCall(closureClassConstructor).also { it.putValueArgument(0, irGet(result.valueParameters[0])) })
+            +irReturn(irCall(closureClassConstructor).also { it.arguments[0] = irGet(result.parameters[0]) })
         }
 
         additionalDeclarations += closureClass
@@ -660,7 +658,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
         }
 
         result.annotations += builder.irCallConstructor(jsRelatedSymbols.jsFunConstructor, typeArguments = emptyList()).also {
-            it.putValueArgument(0, builder.irString(jsFun))
+            it.arguments[0] = builder.irString(jsFun)
         }
 
         additionalDeclarations += result
@@ -749,11 +747,11 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
     class FunctionBasedAdapter(
         private val function: IrSimpleFunction,
     ) : InteropTypeAdapter {
-        override val fromType = function.valueParameters[0].type
+        override val fromType = function.parameters[0].type
         override val toType = function.returnType
         override fun adapt(expression: IrExpression, builder: IrBuilderWithScope): IrExpression {
             val call = builder.irCall(function)
-            call.putValueArgument(0, expression)
+            call.arguments[0] = expression
             return call
         }
     }
@@ -790,7 +788,7 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
         override val fromType: IrType = context.wasmSymbols.wasmStructRefType
         override fun adapt(expression: IrExpression, builder: IrBuilderWithScope): IrExpression {
             val call = builder.irCall(context.wasmSymbols.refCastNull)
-            call.putValueArgument(0, expression)
+            call.arguments[0] = expression
             call.typeArguments[0] = toType
             return call
         }
@@ -900,15 +898,15 @@ class JsInteropFunctionsLowering(val context: WasmBackendContext) : DeclarationT
                             irImplicitCast(
                                 irCall(getMethod).apply {
                                     dispatchReceiver = irGet(originalArrayVar)
-                                    putValueArgument(0, irGet(indexVar))
+                                    arguments[1] = irGet(indexVar)
                                 },
                                 fromElementType
                             ),
                             this@irBlock
                         )
                         +irCall(jsRelatedSymbols.jsArrayPush).apply {
-                            putValueArgument(0, irGet(newJsArrayVar))
-                            putValueArgument(1, adaptedValue)
+                            arguments[0] = irGet(newJsArrayVar)
+                            arguments[1] = adaptedValue
                         }
                         val inc = indexVar.type.getClass()!!.functions.single { it.name == OperatorNameConventions.INC }
                         +irSet(
