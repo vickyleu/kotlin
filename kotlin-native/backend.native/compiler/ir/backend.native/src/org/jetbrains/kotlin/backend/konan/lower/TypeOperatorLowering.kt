@@ -1072,7 +1072,38 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     println("QXX loop start ${loop.condition.render()}")
                     println("    $predicateBeforeBody")
                 }
-                // TODO: is it correct to run only one iteration?
+                /*
+                var o
+                do {
+                    o = foo()
+                } while (o !is A)
+                iter1: o$1 is A
+                iter2: o$1 !is A && o$2 is A
+                iter3: o$1 !is A && o$2 !is A && o$3 is A
+                ...
+                (o$1 is A) || (o$1 !is A && o$2 is A) || (o$1 !is A && o$2 !is A && o$3 is A) =
+                = ((o$1 is A || o$1 !is A) && (o$1 is A || o$2 is A)) || (o$1 !is A && o$2 !is A && o$3 is A) =
+                = (o$1 is A || o$2 is A) || (o$1 !is A && o$2 !is A && o$3 is A) = o$1 is A || o$2 is A || o$3 is A
+
+                iter1: o is A && o$1 is A
+                iter2: ???
+
+                iter1: ifTrue = o$1 !is A, ifFalse = o$1 is A
+                !!!
+                TODO: Resolution: do as in the escape analysis algorithm: bind each value to the corresponding IR node.
+
+------------------------------------------------------------
+                var f = o is A
+                do {
+                    if (f) {
+                        println((o as? A)?.x ?: 42)
+                    }
+                    f = o2 is A
+                    o = foo()
+                } while ()
+
+                 */
+                // TODO: is it correct to run only one iteration? It's NOT!!!
                 for (iter in 0..<1) {
 //                    val savedReturnableBlockCFMPInfos = mutableMapOf<IrReturnableBlock, ControlFlowMergePointInfo>()
 //                    val savedBreaksCFMPInfos = mutableMapOf<IrLoop, ControlFlowMergePointInfo>()
@@ -1180,8 +1211,7 @@ internal class CastsOptimization(val context: Context) : BodyLoweringPass {
                     //typeCheckResults[expression] = false
                 } else {
                     // The cast is needed.
-                    if (typeCheckResults[expression] != null)
-                        typeCheckResults[expression] = TypeCheckResult.UNKNOWN
+                    typeCheckResults[expression] = TypeCheckResult.UNKNOWN
                 }
             }
 
