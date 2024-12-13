@@ -65,7 +65,7 @@ abstract class AbstractContextCollectorTest : AbstractAnalysisApiBasedTest() {
         val targetElement = testServices.expressionMarkerProvider
             .getBottommostSelectedElementOfType(mainFile, KtElement::class)
 
-        val elementContext = ContextCollector.process(firFile, targetElement, useBodyElement)
+        val elementContext = ContextCollector.process(resolveSession, firFile, targetElement, useBodyElement)
             ?: error("Context not found for element $targetElement")
 
         val firRenderer = FirRenderer(
@@ -85,7 +85,7 @@ abstract class AbstractContextCollectorTest : AbstractAnalysisApiBasedTest() {
 
 private class FirDeclarationRendererWithPartialBodyResolveState : FirDeclarationRendererWithAttributes() {
     override fun attributeTypesToIds(): List<Pair<String, Int>> {
-        return super.attributeTypesToIds().filter { it.first == "PartialBodyResolveStateKey" }
+        return super.attributeTypesToIds().filter { it.first == "PartialBodyAnalysisStateKey" }
     }
 }
 
