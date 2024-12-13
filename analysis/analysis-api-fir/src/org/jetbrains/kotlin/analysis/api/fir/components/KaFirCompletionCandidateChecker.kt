@@ -121,6 +121,7 @@ private class KaFirCompletionExtensionCandidateChecker(
 
     private fun computeImplicitReceivers(firFakeFile: FirFile): List<ImplicitReceiverValue<*>> {
         val elementContext = ContextCollector.process(
+            resolveSession = firResolveSession,
             file = firFakeFile,
             targetElement = nameExpression,
             preferBodyContext = false
