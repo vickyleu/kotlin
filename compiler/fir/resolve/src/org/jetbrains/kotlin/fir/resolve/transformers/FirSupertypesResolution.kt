@@ -686,11 +686,9 @@ open class SupertypeComputationSession {
         session: FirSession,
         visited: MutableSet<FirClassLikeDeclaration>, // always empty for LL FIR
         looped: MutableSet<FirClassLikeDeclaration>, // always empty for LL FIR
-        pathSet: MutableSet<FirClassLikeDeclaration>,
-        path: MutableList<FirClassLikeDeclaration>,
+        pathSet: LinkedHashSet<FirClassLikeDeclaration>,
         localClassesNavigationInfo: LocalClassesNavigationInfo?,
     ) {
-        require(path.isEmpty()) { "Path should be empty" }
         require(pathSet.isEmpty()) { "Path set should be empty" }
 
         fun checkIsInLoop(
@@ -717,13 +715,12 @@ open class SupertypeComputationSession {
             if (classLikeDeclaration in visited) {
                 if (classLikeDeclaration in pathSet) {
                     looped.add(classLikeDeclaration)
-                    looped.addAll(path.takeLastWhile { element -> element != classLikeDeclaration })
+                    looped.addAll(pathSet.reversed().takeWhile { element -> element != classLikeDeclaration })
                 }
 
                 return
             }
 
-            path.add(classLikeDeclaration)
             pathSet.add(classLikeDeclaration)
             visited.add(classLikeDeclaration)
 
@@ -745,7 +742,6 @@ open class SupertypeComputationSession {
             // This is an optimization that prevents collecting
             // loops we don't want to report anyway.
             if (wereTypeArgumentsInvolved && isSubtypingCurrentlyInvolved) {
-                path.removeAt(path.size - 1)
                 pathSet.remove(classLikeDeclaration)
                 return
             }
@@ -806,19 +802,16 @@ open class SupertypeComputationSession {
                 reportLoopErrorRefs(classLikeDeclaration, resultSupertypeRefs)
             }
 
-            path.removeAt(path.size - 1)
             pathSet.remove(classLikeDeclaration)
         }
 
         checkIsInLoop(declaration, wasSubtypingInvolved = false, wereTypeArgumentsInvolved = false)
-        require(path.isEmpty()) { "Path should be empty" }
     }
 
     fun breakLoops(session: FirSession, localClassesNavigationInfo: LocalClassesNavigationInfo?) {
         val visitedClassLikeDecls = mutableSetOf<FirClassLikeDeclaration>()
         val loopedClassLikeDecls = mutableSetOf<FirClassLikeDeclaration>()
-        val path = mutableListOf<FirClassLikeDeclaration>()
-        val pathSet = mutableSetOf<FirClassLikeDeclaration>()
+        val pathSet = LinkedHashSet<FirClassLikeDeclaration>()
 
         for (classifier in newClassifiersForBreakingLoops) {
             breakLoopFor(
@@ -827,7 +820,6 @@ open class SupertypeComputationSession {
                 visited = visitedClassLikeDecls,
                 looped = loopedClassLikeDecls,
                 pathSet = pathSet,
-                path = path,
                 localClassesNavigationInfo = localClassesNavigationInfo,
             )
         }
