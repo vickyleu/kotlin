@@ -118,6 +118,6 @@ object DecompiledLightClassesFactory {
     }
 
     fun createClsJavaClassFromVirtualFile(clsFile: KtClsFile): ClsClassImpl? {
-        return ClsJavaStubByVirtualFileCache.getOrBuild(clsFile)
+        return ClsJavaStubBuilderService.getOrBuild(clsFile)
     }
 }

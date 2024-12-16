@@ -49,7 +49,7 @@
         serviceImplementation="org.jetbrains.kotlin.analysis.api.impl.base.lifetime.KaBaseLifetimeTracker"
     />
 
-    <projectService serviceImplementation="org.jetbrains.kotlin.analysis.decompiled.light.classes.ClsJavaStubByVirtualFileCache"/>
+    <projectService serviceImplementation="org.jetbrains.kotlin.analysis.decompiled.light.classes.ClsJavaStubBuilderService"/>
 
     <applicationService serviceImplementation="org.jetbrains.kotlin.analysis.decompiled.light.classes.origin.KotlinDeclarationInCompiledFileSearcher" />
 

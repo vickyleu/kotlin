@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.asJava.builder.ClsWrapperStubPsiFactory
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import java.io.IOException
 
-internal class ClsJavaStubByVirtualFileCache {
+internal class ClsJavaStubBuilderService {
     private class CachedJavaStub(val modificationStamp: Long, val javaClassStub: ClsClassImpl?)
 
     private val cache = ContainerUtil.createConcurrentWeakKeySoftValueMap<KtClsFile, CachedJavaStub>()
@@ -91,10 +91,10 @@ internal class ClsJavaStubByVirtualFileCache {
     }
 
     companion object {
-        private val LOG = Logger.getInstance(ClsJavaStubByVirtualFileCache::class.java)
+        private val LOG = Logger.getInstance(ClsJavaStubBuilderService::class.java)
 
         fun getOrBuild(clsFile: KtClsFile): ClsClassImpl? {
-            return clsFile.project.service<ClsJavaStubByVirtualFileCache>().get(clsFile)
+            return clsFile.project.service<ClsJavaStubBuilderService>().get(clsFile)
         }
     }
 }
