@@ -307,6 +307,16 @@ internal fun KaSession.createPropertyAccessors(
     if (declaration.name.isSpecial) return
 
     val originalElement = declaration.sourcePsiSafe<KtDeclaration>()
+    addPropertyAccessors(
+        lightClass = lightClass,
+        result = result,
+        declaration = declaration,
+        originalElement = originalElement,
+        isTopLevel = isTopLevel,
+        isMutable = isMutable,
+        onlyJvmStatic = onlyJvmStatic,
+        suppressStatic = suppressStatic,
+    )
 
     val generatePropertyAnnotationsMethods =
         (declaration.containingModule as? KaSourceModule)
@@ -330,7 +340,18 @@ internal fun KaSession.createPropertyAccessors(
             result.add(method)
         }
     }
+}
 
+private fun KaSession.addPropertyAccessors(
+    lightClass: SymbolLightClassBase,
+    result: MutableList<PsiMethod>,
+    declaration: KaPropertySymbol,
+    originalElement: KtDeclaration?,
+    isTopLevel: Boolean,
+    isMutable: Boolean,
+    onlyJvmStatic: Boolean,
+    suppressStatic: Boolean,
+) {
     if (declaration is KaKotlinPropertySymbol && declaration.isConst) return
     if (declaration.getter?.hasBody != true && declaration.setter?.hasBody != true && declaration.visibility == KaSymbolVisibility.PRIVATE) return
 
