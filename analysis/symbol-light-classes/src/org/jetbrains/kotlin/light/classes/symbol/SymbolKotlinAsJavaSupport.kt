@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -19,11 +19,7 @@ import org.jetbrains.kotlin.analysis.api.platform.modification.createAllLibrarie
 import org.jetbrains.kotlin.analysis.api.platform.modification.createProjectWideOutOfBlockModificationTracker
 import org.jetbrains.kotlin.analysis.api.platform.packages.createPackageProvider
 import org.jetbrains.kotlin.analysis.api.platform.projectStructure.KotlinProjectStructureProvider
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileModule
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibrarySourceModule
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
-import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
+import org.jetbrains.kotlin.analysis.api.projectStructure.*
 import org.jetbrains.kotlin.analysis.decompiled.light.classes.DecompiledLightClassesFactory
 import org.jetbrains.kotlin.analysis.decompiled.light.classes.KtLightClassForDecompiledDeclaration
 import org.jetbrains.kotlin.analysis.decompiler.psi.file.KtClsFile
@@ -44,7 +40,7 @@ import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.KtScript
-import java.util.WeakHashMap
+import java.util.*
 
 private val KMP_CACHE: ThreadLocal<MutableMap<KtElement, KtLightClass?>> = ThreadLocal.withInitial { null }
 
@@ -164,7 +160,7 @@ internal class SymbolKotlinAsJavaSupport(project: Project) : KotlinAsJavaSupport
     }
 
     override fun createInstanceOfDecompiledLightClass(classOrObject: KtClassOrObject): KtLightClass? {
-        val lightClass = DecompiledLightClassesFactory.getLightClassForDecompiledClassOrObject(classOrObject, project)
+        val lightClass = DecompiledLightClassesFactory.getLightClassForDecompiledClassOrObject(classOrObject)
         if (lightClass != null) {
             return lightClass
         }
@@ -183,7 +179,7 @@ internal class SymbolKotlinAsJavaSupport(project: Project) : KotlinAsJavaSupport
     }
 
     override fun createInstanceOfDecompiledLightFacade(facadeFqName: FqName, files: List<KtFile>): KtLightClassForFacade? {
-        val lightClass = DecompiledLightClassesFactory.createLightFacadeForDecompiledKotlinFile(project, facadeFqName, files)
+        val lightClass = DecompiledLightClassesFactory.createLightFacadeForDecompiledKotlinFile(facadeFqName, files)
         if (lightClass != null) {
             return lightClass
         }
@@ -247,13 +243,9 @@ internal class SymbolKotlinAsJavaSupport(project: Project) : KotlinAsJavaSupport
         return facadeKtFiles.mapNotNull { facadeKtFile ->
             if (facadeKtFile is KtClsFile) {
                 val partClassFile = facadeKtFile.virtualFile.parent.findChild(partClassFileShortName) ?: return@mapNotNull null
-                val psiFile = facadeKtFile.manager.findFile(partClassFile) as? KtClsFile ?: facadeKtFile
-                val javaClsClass = DecompiledLightClassesFactory.createClsJavaClassFromVirtualFile(
-                    mirrorFile = psiFile,
-                    classFile = partClassFile,
-                    correspondingClassOrObject = null,
-                    project = project,
-                ) ?: return@mapNotNull null
+                val psiFile = facadeKtFile.manager.findFile(partClassFile) as? KtClsFile ?: return@mapNotNull null
+                val javaClsClass = DecompiledLightClassesFactory.createClsJavaClassFromVirtualFile(clsFile = psiFile)
+                    ?: return@mapNotNull null
 
                 KtLightClassForDecompiledDeclaration(javaClsClass, javaClsClass.parent, psiFile, null)
             } else {

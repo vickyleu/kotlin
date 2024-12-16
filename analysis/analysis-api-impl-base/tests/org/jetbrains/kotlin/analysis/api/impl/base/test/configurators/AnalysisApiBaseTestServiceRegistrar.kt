@@ -30,7 +30,6 @@ import org.jetbrains.kotlin.analysis.api.standalone.base.modification.KotlinStan
 import org.jetbrains.kotlin.analysis.api.standalone.base.packages.KotlinStandalonePackageProviderFactory
 import org.jetbrains.kotlin.analysis.api.standalone.base.packages.KotlinStandalonePackageProviderMerger
 import org.jetbrains.kotlin.analysis.api.standalone.base.projectStructure.StandaloneProjectFactory
-import org.jetbrains.kotlin.analysis.decompiled.light.classes.ClsJavaStubByVirtualFileCache
 import org.jetbrains.kotlin.analysis.decompiled.light.classes.DecompiledLightClassesFactory
 import org.jetbrains.kotlin.analysis.decompiler.konan.KlibMetaFileType
 import org.jetbrains.kotlin.analysis.decompiler.psi.BuiltInDefinitionFile
@@ -43,7 +42,6 @@ import org.jetbrains.kotlin.analysis.test.framework.services.environmentManager
 import org.jetbrains.kotlin.analysis.test.framework.test.configurators.AnalysisApiTestServiceRegistrar
 import org.jetbrains.kotlin.analysis.test.framework.test.configurators.TestModuleKind
 import org.jetbrains.kotlin.library.KLIB_METADATA_FILE_EXTENSION
-import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.KtFileClassProvider
 import org.jetbrains.kotlin.scripting.compiler.plugin.definitions.CliScriptDefinitionProvider
@@ -67,7 +65,6 @@ object AnalysisApiBaseTestServiceRegistrar : AnalysisApiTestServiceRegistrar() {
             //and KtFile doesn't return any classes in classOwner.getClasses if there is no KtFileClassProvider
             //but getClasses is used during java resolve, thus it's required to return some PsiClass for such cases
             registerService(KtFileClassProvider::class.java, KtClsFileClassProvider(project))
-            registerService(ClsJavaStubByVirtualFileCache::class.java, ClsJavaStubByVirtualFileCache())
             registerService(ScriptDefinitionProvider::class.java, CliScriptDefinitionProvider())
         }
     }
@@ -87,13 +84,12 @@ object AnalysisApiBaseTestServiceRegistrar : AnalysisApiTestServiceRegistrar() {
 
     class KtClsFileClassProvider(val project: Project) : KtFileClassProvider {
         override fun getFileClasses(file: KtFile): Array<PsiClass> {
-            val virtualFile = file.virtualFile
-            val classOrObject = file.declarations.filterIsInstance<KtClassOrObject>().singleOrNull()
-            if (file is KtClsFile && virtualFile != null) {
-                DecompiledLightClassesFactory.createClsJavaClassFromVirtualFile(file, virtualFile, classOrObject, project)?.let {
+            if (file is KtClsFile) {
+                DecompiledLightClassesFactory.createClsJavaClassFromVirtualFile(file)?.let {
                     return arrayOf(it)
                 }
             }
+
             return PsiClass.EMPTY_ARRAY
         }
     }

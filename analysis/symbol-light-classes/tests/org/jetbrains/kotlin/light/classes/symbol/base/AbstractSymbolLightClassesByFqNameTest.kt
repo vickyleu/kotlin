@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.analysis.test.framework.projectStructure.KtTestModul
 import org.jetbrains.kotlin.analysis.test.framework.test.configurators.AnalysisApiTestConfigurator
 import org.jetbrains.kotlin.asJava.LightClassTestCommon
 import org.jetbrains.kotlin.asJava.PsiClassRenderer
+import org.jetbrains.kotlin.load.java.JvmAbi
 import org.jetbrains.kotlin.psi.KtFile
 import java.nio.file.Path
 
@@ -46,7 +47,8 @@ private object MembersFilterForCompiledClasses : PsiClassRenderer.MembersFilter 
         // However, it allows writing code in more or less "idiomatic" style in the light class tests
         // without thinking about private ABI and compiler optimizations.
         if (psiMethod.modifierList.hasExplicitModifier(PsiModifier.PRIVATE)) {
-            return '$' !in psiMethod.name
+            val name = psiMethod.name
+            return '$' !in name || name.endsWith(JvmAbi.ANNOTATED_PROPERTY_METHOD_NAME_SUFFIX)
         }
 
         return super.includeMethod(psiMethod)
