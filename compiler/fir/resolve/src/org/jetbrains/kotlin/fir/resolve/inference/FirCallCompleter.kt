@@ -467,7 +467,7 @@ class FirCallCompleter(
                 val declarationsTransformer = transformer.declarationsTransformer!!
                 if (pclaInferenceSession != null) {
                     transformer.context.withInferenceSession(pclaInferenceSession) {
-                        declarationsTransformer.doTransformAnonymousFunction(
+                        declarationsTransformer.doTransformAnonymousFunctionBodyFromCallCompletion(
                             lambdaExpression,
                             ResolutionMode.LambdaResolution(expectedReturnTypeRef)
                         )
@@ -477,7 +477,7 @@ class FirCallCompleter(
                 } else {
                     additionalConstraints =
                         transformer.context.inferenceSession.runLambdaCompletion(candidate, forOverloadByLambdaReturnType) {
-                            declarationsTransformer.doTransformAnonymousFunction(
+                            declarationsTransformer.doTransformAnonymousFunctionBodyFromCallCompletion(
                                 lambdaExpression,
                                 ResolutionMode.LambdaResolution(expectedReturnTypeRef)
                             )
