@@ -243,7 +243,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
     private fun deserializeImmediate(): WasmImmediate =
         withTag { tag ->
             when (tag) {
-                ImmediateTags.BLOCK_TYPE_FUNCTION -> WasmImmediate.BlockType.Function(deserializeFunctionType())
+                ImmediateTags.BLOCK_TYPE_FUNCTION -> WasmImmediate.BlockType.Function(deserializeSymbol(::deserializeFunctionType))
                 ImmediateTags.BLOCK_TYPE_VALUE -> WasmImmediate.BlockType.Value(deserializeType())
                 ImmediateTags.CATCH -> deserializeImmediateCatch()
                 ImmediateTags.CONST_F32 -> WasmImmediate.ConstF32(b.readUInt32())
@@ -632,6 +632,8 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         tryGetAssociatedObjectFun = deserializeTryGetAssociatedObject(),
         jsToKotlinAnyAdapterFun = deserializeJsToKotlinAnyAdapter(),
         wasmAnyArrayType = deserializeWasmAnyArrayType(),
+        specialSlotITableType = deserializeSymbol(::deserializeTypeDeclaration),
+        additionalFunctionTypes = deserializeList { deserializeSymbol(::deserializeFunctionType) }
     )
 
     private fun deserializeFunctions() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunction)

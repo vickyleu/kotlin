@@ -373,7 +373,7 @@ class WasmIrToBinary(
 
     private fun appendBlockType(type: WasmImmediate.BlockType) {
         when (type) {
-            is WasmImmediate.BlockType.Function -> appendModuleFieldReference(type.type)
+            is WasmImmediate.BlockType.Function -> appendModuleFieldReference(type.type.owner)
             is WasmImmediate.BlockType.Value -> when (type.type) {
                 null -> b.writeVarInt7(WasmBinary.EMPTY_TYPE_FOR_BLOCK)
                 else -> appendType(type.type)
