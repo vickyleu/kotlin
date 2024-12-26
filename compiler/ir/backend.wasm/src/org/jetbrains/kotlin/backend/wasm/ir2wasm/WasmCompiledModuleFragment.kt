@@ -61,6 +61,7 @@ class WasmCompiledFileFragment(
     var builtinIdSignatures: BuiltinIdSignatures? = null,
     var specialSlotITableType: WasmSymbol<WasmTypeDeclaration>? = null,
     var specialITableTypeList: MutableList<Pair<Int, WasmSymbol<WasmTypeDeclaration>>>? = null,
+    val additionalFunctionTypes: MutableList<WasmSymbol<WasmFunctionType>> = mutableListOf<WasmSymbol<WasmFunctionType>>()
 ) : IrICProgramFragment()
 
 class WasmCompiledModuleFragment(
@@ -474,10 +475,15 @@ class WasmCompiledModuleFragment(
         val canonicalFunctionTypes = LinkedHashMap<WasmFunctionType, WasmFunctionType>()
         wasmCompiledFileFragments.forEach { fragment ->
             fragment.functionTypes.elements.associateWithTo(canonicalFunctionTypes) { it }
+            fragment.additionalFunctionTypes.forEach { canonicalFunctionTypes[it.owner] = it.owner }
         }
+
         // Rebind symbol to canonical
         wasmCompiledFileFragments.forEach { fragment ->
             fragment.functionTypes.unbound.forEach { (_, wasmSymbol) ->
+                wasmSymbol.bind(canonicalFunctionTypes.getValue(wasmSymbol.owner))
+            }
+            fragment.additionalFunctionTypes.forEach { wasmSymbol ->
                 wasmSymbol.bind(canonicalFunctionTypes.getValue(wasmSymbol.owner))
             }
         }

@@ -179,6 +179,34 @@ class WasmFileCodegenContext(
         }
     }
 
+    private val wasmAnyArrayToFunctionTypeCache = mutableMapOf<IrSymbol, WasmSymbol<WasmFunctionType>>()
+    fun wasmAnyArrayToFunctionType(symbol: IrFunctionSymbol): WasmSymbol<WasmFunctionType> {
+        return wasmAnyArrayToFunctionTypeCache.getOrPut(symbol) {
+            val returnType = WasmRefNullType(WasmHeapType.Type(referenceFunctionType(symbol)))
+            WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(wasmAnyArrayType))), listOf(returnType))).also {
+                wasmFileFragment.additionalFunctionTypes.add(it)
+            }
+        }
+    }
+
+    val wasmAnyArrayTypeToWasmAny: WasmSymbol<WasmFunctionType> by lazy {
+        WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(wasmAnyArrayType))), listOf(WasmAnyRef))).also {
+            wasmFileFragment.additionalFunctionTypes.add(it)
+        }
+    }
+
+    val wasmAnyArrayTypeToWasmI32: WasmSymbol<WasmFunctionType> by lazy {
+        WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(wasmAnyArrayType))), listOf(WasmI32))).also {
+            wasmFileFragment.additionalFunctionTypes.add(it)
+        }
+    }
+
+    val wasmAnyArrayTypeToUnit: WasmSymbol<WasmFunctionType> by lazy {
+        WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(wasmAnyArrayType))), listOf())).also {
+            wasmFileFragment.additionalFunctionTypes.add(it)
+        }
+    }
+
     val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration>
         get() = wasmFileFragment.wasmAnyArrayType
             ?: WasmSymbol<WasmArrayDeclaration>().also { wasmFileFragment.wasmAnyArrayType = it }
@@ -186,10 +214,6 @@ class WasmFileCodegenContext(
     val specialSlotITableType: WasmSymbol<WasmTypeDeclaration>
         get() = wasmFileFragment.specialSlotITableType
             ?: WasmSymbol<WasmStructDeclaration>().also { wasmFileFragment.specialSlotITableType = it }
-
-    val specialITableTypeList: MutableList<Pair<Int, WasmSymbol<WasmTypeDeclaration>>>
-        get() = wasmFileFragment.specialITableTypeList
-            ?: mutableListOf<Pair<Int, WasmSymbol<WasmTypeDeclaration>>>().also { wasmFileFragment.specialITableTypeList = it }
 }
 
 class WasmModuleMetadataCache(private val backendContext: WasmBackendContext) {
