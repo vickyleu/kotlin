@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.backend.js.lower.PrimaryConstructorLowering
 import org.jetbrains.kotlin.ir.backend.js.utils.*
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.descriptors.IrAbstractDescriptorBasedFunctionFactory.Companion.classOrigin
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrReturnableBlockSymbol
@@ -942,7 +943,7 @@ class BodyGenerator(
                 } else {
                     body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
                     generateInlineCache(WasmI32, location) {
-                        if (irInterface.origin.name == "FUNCTION_INTERFACE_CLASS" && irInterface != irBuiltIns.functionClass.owner) {
+                        if (irInterface.origin == classOrigin && irInterface != irBuiltIns.functionClass.owner) {
                             body.buildBlock("FunctionFastTrack", WasmI32) { fastTrack ->
                                 body.buildConstI32(1, location)
                                 body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
