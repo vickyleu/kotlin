@@ -83,7 +83,7 @@ class KotlinCallCompleter(
                 candidate.runCompletion(completionMode, diagnosticHolder, resolutionCallbacks)
                 candidate.asCallResolutionResult(completionMode, diagnosticHolder)
             }
-            ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL -> error("PCLA might be only run for K2")
+            ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL, ConstraintSystemCompletionMode.PCLA_COMPLETED_NESTED_CALL -> error("PCLA might be only run for K2")
             ConstraintSystemCompletionMode.UNTIL_FIRST_LAMBDA -> throw IllegalStateException("Should not be here")
 
         }

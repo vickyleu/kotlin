@@ -245,6 +245,29 @@ class FirSyntheticCallGenerator(
             .firstOrNull() // TODO: it should be single() after KTIJ-26465 is fixed
     }
 
+    fun resolveAnonymousFunctionExpressionWithSyntheticOuterCall(
+        anonymousFunctionExpression: FirAnonymousFunctionExpression,
+        expectedType: ConeKotlinType?,
+        context: ResolutionContext,
+    ): FirExpression {
+        val argumentList = buildUnaryArgumentList(anonymousFunctionExpression)
+
+        val reference = generateCalleeReferenceToFunctionWithExpectedTypeForArgument(
+            anonymousFunctionExpression,
+            argumentList,
+            expectedType,
+            context,
+        )
+
+        val fakeCall = buildFunctionCall {
+            calleeReference = reference
+            this.argumentList = argumentList
+        }
+
+        val resultingCall = components.callCompleter.completeCall(fakeCall, ResolutionMode.ContextIndependent)
+        return resultingCall.arguments[0]
+    }
+
     fun resolveCallableReferenceWithSyntheticOuterCall(
         callableReferenceAccess: FirCallableReferenceAccess,
         expectedType: ConeKotlinType?,

@@ -51,7 +51,11 @@ class FirPCLAInferenceSession(
     override fun customCompletionModeInsteadOfFull(
         call: FirResolvable,
     ): ConstraintSystemCompletionMode? = when {
-        call.candidate()?.usedOuterCs == true -> ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL
+        call.candidate()?.usedOuterCs == true ->
+            if (call.candidate()!!.callInfo.callSite is FirAnonymousFunctionExpression)
+                ConstraintSystemCompletionMode.PCLA_COMPLETED_NESTED_CALL
+            else
+                ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL
         else -> null
     }
 

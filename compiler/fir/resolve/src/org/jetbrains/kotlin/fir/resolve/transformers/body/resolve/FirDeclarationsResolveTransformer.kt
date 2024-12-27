@@ -1157,10 +1157,21 @@ open class FirDeclarationsResolveTransformer(
     private fun transformTopLevelAnonymousFunctionExpression(
         anonymousFunctionExpression: FirAnonymousFunctionExpression,
         expectedType: ConeKotlinType?,
-    ): FirStatement = anonymousFunctionExpression.also {
-        it.replaceAnonymousFunction(transformTopLevelAnonymousFunctionInObsoleteWay(anonymousFunctionExpression, expectedType))
+    ): FirStatement = when {
+        session.languageVersionSettings.supportsFeature(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument) ->
+            components.syntheticCallGenerator.resolveAnonymousFunctionExpressionWithSyntheticOuterCall(
+                anonymousFunctionExpression, expectedType, resolutionContext
+            )
+        else -> {
+            @OptIn(OnlyForDefaultLanguageFeatureDisabled::class) // ResolveTopLevelLambdasAsSyntheticCallArgument
+            val updatedAnonymousFunction = transformTopLevelAnonymousFunctionInObsoleteWay(anonymousFunctionExpression, expectedType)
+            anonymousFunctionExpression.replaceAnonymousFunction(updatedAnonymousFunction)
+
+            anonymousFunctionExpression
+        }
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun transformTopLevelAnonymousFunctionInObsoleteWay(
         anonymousFunctionExpression: FirAnonymousFunctionExpression,
         expectedType: ConeKotlinType?
@@ -1235,6 +1246,7 @@ open class FirDeclarationsResolveTransformer(
         return lambda
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun FirAnonymousFunction.computeReturnTypeRef(expected: FirResolvedTypeRef?): FirResolvedTypeRef {
         val returnType = computeReturnType(
             session,
@@ -1253,6 +1265,7 @@ open class FirDeclarationsResolveTransformer(
         )
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun obtainValueParametersFromResolvedLambdaAtom(
         resolvedLambdaAtom: ConeResolvedLambdaAtom,
         lambda: FirAnonymousFunction,
@@ -1290,6 +1303,7 @@ open class FirDeclarationsResolveTransformer(
         }
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun obtainValueParametersFromExpectedType(
         expectedType: ConeKotlinType?,
         lambda: FirAnonymousFunction
@@ -1305,6 +1319,7 @@ open class FirDeclarationsResolveTransformer(
         return obtainValueParametersFromExpectedParameterTypes(parameterTypes, lambda)
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun obtainValueParametersFromExpectedParameterTypes(
         expectedTypeParameterTypes: List<ConeKotlinType>,
         lambda: FirAnonymousFunction

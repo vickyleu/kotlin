@@ -377,6 +377,8 @@ enum class LanguageFeature(
     ForbidSyntheticPropertiesWithoutBaseJavaGetter(KOTLIN_2_2, kind = BUG_FIX), // KT-72305, KT-64358
     AnnotationDefaultTargetMigrationWarning(KOTLIN_2_2, kind = BUG_FIX), // KT-73255, KT-73494
 
+    ResolveTopLevelLambdasAsSyntheticCallArgument(KOTLIN_2_1), // KT-67869
+
     // 2.3
 
     ForbidCompanionInLocalInnerClass(KOTLIN_2_3, kind = BUG_FIX),

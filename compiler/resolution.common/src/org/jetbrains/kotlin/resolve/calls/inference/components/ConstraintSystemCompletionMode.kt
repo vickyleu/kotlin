@@ -20,6 +20,11 @@ enum class ConstraintSystemCompletionMode(
         shouldForkPointConstraintsBeResolved = false,
         fixNotInferredTypeVariablesToErrorType = false,
     ),
+    PCLA_COMPLETED_NESTED_CALL(
+        allLambdasShouldBeAnalyzed = true,
+        shouldForkPointConstraintsBeResolved = false,
+        fixNotInferredTypeVariablesToErrorType = false,
+    ),
 
     /**
      * This mode allows us to infer variables in calls, which have enough type-info to be completed right-away

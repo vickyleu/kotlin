@@ -44,6 +44,7 @@ import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.resolve.calls.inference.addEqualityConstraintIfCompatible
 import org.jetbrains.kotlin.resolve.calls.inference.addSubtypeConstraintIfCompatible
 import org.jetbrains.kotlin.resolve.calls.inference.buildAbstractResultingSubstitutor
+import org.jetbrains.kotlin.resolve.calls.inference.buildCurrentSubstitutor
 import org.jetbrains.kotlin.resolve.calls.inference.components.ConstraintSystemCompletionMode
 import org.jetbrains.kotlin.resolve.calls.inference.model.ConstraintStorage
 import org.jetbrains.kotlin.types.TypeApproximatorConfiguration
@@ -116,23 +117,28 @@ class FirCallCompleter(
                 val finalSubstitutor = readOnlyConstraintStorage
                     .buildAbstractResultingSubstitutor(session.typeContext) as ConeSubstitutor
                 call.transformSingle(
-                    FirCallCompletionResultsWriterTransformer(
-                        session, components.scopeSession, finalSubstitutor,
-                        components.returnTypeCalculator,
-                        session.typeApproximator,
-                        components.dataFlowAnalyzer,
-                        components.integerLiteralAndOperatorApproximationTransformer,
-                        components.samResolver,
-                        components.context,
-                    ),
+                    createCompletionResultsWriter(finalSubstitutor),
                     null
                 )
             }
 
-            ConstraintSystemCompletionMode.PARTIAL, ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL -> {
+            // some other mode for PCLA?
+            // runCompletionForCall + currentCommonSystem.replaceContentWith(candidate.system.currentStorage()) + FirCallCompletionResultsWriterTransformer
+
+            ConstraintSystemCompletionMode.PARTIAL, ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL,
+            ConstraintSystemCompletionMode.PCLA_COMPLETED_NESTED_CALL -> {
                 runCompletionForCall(candidate, completionMode, call, initialType, analyzer)
 
                 inferenceSession.processPartiallyResolvedCall(call, resolutionMode, completionMode)
+
+                if (completionMode == ConstraintSystemCompletionMode.PCLA_COMPLETED_NESTED_CALL) {
+                    val finalSubstitutor = candidate.system.currentStorage()
+                        .buildCurrentSubstitutor(session.typeContext, emptyMap()) as ConeSubstitutor
+                    call.transformSingle(
+                        createCompletionResultsWriter(finalSubstitutor),
+                        null
+                    )
+                }
 
                 call
             }
