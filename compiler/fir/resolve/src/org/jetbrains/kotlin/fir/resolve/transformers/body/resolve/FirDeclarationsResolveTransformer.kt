@@ -1116,7 +1116,6 @@ open class FirDeclarationsResolveTransformer(
         val anonymousFunction = anonymousFunctionExpression.anonymousFunction
         anonymousFunction.transformAnnotations(transformer, ResolutionMode.ContextIndependent)
 
-        // Either ContextDependent, ContextIndependent or WithExpectedType could be here
         anonymousFunction.transformReturnTypeRef(transformer, ResolutionMode.ContextIndependent)
         anonymousFunction.transformReceiverParameter(transformer, ResolutionMode.ContextIndependent)
         anonymousFunction.valueParameters.forEach { it.transformReturnTypeRef(transformer, ResolutionMode.ContextIndependent) }
