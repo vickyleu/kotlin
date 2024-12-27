@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.fir.MutableOrEmptyList
 import org.jetbrains.kotlin.fir.builder.toMutableOrEmpty
 import org.jetbrains.kotlin.fir.contracts.FirContractDescription
 import org.jetbrains.kotlin.fir.declarations.*
+import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.references.FirControlFlowGraphReference
@@ -56,6 +57,7 @@ internal class FirAnonymousFunctionImpl(
     override val hasExplicitParameterList: Boolean,
     override val typeParameters: MutableList<FirTypeParameter>,
     override var typeRef: FirTypeRef,
+    override var diagnostic: ConeDiagnostic?,
 ) : FirAnonymousFunction() {
     override val containerSource: DeserializedContainerSource?
         get() = null
@@ -193,5 +195,9 @@ internal class FirAnonymousFunctionImpl(
 
     override fun replaceTypeRef(newTypeRef: FirTypeRef) {
         typeRef = newTypeRef
+    }
+
+    override fun replaceDiagnostic(newDiagnostic: ConeDiagnostic?) {
+        diagnostic = newDiagnostic
     }
 }

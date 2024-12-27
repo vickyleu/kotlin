@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.declaration.isLocalMember
 import org.jetbrains.kotlin.fir.analysis.checkers.projectionKindAsString
 import org.jetbrains.kotlin.fir.analysis.getChild
 import org.jetbrains.kotlin.fir.builder.FirSyntaxErrors
+import org.jetbrains.kotlin.fir.declarations.FirAnonymousFunction
 import org.jetbrains.kotlin.fir.declarations.utils.*
 import org.jetbrains.kotlin.fir.diagnostics.*
 import org.jetbrains.kotlin.fir.expressions.*
@@ -168,7 +169,10 @@ private fun ConeDiagnostic.toKtDiagnostic(
 
     is ConeDestructuringDeclarationsOnTopLevel -> null // TODO Currently a parsing error. Would be better to report here instead KT-58563
     is ConeCannotInferTypeParameterType -> FirErrors.CANNOT_INFER_PARAMETER_TYPE.createOn(source)
-    is ConeCannotInferValueParameterType -> FirErrors.CANNOT_INFER_PARAMETER_TYPE.createOn(source)
+    is ConeCannotInferValueParameterType -> when {
+        isTopLevelLambda -> FirErrors.VALUE_PARAMETER_WITHOUT_EXPLICIT_TYPE.createOn(source)
+        else -> FirErrors.CANNOT_INFER_PARAMETER_TYPE.createOn(source)
+    }
     is ConeCannotInferReceiverParameterType -> FirErrors.CANNOT_INFER_PARAMETER_TYPE.createOn(source)
     is ConeTypeVariableTypeIsNotInferred -> FirErrors.INFERENCE_ERROR.createOn(callOrAssignmentSource ?: source)
     is ConeInstanceAccessBeforeSuperCall -> FirErrors.INSTANCE_ACCESS_BEFORE_SUPER_CALL.createOn(source, this.target)
@@ -316,7 +320,8 @@ private fun mapInapplicableCandidateError(
                         rootCause.actualType.removeTypeVariableTypes(typeContext)
                     },
                     isMismatchDueToNullability = rootCause.isMismatchDueToNullability,
-                    candidate = diagnostic.candidate
+                    candidate = diagnostic.candidate,
+                    rootCause.returnExpressionForLambda,
                 )
             }
 
@@ -450,30 +455,38 @@ private fun diagnosticForArgumentTypeMismatch(
     actualType: ConeKotlinType,
     isMismatchDueToNullability: Boolean,
     candidate: AbstractCallCandidate<*>,
+    returnExpressionForLambda: FirAnonymousFunction?,
 ): KtDiagnostic {
     val symbol = candidate.symbol as FirCallableSymbol
     val receiverType = (candidate.chosenExtensionReceiver ?: candidate.dispatchReceiver)?.expression?.resolvedType
 
-    return if (expectedType is ConeCapturedType &&
-        expectedType.constructor.projection.kind.let { it == ProjectionKind.OUT || it == ProjectionKind.STAR } &&
-        receiverType != null &&
-        // Ensure we report an actual argument type mismatch of the candidate and not a lambda return expression
-        candidate.argumentMapping.keys.any { it.expression.source == source }
-    ) {
-        FirErrors.MEMBER_PROJECTED_OUT.createOn(
-            source,
-            receiverType,
-            expectedType.projectionKindAsString(),
-            symbol.originalOrSelf(),
-        )
-    } else {
-        FirErrors.ARGUMENT_TYPE_MISMATCH.createOn(
-            source,
-            expectedType,
-            // For lambda expressions, use their resolved type because `rootCause.actualType` can contain unresolved types
-            actualType,
-            isMismatchDueToNullability
-        )
+    return when {
+        returnExpressionForLambda != null ->
+            FirErrors.RETURN_TYPE_MISMATCH.createOn(
+                source, expectedType, actualType, returnExpressionForLambda, isMismatchDueToNullability
+            )
+        expectedType is ConeCapturedType &&
+                expectedType.constructor.projection.kind.let { it == ProjectionKind.OUT || it == ProjectionKind.STAR } &&
+                receiverType != null &&
+                // Ensure we report an actual argument type mismatch of the candidate and not a lambda return expression
+                candidate.argumentMapping.keys.any { it.expression.source == source }
+            -> {
+            FirErrors.MEMBER_PROJECTED_OUT.createOn(
+                source,
+                receiverType,
+                expectedType.projectionKindAsString(),
+                symbol.originalOrSelf(),
+            )
+        }
+        else -> {
+            FirErrors.ARGUMENT_TYPE_MISMATCH.createOn(
+                source,
+                expectedType,
+                // For lambda expressions, use their resolved type because `rootCause.actualType` can contain unresolved types
+                actualType,
+                isMismatchDueToNullability
+            )
+        }
     }
 }
 
@@ -564,7 +577,8 @@ private fun ConstraintSystemError.toDiagnostic(
                     expectedType = lowerConeType.removeTypeVariableTypes(typeContext),
                     actualType = upperConeType.removeTypeVariableTypes(typeContext),
                     isMismatchDueToNullability = typeMismatchDueToNullability,
-                    candidate = candidate
+                    candidate = candidate,
+                    (position as? ConeLambdaArgumentConstraintPosition)?.lambda,
                 )
             }
 

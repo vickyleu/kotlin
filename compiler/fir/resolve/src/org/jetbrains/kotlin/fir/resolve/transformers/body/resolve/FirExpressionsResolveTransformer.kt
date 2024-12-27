@@ -1234,7 +1234,7 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
             callableReferenceAccess
         } else {
             components.syntheticCallGenerator.resolveCallableReferenceWithSyntheticOuterCall(
-                callableReferenceAccess, data.expectedType, resolutionContext, data
+                callableReferenceAccess, data.expectedType, resolutionContext
             )
         }.also {
             dataFlowAnalyzer.exitCallableReference(it)

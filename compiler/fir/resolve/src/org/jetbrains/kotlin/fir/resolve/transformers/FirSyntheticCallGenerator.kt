@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.fir.moduleData
 import org.jetbrains.kotlin.fir.references.FirErrorNamedReference
 import org.jetbrains.kotlin.fir.references.FirReference
 import org.jetbrains.kotlin.fir.references.FirResolvedCallableReference
+import org.jetbrains.kotlin.fir.references.FirResolvedErrorReference
 import org.jetbrains.kotlin.fir.references.builder.buildErrorNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildResolvedErrorReference
 import org.jetbrains.kotlin.fir.references.impl.FirSimpleNamedReference
@@ -243,6 +244,34 @@ class FirSyntheticCallGenerator(
         return session.symbolProvider
             .getTopLevelFunctionSymbols(StandardNames.BUILT_INS_PACKAGE_FQ_NAME, arrayOfName)
             .firstOrNull() // TODO: it should be single() after KTIJ-26465 is fixed
+    }
+
+    fun resolveAnonymousFunctionExpressionWithSyntheticOuterCall(
+        anonymousFunctionExpression: FirAnonymousFunctionExpression,
+        expectedType: ConeKotlinType?,
+        context: ResolutionContext,
+    ): FirExpression {
+        val argumentList = buildUnaryArgumentList(anonymousFunctionExpression)
+
+        val reference = generateCalleeReferenceToFunctionWithExpectedTypeForArgument(
+            anonymousFunctionExpression,
+            argumentList,
+            expectedType,
+            context,
+        )
+
+        val fakeCall = buildFunctionCall {
+            calleeReference = reference
+            this.argumentList = argumentList
+        }
+
+        val resultingCall = components.callCompleter.completeCall(fakeCall, ResolutionMode.ContextIndependent)
+
+        (resultingCall.calleeReference as? FirResolvedErrorReference)?.let {
+            anonymousFunctionExpression.anonymousFunction.replaceDiagnostic(it.diagnostic)
+        }
+
+        return resultingCall.arguments[0]
     }
 
     fun resolveCallableReferenceWithSyntheticOuterCall(

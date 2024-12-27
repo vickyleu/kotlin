@@ -135,6 +135,7 @@ class ArgumentTypeMismatch(
     val actualType: ConeKotlinType,
     val argument: FirExpression,
     val isMismatchDueToNullability: Boolean,
+    val returnExpressionForLambda: FirAnonymousFunction? = null,
 ) : ResolutionDiagnostic(if (isMismatchDueToNullability) UNSAFE_CALL else INAPPLICABLE)
 
 class UnitReturnTypeLambdaContradictsExpectedType(

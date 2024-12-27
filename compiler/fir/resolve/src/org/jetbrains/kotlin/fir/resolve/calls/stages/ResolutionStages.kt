@@ -1013,7 +1013,8 @@ internal object CheckLambdaAgainstTypeVariableContradiction : ResolutionStage() 
                     expectedType,
                     lambdaType,
                     expression,
-                    context.session.typeContext.isTypeMismatchDueToNullability(lambdaType, expectedType)
+                    context.session.typeContext.isTypeMismatchDueToNullability(lambdaType, expectedType),
+                    returnExpressionForLambda = null,
                 )
             )
         }

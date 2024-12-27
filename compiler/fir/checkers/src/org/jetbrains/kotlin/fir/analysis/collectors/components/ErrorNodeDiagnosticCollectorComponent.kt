@@ -181,6 +181,16 @@ class ErrorNodeDiagnosticCollectorComponent(
         reportFirDiagnostic(diagnostic, source, data)
     }
 
+    override fun visitAnonymousFunction(
+        anonymousFunction: FirAnonymousFunction,
+        data: CheckerContext,
+    ) {
+        val diagnostic = anonymousFunction.diagnostic ?: return
+        val source = anonymousFunction.source
+
+        reportFirDiagnostic(diagnostic, source, data)
+    }
+
     private fun reportFirDiagnostic(
         diagnostic: ConeDiagnostic,
         source: KtSourceElement?,

@@ -71,8 +71,15 @@ class FirPCLAInferenceSession(
 
         currentCommonSystem.replaceContentWith(candidate.system.currentStorage())
 
-        if (completionMode == ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL) {
-            outerCandidate.postponedPCLACalls += ConeAtomWithCandidate(call, candidate)
+        when (completionMode) {
+            ConstraintSystemCompletionMode.PCLA_POSTPONED_CALL -> {
+                outerCandidate.postponedPCLACalls += ConeAtomWithCandidate(call, candidate)
+            }
+//            ConstraintSystemCompletionMode.PCLA_COMPLETED_NESTED_CALL -> {
+//                outerCandidate.postponedPCLACalls += candidate.postponedPCLACalls
+//                outerCandidate.lambdasAnalyzedWithPCLA += candidate.lambdasAnalyzedWithPCLA
+//            }
+            else -> {}
         }
     }
 
