@@ -38,7 +38,7 @@ FILE: onConstructor.kt
 
     }
     public final class Test4 : R|kotlin/Any| {
-        public constructor(a: R|@ContextFunctionTypeParams (A) -> kotlin/String| = fun <anonymous>(): R|kotlin/String| <inline=Unknown>  {
+        public constructor(a: R|@ContextFunctionTypeParams (A) -> kotlin/String| = fun <anonymous>(): R|kotlin/String| <inline=NoInline>  {
             ^ String()
         }
         ): R|Test4| {
