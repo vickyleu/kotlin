@@ -512,9 +512,14 @@ public class FirLightTreeDiagnosticsWithoutAliasExpansionTestGenerated extends A
   @TestDataPath("$PROJECT_ROOT")
   public class ResolveFreezesIDE {
     @Nested
-    @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/pcla")
+    @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree")
     @TestDataPath("$PROJECT_ROOT")
-    public class Pcla {
+    public class LightTree {
+      @Nested
+      @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree/pcla")
+      @TestDataPath("$PROJECT_ROOT")
+      public class Pcla {
+      }
     }
   }
 }

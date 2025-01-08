@@ -26797,23 +26797,28 @@ public class TieredBackendJvmLightTreeTestGenerated extends AbstractTieredBacken
     }
 
     @Nested
-    @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/pcla")
+    @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree")
     @TestDataPath("$PROJECT_ROOT")
-    public class Pcla {
+    public class LightTree {
       @Nested
-      @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/pcla/issues")
+      @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree/pcla")
       @TestDataPath("$PROJECT_ROOT")
-      public class Issues {
-        @Test
-        @TestMetadata("kt73771Original.nkt")
-        public void testKt73771Original() {
-          runTest("compiler/fir/analysis-tests/testData/resolveFreezesIDE/pcla/issues/kt73771Original.nkt");
-        }
+      public class Pcla {
+        @Nested
+        @TestMetadata("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree/pcla/issues")
+        @TestDataPath("$PROJECT_ROOT")
+        public class Issues {
+          @Test
+          @TestMetadata("kt73771Original.nkt")
+          public void testKt73771Original() {
+            runTest("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree/pcla/issues/kt73771Original.nkt");
+          }
 
-        @Test
-        @TestMetadata("kt73771Simple.nkt")
-        public void testKt73771Simple() {
-          runTest("compiler/fir/analysis-tests/testData/resolveFreezesIDE/pcla/issues/kt73771Simple.nkt");
+          @Test
+          @TestMetadata("kt73771Simple.nkt")
+          public void testKt73771Simple() {
+            runTest("compiler/fir/analysis-tests/testData/resolveFreezesIDE/lightTree/pcla/issues/kt73771Simple.nkt");
+          }
         }
       }
     }
