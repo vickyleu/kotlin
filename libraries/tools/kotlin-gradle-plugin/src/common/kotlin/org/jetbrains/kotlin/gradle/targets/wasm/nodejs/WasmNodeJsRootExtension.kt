@@ -8,11 +8,11 @@ package org.jetbrains.kotlin.gradle.targets.wasm.nodejs
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.TaskProvider
-import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
-import org.jetbrains.kotlin.gradle.targets.web.nodejs.AbstractNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinToolingInstallTask
+import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
+import org.jetbrains.kotlin.gradle.targets.web.nodejs.AbstractNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.utils.property
 
 open class WasmNodeJsRootExtension(

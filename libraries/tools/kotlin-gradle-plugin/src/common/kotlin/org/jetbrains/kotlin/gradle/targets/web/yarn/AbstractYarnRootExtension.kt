@@ -17,16 +17,7 @@ import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnv
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmApiExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.Platform
 import org.jetbrains.kotlin.gradle.targets.js.npm.LockCopyTask
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
-import org.jetbrains.kotlin.gradle.targets.js.yarn.Yarn
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnEnv
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnEnvironment
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockCopyTask
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockStoreTask
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnResolution
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnSetupTask
-import org.jetbrains.kotlin.gradle.targets.js.yarn.asYarnEnvironment
+import org.jetbrains.kotlin.gradle.targets.js.yarn.*
 import org.jetbrains.kotlin.gradle.targets.web.nodejs.AbstractNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.utils.property
 import java.io.File

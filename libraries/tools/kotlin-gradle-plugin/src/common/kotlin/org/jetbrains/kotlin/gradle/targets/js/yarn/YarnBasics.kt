@@ -8,9 +8,9 @@ package org.jetbrains.kotlin.gradle.targets.js.yarn
 import org.gradle.api.logging.Logger
 import org.gradle.internal.service.ServiceRegistry
 import org.jetbrains.kotlin.gradle.internal.execWithProgress
-import org.jetbrains.kotlin.gradle.targets.js.npm.NpmApiExecution
 import org.jetbrains.kotlin.gradle.targets.js.npm.NodeJsEnvironment
 import org.jetbrains.kotlin.gradle.targets.js.npm.Npm
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmApiExecution
 import java.io.File
 
 abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
@@ -22,7 +22,7 @@ abstract class YarnBasics : NpmApiExecution<YarnEnvironment> {
         environment: YarnEnvironment,
         dir: File,
         description: String,
-        args: List<String>
+        args: List<String>,
     ) {
         services.execWithProgress(description) { exec ->
             val arguments = args

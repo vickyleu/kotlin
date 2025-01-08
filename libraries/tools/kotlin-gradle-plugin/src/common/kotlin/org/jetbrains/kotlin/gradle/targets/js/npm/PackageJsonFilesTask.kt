@@ -5,14 +5,13 @@
 
 package org.jetbrains.kotlin.gradle.targets.js.npm
 
-import org.gradle.api.Task
 import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.ListProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.IgnoreEmptyDirectories
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.work.NormalizeLineEndings
-import org.jetbrains.kotlin.gradle.InternalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.PackageManagerEnvironment
 
 internal interface PackageJsonFilesTask : NodeJsEnvironmentTask, UsesKotlinNpmResolutionManager {
     @get:PathSensitive(PathSensitivity.RELATIVE)

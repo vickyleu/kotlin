@@ -44,7 +44,7 @@ class YarnWorkspaces : YarnBasics() {
         rootProjectName: String,
         rootProjectVersion: String,
         npmProjects: Collection<PreparedKotlinCompilationNpmResolution>,
-        resolutions: Map<String, String>
+        resolutions: Map<String, String>,
     ) {
         val rootPackageJsonFile = preparedFiles(nodeJs).single()
 
@@ -62,7 +62,7 @@ class YarnWorkspaces : YarnBasics() {
         logger: Logger,
         nodeJs: NodeJsEnvironment,
         packageManagerEnvironment: YarnEnvironment,
-        cliArgs: List<String>
+        cliArgs: List<String>,
     ) {
         val nodeJsWorldDir = nodeJs.rootPackageDir.getFile()
 
@@ -82,7 +82,7 @@ class YarnWorkspaces : YarnBasics() {
         rootProjectVersion: String,
         npmProjects: Collection<PreparedKotlinCompilationNpmResolution>,
         resolutions: Map<String, String>,
-        rootPackageJsonFile: File
+        rootPackageJsonFile: File,
     ) {
         val nodeJsWorldDir = rootPackageJsonFile.parentFile
         val rootPackageJson = PackageJson(rootProjectName, rootProjectVersion)
