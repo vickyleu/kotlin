@@ -28,7 +28,8 @@ internal data class KotlinWebpackRunner(
     val args: List<String>,
     val nodeArgs: List<String>,
     val config: KotlinWebpackConfig,
-    val npmToolingEnvDir: File?,
+    val npmToolingEnvDir: File,
+    val toolingExtracted: Boolean,
 ) {
     fun execute(services: ServiceRegistry) = services.execWithErrorLogger("webpack") { execAction, progressLogger ->
         configureExec(
@@ -97,21 +98,15 @@ internal data class KotlinWebpackRunner(
             args.add("--progress")
         }
 
-        if (npmToolingEnvDir != null) {
-            val modules = NpmProjectModules(npmToolingEnvDir)
-            execFactory.workingDir(npmProject.dir)
-            execFactory.executable(npmProject.nodeExecutable)
+        val modules = NpmProjectModules(npmToolingEnvDir)
+        execFactory.workingDir(npmProject.dir)
+        execFactory.executable(npmProject.nodeExecutable)
+        if (toolingExtracted) {
             execFactory.environment("NODE_PATH", npmToolingEnvDir.resolve("node_modules"))
             execFactory.environment("KOTLIN_TOOLING_DIR", npmToolingEnvDir.resolve("node_modules"))
-            execFactory.args = nodeArgs + modules.require(tool) + args
-        } else {
-            npmProject.useTool(
-                execFactory,
-                tool,
-                nodeArgs,
-                args
-            )
         }
+
+        execFactory.args = nodeArgs + modules.require(tool) + args
 
         return standardClient to errorClient
     }

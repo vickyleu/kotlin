@@ -103,31 +103,6 @@ open class NpmProject(@Transient val compilation: KotlinJsIrCompilation) : Seria
         nodeJs.executable.get()
     }
 
-    fun useTool(
-        exec: ExecSpec,
-        tool: String,
-        nodeArgs: List<String> = listOf(),
-        args: List<String>,
-    ) {
-        exec.workingDir(dir)
-        exec.executable(nodeExecutable)
-        exec.args = nodeArgs + require(tool) + args
-    }
-
-    /**
-     * Require [request] nodejs module and return canonical path to it's main js file.
-     */
-    fun require(request: String): String {
-//        nodeJs.npmResolutionManager.requireAlreadyInstalled(project)
-        return modules.require(request)
-    }
-
-    /**
-     * Find node module according to https://nodejs.org/api/modules.html#modules_all_together,
-     * with exception that instead of traversing parent folders, we are traversing parent projects
-     */
-    internal fun resolve(name: String): File? = modules.resolve(name)
-
     override fun toString() = "NpmProject(${name.get()})"
 
     companion object {
