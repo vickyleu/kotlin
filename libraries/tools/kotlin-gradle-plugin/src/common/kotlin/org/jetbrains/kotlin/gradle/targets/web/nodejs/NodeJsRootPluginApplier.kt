@@ -105,20 +105,41 @@ internal class NodeJsRootPluginApplier(
 
         val packageManagerName = nodeJsRoot.packageManagerExtension.map { it.name }
 
+        val allDeps = nodeJsRoot.versions.allDeps
+
         val npmTooling = NpmTooling(
             project.objects.directoryProperty()
                 .fileValue(project.gradle.gradleUserHomeDir.resolve("kotlin-npm-tooling"))
                 .zip(packageManagerName) { toolingDir, name ->
                     toolingDir.dir(name)
                 },
-            nodeJsRoot
-        )
+            allDeps
+        ).produceEnv()
 
         project.registerTask<KotlinToolingInstallTask>(KotlinToolingInstallTask.NAME) { toolingInstall ->
-            toolingInstall.npmTooling.set(
-                project.provider {
-                    npmTooling.requireConfigured()
-                }
+            toolingInstall
+                .versionsHash
+                .value(npmTooling.map { it.version })
+                .disallowChanges()
+
+            toolingInstall
+                .tools
+                .value(allDeps)
+                .disallowChanges()
+
+            toolingInstall
+                .destination
+                .fileProvider(npmTooling.map { it.dir })
+                .disallowChanges()
+
+            toolingInstall
+                .nodeModules
+                .fileProvider(npmTooling.map { it.dir.resolve("node_modules") })
+                .disallowChanges()
+
+            toolingInstall.configureNodeJsEnvironmentTasks(
+                nodeJsRoot,
+                nodeJs
             )
 
             with(nodeJs) {
@@ -131,6 +152,10 @@ internal class NodeJsRootPluginApplier(
                 toolingInstall.nodeModules.getFile().exists()
             }
         }
+
+        nodeJsRoot.npmTooling
+            .value(npmTooling)
+
 
         nodeJsRoot.resolver = KotlinRootNpmResolver(
             project.name,
@@ -164,7 +189,7 @@ internal class NodeJsRootPluginApplier(
                 task.group = NodeJsRootPlugin.Companion.TASKS_GROUP_NAME
                 task.description = "Create root package.json"
 
-                task.configureNodeJsEnvironmentTasks(
+                task.configureNodeJsEnvironmentWithNpmResolutionManagerTasks(
                     setupFileHasherTask,
                     nodeJsRoot,
                     nodeJs,
@@ -193,7 +218,7 @@ internal class NodeJsRootPluginApplier(
                 npmInstall.group = NodeJsRootPlugin.Companion.TASKS_GROUP_NAME
                 npmInstall.description = "Find, download and link NPM dependencies and projects"
 
-                npmInstall.configureNodeJsEnvironmentTasks(
+                npmInstall.configureNodeJsEnvironmentWithNpmResolutionManagerTasks(
                     setupFileHasherTask,
                     nodeJsRoot,
                     nodeJs,
@@ -335,7 +360,7 @@ internal class NodeJsRootPluginApplier(
         }
     }
 
-    private fun NodeJsEnvironmentTask.configureNodeJsEnvironmentTasks(
+    private fun PackageJsonFilesTask.configureNodeJsEnvironmentWithNpmResolutionManagerTasks(
         setupFileHasherTask: TaskProvider<*>,
         nodeJsRoot: AbstractNodeJsRootExtension,
         nodeJs: AbstractNodeJsEnvSpec,
@@ -359,6 +384,16 @@ internal class NodeJsRootPluginApplier(
             }
         ).disallowChanges()
 
+        configureNodeJsEnvironmentTasks(
+            nodeJsRoot,
+            nodeJs
+        )
+    }
+
+    private fun NodeJsEnvironmentTask.configureNodeJsEnvironmentTasks(
+        nodeJsRoot: AbstractNodeJsRootExtension,
+        nodeJs: AbstractNodeJsEnvSpec,
+    ) {
         nodeJsEnvironment.value(
             nodeJs.env
                 .map {

@@ -13,12 +13,14 @@ import org.gradle.work.DisableCachingByDefault
 import org.gradle.work.NormalizeLineEndings
 import org.jetbrains.kotlin.gradle.targets.js.npm.KotlinNpmResolutionManager
 import org.jetbrains.kotlin.gradle.targets.js.npm.NodeJsEnvironmentTask
+import org.jetbrains.kotlin.gradle.targets.js.npm.PackageJsonFilesTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.UsesKotlinNpmResolutionManager
 
 @DisableCachingByDefault
 abstract class KotlinNpmInstallTask :
     DefaultTask(),
     NodeJsEnvironmentTask,
+    PackageJsonFilesTask,
     UsesKotlinNpmResolutionManager {
     init {
         check(project == project.rootProject)

@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder
 import jetbrains.buildServer.messages.serviceMessages.BaseTestSuiteMessage
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.internal.tasks.testing.TestResultProcessor
 import org.gradle.api.provider.Provider
 import org.gradle.internal.logging.progress.ProgressLogger
@@ -100,7 +101,9 @@ class KotlinKarma(
     override val settingsState: String
         get() = "KotlinKarma($config)"
 
-    internal val npmTooling: Provider<NpmToolingEnv> = nodeJsRoot.toolingInstallTaskProvider.flatMap { it.npmTooling }
+    internal val npmToolingDir: DirectoryProperty = project.objects.directoryProperty().fileProvider(
+        nodeJsRoot.npmTooling.map { it.dir }
+    )
 
     val webpackConfig = KotlinWebpackConfig(
         configDirectory = project.projectDir.resolve("webpack.config.d"),
@@ -361,7 +364,7 @@ class KotlinKarma(
         val file = task.inputFileProperty.getFile()
         val fileString = file.toString()
 
-        val modules = NpmProjectModules(npmTooling.get().dir)
+        val modules = NpmProjectModules(npmToolingDir.getFile())
 
         config.files.add(modules.require("kotlin-web-helpers/dist/kotlin-test-karma-runner.js"))
         if (!debug) {
@@ -465,11 +468,10 @@ class KotlinKarma(
             "NODE_PATH",
             listOf(
                 npmProjectNodeModulesDir.getFile().normalize().absolutePath,
-                npmTooling.get().dir.resolve("node_modules").normalize().absolutePath
+                npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath
             ).joinToString(File.pathSeparator)
         )
-        forkOptions.environment("KOTLIN_TOOLING_DIR", npmTooling.get().dir.resolve("node_modules").normalize().absolutePath)
-
+        forkOptions.environment("KOTLIN_TOOLING_DIR", npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath)
 
         return object : JSServiceMessagesTestExecutionSpec(
             forkOptions,

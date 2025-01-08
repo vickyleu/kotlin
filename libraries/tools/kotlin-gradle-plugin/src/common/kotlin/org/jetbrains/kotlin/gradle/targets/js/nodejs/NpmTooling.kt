@@ -7,36 +7,36 @@ package org.jetbrains.kotlin.gradle.targets.js.nodejs
 
 import org.gradle.api.file.Directory
 import org.gradle.api.provider.Provider
-import org.jetbrains.kotlin.gradle.internal.ConfigurationPhaseAware
-import org.jetbrains.kotlin.gradle.targets.web.nodejs.AbstractNodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.NpmPackageVersion
 import org.jetbrains.kotlin.gradle.tasks.internal.CleanableStore
-import org.jetbrains.kotlin.gradle.utils.getFile
 import org.jetbrains.kotlin.gradle.utils.toHexString
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 
 open class NpmTooling(
     val installationDir: Provider<Directory>,
-    val nodeJs: AbstractNodeJsRootExtension,
-) : ConfigurationPhaseAware<NpmToolingEnv>() {
+    val allDeps: List<NpmPackageVersion>,
+) {
 
-    override fun finalizeConfiguration(): NpmToolingEnv {
-        val md = MessageDigest.getInstance("MD5")
-        nodeJs.versions.allDeps.forEach { (name, version) ->
-            md.update(name.toByteArray(StandardCharsets.UTF_8))
-            md.update(version.toByteArray(StandardCharsets.UTF_8))
+    fun produceEnv(): Provider<NpmToolingEnv> {
+        return installationDir.map { installationDirectory ->
+            val md = MessageDigest.getInstance("MD5")
+            allDeps.forEach { (name, version) ->
+                md.update(name.toByteArray(StandardCharsets.UTF_8))
+                md.update(version.toByteArray(StandardCharsets.UTF_8))
+            }
+
+            val hashVersion = md.digest().toHexString()
+
+            val cleanableStore = CleanableStore[installationDirectory.asFile.absolutePath]
+
+            val nodeDir = cleanableStore[hashVersion].use()
+
+            NpmToolingEnv(
+                cleanableStore = cleanableStore,
+                version = hashVersion,
+                dir = nodeDir,
+            )
         }
-
-        val hashVersion = md.digest().toHexString()
-
-        val cleanableStore = CleanableStore[installationDir.getFile().absolutePath]
-
-        val nodeDir = cleanableStore[hashVersion].use()
-
-        return NpmToolingEnv(
-            cleanableStore = cleanableStore,
-            version = hashVersion,
-            dir = nodeDir,
-        )
     }
 }

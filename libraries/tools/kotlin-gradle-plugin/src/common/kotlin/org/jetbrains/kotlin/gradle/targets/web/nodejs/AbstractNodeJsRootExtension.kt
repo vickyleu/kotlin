@@ -13,19 +13,15 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.logging.kotlinInfo
 import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider
-import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
 import org.jetbrains.kotlin.gradle.targets.js.NpmVersions
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnv
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsSetupTask
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmApiExt
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.TasksRequirements
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.*
 import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.KotlinRootNpmResolver
 import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.PACKAGE_JSON_UMBRELLA_TASK_NAME
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmCachesSetup
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinToolingInstallTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.RootPackageJsonTask
+import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
 import org.jetbrains.kotlin.gradle.utils.property
 import java.io.File
 
@@ -113,6 +109,8 @@ abstract class AbstractNodeJsRootExtension(
         get() = project.rootDir
 
     val packageManagerExtension: Property<NpmApiExt> = project.objects.property()
+
+    val npmTooling: Property<NpmToolingEnv> = project.objects.property()
 
     val taskRequirements: TasksRequirements
         get() = resolver.tasksRequirements
