@@ -31,7 +31,6 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinWebpackRulesContainer
 import org.jetbrains.kotlin.gradle.targets.js.dsl.WebpackRulesDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.WebpackRulesDsl.Companion.webpackRulesContainer
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.RequiresNpmDependencies
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode
@@ -79,7 +78,7 @@ constructor(
     var mode: Mode = Mode.DEVELOPMENT
 
     @get:Internal
-    internal val npmTooling: Property<NpmToolingEnv> = project.objects.property()
+    internal abstract val npmToolingEnvDir: DirectoryProperty
 
     @get:Internal
     abstract val inputFilesDirectory: DirectoryProperty
@@ -248,6 +247,7 @@ constructor(
         devtool = devtool,
         sourceMaps = sourceMaps,
         resolveFromModulesFirst = resolveFromModulesFirst,
+        resolveLoadersFromKotlinToolingDir = npmToolingEnvDir.isPresent
     )
 
     private fun createRunner(): KotlinWebpackRunner {
@@ -270,7 +270,6 @@ constructor(
         }
 
         return KotlinWebpackRunner(
-            npmTooling.get(),
             npmProject,
             logger,
             configFile.get(),
@@ -278,7 +277,8 @@ constructor(
             bin,
             webpackArgs,
             nodeArgs,
-            config
+            config,
+            npmToolingEnvDir.orNull?.asFile,
         )
     }
 

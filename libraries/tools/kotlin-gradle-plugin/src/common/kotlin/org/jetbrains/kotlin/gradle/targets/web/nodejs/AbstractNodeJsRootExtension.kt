@@ -110,8 +110,6 @@ abstract class AbstractNodeJsRootExtension(
 
     val packageManagerExtension: Property<NpmApiExt> = project.objects.property()
 
-    val npmTooling: Property<NpmToolingEnv> = project.objects.property()
-
     val taskRequirements: TasksRequirements
         get() = resolver.tasksRequirements
 
@@ -130,10 +128,6 @@ abstract class AbstractNodeJsRootExtension(
     val npmInstallTaskProvider: TaskProvider<out KotlinNpmInstallTask>
         get() = project.tasks.withType(KotlinNpmInstallTask::class.java)
             .named(extensionName(KotlinNpmInstallTask.Companion.NAME))
-
-    val toolingInstallTaskProvider: TaskProvider<out KotlinToolingInstallTask>
-        get() = project.tasks.withType(KotlinToolingInstallTask::class.java)
-            .named(extensionName(KotlinToolingInstallTask.NAME))
 
     val rootPackageJsonTaskProvider: TaskProvider<RootPackageJsonTask>
         get() = project.tasks.withType(RootPackageJsonTask::class.java)

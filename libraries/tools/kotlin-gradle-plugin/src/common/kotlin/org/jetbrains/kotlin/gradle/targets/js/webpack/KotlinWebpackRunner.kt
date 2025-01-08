@@ -15,14 +15,11 @@ import org.jetbrains.kotlin.gradle.internal.LogType
 import org.jetbrains.kotlin.gradle.internal.TeamCityMessageCommonClient
 import org.jetbrains.kotlin.gradle.internal.execWithErrorLogger
 import org.jetbrains.kotlin.gradle.internal.testing.TCServiceMessageOutputStreamHandler
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProject
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProjectModules
 import java.io.File
-import kotlin.collections.plus
 
 internal data class KotlinWebpackRunner(
-    val npmToolingEnv: NpmToolingEnv,
     val npmProject: NpmProject,
     val logger: Logger,
     val configFile: File,
@@ -30,7 +27,8 @@ internal data class KotlinWebpackRunner(
     val tool: String,
     val args: List<String>,
     val nodeArgs: List<String>,
-    val config: KotlinWebpackConfig
+    val config: KotlinWebpackConfig,
+    val npmToolingEnvDir: File?,
 ) {
     fun execute(services: ServiceRegistry) = services.execWithErrorLogger("webpack") { execAction, progressLogger ->
         configureExec(
@@ -65,7 +63,7 @@ internal data class KotlinWebpackRunner(
 
     private fun configureExec(
         execFactory: ExecSpec,
-        progressLogger: ProgressLogger?
+        progressLogger: ProgressLogger?,
     ): Pair<TeamCityMessageCommonClient, TeamCityMessageCommonClient> {
         check(config.entry?.isFile == true) {
             "${this}: Entry file not existed \"${config.entry}\""
@@ -99,12 +97,21 @@ internal data class KotlinWebpackRunner(
             args.add("--progress")
         }
 
-        val modules = NpmProjectModules(npmToolingEnv.dir)
-        execFactory.workingDir(npmProject.dir)
-        execFactory.executable(npmProject.nodeExecutable)
-        execFactory.environment("NODE_PATH", npmToolingEnv.dir.resolve("node_modules"))
-        execFactory.environment("KOTLIN_TOOLING_DIR", npmToolingEnv.dir.resolve("node_modules"))
-        execFactory.args = nodeArgs + modules.require(tool) + args
+        if (npmToolingEnvDir != null) {
+            val modules = NpmProjectModules(npmToolingEnvDir)
+            execFactory.workingDir(npmProject.dir)
+            execFactory.executable(npmProject.nodeExecutable)
+            execFactory.environment("NODE_PATH", npmToolingEnvDir.resolve("node_modules"))
+            execFactory.environment("KOTLIN_TOOLING_DIR", npmToolingEnvDir.resolve("node_modules"))
+            execFactory.args = nodeArgs + modules.require(tool) + args
+        } else {
+            npmProject.useTool(
+                execFactory,
+                tool,
+                nodeArgs,
+                args
+            )
+        }
 
         return standardClient to errorClient
     }

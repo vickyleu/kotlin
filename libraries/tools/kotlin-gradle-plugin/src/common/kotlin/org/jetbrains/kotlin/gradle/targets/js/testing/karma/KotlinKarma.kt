@@ -30,11 +30,11 @@ import org.jetbrains.kotlin.gradle.targets.js.internal.parseNodeJsStackTraceAsJv
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin.Companion.kotlinNodeJsEnvSpec
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProjectModules
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.testing.*
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 import org.jetbrains.kotlin.gradle.utils.appendLine
 import org.jetbrains.kotlin.gradle.utils.getFile
@@ -101,8 +101,16 @@ class KotlinKarma(
     override val settingsState: String
         get() = "KotlinKarma($config)"
 
+    internal val toolingExtracted: Boolean = compilation.targetVariant(
+        jsVariant = false,
+        wasmVariant = true,
+    )
+
     internal val npmToolingDir: DirectoryProperty = project.objects.directoryProperty().fileProvider(
-        nodeJsRoot.npmTooling.map { it.dir }
+        compilation.targetVariant(
+            { npmProjectDir.map { it.asFile } },
+            { (nodeJsRoot as WasmNodeJsRootExtension).npmTooling.map { it.dir } },
+        )
     )
 
     val webpackConfig = KotlinWebpackConfig(
@@ -116,7 +124,8 @@ class KotlinKarma(
         export = false,
         progressReporter = true,
         rules = project.objects.webpackRulesContainer(),
-        experiments = mutableSetOf("topLevelAwait")
+        experiments = mutableSetOf("topLevelAwait"),
+        resolveLoadersFromKotlinToolingDir = toolingExtracted
     )
 
     init {
@@ -464,14 +473,16 @@ class KotlinKarma(
                     listOf("start", karmaConfigAbsolutePath)
         }
 
-        forkOptions.environment(
-            "NODE_PATH",
-            listOf(
-                npmProjectNodeModulesDir.getFile().normalize().absolutePath,
-                npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath
-            ).joinToString(File.pathSeparator)
-        )
-        forkOptions.environment("KOTLIN_TOOLING_DIR", npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath)
+        if (toolingExtracted) {
+            forkOptions.environment(
+                "NODE_PATH",
+                listOf(
+                    npmProjectNodeModulesDir.getFile().normalize().absolutePath,
+                    npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath
+                ).joinToString(File.pathSeparator)
+            )
+            forkOptions.environment("KOTLIN_TOOLING_DIR", npmToolingDir.getFile().resolve("node_modules").normalize().absolutePath)
+        }
 
         return object : JSServiceMessagesTestExecutionSpec(
             forkOptions,

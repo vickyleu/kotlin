@@ -41,7 +41,8 @@ data class KotlinWebpackConfig(
     var sourceMaps: Boolean = false,
     var export: Boolean = true,
     var progressReporter: Boolean = false,
-    var resolveFromModulesFirst: Boolean = false
+    var resolveFromModulesFirst: Boolean = false,
+    var resolveLoadersFromKotlinToolingDir: Boolean = false,
 ) : WebpackRulesDsl {
 
     val entryInput: String?
@@ -134,6 +135,14 @@ data class KotlinWebpackConfig(
 
     fun appendTo(target: Appendable) {
         with(target) {
+            val resolveLoaders = if (resolveLoadersFromKotlinToolingDir) {
+                """
+                resolveLoader: {
+                  modules: ['node_modules', process.env['KOTLIN_TOOLING_DIR']]
+                }
+                """.trimIndent()
+            } else ""
+
             //language=JavaScript 1.8
             appendLine(
                 """
@@ -148,9 +157,7 @@ data class KotlinWebpackConfig(
                       module: {
                         rules: []
                       },
-                      resolveLoader: {
-                        modules: ['node_modules', process.env['KOTLIN_TOOLING_DIR']]
-                      }
+                      $resolveLoaders
                     };
                     
                 """.trimIndent()

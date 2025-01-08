@@ -21,12 +21,14 @@ import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinBrowserJsIr.Companion.WEB
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrSubTarget.Companion.DISTRIBUTION_TASK_NAME
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrSubTarget.Companion.RUN_TASK_NAME
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.targetVariant
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode
 import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
+import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.tasks.dependsOn
 import org.jetbrains.kotlin.gradle.utils.*
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toLowerCaseAsciiOnly
@@ -40,6 +42,15 @@ class WebpackConfigurator(private val subTarget: KotlinJsIrSubTarget) : SubTarge
         { project.rootProject.kotlinNodeJsRootExtension },
         { project.rootProject.wasmKotlinNodeJsRootExtension },
     )
+
+    internal val npmTooling: Provider<NpmToolingEnv>? =
+        subTarget.target.targetVariant(
+            { null },
+            {
+                (nodeJsRoot as WasmNodeJsRootExtension).npmTooling
+            },
+        )
+
 
     private val webpackTaskConfigurations = project.objects.domainObjectSet<Action<KotlinWebpack>>()
     private val runTaskConfigurations = project.objects.domainObjectSet<Action<KotlinWebpack>>()
@@ -209,6 +220,16 @@ class WebpackConfigurator(private val subTarget: KotlinJsIrSubTarget) : SubTarge
         dependsOn(nodeJsRoot.packageManagerExtension.map { it.postInstallTasks })
 
         configureOptimization(mode)
+
+        if (npmTooling != null) {
+            dependsOn((nodeJsRoot as WasmNodeJsRootExtension).toolingInstallTaskProvider)
+
+            this.npmToolingEnvDir
+                .fileProvider(
+                    npmTooling.map { it.dir }
+                )
+                .disallowChanges()
+        }
 
         this.versions.value(nodeJsRoot.versions)
             .disallowChanges()
