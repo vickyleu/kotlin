@@ -40,6 +40,9 @@ open class AbstractYarnRootExtension(
         check(project == project.rootProject)
     }
 
+    override val name: String
+        get() = "yarn"
+
     private val gradleHome = project.gradle.gradleUserHomeDir.also {
         project.logger.kotlinInfo("Storing cached files in $it")
     }

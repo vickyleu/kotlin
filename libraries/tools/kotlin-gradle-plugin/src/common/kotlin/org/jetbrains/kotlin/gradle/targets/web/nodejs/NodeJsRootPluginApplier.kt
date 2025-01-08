@@ -18,6 +18,8 @@ import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider
 import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
 import org.jetbrains.kotlin.gradle.targets.js.MultiplePluginDeclarationDetector
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.TASKS_GROUP_NAME
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmTooling
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.TasksRequirements
 import org.jetbrains.kotlin.gradle.targets.js.npm.*
 import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.KotlinRootNpmResolver
@@ -25,6 +27,7 @@ import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.PACKAGE_JSON_UMBRELLA
 import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.implementing
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmCachesSetup
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
+import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinToolingInstallTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.RootPackageJsonTask
 import org.jetbrains.kotlin.gradle.tasks.CleanDataTask
 import org.jetbrains.kotlin.gradle.tasks.registerTask
@@ -99,6 +102,35 @@ internal class NodeJsRootPluginApplier(
             }
 
         project.registerTask<Task>(platformDisambiguate.extensionName(PACKAGE_JSON_UMBRELLA_TASK_NAME))
+
+        val packageManagerName = nodeJsRoot.packageManagerExtension.map { it.name }
+
+        val npmTooling = NpmTooling(
+            project.objects.directoryProperty()
+                .fileValue(project.gradle.gradleUserHomeDir.resolve("kotlin-npm-tooling"))
+                .zip(packageManagerName) { toolingDir, name ->
+                    toolingDir.dir(name)
+                },
+            nodeJsRoot
+        )
+
+        project.registerTask<KotlinToolingInstallTask>(KotlinToolingInstallTask.NAME) { toolingInstall ->
+            toolingInstall.npmTooling.set(
+                project.provider {
+                    npmTooling.requireConfigured()
+                }
+            )
+
+            with(nodeJs) {
+                toolingInstall.dependsOn(project.nodeJsSetupTaskProvider)
+            }
+            toolingInstall.group = TASKS_GROUP_NAME
+            toolingInstall.description = "Find, download and link NPM dependencies and projects"
+
+            toolingInstall.outputs.upToDateWhen {
+                toolingInstall.nodeModules.getFile().exists()
+            }
+        }
 
         nodeJsRoot.resolver = KotlinRootNpmResolver(
             project.name,

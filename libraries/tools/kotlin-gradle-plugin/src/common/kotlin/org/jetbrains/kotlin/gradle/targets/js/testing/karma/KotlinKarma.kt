@@ -29,6 +29,8 @@ import org.jetbrains.kotlin.gradle.targets.js.internal.parseNodeJsStackTraceAsJv
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin.Companion.kotlinNodeJsEnvSpec
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NpmToolingEnv
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProjectModules
 import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
 import org.jetbrains.kotlin.gradle.targets.js.testing.*
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -83,6 +85,8 @@ class KotlinKarma(
     }
     private val npmProjectDir by project.provider { npmProject.dir }
 
+    private val npmProjectNodeModulesDir by project.provider { npmProject.nodeModulesDir }
+
     override val requiredNpmDependencies: Set<RequiredKotlinJsDependency>
         get() = requiredDependencies + webpackConfig.getRequiredDependencies(versions)
 
@@ -95,6 +99,8 @@ class KotlinKarma(
 
     override val settingsState: String
         get() = "KotlinKarma($config)"
+
+    internal val npmTooling: Provider<NpmToolingEnv> = nodeJsRoot.toolingInstallTaskProvider.flatMap { it.npmTooling }
 
     val webpackConfig = KotlinWebpackConfig(
         configDirectory = project.projectDir.resolve("webpack.config.d"),
@@ -147,7 +153,7 @@ class KotlinKarma(
                 "firefox-nightly-headless" -> useFirefoxNightlyHeadless()
                 "ie" -> useIe()
                 "opera" -> useOpera()
-                "phantom-js" -> usePhantomJS()
+//                "phantom-js" -> usePhantomJS()
                 "safari" -> useSafari()
                 else -> project.logger.warn("Unrecognised `kotlin.js.browser.karma.browsers` value [$it]. Ignoring...")
             }
@@ -239,7 +245,7 @@ class KotlinKarma(
         useChromeLike(debuggableChrome)
     }
 
-    fun usePhantomJS() = useBrowser("PhantomJS", versions.karmaPhantomjsLauncher)
+//    fun usePhantomJS() = useBrowser("PhantomJS", versions.karmaPhantomjsLauncher)
 
     private fun useFirefoxLike(id: String) = useBrowser(id, versions.karmaFirefoxLauncher)
 
@@ -355,15 +361,17 @@ class KotlinKarma(
         val file = task.inputFileProperty.getFile()
         val fileString = file.toString()
 
-        config.files.add(npmProject.require("kotlin-web-helpers/dist/kotlin-test-karma-runner.js"))
+        val modules = NpmProjectModules(npmTooling.get().dir)
+
+        config.files.add(modules.require("kotlin-web-helpers/dist/kotlin-test-karma-runner.js"))
         if (!debug) {
             if (platformType == KotlinPlatformType.wasm) {
                 config.files.add(
                     createLoadWasm(npmProject.dir.getFile(), file).normalize().absolutePath
                 )
 
-                config.customContextFile = npmProject.require("kotlin-web-helpers/dist/static/context.html")
-                config.customDebugFile = npmProject.require("kotlin-web-helpers/dist/static/debug.html")
+                config.customContextFile = modules.require("kotlin-web-helpers/dist/static/context.html")
+                config.customDebugFile = modules.require("kotlin-web-helpers/dist/static/debug.html")
             } else {
                 config.files.add(fileString)
             }
@@ -441,19 +449,27 @@ class KotlinKarma(
             confWriter.println("}")
         }
 
-        val nodeModules = listOf("karma/bin/karma")
-
         val karmaConfigAbsolutePath = karmaConfJs.absolutePath
         val args = if (debug) {
             nodeJsArgs + listOf(
-                npmProject.require("kotlin-web-helpers/dist/karma-debug-runner.js"),
+                modules.require("kotlin-web-helpers/dist/karma-debug-runner.js"),
                 karmaConfigAbsolutePath
             )
         } else {
             nodeJsArgs +
-                    nodeModules.map { npmProject.require(it) } +
+                    modules.require("karma/bin/karma") +
                     listOf("start", karmaConfigAbsolutePath)
         }
+
+        forkOptions.environment(
+            "NODE_PATH",
+            listOf(
+                npmProjectNodeModulesDir.getFile().normalize().absolutePath,
+                npmTooling.get().dir.resolve("node_modules").normalize().absolutePath
+            ).joinToString(File.pathSeparator)
+        )
+        forkOptions.environment("KOTLIN_TOOLING_DIR", npmTooling.get().dir.resolve("node_modules").normalize().absolutePath)
+
 
         return object : JSServiceMessagesTestExecutionSpec(
             forkOptions,

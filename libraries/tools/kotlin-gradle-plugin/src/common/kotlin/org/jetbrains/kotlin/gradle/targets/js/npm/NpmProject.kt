@@ -71,8 +71,7 @@ open class NpmProject(@Transient val compilation: KotlinJsIrCompilation) : Seria
     val project: Project
         get() = target.project
 
-    val nodeModulesDir
-        get() = dir.map { it.dir(NODE_MODULES) }
+    val nodeModulesDir: Provider<Directory> = nodeJsRoot.rootPackageDirectory.map { it.dir(NODE_MODULES) }
 
     val packageJsonFile: Provider<RegularFile>
         get() = dir.map { it.file(PACKAGE_JSON) }
@@ -100,7 +99,7 @@ open class NpmProject(@Transient val compilation: KotlinJsIrCompilation) : Seria
         NpmProjectModules(dir.getFile())
     }
 
-    private val nodeExecutable by lazy {
+    val nodeExecutable by lazy {
         nodeJs.executable.get()
     }
 

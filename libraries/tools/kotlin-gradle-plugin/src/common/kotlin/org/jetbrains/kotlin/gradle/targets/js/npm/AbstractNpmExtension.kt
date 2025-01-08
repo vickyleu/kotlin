@@ -26,6 +26,8 @@ open class AbstractNpmExtension(
         project.logger.kotlinInfo("Storing cached files in ${project.gradle.gradleUserHomeDir}")
     }
 
+    override val name = "npm"
+
     override val packageManager: Npm by lazy {
         Npm()
     }

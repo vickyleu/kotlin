@@ -11,6 +11,8 @@ import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmApiExecution
 
 interface NpmApiExtension<out Env : PackageManagerEnvironment, out NpmApi : NpmApiExecution<Env>> {
+    val name: String
+
     val packageManager: NpmApi
 
     val environment: Env
