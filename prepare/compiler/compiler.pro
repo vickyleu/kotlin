@@ -46,6 +46,10 @@
 -dontwarn org.w3c.dom.ElementTraversal
 -dontwarn org.xerial.snappy.SnappyBundleActivator
 
+# new jline uses modern JDK features, but we don't care so far, because the CLI REPL, which uses it, is deprecated anyway
+-dontwarn java.lang.**
+-dontwarn java.util.**
+
 # Some annotations from intellijCore/annotations.jar are not presented in org.jetbrains.annotations
 -dontwarn org.jetbrains.annotations.*
 
