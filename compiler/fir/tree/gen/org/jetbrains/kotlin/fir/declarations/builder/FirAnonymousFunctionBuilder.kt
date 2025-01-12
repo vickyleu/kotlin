@@ -22,7 +22,6 @@ import org.jetbrains.kotlin.fir.contracts.FirContractDescription
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.impl.FirAnonymousFunctionImpl
 import org.jetbrains.kotlin.fir.declarations.impl.FirResolvedDeclarationStatusImpl
-import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.references.FirControlFlowGraphReference
@@ -58,7 +57,6 @@ class FirAnonymousFunctionBuilder : FirFunctionBuilder, FirAnnotationContainerBu
     var hasExplicitParameterList: Boolean by kotlin.properties.Delegates.notNull<Boolean>()
     val typeParameters: MutableList<FirTypeParameter> = mutableListOf()
     var typeRef: FirTypeRef = FirImplicitTypeRefImplWithoutSource
-    var diagnostic: ConeDiagnostic? = null
 
     override fun build(): FirAnonymousFunction {
         return FirAnonymousFunctionImpl(
@@ -86,7 +84,6 @@ class FirAnonymousFunctionBuilder : FirFunctionBuilder, FirAnnotationContainerBu
             hasExplicitParameterList,
             typeParameters,
             typeRef,
-            diagnostic,
         )
     }
 

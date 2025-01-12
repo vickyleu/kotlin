@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.FirLabel
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.contracts.FirContractDescription
-import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.references.FirControlFlowGraphReference
@@ -53,7 +52,6 @@ abstract class FirAnonymousFunction : FirFunction(), FirTypeParametersOwner, Fir
     abstract val hasExplicitParameterList: Boolean
     abstract override val typeParameters: List<FirTypeParameter>
     abstract val typeRef: FirTypeRef
-    abstract val diagnostic: ConeDiagnostic?
 
     override fun <R, D> accept(visitor: FirVisitor<R, D>, data: D): R =
         visitor.visitAnonymousFunction(this, data)
@@ -87,8 +85,6 @@ abstract class FirAnonymousFunction : FirFunction(), FirTypeParametersOwner, Fir
     abstract fun replaceInlineStatus(newInlineStatus: InlineStatus)
 
     abstract fun replaceTypeRef(newTypeRef: FirTypeRef)
-
-    abstract fun replaceDiagnostic(newDiagnostic: ConeDiagnostic?)
 
     abstract override fun <D> transformAnnotations(transformer: FirTransformer<D>, data: D): FirAnonymousFunction
 

@@ -26,15 +26,11 @@ import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.expressions.builder.buildArgumentList
 import org.jetbrains.kotlin.fir.expressions.builder.buildFunctionCall
 import org.jetbrains.kotlin.fir.moduleData
-import org.jetbrains.kotlin.fir.references.FirErrorNamedReference
-import org.jetbrains.kotlin.fir.references.FirReference
-import org.jetbrains.kotlin.fir.references.FirResolvedCallableReference
-import org.jetbrains.kotlin.fir.references.FirResolvedErrorReference
+import org.jetbrains.kotlin.fir.references.*
 import org.jetbrains.kotlin.fir.references.builder.buildErrorNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildResolvedErrorReference
 import org.jetbrains.kotlin.fir.references.impl.FirSimpleNamedReference
 import org.jetbrains.kotlin.fir.references.impl.FirStubReference
-import org.jetbrains.kotlin.fir.references.isError
 import org.jetbrains.kotlin.fir.resolve.*
 import org.jetbrains.kotlin.fir.resolve.calls.FirSyntheticFunctionSymbol
 import org.jetbrains.kotlin.fir.resolve.calls.ResolutionContext
@@ -268,7 +264,11 @@ class FirSyntheticCallGenerator(
         val resultingCall = components.callCompleter.completeCall(fakeCall, ResolutionMode.ContextIndependent)
 
         (resultingCall.calleeReference as? FirResolvedErrorReference)?.let {
-            anonymousFunctionExpression.anonymousFunction.replaceDiagnostic(it.diagnostic)
+            return buildErrorExpression(
+                anonymousFunctionExpression.source?.fakeElement(KtFakeSourceElementKind.ErrorTypeRef),
+                it.diagnostic,
+                anonymousFunctionExpression
+            )
         }
 
         return resultingCall.arguments[0]

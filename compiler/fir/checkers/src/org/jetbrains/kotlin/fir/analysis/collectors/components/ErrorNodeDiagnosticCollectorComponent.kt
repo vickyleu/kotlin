@@ -27,7 +27,6 @@ import org.jetbrains.kotlin.fir.references.FirResolvedErrorReference
 import org.jetbrains.kotlin.fir.references.FirThisReference
 import org.jetbrains.kotlin.fir.resolve.diagnostics.*
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.fir.types.ConeErrorType
 
 class ErrorNodeDiagnosticCollectorComponent(
     session: FirSession,
@@ -178,16 +177,6 @@ class ErrorNodeDiagnosticCollectorComponent(
         val diagnostic = thisReference.diagnostic ?: return
         // FirImplicitThisReference has no source, in this case use source of containing ThisReceiverExpression
         val source = thisReference.source ?: data.containingElements.elementAtOrNull(1)?.source
-        reportFirDiagnostic(diagnostic, source, data)
-    }
-
-    override fun visitAnonymousFunction(
-        anonymousFunction: FirAnonymousFunction,
-        data: CheckerContext,
-    ) {
-        val diagnostic = anonymousFunction.diagnostic ?: return
-        val source = anonymousFunction.source
-
         reportFirDiagnostic(diagnostic, source, data)
     }
 

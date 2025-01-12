@@ -463,7 +463,6 @@ object FirTree : AbstractFirTreeBuilder() {
         +field("hasExplicitParameterList", boolean)
         +typeParameters
         +field(typeRef, withReplace = true)
-        +field("diagnostic", coneDiagnosticType, nullable = true, withReplace = true)
     }
 
     val anonymousFunctionExpression: Element by element(Expression) {
