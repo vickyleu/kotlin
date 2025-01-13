@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.containin
 import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders.LLModuleWithDependenciesSymbolProvider
+import org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders.LLPsiAwareSymbolProvider
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProviderInternals
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
@@ -132,12 +133,14 @@ internal class FirDeclarationForCompiledElementSearcher(private val session: LLF
         val classId = declaration.getClassId() ?: errorWithFirSpecificEntries("Non-local class should have classId", psi = declaration)
 
         val classCandidate = when (val symbolProvider = session.symbolProvider) {
-            is LLModuleWithDependenciesSymbolProvider -> {
-                symbolProvider.getDeserializedClassLikeSymbolByClassIdWithoutDependencies(classId, declaration)
-            }
-            else -> {
-                symbolProvider.getClassLikeSymbolByClassId(classId)
-            }
+            is LLModuleWithDependenciesSymbolProvider ->
+                symbolProvider.getDeserializedClassLikeSymbolByPsiWithoutDependencies(classId, declaration)
+
+            is LLPsiAwareSymbolProvider -> symbolProvider.getClassLikeSymbolByPsi(classId, declaration)
+
+            // TODO (KT-72988): Error out as we should find deserialized symbols via at least `getClassLikeSymbolByPsi`. This first requires
+            //  builtins symbol providers, as well as the composite provider they're embedded in, to become `LLPsiAwareSymbolProvider`s.
+            else -> symbolProvider.getClassLikeSymbolByClassId(classId)
         }
 
         if (classCandidate == null) {
