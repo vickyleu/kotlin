@@ -357,8 +357,6 @@ val projectsUsedInIntelliJKotlinPlugin =
                 ":kotlin-noarg-compiler-plugin.k2",
                 ":kotlin-noarg-compiler-plugin.backend",
 
-                ":plugins:android-extensions-compiler",
-
                 ":kotlin-sam-with-receiver-compiler-plugin.cli",
                 ":kotlin-sam-with-receiver-compiler-plugin.common",
                 ":kotlin-sam-with-receiver-compiler-plugin.k1",
@@ -444,7 +442,6 @@ extra["kotlinJpsPluginMavenDependenciesNonTransitiveLibs"] = listOf(
 )
 
 extra["compilerArtifactsForIde"] = listOfNotNull(
-    ":prepare:ide-plugin-dependencies:android-extensions-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:allopen-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:compose-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:js-plain-objects-compiler-plugin-for-ide",
@@ -490,7 +487,6 @@ extra["compilerArtifactsForIde"] = listOfNotNull(
     ":kotlin-scripting-jvm",
     ":kotlin-scripting-compiler",
     ":kotlin-scripting-compiler-impl",
-    ":kotlin-android-extensions-runtime",
     ":plugins:parcelize:parcelize-runtime",
     ":kotlin-stdlib-common",
     ":kotlin-stdlib",
