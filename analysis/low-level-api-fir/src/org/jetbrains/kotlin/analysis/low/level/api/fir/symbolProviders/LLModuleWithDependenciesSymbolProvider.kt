@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.analysis.api.projectStructure.KaScriptModule
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
 import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
 import org.jetbrains.kotlin.analysis.low.level.api.fir.providers.jvmClassNameIfDeserialized
+import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirBuiltinsAndCloneableSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders.combined.LLCombinedSymbolProvider
 import org.jetbrains.kotlin.analysis.utils.collections.buildSmartList
@@ -81,7 +82,7 @@ internal class LLModuleWithDependenciesSymbolProvider(
             is AbstractFirDeserializedSymbolProvider -> provider.getClassLikeSymbolByClassId(classId)
             else -> null
         }
-    }
+    } ?: stdlibBuiltinsProvider?.getClassLikeSymbolMatchingPsi(classId, classLikeDeclaration)
 
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
@@ -93,30 +94,29 @@ internal class LLModuleWithDependenciesSymbolProvider(
         LLKotlinStubBasedLibraryMultifileClassPartCallableSymbolProvider(session)
     }
 
-    @FirSymbolProviderInternals
-    fun getTopLevelDeserializedCallableSymbolsToWithoutDependencies(
-        destination: MutableList<FirCallableSymbol<*>>,
+    @OptIn(FirSymbolProviderInternals::class)
+    fun getTopLevelDeserializedCallableSymbolsWithoutDependencies(
         packageFqName: FqName,
         shortName: Name,
         callableDeclaration: KtCallableDeclaration,
-    ) {
-        val sizeBefore = destination.size
-
+    ): List<FirCallableSymbol<*>> = buildList {
         providers.forEach { provider ->
             when (provider) {
                 is LLKotlinStubBasedLibrarySymbolProvider ->
-                    destination.addIfNotNull(provider.getTopLevelCallableSymbol(packageFqName, shortName, callableDeclaration))
+                    addIfNotNull(provider.getTopLevelCallableSymbol(packageFqName, shortName, callableDeclaration))
 
                 is AbstractFirDeserializedSymbolProvider ->
-                    provider.getTopLevelCallableSymbolsTo(destination, packageFqName, shortName)
+                    provider.getTopLevelCallableSymbolsTo(this, packageFqName, shortName)
 
                 else -> {}
             }
         }
 
+        stdlibBuiltinsProvider?.getTopLevelCallableSymbolsTo(this, packageFqName, shortName)
+
         // Must be called after the original search as this is only a fallback solution
-        if (sizeBefore == destination.size && providers.any { it is LLKotlinStubBasedLibrarySymbolProvider }) {
-            multifileClassPartCallableSymbolProvider.addCallableIfNeeded(destination, packageFqName, shortName, callableDeclaration)
+        if (isEmpty() && providers.any { it is LLKotlinStubBasedLibrarySymbolProvider }) {
+            multifileClassPartCallableSymbolProvider.addCallableIfNeeded(this, packageFqName, shortName, callableDeclaration)
         }
     }
 
@@ -150,8 +150,17 @@ internal class LLModuleWithDependenciesSymbolProvider(
         hasPackageWithoutDependencies(fqName)
                 || dependencyProvider.hasPackage(fqName)
 
-    fun hasPackageWithoutDependencies(fqName: FqName): Boolean =
+    private fun hasPackageWithoutDependencies(fqName: FqName): Boolean =
         providers.any { it.hasPackage(fqName) }
+
+    /**
+     * The builtins provider for a Kotlin standard library. This is used as a fallback for builtins when getting deserialized symbols for
+     * the current module, as builtins are conceptually part of the standard library, but might not be present in its binaries.
+     */
+    private val stdlibBuiltinsProvider: FirSymbolProvider?
+        get() = if (hasPackageWithoutDependencies(StandardClassIds.BASE_KOTLIN_PACKAGE)) {
+            dependencyProvider.providers.find { it.session is LLFirBuiltinsAndCloneableSession }
+        } else null
 }
 
 internal class LLDependenciesSymbolProvider(
