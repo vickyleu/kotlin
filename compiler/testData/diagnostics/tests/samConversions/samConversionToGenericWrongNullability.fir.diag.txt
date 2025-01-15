@@ -18,7 +18,7 @@
 
 /test.kt:(1300,1322): error: Return type mismatch: expected 'String', actual 'String?'.
 
-/test.kt:(1300,1322): error: Argument type mismatch: actual type is 'String?', but 'String' was expected.
+/test.kt:(1300,1322): error: Return type mismatch: expected 'String', actual 'String?'.
 
 /test.kt:(1414,1513): error: Argument type mismatch: actual type is 'String!', but 'Function0<String>' was expected.
 
@@ -37,21 +37,21 @@
 /test.kt:(1977,1984): error: Return type of 'get' is not a subtype of the return type of the overridden member 'fun get(): String' defined in '/<anonymous>'.
 
 /test.kt:(2070,2073): error: Return type of 'get' is not a subtype of the return type of the overridden member 'fun get(): String' defined in '/<anonymous>'.
-/edge-cases.kt:(269,319): error: Argument type mismatch: actual type is 'Unit', but 'String!' was expected.
+/edge-cases.kt:(269,319): error: Return type mismatch: expected 'String!', actual 'Unit'.
 
-/edge-cases.kt:(358,419): error: Argument type mismatch: actual type is 'Unit', but 'String!' was expected.
+/edge-cases.kt:(358,419): error: Return type mismatch: expected 'String!', actual 'Unit'.
 
 /edge-cases.kt:(387,409): error: Return type mismatch: expected 'Unit', actual 'String?'.
 
-/edge-cases.kt:(387,409): error: Argument type mismatch: actual type is 'String?', but 'Unit' was expected.
+/edge-cases.kt:(387,409): error: Return type mismatch: expected 'Unit', actual 'String?'.
 
-/edge-cases.kt:(458,524): error: Argument type mismatch: actual type is 'Unit', but 'String!' was expected.
+/edge-cases.kt:(458,524): error: Return type mismatch: expected 'String!', actual 'Unit'.
 
 /edge-cases.kt:(492,514): error: Return type mismatch: expected 'Unit', actual 'String?'.
 
-/edge-cases.kt:(492,514): error: Argument type mismatch: actual type is 'String?', but 'Unit' was expected.
+/edge-cases.kt:(492,514): error: Return type mismatch: expected 'Unit', actual 'String?'.
 
-/edge-cases.kt:(571,635): error: Argument type mismatch: actual type is 'Unit', but 'String!' was expected.
+/edge-cases.kt:(571,635): error: Return type mismatch: expected 'String!', actual 'Unit'.
 
 /edge-cases.kt:(701,708): warning: Argument type mismatch: actual type is 'T? (of fun <T : Number> test1)', but 'T (of fun <T : Number> test1)' was expected. This will become an error in Kotlin 2.1.
 
