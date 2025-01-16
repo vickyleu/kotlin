@@ -32,6 +32,7 @@ kotlin {
             args("configtest")
             val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserDevelopmentWebpack").flatMap { it.configFile }
             environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+            environment("NODE_PATH", modules.dir.resolve("node_modules"))
 
             doFirst {
                 args(configFile.get().absolutePath)
@@ -42,6 +43,7 @@ kotlin {
             dependsOn("wasmJsBrowserProductionWebpack")
             val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserProductionWebpack").flatMap { it.configFile }
             environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+            environment("NODE_PATH", modules.dir.resolve("node_modules"))
 
             args("configtest")
             doFirst {
@@ -54,6 +56,7 @@ kotlin {
             val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserDevelopmentRun").flatMap { it.configFile }
             args("configtest")
             environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+            environment("NODE_PATH", modules.dir.resolve("node_modules"))
 
             doFirst {
                 args(configFile.get().absolutePath)
@@ -65,6 +68,7 @@ kotlin {
             val configFile = tasks.named<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>("wasmJsBrowserProductionRun").flatMap { it.configFile }
             args("configtest")
             environment("KOTLIN_TOOLING_DIR", modules.dir.resolve("node_modules"))
+            environment("NODE_PATH", modules.dir.resolve("node_modules"))
 
             doFirst {
                 args(configFile.get().absolutePath)
