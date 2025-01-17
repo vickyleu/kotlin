@@ -40,7 +40,8 @@ class ConeCannotInferTypeParameterType(
 
 class ConeCannotInferValueParameterType(
     val valueParameter: FirValueParameterSymbol,
-    override val reason: String = "Cannot infer type for parameter ${valueParameter.name}"
+    override val reason: String = "Cannot infer type for parameter ${valueParameter.name}",
+    val isTopLevelLambda: Boolean = false,
 ) : ConeCannotInferType()
 
 class ConeCannotInferReceiverParameterType(

@@ -378,6 +378,8 @@ enum class LanguageFeature(
     AnnotationDefaultTargetMigrationWarning(KOTLIN_2_2, kind = BUG_FIX), // KT-73255, KT-73494
     AllowDnnTypeOverridingFlexibleType(KOTLIN_2_2, kind = OTHER), // KT-74049
 
+    ResolveTopLevelLambdasAsSyntheticCallArgument(KOTLIN_2_1), // KT-67869
+
     // 2.3
 
     ForbidCompanionInLocalInnerClass(KOTLIN_2_3, kind = BUG_FIX),

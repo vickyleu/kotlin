@@ -8,9 +8,9 @@ fun <B> build(func: (Container<B>) -> B) {}
 fun main(b: Boolean) {
     build { container ->
         if (b) {
-            return@build <!UNRESOLVED_REFERENCE!>{ <!VALUE_PARAMETER_WITHOUT_EXPLICIT_TYPE!>arg<!> ->
-                arg.<!UNRESOLVED_REFERENCE!>length<!>
-            }<!>
+            return@build { arg ->
+                arg.length
+            }
         }
         container.consume({ arg: String -> })
     }

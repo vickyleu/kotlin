@@ -229,7 +229,7 @@ interface TypeSystemInferenceExtensionContext : TypeSystemContext, TypeSystemBui
 
     fun TypeConstructorMarker.isFinalClassConstructor(): Boolean
 
-    fun TypeVariableMarker.freshTypeConstructor(): TypeConstructorMarker
+    fun TypeVariableMarker./**/freshTypeConstructor(): TypeConstructorMarker
 
     fun CapturedTypeMarker.typeConstructorProjection(): TypeArgumentMarker
     fun CapturedTypeMarker.typeParameter(): TypeParameterMarker?

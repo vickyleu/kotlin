@@ -44,9 +44,12 @@ import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.resolve.calls.inference.addEqualityConstraintIfCompatible
 import org.jetbrains.kotlin.resolve.calls.inference.addSubtypeConstraintIfCompatible
 import org.jetbrains.kotlin.resolve.calls.inference.buildAbstractResultingSubstitutor
+import org.jetbrains.kotlin.resolve.calls.inference.buildCurrentSubstitutor
 import org.jetbrains.kotlin.resolve.calls.inference.components.ConstraintSystemCompletionMode
 import org.jetbrains.kotlin.resolve.calls.inference.model.ConstraintStorage
 import org.jetbrains.kotlin.types.TypeApproximatorConfiguration
+import org.jetbrains.kotlin.types.model.KotlinTypeMarker
+import org.jetbrains.kotlin.types.model.TypeConstructorMarker
 import org.jetbrains.kotlin.types.model.safeSubstitute
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 
@@ -126,12 +129,34 @@ class FirCallCompleter(
 
                 inferenceSession.processPartiallyResolvedCall(call, resolutionMode, completionMode)
 
-                call
+                if (candidate.isSyntheticCallForTopLevelLambda()) {
+                    val storage = candidate.system.currentStorage()
+
+                    val fixingNotInferredVariables: Map<TypeConstructorMarker, KotlinTypeMarker> = buildMap {
+                        if (storage.notFixedTypeVariables.isEmpty()) return@buildMap
+
+                        for (typeConstructor in storage.allTypeVariables.keys.toList().drop(storage.outerSystemVariablesPrefixSize)) {
+                            if (typeConstructor !in storage.notFixedTypeVariables) continue
+                            put(typeConstructor, session.typeContext.createUninferredType(typeConstructor))
+                        }
+                    }
+
+                    val finalSubstitutor = storage
+                        .buildCurrentSubstitutor(session.typeContext, emptyMap()) as ConeSubstitutor
+                    call.transformSingle(
+                        createCompletionResultsWriter(finalSubstitutor),
+                        null
+                    )
+                } else {
+                    call
+                }
             }
 
             ConstraintSystemCompletionMode.UNTIL_FIRST_LAMBDA -> throw IllegalStateException()
         }
     }
+
+    private fun Candidate.isSyntheticCallForTopLevelLambda(): Boolean = callInfo.callSite is FirAnonymousFunctionExpression
 
     private fun checkStorageConstraintsAfterFullCompletion(storage: ConstraintStorage) {
         // Fast path for sake of optimization
@@ -351,7 +376,7 @@ class FirCallCompleter(
                         this.name = name
                         symbol = FirValueParameterSymbol(name)
                         returnTypeRef =
-                            itType.approximateLambdaInputType(symbol, withPCLASession).toFirResolvedTypeRef(
+                            itType.approximateLambdaInputType(symbol, withPCLASession, candidate).toFirResolvedTypeRef(
                                 lambdaAtom.anonymousFunction.source?.fakeElement(KtFakeSourceElementKind.ItLambdaParameter)
                             )
                         defaultValue = null
@@ -371,7 +396,7 @@ class FirCallCompleter(
                 receiverType == null -> lambda.replaceReceiverParameter(null)
                 !lambdaAtom.coerceFirstParameterToExtensionReceiver -> {
                     lambda.receiverParameter?.apply {
-                        val type = receiverType.approximateLambdaInputType(valueParameter = null, withPCLASession)
+                        val type = receiverType.approximateLambdaInputType(valueParameter = null, withPCLASession, candidate)
                         val source =
                             source?.fakeElement(KtFakeSourceElementKind.LambdaReceiver)
                                 ?: lambda.source?.fakeElement(KtFakeSourceElementKind.LambdaReceiver)
@@ -393,7 +418,7 @@ class FirCallCompleter(
                             name = SpecialNames.UNDERSCORE_FOR_UNUSED_VAR
                             symbol = FirValueParameterSymbol(name)
                             returnTypeRef = contextParameterType
-                                .approximateLambdaInputType(symbol, withPCLASession)
+                                .approximateLambdaInputType(symbol, withPCLASession, candidate)
                                 .toFirResolvedTypeRef(lambdaAtom.anonymousFunction.source?.fakeElement(KtFakeSourceElementKind.LambdaContextParameter))
                             valueParameterKind = if (session.languageVersionSettings.supportsFeature(LanguageFeature.ContextParameters)) {
                                 FirValueParameterKind.ContextParameter
@@ -428,7 +453,7 @@ class FirCallCompleter(
                     )
                     return@forEachIndexed
                 }
-                val newReturnType = theParameters[index].approximateLambdaInputType(parameter.symbol, withPCLASession)
+                val newReturnType = theParameters[index].approximateLambdaInputType(parameter.symbol, withPCLASession, candidate)
                 val newReturnTypeRef = if (parameter.returnTypeRef is FirImplicitTypeRef) {
                     newReturnType.toFirResolvedTypeRef(parameter.source?.fakeElement(KtFakeSourceElementKind.ImplicitReturnTypeOfLambdaValueParameter))
                 } else parameter.returnTypeRef.resolvedTypeFromPrototype(newReturnType)
@@ -515,12 +540,15 @@ class FirCallCompleter(
     private fun ConeKotlinType.approximateLambdaInputType(
         valueParameter: FirValueParameterSymbol?,
         isRootLambdaForPCLASession: Boolean,
+        containingCandidate: Candidate,
     ): ConeKotlinType {
         // We only run lambda completion from ConstraintSystemCompletionContext.analyzeRemainingNotAnalyzedPostponedArgument when they are
         // left uninferred.
         // Currently, we use stub types for builder inference, so CANNOT_INFER_PARAMETER_TYPE is the only possible result here.
         if (useErrorTypeInsteadOfTypeVariableForParameterType(isReceiver = valueParameter == null, isRootLambdaForPCLASession)) {
-            val diagnostic = valueParameter?.let(::ConeCannotInferValueParameterType) ?: ConeCannotInferReceiverParameterType()
+            val diagnostic = valueParameter?.let {
+                ConeCannotInferValueParameterType(it, isTopLevelLambda = containingCandidate.isSyntheticCallForTopLevelLambda())
+            } ?: ConeCannotInferReceiverParameterType()
             return ConeErrorType(diagnostic)
         }
 

@@ -79,7 +79,10 @@ sealed class ConeResolutionAtom : AbstractConeResolutionAtom() {
         private fun createRawAtom(expression: FirExpression?, allowUnresolvedExpression: Boolean): ConeResolutionAtom? {
             return when (expression) {
                 null -> null
-                is FirAnonymousFunctionExpression -> ConeResolutionAtomWithPostponedChild(expression)
+                is FirAnonymousFunctionExpression -> when {
+                    expression.isResolved -> ConeSimpleLeafResolutionAtom(expression, allowUnresolvedExpression)
+                    else -> ConeResolutionAtomWithPostponedChild(expression)
+                }
                 is FirCallableReferenceAccess -> when {
                     expression.isResolved -> ConeSimpleLeafResolutionAtom(expression, allowUnresolvedExpression)
                     else -> ConeResolutionAtomWithPostponedChild(expression)
