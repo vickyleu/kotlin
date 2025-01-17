@@ -169,6 +169,7 @@ object CommonExpressionCheckers : ExpressionCheckers() {
     override val typeOperatorCallCheckers: Set<FirTypeOperatorCallChecker>
         get() = setOf(
             FirCastOperatorsChecker,
+            FirInlineBodyTypeOperatorCallExpressionChecker,
         )
 
     override val resolvedQualifierCheckers: Set<FirResolvedQualifierChecker>

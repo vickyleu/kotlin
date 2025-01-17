@@ -17,6 +17,13 @@ object FirInlineBodyQualifiedAccessExpressionChecker : FirQualifiedAccessExpress
         val inlineFunctionBodyContext = context.inlineFunctionBodyContext ?: return
         val targetSymbol = expression.toResolvedCallableSymbol()
 
+        inlineFunctionBodyContext.strictCheckAccessedDeclaration(
+            expression,
+            targetSymbol,
+            context,
+            reporter
+        )
+
         inlineFunctionBodyContext.checkQualifiedAccess(expression, targetSymbol, context, reporter)
         inlineFunctionBodyContext.checkReceiversOfQualifiedAccessExpression(expression, targetSymbol, context, reporter)
 

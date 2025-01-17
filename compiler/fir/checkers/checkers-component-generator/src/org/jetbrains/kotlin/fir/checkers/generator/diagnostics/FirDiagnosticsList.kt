@@ -1820,6 +1820,10 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
             parameter<Symbol>("parameter")
         }
 
+        val INVALID_VISIBILITY_FROM_INLINE by warning<KtElement>(PositioningStrategy.DEFAULT) {
+            parameter<String>("message")
+        }
+
         val NOT_YET_SUPPORTED_IN_INLINE by error<KtDeclaration>(PositioningStrategy.NOT_SUPPORTED_IN_INLINE_MOST_RELEVANT) {
             parameter<String>("message")
         }

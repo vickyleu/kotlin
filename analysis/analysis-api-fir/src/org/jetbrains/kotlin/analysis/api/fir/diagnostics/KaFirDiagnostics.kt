@@ -3654,6 +3654,11 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         val parameter: KaSymbol
     }
 
+    interface InvalidVisibilityFromInline : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = InvalidVisibilityFromInline::class
+        val message: String
+    }
+
     interface NotYetSupportedInInline : KaFirDiagnostic<KtDeclaration> {
         override val diagnosticClass get() = NotYetSupportedInInline::class
         val message: String

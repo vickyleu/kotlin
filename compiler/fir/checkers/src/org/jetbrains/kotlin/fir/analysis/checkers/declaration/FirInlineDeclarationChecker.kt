@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.isDataClassCopy
+import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.analysis.checkers.getDirectOverriddenSymbols
 import org.jetbrains.kotlin.fir.analysis.checkers.inlineCheckerExtension
 import org.jetbrains.kotlin.fir.analysis.checkers.isInlineOnly
@@ -96,6 +97,73 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
             return isInlineFunPublicOrPublishedApi &&
                     !isCalledFunPublicOrPublishedApi &&
                     declarationVisibility !== Visibilities.Local
+        }
+
+        internal fun strictCheckAccessedDeclaration(
+            accessExpression: FirStatement,
+            accessedSymbol: FirBasedSymbol<*>?,
+            context: CheckerContext,
+            reporter: DiagnosticReporter,
+        ) {
+            accessedSymbol ?: return
+
+            val somethingInlinable = inlineFunction.valueParameters.any { it.isInlinable(context.session) }
+            val inlineOnly = inlineFunction.isInlineOnly(session)
+
+            val calleeEffectiveVisibility = accessedDeclarationEffectiveVisibility(accessExpression, accessedSymbol, context)
+
+            fun calleeKind(): String = when (accessedSymbol) {
+                is FirPropertyAccessorSymbol -> "property-accessor"
+                is FirPropertySymbol -> "property"
+                is FirClassSymbol -> "class"
+                is FirNamedFunctionSymbol -> "function"
+                is FirConstructorSymbol -> "constructor"
+                is FirEnumEntrySymbol -> "enum-entry"
+                else -> "unknown(${accessedSymbol::class.simpleName})"
+            }
+
+            val containingDeclaration = when (inlineFunction.getContainingClassSymbol()) {
+                is FirRegularClassSymbol -> "regular-class"
+                is FirAnonymousObjectSymbol -> "anonymous-object"
+                is FirTypeAliasSymbol -> "type-alias"
+                null -> "file"
+            }
+
+            fun callerKind(): String = when (inlineFunction) {
+                is FirPropertyAccessor -> "property-accessor"
+                is FirSimpleFunction -> "function"
+                else -> "unknown(${inlineFunction::class.simpleName})"
+            }
+
+            fun callExpression(): String = when (accessExpression) {
+                is FirQualifiedAccessExpression -> "qualified-access"
+                is FirVariableAssignment -> "variable-assignment"
+                is FirTypeOperatorCall -> "type-operator-call"
+                else -> "unknown(${accessExpression::class.simpleName})"
+            }
+
+            fun report(source: KtSourceElement?, visibilityComparison: String) {
+                val str = buildString {
+                    append("VISIBILITY: $visibilityComparison; ")
+                    append("CALLEE_VISIBILITY: ${calleeEffectiveVisibility.name}; ")
+                    append("CALLER_VISIBILITY: ${inlineFunEffectiveVisibility.name}; ")
+                    append("CALLEE_KIND: ${calleeKind()}; ")
+                    append("CALLER_KIND: ${callerKind()}; ")
+                    append("CALL_EXPRESSION_KIND: ${callExpression()}; ")
+                    append("FUN_HAVE_INLINABLE_ARG: ${somethingInlinable}; ")
+                    append("INLINE_ONLY_ANNOTATION: ${inlineOnly}; ")
+                    append("CONTAINING_DECLARATION: $containingDeclaration; ")
+                }
+                reporter.reportOn(
+                    source, FirErrors.INVALID_VISIBILITY_FROM_INLINE, "ROMANV; $str", context
+                )
+            }
+
+            when (calleeEffectiveVisibility.relation(inlineFunEffectiveVisibility, context.session.typeContext)) {
+                EffectiveVisibility.Permissiveness.MORE, EffectiveVisibility.Permissiveness.SAME -> {}
+                EffectiveVisibility.Permissiveness.LESS -> report(accessExpression.source, "LESS")
+                EffectiveVisibility.Permissiveness.UNKNOWN -> report(accessExpression.source, "UNKNOWN")
+            }
         }
 
         internal fun checkAccessedDeclaration(
@@ -179,7 +247,7 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
         internal data class AccessedDeclarationVisibilityData(
             val isInlineFunPublicOrPublishedApi: Boolean,
             val isCalledFunPublicOrPublishedApi: Boolean,
-            val calledFunEffectiveVisibility: EffectiveVisibility
+            val calledFunEffectiveVisibility: EffectiveVisibility,
         )
 
         internal fun checkReceiversOfQualifiedAccessExpression(
@@ -276,7 +344,12 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     reporter.reportOn(source, FirErrors.USAGE_IS_NOT_INLINABLE, targetSymbol, context)
                 }
                 if (context.containingDeclarations.any { it.symbol in inlinableParameters }) {
-                    reporter.reportOn(source, FirErrors.NOT_SUPPORTED_INLINE_PARAMETER_IN_INLINE_PARAMETER_DEFAULT_VALUE, targetSymbol as FirValueParameterSymbol, context)
+                    reporter.reportOn(
+                        source,
+                        FirErrors.NOT_SUPPORTED_INLINE_PARAMETER_IN_INLINE_PARAMETER_DEFAULT_VALUE,
+                        targetSymbol as FirValueParameterSymbol,
+                        context
+                    )
                 }
             }
             checkVisibilityAndAccess(qualifiedAccess, targetSymbol, source, context, reporter)
@@ -422,7 +495,7 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
         function: FirSimpleFunction,
         overriddenSymbols: List<FirCallableSymbol<FirCallableDeclaration>>,
         context: CheckerContext,
-        reporter: DiagnosticReporter
+        reporter: DiagnosticReporter,
     ) {
         for (param in function.valueParameters) {
             val coneType = param.returnTypeRef.coneType.fullyExpandedType(context.session)
@@ -503,7 +576,7 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
         declaration: FirCallableDeclaration,
         effectiveVisibility: EffectiveVisibility,
         context: CheckerContext,
-        reporter: DiagnosticReporter
+        reporter: DiagnosticReporter,
     ): Boolean {
         if (declaration.containingClassLookupTag() == null) return true
         if (effectiveVisibility == EffectiveVisibility.PrivateInClass) return true
