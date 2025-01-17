@@ -12,7 +12,7 @@ internal class KClassImpl<T : Any> @WasmPrimitiveConstructor constructor(interna
         get() = if (typeData.packageName.isEmpty()) typeData.typeName else "${typeData.packageName}.${typeData.typeName}"
 
     private fun checkSuperTypeInstance(obj: Any): Boolean {
-        var typeId = obj.typeInfo
+        var typeId = getTypeId(obj)
         while (typeId != -1) {
             if (typeData.typeId == typeId) return true
             typeId = getSuperTypeId(typeId)

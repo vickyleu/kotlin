@@ -55,8 +55,9 @@ internal fun getSuperTypeId(typeInfoPtr: Int): Int =
     wasm_i32_load(typeInfoPtr + TYPE_INFO_SUPER_TYPE_OFFSET)
 
 internal fun isInterfaceById(obj: Any, interfaceId: Int): Boolean {
-    val interfaceListSize = wasm_i32_load(obj.typeInfo + TYPE_INFO_ITABLE_SIZE_OFFSET)
-    val interfaceListPtr = obj.typeInfo + TYPE_INFO_ITABLE_OFFSET
+    val typeId = getTypeId(obj)
+    val interfaceListSize = wasm_i32_load(typeId + TYPE_INFO_ITABLE_SIZE_OFFSET)
+    val interfaceListPtr = typeId + TYPE_INFO_ITABLE_OFFSET
 
     var interfaceSlot = 0
     while (interfaceSlot < interfaceListSize) {
@@ -77,3 +78,5 @@ internal fun <T> wasmIsInterface(obj: Any): Boolean =
 @ExcludedFromCodegen
 internal fun <T> wasmTypeId(): Int =
     implementedAsIntrinsic
+
+internal fun getTypeId(obj: Any): Int = obj.typeInfo

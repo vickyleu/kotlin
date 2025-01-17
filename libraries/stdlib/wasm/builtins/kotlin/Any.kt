@@ -49,7 +49,7 @@ public actual open class Any @WasmPrimitiveConstructor actual constructor() {
      * Returns a string representation of the object.
      */
     public actual open fun toString(): String {
-        val typeInfoPtr = this.typeInfo
+        val typeInfoPtr = getTypeId(this)
         val packageName = getPackageName(typeInfoPtr)
         val simpleName = getSimpleName(typeInfoPtr)
         val qualifiedName = if (packageName.isEmpty()) simpleName else "$packageName.$simpleName"
