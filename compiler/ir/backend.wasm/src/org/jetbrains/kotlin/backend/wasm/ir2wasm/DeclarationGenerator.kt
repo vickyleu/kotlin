@@ -41,6 +41,9 @@ class DeclarationGenerator(
     // Shortcuts
     private val irBuiltIns: IrBuiltIns = backendContext.irBuiltIns
 
+    // TODO remove after bootstrap
+    private val hasAnyTypeInfo = irBuiltIns.anyClass.owner.declarations.any { (it as? IrDeclarationWithName)?.name?.asString() == "typeInfo" }
+
     private val unitGetInstanceFunction: IrSimpleFunction by lazy { backendContext.findUnitGetInstanceFunction() }
     private val unitPrimaryConstructor: IrConstructor? by lazy { backendContext.irBuiltIns.unitClass.owner.primaryConstructor }
 
@@ -206,8 +209,15 @@ class DeclarationGenerator(
         name: String,
         superType: WasmSymbolReadOnly<WasmTypeDeclaration>? = null,
         isFinal: Boolean,
+        isVTableForClass: Boolean
     ): WasmStructDeclaration {
-        val tableFields = methods.map {
+        val tableFields = mutableListOf<WasmStructFieldDeclaration>().apply {
+            if (isVTableForClass && !hasAnyTypeInfo) {
+                add(WasmStructFieldDeclaration(name = "typeId", type = WasmI32, isMutable = false))
+            }
+        }
+
+        methods.mapTo(tableFields) {
             WasmStructFieldDeclaration(
                 name = it.signature.name.asString(),
                 type = WasmRefNullType(WasmHeapType.Type(wasmFileCodegenContext.referenceFunctionType(it.function.symbol))),
@@ -231,7 +241,8 @@ class DeclarationGenerator(
             metadata.virtualMethods,
             vtableName,
             superType = metadata.superClass?.klass?.symbol?.let(wasmFileCodegenContext::referenceVTableGcType),
-            isFinal = klass.modality == Modality.FINAL
+            isFinal = klass.modality == Modality.FINAL,
+            isVTableForClass = true
         )
         wasmFileCodegenContext.defineVTableGcType(metadata.klass.symbol, vtableStruct)
 
@@ -242,6 +253,9 @@ class DeclarationGenerator(
 
         val initVTableGlobal = buildWasmExpression {
             val location = SourceLocation.NoLocation("Create instance of vtable struct")
+
+            if (!hasAnyTypeInfo) buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(symbol), location)
+
             metadata.virtualMethods.forEachIndexed { i, method ->
                 if (method.function.modality != Modality.ABSTRACT) {
                     buildInstr(WasmOp.REF_FUNC, location, WasmImmediate.FuncIdx(wasmFileCodegenContext.referenceFunction(method.function.symbol)))
@@ -253,6 +267,7 @@ class DeclarationGenerator(
                     buildRefNull(vtableStruct.fields[i].type.getHeapType(), location)
                 }
             }
+
             buildStructNew(vTableTypeReference, location)
         }
         wasmFileCodegenContext.defineGlobalVTable(
@@ -348,6 +363,7 @@ class DeclarationGenerator(
                 methods = wasmModuleMetadataCache.getInterfaceMetadata(symbol).methods,
                 name = "$nameStr.itable",
                 isFinal = true,
+                isVTableForClass = false
             )
             wasmFileCodegenContext.defineVTableGcType(symbol, vtableStruct)
         } else {

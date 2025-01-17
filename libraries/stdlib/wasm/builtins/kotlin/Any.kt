@@ -13,6 +13,7 @@ import kotlin.random.*
  * The root of the Kotlin class hierarchy. Every Kotlin class has [Any] as a superclass.
  */
 public actual open class Any @WasmPrimitiveConstructor actual constructor() {
+    // TODO remove after bootstrap
     // Pointer to runtime type info
     // Initialized by a compiler
     @Suppress("MUST_BE_INITIALIZED_OR_BE_ABSTRACT")

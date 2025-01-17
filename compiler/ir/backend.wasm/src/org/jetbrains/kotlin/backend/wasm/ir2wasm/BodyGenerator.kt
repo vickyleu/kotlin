@@ -45,6 +45,9 @@ class BodyGenerator(
     private val wasmSymbols: WasmSymbols = backendContext.wasmSymbols
     private val irBuiltIns: IrBuiltIns = backendContext.irBuiltIns
 
+    // TODO remove after bootstrap
+    private val hasAnyTypeInfo = irBuiltIns.anyClass.owner.declarations.any { (it as? IrDeclarationWithName)?.name?.asString() == "typeInfo" }
+
     private val unitGetInstance by lazy { backendContext.findUnitGetInstanceFunction() }
     private val unitInstanceField by lazy { backendContext.findUnitInstanceField() }
 
@@ -583,7 +586,10 @@ class BodyGenerator(
             body.buildRefNull(WasmHeapType.Simple.Struct, location)
         }
 
-        body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
+        if (hasAnyTypeInfo) {
+            body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
+        }
+
         body.buildConstI32(0, location) // Any::_hashCode
         body.commentGroupEnd()
     }
@@ -599,11 +605,9 @@ class BodyGenerator(
             body.buildInstr(WasmOp.REF_IS_NULL, location)
             body.buildIf("this_init")
             generateAnyParameters(parentClass.symbol, location)
-            val irFields: List<IrField> = parentClass.allFields(backendContext.irBuiltIns)
+            val irFields: List<IrField> = parentClass.allFields(backendContext.irBuiltIns, withAnyMembers = false)
             irFields.forEachIndexed { index, field ->
-                if (index > 1) {
-                    generateDefaultInitializerForType(wasmModuleTypeTransformer.transformType(field.type), body)
-                }
+                generateDefaultInitializerForType(wasmModuleTypeTransformer.transformType(field.type), body)
             }
             body.buildStructNew(wasmFileCodegenContext.referenceGcType(parentClass.symbol), location)
             body.buildSetLocal(thisParameter, location)
@@ -694,7 +698,8 @@ class BodyGenerator(
             val klass = function.parentAsClass
             if (!klass.isInterface) {
                 val classMetadata = wasmModuleMetadataCache.getClassMetadata(klass.symbol)
-                val vfSlot = classMetadata.virtualMethods.indexOfFirst { it.function == function }
+                val vfOffset = if(hasAnyTypeInfo) 0 else 1 // first field might be typeId 
+                val vfSlot = vfOffset + classMetadata.virtualMethods.indexOfFirst { it.function == function } 
                 // Dispatch receiver should be simple and without side effects at this point
                 // TODO: Verify
                 val receiver = call.dispatchReceiver!!
@@ -816,6 +821,14 @@ class BodyGenerator(
                 val klass = call.typeArguments[0]!!.getClass()
                     ?: error("No class given for wasmTypeId intrinsic")
                 body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klass.symbol), location)
+            }
+
+            wasmSymbols.getTypeId -> {
+                if (hasAnyTypeInfo) return false
+                // get vtable
+                body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                // get typeId
+                body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
             }
 
             wasmSymbols.wasmIsInterface -> {

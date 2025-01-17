@@ -229,6 +229,8 @@ class WasmSymbols(
 
     val wasmTypeId = getInternalFunction("wasmTypeId")
 
+    val getTypeId = getInternalFunction("getTypeId")
+
     val wasmIsInterface = getInternalFunction("wasmIsInterface")
 
     val nullableEquals = getInternalFunction("nullableEquals")

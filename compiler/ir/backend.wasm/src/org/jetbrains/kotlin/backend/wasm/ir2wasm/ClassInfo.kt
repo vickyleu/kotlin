@@ -185,8 +185,10 @@ fun IrClass.getSuperClass(builtIns: IrBuiltIns): IrClass? =
             .singleOrNull { !it.isInterface } ?: builtIns.anyClass.owner
     }
 
-fun IrClass.allFields(builtIns: IrBuiltIns): List<IrField> =
-    getSuperClass(builtIns)?.allFields(builtIns).orEmpty() + declarations.filterIsInstance<IrField>()
+fun IrClass.allFields(builtIns: IrBuiltIns, withAnyMembers: Boolean = true): List<IrField> {
+    if (!withAnyMembers && this == builtIns.anyClass.owner) return emptyList()
+    return getSuperClass(builtIns)?.allFields(builtIns, withAnyMembers).orEmpty() + declarations.filterIsInstance<IrField>()
+}
 
 fun IrClass.hasInterfaceSuperClass(): Boolean {
     var superClass: IrClass? = null
