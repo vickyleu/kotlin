@@ -231,6 +231,10 @@ class Candidate(
         }
     }
 
+    fun removeDiagnostic(diagnostic: ResolutionDiagnostic) {
+        _diagnostics.remove(diagnostic)
+    }
+
     /**
      * Note that [lowestApplicability]`.isSuccess == true` doesn't imply [isSuccessful].
      *

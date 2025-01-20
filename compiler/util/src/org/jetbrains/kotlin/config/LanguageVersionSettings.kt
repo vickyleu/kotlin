@@ -377,6 +377,8 @@ enum class LanguageFeature(
     AllowDnnTypeOverridingFlexibleType(KOTLIN_2_2, kind = OTHER), // KT-74049
     PreferDependentTypeVariablesWithProperArgumentConstraint(KOTLIN_2_2, kind = OTHER), // KT-71854
 
+    ResolveTopLevelLambdasAsSyntheticCallArgument(KOTLIN_2_1), // KT-67869
+
     // 2.3
 
     ForbidCompanionInLocalInnerClass(KOTLIN_2_3, kind = BUG_FIX),
