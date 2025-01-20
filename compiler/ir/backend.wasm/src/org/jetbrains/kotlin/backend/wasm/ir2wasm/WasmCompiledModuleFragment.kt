@@ -288,6 +288,11 @@ class WasmCompiledModuleFragment(
             },
             runIf(!generateTrapsInsteadOfExceptions) { WasmTag(throwableTagFuncType) }
         )
+
+        tags.forEachIndexed { i, tag ->
+            tag.id = i
+        }
+
         val throwableTagIndex = tags.indexOfFirst { it.type === throwableTagFuncType }
         wasmCompiledFileFragments.forEach {
             it.throwableTagIndex?.bind(throwableTagIndex)
