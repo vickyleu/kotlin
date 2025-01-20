@@ -179,6 +179,17 @@ class WasmFileCodegenContext(
         }
     }
 
+
+    private val interfaceCallFastTrackBlockType = mutableMapOf<IrSymbol, Pair<WasmSymbol<WasmFunctionType>, WasmSymbol<WasmFunctionType>>>()
+    fun getInterfaceCallFastTrackBlockType(symbol: IrFunctionSymbol, default: () -> Pair<WasmSymbol<WasmFunctionType>, WasmSymbol<WasmFunctionType>>): Pair<WasmSymbol<WasmFunctionType>, WasmSymbol<WasmFunctionType>> {
+        return interfaceCallFastTrackBlockType.getOrPut(symbol) {
+            default().also {
+                wasmFileFragment.additionalFunctionTypes.add(it.first)
+                wasmFileFragment.additionalFunctionTypes.add(it.second)
+            }
+        }
+    }
+
     private val wasmAnyArrayToFunctionTypeCache = mutableMapOf<IrSymbol, WasmSymbol<WasmFunctionType>>()
     fun wasmAnyArrayToFunctionType(symbol: IrFunctionSymbol): WasmSymbol<WasmFunctionType> {
         return wasmAnyArrayToFunctionTypeCache.getOrPut(symbol) {
