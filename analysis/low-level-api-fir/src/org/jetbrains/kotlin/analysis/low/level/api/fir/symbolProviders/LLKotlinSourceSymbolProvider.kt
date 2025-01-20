@@ -71,7 +71,7 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     searchScope: GlobalSearchScope,
     canContainKotlinPackage: Boolean,
     declarationProviderFactory: (GlobalSearchScope) -> KotlinDeclarationProvider?,
-) : LLKotlinSymbolProvider(session), LLPsiAwareSymbolProvider {
+) : LLKotlinSymbolProvider(session) {
     constructor(
         session: LLFirSession,
         moduleComponents: LLFirModuleResolveComponents,
