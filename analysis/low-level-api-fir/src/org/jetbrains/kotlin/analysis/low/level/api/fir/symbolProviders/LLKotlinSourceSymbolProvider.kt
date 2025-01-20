@@ -142,14 +142,20 @@ internal class LLKotlinSourceSymbolProvider private constructor(
         return findClassLikeSymbol(classId, ktClass) { FirElementFinder.findClassifierWithClassId(it, classId) }
     }
 
-    private val ambiguousClassLikeSymbolCache =
-        LLAmbiguousClassLikeSymbolCache.withoutContext(this, searchScope) { declaration ->
+    private val ambiguousClassLikeSymbolCache = run {
+        // TODO (KT-74541): Workaround for KT-74541.
+        val ambiguitySearchScope =
+            if (extensionTool != null) GlobalSearchScope.union(listOf(searchScope, extensionTool.generatedFilesSearchScope))
+            else searchScope
+
+        LLAmbiguousClassLikeSymbolCache.withoutContext(this, ambiguitySearchScope) { declaration ->
             val classId = declaration.getClassId() ?: return@withoutContext null
 
             findClassLikeSymbol(classId, declaration) {
                 FirElementFinder.findClassifierWithPsi(it, classId, declaration)
             }
         }
+    }
 
     private inline fun findClassLikeSymbol(
         classId: ClassId,

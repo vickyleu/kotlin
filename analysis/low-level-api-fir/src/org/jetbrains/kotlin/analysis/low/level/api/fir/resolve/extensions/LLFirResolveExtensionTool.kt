@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.low.level.api.fir.resolve.extensions
 
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.search.GlobalSearchScope
@@ -42,6 +43,10 @@ abstract class LLFirResolveExtensionTool : FirSessionComponent {
     abstract val packageProvider: KotlinPackageProvider
     abstract val packageFilter: LLFirResolveExtensionToolPackageFilter
     abstract val shadowedSearchScope: GlobalSearchScope
+
+    // TODO (KT-74541): Workaround for KT-74541.
+    abstract val generatedFilesSearchScope: GlobalSearchScope
+
     internal abstract val symbolNamesProvider: FirSymbolNamesProvider
 }
 
@@ -51,7 +56,7 @@ abstract class LLFirResolveExtensionTool : FirSessionComponent {
 val FirSession.llResolveExtensionTool: LLFirResolveExtensionTool? by FirSession.nullableSessionComponentAccessor()
 
 internal class LLFirNonEmptyResolveExtensionTool(
-    session: LLFirSession,
+    private val session: LLFirSession,
     override val extensions: List<KaResolveExtension>,
 ) : LLFirResolveExtensionTool() {
     init {
@@ -72,6 +77,9 @@ internal class LLFirNonEmptyResolveExtensionTool(
             GlobalSearchScope.union(extensions.mapTo(mutableSetOf()) { it.getShadowedScope() })
         }
     }
+
+    override val generatedFilesSearchScope: GlobalSearchScope
+        get() = LLFirResolveExtensionGeneratedFilesScope(session.ktModule)
 
     override val symbolNamesProvider: FirSymbolNamesProvider = LLFirResolveExtensionToolSymbolNamesProvider(packageFilter, fileProvider)
 }
@@ -359,6 +367,15 @@ private class LLFirResolveExtensionToolPackageProvider(
         if (subPackageNames.isEmpty()) return emptySet()
         return subPackageNames.filterTo(mutableSetOf()) { nameFilter(it) }
     }
+}
+
+private class LLFirResolveExtensionGeneratedFilesScope(private val module: KaModule) : GlobalSearchScope(module.project) {
+    override fun contains(file: VirtualFile): Boolean =
+        file.analysisContextModule == module
+
+    override fun isSearchInModuleContent(aModule: Module): Boolean = true
+
+    override fun isSearchInLibraries(): Boolean = false
 }
 
 private fun ClassId.getTopLevelShortClassName(): Name {
