@@ -1064,7 +1064,10 @@ class CallAndReferenceGenerator(
         parameter: FirValueParameter?,
         substitutor: ConeSubstitutor,
     ): IrExpression {
-        val unsubstitutedParameterType = parameter?.returnTypeRef?.coneType?.fullyExpandedType(session)
+        val unsubstitutedParameterType =
+            parameter?.returnTypeRef?.coneType?.fullyExpandedType(session)?.let {
+                if (parameter.isVararg) it.arrayElementType()!! else it
+            }
         // Normally argument type should be correct itself.
         // However, for deserialized annotations it's possible to have imprecise Array<Any> type
         // for empty integer literal arguments.
@@ -1096,12 +1099,10 @@ class CallAndReferenceGenerator(
         }
         with(adapterGenerator) {
             if (unsubstitutedParameterType != null) {
-                val unwrappedParameterType =
-                    if (parameter.isVararg) unsubstitutedParameterType.arrayElementType()!! else unsubstitutedParameterType
-                val samFunctionType = getFunctionTypeForPossibleSamType(unwrappedParameterType)
+                val samFunctionType = getFunctionTypeForPossibleSamType(unsubstitutedParameterType)
                 irArgument = irArgument.applySuspendConversionIfNeeded(
                     argument,
-                    substitutor.substituteOrSelf(samFunctionType ?: unwrappedParameterType)
+                    substitutor.substituteOrSelf(samFunctionType ?: unsubstitutedParameterType)
                 )
                 irArgument = irArgument.applySamConversionIfNeeded(argument)
             }
