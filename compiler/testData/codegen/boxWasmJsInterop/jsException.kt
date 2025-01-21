@@ -1,6 +1,4 @@
 // TARGET_BACKEND: WASM
-// Related issue https://bugs.webkit.org/show_bug.cgi?id=277546
-// WASM_FAILS_IN: JSC
 
 fun throwNumberFromJs(): Int = js("{ throw 42; }")
 // TODO: cover more cases?
