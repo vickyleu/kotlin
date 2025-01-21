@@ -1076,12 +1076,12 @@ class CallAndReferenceGenerator(
         val expectedType = unsubstitutedParameterType.takeIf { visitor.annotationMode && unsubstitutedParameterType?.isArrayType == true }
         var irArgument = visitor.convertToIrExpression(argument, expectedType = expectedType)
         if (unsubstitutedParameterType != null) {
+            val substitutedParameterType = substitutor.substituteOrSelf(unsubstitutedParameterType)
             with(visitor.implicitCastInserter) {
                 val argumentType = argument.resolvedType.fullyExpandedType(session)
 
                 fun insertCastToArgument(argument: FirExpression): IrExpression = when (argument) {
                     is FirSmartCastExpression -> {
-                        val substitutedParameterType = substitutor.substituteOrSelf(unsubstitutedParameterType)
                         // here we should use a substituted parameter type to properly choose the component of an intersection type
                         //  to provide a proper cast to the smartcasted type
                         irArgument.insertCastForSmartcastWithIntersection(argumentType, substitutedParameterType)
@@ -1098,10 +1098,10 @@ class CallAndReferenceGenerator(
             }
 
             with(adapterGenerator) {
-                val samFunctionType = getFunctionTypeForPossibleSamType(unsubstitutedParameterType)
+                val samFunctionType = getFunctionTypeForPossibleSamType(substitutedParameterType) ?: substitutedParameterType
                 irArgument = irArgument.applySuspendConversionIfNeeded(
                     argument,
-                    substitutor.substituteOrSelf(samFunctionType ?: unsubstitutedParameterType)
+                    samFunctionType,
                 )
                 irArgument = irArgument.applySamConversionIfNeeded(argument)
             }
