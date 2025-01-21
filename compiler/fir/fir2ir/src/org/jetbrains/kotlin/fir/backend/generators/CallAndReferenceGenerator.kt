@@ -1096,9 +1096,8 @@ class CallAndReferenceGenerator(
                 // to properly insert nullability check
                 irArgument = irArgument.insertSpecialCast(argument, argumentType, unsubstitutedParameterType)
             }
-        }
-        with(adapterGenerator) {
-            if (unsubstitutedParameterType != null) {
+
+            with(adapterGenerator) {
                 val samFunctionType = getFunctionTypeForPossibleSamType(unsubstitutedParameterType)
                 irArgument = irArgument.applySuspendConversionIfNeeded(
                     argument,
@@ -1107,6 +1106,7 @@ class CallAndReferenceGenerator(
                 irArgument = irArgument.applySamConversionIfNeeded(argument)
             }
         }
+
         return irArgument
             .applyImplicitIntegerCoercionIfNeeded(argument, parameter)
     }
