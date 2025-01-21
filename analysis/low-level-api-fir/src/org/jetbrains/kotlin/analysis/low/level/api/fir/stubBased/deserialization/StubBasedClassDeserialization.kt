@@ -111,7 +111,7 @@ internal fun deserializeClassToSymbol(
     scopeProvider: FirScopeProvider,
     parentContext: StubBasedFirDeserializationContext? = null,
     containerSource: DeserializedContainerSource? = null,
-    deserializeNestedClass: (ClassId, KtClassLikeDeclaration, StubBasedFirDeserializationContext) -> FirRegularClassSymbol?,
+    deserializeNestedClass: (ClassId, KtClassOrObject, StubBasedFirDeserializationContext) -> FirRegularClassSymbol?,
     initialOrigin: FirDeclarationOrigin,
 ) {
     val kind = when (classOrObject) {

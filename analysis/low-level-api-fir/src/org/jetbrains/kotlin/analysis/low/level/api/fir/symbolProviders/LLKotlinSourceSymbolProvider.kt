@@ -13,12 +13,11 @@ import org.jetbrains.kotlin.analysis.api.platform.packages.KotlinCompositePackag
 import org.jetbrains.kotlin.analysis.api.platform.packages.createPackageProvider
 import org.jetbrains.kotlin.analysis.api.utils.errors.withPsiEntry
 import org.jetbrains.kotlin.analysis.low.level.api.fir.LLFirModuleResolveComponents
-import org.jetbrains.kotlin.analysis.low.level.api.fir.caches.getNotNullValueForNotNullContext
 import org.jetbrains.kotlin.analysis.low.level.api.fir.projectStructure.llFirModuleData
 import org.jetbrains.kotlin.analysis.low.level.api.fir.resolve.extensions.LLFirResolveExtensionTool
 import org.jetbrains.kotlin.analysis.low.level.api.fir.resolve.extensions.llResolveExtensionTool
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
-import org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders.caches.LLAmbiguousClassLikeSymbolCache
+import org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders.caches.LLPsiAwareClassLikeSymbolCache
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.FirElementFinder
 import org.jetbrains.kotlin.config.AnalysisFlags
 import org.jetbrains.kotlin.fir.caches.FirCache
@@ -118,21 +117,28 @@ internal class LLKotlinSourceSymbolProvider private constructor(
         classLikeDeclaration: KtClassLikeDeclaration?,
     ): FirClassLikeSymbol<*>? {
         if (!classId.isAccepted()) return null
-        return classifierCache.getNotNullValueForNotNullContext(classId, classLikeDeclaration)
+        return classLikeCache.getSymbolByClassId(classId, classLikeDeclaration)
     }
 
     override fun getClassLikeSymbolByPsi(classId: ClassId, declaration: PsiElement): FirClassLikeSymbol<*>? {
         if (!classId.isAccepted()) return null
-
-        return ambiguousClassLikeSymbolCache.getClassLikeSymbolByPsi<KtClassLikeDeclaration>(classId, declaration)
+        return classLikeCache.getSymbolByPsi<KtClassLikeDeclaration>(classId, declaration) { it }
     }
 
     private fun ClassId.isAccepted(): Boolean = !isLocal && (allowKotlinPackage || !isKotlinPackage())
 
-    private val classifierCache: FirCache<ClassId, FirClassLikeSymbol<*>?, KtClassLikeDeclaration?> =
-        session.firCachesFactory.createCache { classId, context ->
-            computeClassLikeSymbolByClassId(classId, context)
-        }
+    private val classLikeCache = run {
+        // TODO (KT-74541): Workaround for KT-74541.
+        val fullSearchScope =
+            if (extensionTool != null) GlobalSearchScope.union(listOf(searchScope, extensionTool.generatedFilesSearchScope))
+            else searchScope
+
+        LLPsiAwareClassLikeSymbolCache(
+            session,
+            fullSearchScope,
+            ::computeClassLikeSymbolByClassId,
+        ) { declaration: KtClassLikeDeclaration, _ -> computeClassLikeSymbolByPsi(declaration) }
+    }
 
     private fun computeClassLikeSymbolByClassId(classId: ClassId, context: KtClassLikeDeclaration?): FirClassLikeSymbol<*>? {
         require(context == null || context.isPhysical)
@@ -142,19 +148,11 @@ internal class LLKotlinSourceSymbolProvider private constructor(
         return findClassLikeSymbol(classId, ktClass) { FirElementFinder.findClassifierWithClassId(it, classId) }
     }
 
-    private val ambiguousClassLikeSymbolCache = run {
-        // TODO (KT-74541): Workaround for KT-74541.
-        val ambiguitySearchScope =
-            if (extensionTool != null) GlobalSearchScope.union(listOf(searchScope, extensionTool.generatedFilesSearchScope))
-            else searchScope
+    private fun computeClassLikeSymbolByPsi(declaration: KtClassLikeDeclaration): FirClassLikeSymbol<*>? {
+        require(declaration.isPhysical)
 
-        LLAmbiguousClassLikeSymbolCache.withoutContext(this, ambiguitySearchScope) { declaration ->
-            val classId = declaration.getClassId() ?: return@withoutContext null
-
-            findClassLikeSymbol(classId, declaration) {
-                FirElementFinder.findClassifierWithPsi(it, classId, declaration)
-            }
-        }
+        val classId = declaration.getClassId() ?: return null
+        return findClassLikeSymbol(classId, declaration) { FirElementFinder.findClassifierWithPsi(it, classId, declaration) }
     }
 
     private inline fun findClassLikeSymbol(
