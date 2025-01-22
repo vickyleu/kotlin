@@ -91,8 +91,8 @@ fun box(): String {
     assertEquals("kotlin.jvm.functions.Function0<kotlin.Unit>", renderSuperInterface(lambdaExplicitUnit))
     assertEquals("kotlin.jvm.functions.Function0<java.lang.Object>", renderSuperInterface(lambdaTypeVariableConstructor))
     assertEquals("kotlin.jvm.functions.Function0<java.lang.Object>", renderSuperInterface(lambdaExplicitUnitOrString))
-    assertEquals("kotlin.jvm.functions.Function0<java.lang.String>", renderSuperInterface(lambdaString))
-    assertEquals("kotlin.jvm.functions.Function0<java.lang.Integer>", renderSuperInterface(lambdaInt))
-    assertEquals("interface kotlin.jvm.functions.Function0", renderSuperInterface(lambdaNothing))
+    assertEquals("kotlin.jvm.functions.Function0<java.lang.Object>", renderSuperInterface(lambdaString))
+    assertEquals("kotlin.jvm.functions.Function0<java.lang.Object>", renderSuperInterface(lambdaInt))
+    assertEquals("kotlin.jvm.functions.Function0<java.lang.Object>", renderSuperInterface(lambdaNothing))
     return "OK"
 }

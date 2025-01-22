@@ -73,10 +73,10 @@ FILE fqName:<root> fileName:/main.kt
   PROPERTY name:lambdaString visibility:public modality:FINAL [val]
     FIELD PROPERTY_BACKING_FIELD name:lambdaString type:kotlin.Function0<kotlin.Any> visibility:private [final,static]
       EXPRESSION_BODY
-        FUN_EXPR type=kotlin.Function0<kotlin.String> origin=LAMBDA
-          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.String
+        FUN_EXPR type=kotlin.Function0<kotlin.Any> origin=LAMBDA
+          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.Any
             BLOCK_BODY
-              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.String declared in <root>.lambdaString'
+              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any declared in <root>.lambdaString'
                 CONST String type=kotlin.String value="propertyAssignment"
     FUN DEFAULT_PROPERTY_ACCESSOR name:<get-lambdaString> visibility:public modality:FINAL <> () returnType:kotlin.Function0<kotlin.Any>
       correspondingProperty: PROPERTY name:lambdaString visibility:public modality:FINAL [val]
@@ -86,10 +86,10 @@ FILE fqName:<root> fileName:/main.kt
   PROPERTY name:lambdaInt visibility:public modality:FINAL [val]
     FIELD PROPERTY_BACKING_FIELD name:lambdaInt type:kotlin.Function0<kotlin.Any> visibility:private [final,static]
       EXPRESSION_BODY
-        FUN_EXPR type=kotlin.Function0<kotlin.Int> origin=LAMBDA
-          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.Int
+        FUN_EXPR type=kotlin.Function0<kotlin.Any> origin=LAMBDA
+          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.Any
             BLOCK_BODY
-              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Int declared in <root>.lambdaInt'
+              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any declared in <root>.lambdaInt'
                 CONST Int type=kotlin.Int value=42
     FUN DEFAULT_PROPERTY_ACCESSOR name:<get-lambdaInt> visibility:public modality:FINAL <> () returnType:kotlin.Function0<kotlin.Any>
       correspondingProperty: PROPERTY name:lambdaInt visibility:public modality:FINAL [val]
@@ -99,10 +99,10 @@ FILE fqName:<root> fileName:/main.kt
   PROPERTY name:lambdaNothing visibility:public modality:FINAL [val]
     FIELD PROPERTY_BACKING_FIELD name:lambdaNothing type:kotlin.Function0<kotlin.Any?> visibility:private [final,static]
       EXPRESSION_BODY
-        FUN_EXPR type=kotlin.Function0<kotlin.Nothing?> origin=LAMBDA
-          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.Nothing?
+        FUN_EXPR type=kotlin.Function0<kotlin.Any?> origin=LAMBDA
+          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> () returnType:kotlin.Any?
             BLOCK_BODY
-              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Nothing? declared in <root>.lambdaNothing'
+              RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in <root>.lambdaNothing'
                 TYPE_OP type=kotlin.Nothing? origin=CAST typeOperand=kotlin.Nothing?
                   CONST Null type=kotlin.Nothing? value=null
     FUN DEFAULT_PROPERTY_ACCESSOR name:<get-lambdaNothing> visibility:public modality:FINAL <> () returnType:kotlin.Function0<kotlin.Any?>
@@ -290,19 +290,19 @@ FILE fqName:<root> fileName:/main.kt
           value: CALL 'public final fun <get-lambdaExplicitUnitOrString> (): kotlin.Function0<kotlin.Any> declared in <root>' type=kotlin.Function0<kotlin.Any> origin=GET_PROPERTY
       CALL 'public final fun assertEquals <T> (expected: T of kotlin.test.assertEquals, actual: T of kotlin.test.assertEquals, message: kotlin.String?): kotlin.Unit declared in kotlin.test' type=kotlin.Unit origin=null
         <T>: kotlin.String
-        expected: CONST String type=kotlin.String value="kotlin.jvm.functions.Function0<java.lang.String>"
+        expected: CONST String type=kotlin.String value="kotlin.jvm.functions.Function0<java.lang.Object>"
         actual: CALL 'public final fun renderSuperInterface <T> (value: T of <root>.renderSuperInterface): kotlin.String declared in <root>' type=kotlin.String origin=null
           <T>: kotlin.Function0<kotlin.Any>
           value: CALL 'public final fun <get-lambdaString> (): kotlin.Function0<kotlin.Any> declared in <root>' type=kotlin.Function0<kotlin.Any> origin=GET_PROPERTY
       CALL 'public final fun assertEquals <T> (expected: T of kotlin.test.assertEquals, actual: T of kotlin.test.assertEquals, message: kotlin.String?): kotlin.Unit declared in kotlin.test' type=kotlin.Unit origin=null
         <T>: kotlin.String
-        expected: CONST String type=kotlin.String value="kotlin.jvm.functions.Function0<java.lang.Integer>"
+        expected: CONST String type=kotlin.String value="kotlin.jvm.functions.Function0<java.lang.Object>"
         actual: CALL 'public final fun renderSuperInterface <T> (value: T of <root>.renderSuperInterface): kotlin.String declared in <root>' type=kotlin.String origin=null
           <T>: kotlin.Function0<kotlin.Any>
           value: CALL 'public final fun <get-lambdaInt> (): kotlin.Function0<kotlin.Any> declared in <root>' type=kotlin.Function0<kotlin.Any> origin=GET_PROPERTY
       CALL 'public final fun assertEquals <T> (expected: T of kotlin.test.assertEquals, actual: T of kotlin.test.assertEquals, message: kotlin.String?): kotlin.Unit declared in kotlin.test' type=kotlin.Unit origin=null
         <T>: kotlin.String
-        expected: CONST String type=kotlin.String value="interface kotlin.jvm.functions.Function0"
+        expected: CONST String type=kotlin.String value="kotlin.jvm.functions.Function0<java.lang.Object>"
         actual: CALL 'public final fun renderSuperInterface <T> (value: T of <root>.renderSuperInterface): kotlin.String declared in <root>' type=kotlin.String origin=null
           <T>: kotlin.Function0<kotlin.Any?>
           value: CALL 'public final fun <get-lambdaNothing> (): kotlin.Function0<kotlin.Any?> declared in <root>' type=kotlin.Function0<kotlin.Any?> origin=GET_PROPERTY
