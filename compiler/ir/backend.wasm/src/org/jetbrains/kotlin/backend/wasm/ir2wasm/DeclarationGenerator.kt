@@ -206,6 +206,7 @@ class DeclarationGenerator(
         name: String,
         superType: WasmSymbolReadOnly<WasmTypeDeclaration>? = null,
         isFinal: Boolean,
+        generateSpecialITableField: Boolean,
     ): WasmStructDeclaration {
         val tableFields = methods.map {
             WasmStructFieldDeclaration(
@@ -215,23 +216,88 @@ class DeclarationGenerator(
             )
         }
 
+        val vtableFields: List<WasmStructFieldDeclaration>
+        if (generateSpecialITableField) {
+            val specialItableField = WasmStructFieldDeclaration(
+                name = "special_itable",
+                type = WasmRefNullType(WasmHeapType.Type(wasmFileCodegenContext.specialSlotITableType)),
+                isMutable = false
+            )
+            val result = mutableListOf<WasmStructFieldDeclaration>()
+            result.add(specialItableField)
+            result.addAll(tableFields)
+            vtableFields = result
+        } else {
+            vtableFields = tableFields
+        }
+
         return WasmStructDeclaration(
             name = name,
-            fields = tableFields,
+            fields = vtableFields,
             superType = superType,
             isFinal = isFinal
         )
     }
 
+    private fun buildSpecialITableInit(metadata: ClassMetadata, builder: WasmExpressionBuilder, location: SourceLocation): Unit = with(builder) {
+            val klass = metadata.klass
+            if (!klass.hasInterfaceSuperClass()) {
+                buildRefNull(WasmHeapType.Simple.None, location)
+                return
+            }
+
+            val supportedIFaces = metadata.interfaces
+
+            val specialSlotITableTypes = backendContext.specialSlotITableTypes
+            val functionalIFaces = supportedIFaces.mapNotNull { iFace -> getInvokeMethod(iFace)?.let { iFace to it } }
+
+            if (functionalIFaces.isNotEmpty() || specialSlotITableTypes.any { it.owner in supportedIFaces }) {
+                for (specialSlot in specialSlotITableTypes) {
+                    if (specialSlot.owner in supportedIFaces) {
+                        addInterfaceMethods(metadata, this, specialSlot.owner, onlyFunction = null, location)
+                        buildStructNew(wasmFileCodegenContext.referenceVTableGcType(specialSlot), location)
+                    } else {
+                        buildRefNull(WasmHeapType.Simple.None, location)
+                    }
+                }
+                //Functional class
+                if (functionalIFaces.isNotEmpty()) {
+                    val sortedInterfaces = functionalIFaces.sortedBy { it.second.parameters.size }
+                    var currentArity = 1
+                    sortedInterfaces.forEach { (iFace, invokeMethod) ->
+                        val invokeMethodArity = invokeMethod.parameters.size
+                        repeat(invokeMethodArity - currentArity) { arity ->
+                            buildRefNull(WasmHeapType.Simple.Func, location)
+                        }
+                        currentArity = invokeMethodArity + 1
+                        addInterfaceMethods(metadata, this, iFace, onlyFunction = invokeMethod, location)
+                    }
+                    buildInstr(
+                        WasmOp.ARRAY_NEW_FIXED,
+                        location,
+                        WasmImmediate.GcType(wasmFileCodegenContext.wasmFuncArrayType),
+                        WasmImmediate.ConstI32(currentArity - 1)
+                    )
+                } else {
+                    buildRefNull(WasmHeapType.Type(wasmFileCodegenContext.wasmFuncArrayType), location)
+                }
+                buildStructNew(wasmFileCodegenContext.specialSlotITableType, location)
+            } else {
+                buildRefNull(WasmHeapType.Simple.None, location)
+            }
+        }
+
     private fun createVTable(metadata: ClassMetadata) {
         val klass = metadata.klass
         val symbol = klass.symbol
         val vtableName = "${klass.fqNameWhenAvailable}.vtable"
+
         val vtableStruct = createVirtualTableStruct(
             metadata.virtualMethods,
             vtableName,
             superType = metadata.superClass?.klass?.symbol?.let(wasmFileCodegenContext::referenceVTableGcType),
-            isFinal = klass.modality == Modality.FINAL
+            isFinal = klass.modality == Modality.FINAL,
+            generateSpecialITableField = true,
         )
         wasmFileCodegenContext.defineVTableGcType(metadata.klass.symbol, vtableStruct)
 
@@ -242,6 +308,7 @@ class DeclarationGenerator(
 
         val initVTableGlobal = buildWasmExpression {
             val location = SourceLocation.NoLocation("Create instance of vtable struct")
+            buildSpecialITableInit(metadata, this, location) //SPECIAL
             metadata.virtualMethods.forEachIndexed { i, method ->
                 if (method.function.modality != Modality.ABSTRACT) {
                     buildInstr(WasmOp.REF_FUNC, location, WasmImmediate.FuncIdx(wasmFileCodegenContext.referenceFunction(method.function.symbol)))
@@ -261,18 +328,26 @@ class DeclarationGenerator(
         )
     }
 
-    private fun getSamMethod(supportedIFaces: Set<IrClass>): Pair<IrClass, IrFunction>? {
-        var result: Pair<IrClass, IrFunction>? = null
-        for (iFace in supportedIFaces) {
-            val iFaceSamMethod = iFace.declarations.singleOrNull { declaration ->
-                declaration is IrSimpleFunction && declaration.overriddenSymbols.isEmpty()
+    fun addInterfaceMethods(metadata: ClassMetadata, builder: WasmExpressionBuilder, iFace: IrClass, onlyFunction: IrFunction?, location: SourceLocation) = with(builder) {
+        val klass = metadata.klass
+        for (method in wasmModuleMetadataCache.getInterfaceMetadata(iFace.symbol).methods) {
+            if (onlyFunction != null && method.function != onlyFunction) continue
+
+            val classMethod: VirtualMethodMetadata? = metadata.virtualMethods
+                .find { it.signature == method.signature && it.function.modality != Modality.ABSTRACT }  // TODO: Use map
+
+            if (classMethod == null && !allowIncompleteImplementations && !backendContext.partialLinkageSupport.isEnabled) {
+                error("Cannot find interface implementation of method ${method.signature} in class ${klass.fqNameWhenAvailable}")
             }
-            if (iFaceSamMethod != null) {
-                if (result != null) return null
-                result = iFace to iFaceSamMethod as IrFunction
+
+            if (classMethod != null) {
+                val functionTypeReference = wasmFileCodegenContext.referenceFunction(classMethod.function.symbol)
+                buildInstr(WasmOp.REF_FUNC, location, WasmImmediate.FuncIdx(functionTypeReference))
+            } else {
+                //This erased by DCE so abstract version appeared in non-abstract class
+                buildRefNull(WasmHeapType.Type(wasmFileCodegenContext.referenceFunctionType(method.function.symbol)), location)
             }
         }
-        return result
     }
 
     private fun createClassITable(metadata: ClassMetadata) {
@@ -281,64 +356,20 @@ class DeclarationGenerator(
         if (klass.isAbstractOrSealed) return
         if (!klass.hasInterfaceSuperClass()) return
 
-        fun addInterfaceMethods(builder: WasmExpressionBuilder, iFace: IrClass, onlyFunction: IrFunction?) = with(builder) {
-            for (method in wasmModuleMetadataCache.getInterfaceMetadata(iFace.symbol).methods) {
-                if (onlyFunction != null && method.function != onlyFunction) continue
-
-                val classMethod: VirtualMethodMetadata? = metadata.virtualMethods
-                    .find { it.signature == method.signature && it.function.modality != Modality.ABSTRACT }  // TODO: Use map
-
-                if (classMethod == null && !allowIncompleteImplementations && !backendContext.partialLinkageSupport.isEnabled) {
-                    error("Cannot find interface implementation of method ${method.signature} in class ${klass.fqNameWhenAvailable}")
-                }
-
-                if (classMethod != null) {
-                    val functionTypeReference = wasmFileCodegenContext.referenceFunction(classMethod.function.symbol)
-                    buildInstr(WasmOp.REF_FUNC, location, WasmImmediate.FuncIdx(functionTypeReference))
-                } else {
-                    //This erased by DCE so abstract version appeared in non-abstract class
-                    buildRefNull(WasmHeapType.Type(wasmFileCodegenContext.referenceFunctionType(method.function.symbol)), location)
-                }
-            }
-        }
-
         val initITableGlobal = buildWasmExpression {
             val supportedIFaces = metadata.interfaces
-
-            //SPECIAL ITABLE
-            val specialSlotITableTypes = backendContext.specialSlotITableTypes
-            val samFunction = getSamMethod(supportedIFaces)
-            if (samFunction != null || specialSlotITableTypes.any { it.owner in supportedIFaces }) {
-                for (specialSlot in specialSlotITableTypes) {
-                    if (specialSlot.owner in supportedIFaces) {
-                        addInterfaceMethods(this, specialSlot.owner, onlyFunction = null)
-                        buildStructNew(wasmFileCodegenContext.referenceVTableGcType(specialSlot), location)
-                    } else {
-                        buildRefNull(WasmHeapType.Simple.None, location)
-                    }
-                }
-                //SAM
-                if (samFunction != null) {
-                    addInterfaceMethods(this, samFunction.first, onlyFunction = samFunction.second)
-                } else {
-                    buildRefNull(WasmHeapType.Simple.Func, location)
-                }
-                buildStructNew(wasmFileCodegenContext.specialSlotITableType, location)
-            } else {
-                buildRefNull(WasmHeapType.Simple.None, location)
-            }
-
-            //REGULAR
-            val regularITableIFaces = supportedIFaces.filterNot { it.symbol in backendContext.specialSlotITableTypes }
+            val regularITableIFaces = supportedIFaces
+                .filterNot { it.symbol in backendContext.specialSlotITableTypes }
+                .filterNot { isFunctionClass(it) }
             for (iFace in regularITableIFaces) {
-                addInterfaceMethods(this, iFace, onlyFunction = null)
+                addInterfaceMethods(metadata, this, iFace, onlyFunction = null, location)
                 buildStructNew(wasmFileCodegenContext.referenceVTableGcType(iFace.symbol), location)
             }
             buildInstr(
                 WasmOp.ARRAY_NEW_FIXED,
                 location,
                 WasmImmediate.GcType(wasmFileCodegenContext.wasmAnyArrayType),
-                WasmImmediate.ConstI32(regularITableIFaces.size + 1) //special + ifaces
+                WasmImmediate.ConstI32(regularITableIFaces.size)
             )
         }
 
@@ -378,6 +409,7 @@ class DeclarationGenerator(
                 methods = wasmModuleMetadataCache.getInterfaceMetadata(symbol).methods,
                 name = "<itable>",
                 isFinal = true,
+                generateSpecialITableField = false,
             )
             wasmFileCodegenContext.defineVTableGcType(symbol, vtableStruct)
         } else {
@@ -459,9 +491,9 @@ class DeclarationGenerator(
 
         val specialSlotIFaces = backendContext.specialSlotITableTypes
 
-        val supportedPushedBack =
-            supportedInterfaces.filterNot { it.symbol in specialSlotIFaces } +
-                    supportedInterfaces.filter { it.symbol in specialSlotIFaces }
+        val (forward, back) = supportedInterfaces.partition { it.symbol !in specialSlotIFaces && !isFunctionClass(it) }
+
+        val supportedPushedBack = forward + back
 
         val size = ConstantDataIntField(supportedPushedBack.size)
         val interfaceIds = ConstantDataIntArray(
@@ -602,3 +634,11 @@ val IrFunction.locationTarget: IrElement
             else -> body ?: this
         }
     }
+
+internal fun isFunctionClass(iFace: IrClass): Boolean =
+    iFace.origin == org.jetbrains.kotlin.ir.descriptors.IrAbstractDescriptorBasedFunctionFactory.Companion.classOrigin
+
+internal fun getInvokeMethod(iFace: IrClass): IrSimpleFunction? {
+    if (!isFunctionClass(iFace)) return null
+    return iFace.declarations.singleOrNull { it is IrSimpleFunction && it.overriddenSymbols.isEmpty() } as? IrSimpleFunction
+}

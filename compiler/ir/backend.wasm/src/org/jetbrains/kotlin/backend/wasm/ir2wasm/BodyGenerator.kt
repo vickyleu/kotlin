@@ -796,7 +796,7 @@ class BodyGenerator(
                 generateRefCast(receiver.type, klass.defaultType, isRefNullCast = false, location)
 
                 body.buildStructGet(wasmFileCodegenContext.referenceGcType(klass.symbol), WasmSymbol(0), location)
-                body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(klass.symbol), WasmSymbol(vfSlot), location)
+                body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(klass.symbol), WasmSymbol(vfSlot + 1), location)
                 body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.referenceFunctionType(function.symbol)))
                 body.commentGroupEnd()
             } else {
@@ -812,20 +812,18 @@ class BodyGenerator(
                 val specialITableSlot = backendContext.specialSlotITableTypes.indexOf(symbol)
                 if (specialITableSlot != -1) {
                     body.buildGetLocal(isInterfaceLocal, location)
-                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                    body.buildConstI32(0, location)
-                    body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.wasmAnyArrayType))
-                    body.buildRefCastStatic(wasmFileCodegenContext.specialSlotITableType, location)
+                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                    body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
                     body.buildStructGet(wasmFileCodegenContext.specialSlotITableType, WasmSymbol(specialITableSlot), location)
                     val vfSlot = wasmModuleMetadataCache.getInterfaceMetadata(symbol).methods
                         .indexOfFirst { it.function == function }
-                    body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(symbol), WasmSymbol(vfSlot), location)
+                    body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(klass.symbol), WasmSymbol(vfSlot), location)
                     body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.referenceFunctionType(function.symbol)))
                 } else {
-                    val (specialBlockTypeAnyRef, specialBlockTypeFuncRef) = wasmFileCodegenContext.getInterfaceCallFastTrackBlockType(function.symbol) {
+                    val (specialBlockTypeAnyRef, _) = wasmFileCodegenContext.getInterfaceCallFastTrackBlockType(function.symbol) {
                         val parameterTypes = function.parameters.map { wasmModuleTypeTransformer.transformValueParameterType(it) }
-                        val first = WasmSymbol(WasmFunctionType(parameterTypes = parameterTypes, resultTypes = parameterTypes + WasmAnyRef))
-                        val second = WasmSymbol(WasmFunctionType(parameterTypes = parameterTypes, resultTypes = parameterTypes + WasmFuncRef))
+                        val first = WasmSymbol(WasmFunctionType(parameterTypes = parameterTypes, resultTypes = parameterTypes))
+                        val second = WasmSymbol(WasmFunctionType(parameterTypes = parameterTypes, resultTypes = parameterTypes))
                         first to second
                     }
 
@@ -833,57 +831,27 @@ class BodyGenerator(
 
                     val resultType = WasmHeapType.Type(wasmFileCodegenContext.referenceFunctionType(function.symbol))
                     generateInlineCache(WasmRefNullType(resultType), location) {
-                        val isSamInterface = klass.declarations.singleOrNull { it !is IrSimpleFunction || it.overriddenSymbols.isEmpty() } != null
-                        if (isSamInterface) {
+
+                        val isInvokeCall = getInvokeMethod(klass) == function
+
+//                        val isSamInterface = klass.declarations.singleOrNull { it !is IrSimpleFunction || it.overriddenSymbols.isEmpty() } != null
+                        if (isInvokeCall) {
                             body.buildFunctionTypedBlock("SAMFastTrack", callFunctionType) { samFastTrack ->
                                 body.buildFunctionTypedBlock("SAMFunctionAnyRef", specialBlockTypeAnyRef) { samFunction1 ->
-                                    body.buildFunctionTypedBlock("SAMFunctionFuncRef", specialBlockTypeFuncRef) { samFunction2 ->
-                                        body.buildGetLocal(isInterfaceLocal, location)
-                                        body.buildStructGet(
-                                            wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass),
-                                            WasmSymbol(1),
-                                            location
-                                        )
-                                        body.buildConstI32(0, location)
-                                        body.buildInstr(
-                                            WasmOp.ARRAY_GET,
-                                            location,
-                                            WasmImmediate.TypeIdx(wasmFileCodegenContext.wasmAnyArrayType)
-                                        )
-                                        body.buildBrOnCastInstr(
-                                            WasmOp.BR_ON_CAST_FAIL,
-                                            samFunction1,
-                                            fromIsNullable = true,
-                                            toIsNullable = false,
-                                            from = WasmHeapType.Simple.Any,
-                                            to = WasmHeapType.Type(wasmFileCodegenContext.specialSlotITableType),
-                                            location,
-                                        )
-                                        body.buildStructGet(
-                                            wasmFileCodegenContext.specialSlotITableType,
-                                            WasmSymbol(backendContext.specialSlotITableTypes.size),
-                                            location
-                                        )
-                                        body.buildBrOnCastInstr(
-                                            WasmOp.BR_ON_CAST_FAIL,
-                                            samFunction2,
-                                            fromIsNullable = true,
-                                            toIsNullable = false,
-                                            from = WasmHeapType.Simple.Func,
-                                            to = resultType,
-                                            location,
-                                        )
-                                        body.buildInstr(
-                                            WasmOp.CALL_REF,
-                                            location,
-                                            WasmImmediate.TypeIdx(wasmFileCodegenContext.referenceFunctionType(function.symbol))
-                                        )
-                                        body.buildBr(samFastTrack, location)
-                                    }
-                                    body.buildDrop(location)
-                                    body.buildRefNull(WasmHeapType.Simple.Any, location)
+                                    body.buildGetLocal(isInterfaceLocal, location)
+                                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                                    body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                                    body.buildStructGet(wasmFileCodegenContext.specialSlotITableType, WasmSymbol(backendContext.specialSlotITableTypes.size), location)
+                                    body.buildConstI32(function.parameters.size - 1, location)
+                                    body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.wasmFuncArrayType))
+                                    body.buildRefCastStatic(wasmFileCodegenContext.referenceFunctionType(function.symbol), location)
+                                    body.buildInstr(
+                                        WasmOp.CALL_REF,
+                                        location,
+                                        WasmImmediate.TypeIdx(wasmFileCodegenContext.referenceFunctionType(function.symbol))
+                                    )
+                                    body.buildBr(samFastTrack, location)
                                 }
-                                body.buildDrop(location)
                                 generateFallback(klass.symbol, function, location)
                                 body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.referenceFunctionType(function.symbol)))
                             }
@@ -987,14 +955,11 @@ class BodyGenerator(
 
                 val specialSlotIndex = backendContext.specialSlotITableTypes.indexOf(irInterface.symbol)
                 if (specialSlotIndex != -1) {
-                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                    body.buildFunctionTypedBlock("castResultBlock", wasmFileCodegenContext.wasmAnyArrayTypeToWasmI32) { result ->
-                        body.buildFunctionTypedBlock("castFailBlock", wasmFileCodegenContext.wasmAnyArrayTypeToUnit) { fail ->
+                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                    body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                    body.buildFunctionTypedBlock("castResultBlock", wasmFileCodegenContext.specialSlotITableTypeToInt32) { result ->
+                        body.buildFunctionTypedBlock("castFailBlock", wasmFileCodegenContext.specialSlotITableTypeToUnit) { fail ->
                             body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
-                            body.buildConstI32(0, location)
-                            body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.wasmAnyArrayType))
-                            body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
-                            body.buildRefCastStatic(wasmFileCodegenContext.specialSlotITableType, location)
                             body.buildStructGet(wasmFileCodegenContext.specialSlotITableType, WasmSymbol(specialSlotIndex), location)
                             body.buildInstr(WasmOp.REF_IS_NULL, location)
                             body.buildInstr(WasmOp.I32_EQZ, location)
@@ -1003,15 +968,44 @@ class BodyGenerator(
                         body.buildConstI32(0, location)
                     }
                 } else {
-//                    body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                    val invokeMethod = getInvokeMethod(irInterface)
+                    if (invokeMethod != null) {
+                        body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                        body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), WasmSymbol(0), location)
+                        body.buildFunctionTypedBlock("castResultBlock", wasmFileCodegenContext.specialSlotITableTypeToInt32) { result ->
+                            body.buildFunctionTypedBlock("castFailBlock", wasmFileCodegenContext.specialSlotITableTypeToUnit) { fail ->
+                                body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
+                                body.buildStructGet(wasmFileCodegenContext.specialSlotITableType, WasmSymbol(backendContext.specialSlotITableTypes.size), location)
+                                body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
 
-//                    generateInlineCache(WasmI32, location) {
+                                val funcArrayLocal = functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_FUNC_ARRAY)
+                                body.buildSetLocal(funcArrayLocal, location)
+                                body.buildGetLocal(funcArrayLocal, location)
+
+                                body.buildInstr(WasmOp.ARRAY_LEN, location)
+                                body.buildConstI32(invokeMethod.parameters.size, location)
+
+                                body.buildInstr(WasmOp.I32_LT_U, location)
+                                body.buildBrIf(fail, location)
+
+                                body.buildGetLocal(funcArrayLocal, location)
+                                body.buildConstI32(invokeMethod.parameters.size - 1, location)
+
+                                WasmImmediate.HeapType(WasmFuncRef)
+
+                                body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(wasmFileCodegenContext.wasmFuncArrayType))
+                                body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
+                                body.buildConstI32(1, location)
+                                body.buildBr(result, location)
+                            }
+                            body.buildConstI32(0, location)
+                        }
+
+                    } else {
                         generateInterfaceSlotLookup(wasmFileCodegenContext.referenceTypeId(irInterface.symbol), location)
                         body.buildConstI32(-1, location)
                         body.buildInstr(WasmOp.I32_NE, location)
-//                    }
-
-
+                    }
                 }
 
 

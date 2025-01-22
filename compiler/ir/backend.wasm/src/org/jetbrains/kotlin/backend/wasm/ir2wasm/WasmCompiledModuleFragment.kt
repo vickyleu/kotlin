@@ -58,6 +58,7 @@ class WasmCompiledFileFragment(
     val jsModuleAndQualifierReferences: MutableSet<JsModuleAndQualifierReference> = mutableSetOf(),
     val classAssociatedObjectsInstanceGetters: MutableList<ClassAssociatedObjects> = mutableListOf(),
     var wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration>? = null,
+    var wasmFuncArrayType: WasmSymbol<WasmArrayDeclaration>? = null,
     var builtinIdSignatures: BuiltinIdSignatures? = null,
     var specialSlotITableType: WasmSymbol<WasmTypeDeclaration>? = null,
     var specialITableTypeList: MutableList<Pair<Int, WasmSymbol<WasmTypeDeclaration>>>? = null,
@@ -187,6 +188,11 @@ class WasmCompiledModuleFragment(
         )
         wasmCompiledFileFragments.forEach { it.wasmAnyArrayType?.bind(wasmAnyArrayType) }
 
+        val wasmFuncArrayType = WasmArrayDeclaration(
+            name = "func",
+            field = WasmStructFieldDeclaration("", WasmRefNullType(WasmHeapType.Simple.Func), false)
+        )
+        wasmCompiledFileFragments.forEach { it.wasmFuncArrayType?.bind(wasmFuncArrayType) }
 
         val vTableGcTypes = mutableMapOf<IdSignature, WasmTypeDeclaration>()
         for (fragment in wasmCompiledFileFragments) {
@@ -204,7 +210,7 @@ class WasmCompiledModuleFragment(
             name = "special_itable",
             fields = slotGcTypes.map {
                 WasmStructFieldDeclaration(it.name, it, false)
-            } + WasmStructFieldDeclaration("SAM_method", WasmRefNullType(WasmHeapType.Simple.Func), false),
+            } + WasmStructFieldDeclaration("func_tbl", WasmRefNullType(WasmHeapType.Type(WasmSymbol(wasmFuncArrayType))), false),
             superType = null,
             isFinal = true
         )
@@ -215,7 +221,7 @@ class WasmCompiledModuleFragment(
         additionalTypes.add(parameterlessNoReturnFunctionType)
         tags.forEach { additionalTypes.add(it.type) }
 
-        val recursiveTypeGroups = getTypes(listOf(wasmAnyArrayType, specialSlotITableType), canonicalFunctionTypes, additionalTypes)
+        val recursiveTypeGroups = getTypes(listOf(wasmAnyArrayType, wasmFuncArrayType, specialSlotITableType), canonicalFunctionTypes, additionalTypes)
 
         return WasmModule(
             recGroups = recursiveTypeGroups,

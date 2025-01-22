@@ -206,6 +206,18 @@ class WasmFileCodegenContext(
         }
     }
 
+    val specialSlotITableTypeToInt32: WasmSymbol<WasmFunctionType> by lazy {
+        WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(specialSlotITableType))), listOf(WasmI32))).also {
+            wasmFileFragment.additionalFunctionTypes.add(it)
+        }
+    }
+
+    val specialSlotITableTypeToUnit: WasmSymbol<WasmFunctionType> by lazy {
+        WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(specialSlotITableType))), listOf())).also {
+            wasmFileFragment.additionalFunctionTypes.add(it)
+        }
+    }
+
     val wasmAnyArrayTypeToWasmI32: WasmSymbol<WasmFunctionType> by lazy {
         WasmSymbol(WasmFunctionType(listOf(WasmRefNullType(WasmHeapType.Type(wasmAnyArrayType))), listOf(WasmI32))).also {
             wasmFileFragment.additionalFunctionTypes.add(it)
@@ -221,6 +233,10 @@ class WasmFileCodegenContext(
     val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration>
         get() = wasmFileFragment.wasmAnyArrayType
             ?: WasmSymbol<WasmArrayDeclaration>().also { wasmFileFragment.wasmAnyArrayType = it }
+
+    val wasmFuncArrayType: WasmSymbol<WasmArrayDeclaration>
+        get() = wasmFileFragment.wasmFuncArrayType
+            ?: WasmSymbol<WasmArrayDeclaration>().also { wasmFileFragment.wasmFuncArrayType = it }
 
     val specialSlotITableType: WasmSymbol<WasmTypeDeclaration>
         get() = wasmFileFragment.specialSlotITableType

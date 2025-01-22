@@ -648,6 +648,7 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeList(classAssociatedObjectsInstanceGetters, ::serializeClassAssociatedObjects)
             serializeNullable(builtinIdSignatures, ::serializeBuiltinIdSignatures)
             serializeNullable(wasmAnyArrayType) { serializeWasmSymbolReadOnly(it, ::serializeWasmArrayDeclaration) }
+            serializeNullable(wasmFuncArrayType) { serializeWasmSymbolReadOnly(it, ::serializeWasmArrayDeclaration) }
             serializeNullable(specialSlotITableType) { serializeWasmSymbolReadOnly(it, ::serializeWasmTypeDeclaration) }
             serializeList(additionalFunctionTypes) { serializeWasmSymbolReadOnly(it, ::serializeWasmFunctionType) }
         }
