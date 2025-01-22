@@ -26,7 +26,7 @@ import java.io.File
 import java.util.concurrent.Callable
 import javax.inject.Inject
 
-@DisableCachingByDefault(because = "Abstract super-class, not to be instantiated directly")
+@DisableCachingByDefault(because = "registering native libraries as task inputs is non-trivial KT-65607")
 abstract class KotlinNativeTest : KotlinTest() {
     @get:Inject
     abstract val providerFactory: ProviderFactory
@@ -154,14 +154,14 @@ abstract class KotlinNativeTest : KotlinTest() {
         return TCServiceMessagesTestExecutionSpec(extendedForkOptions, cliArgs, checkExitCode, clientSettings)
     }
 
-    protected abstract class TestCommand() {
+    protected abstract class TestCommand {
         abstract val executable: String
         abstract fun cliArgs(
             testLogger: String?,
             checkExitCode: Boolean,
             testGradleFilter: Set<String>,
             testNegativeGradleFilter: Set<String>,
-            userArgs: List<String>
+            userArgs: List<String>,
         ): List<String>
 
         protected fun testArgs(
@@ -169,7 +169,7 @@ abstract class KotlinNativeTest : KotlinTest() {
             checkExitCode: Boolean,
             testGradleFilter: Set<String>,
             testNegativeGradleFilter: Set<String>,
-            userArgs: List<String>
+            userArgs: List<String>,
         ): List<String> = mutableListOf<String>().also {
             // during debug from IDE executable is switched and special arguments are added
             // via Gradle task manipulation; these arguments are expected to precede test settings
@@ -198,7 +198,7 @@ abstract class KotlinNativeTest : KotlinTest() {
 /**
  * A task running Kotlin/Native tests on a host machine.
  */
-@DisableCachingByDefault
+@DisableCachingByDefault(because = "registering native libraries as task inputs is non-trivial KT-65607")
 abstract class KotlinNativeHostTest : KotlinNativeTest() {
     @get:Internal
     override val testCommand: TestCommand = object : TestCommand() {
@@ -210,7 +210,7 @@ abstract class KotlinNativeHostTest : KotlinNativeTest() {
             checkExitCode: Boolean,
             testGradleFilter: Set<String>,
             testNegativeGradleFilter: Set<String>,
-            userArgs: List<String>
+            userArgs: List<String>,
         ): List<String> = testArgs(testLogger, checkExitCode, testGradleFilter, testNegativeGradleFilter, userArgs)
     }
 }
@@ -218,7 +218,7 @@ abstract class KotlinNativeHostTest : KotlinNativeTest() {
 /**
  * A task running Kotlin/Native tests on a simulator (iOS/watchOS/tvOS).
  */
-@DisableCachingByDefault
+@DisableCachingByDefault(because = "registering native libraries as task inputs is non-trivial KT-65607")
 abstract class KotlinNativeSimulatorTest : KotlinNativeTest() {
     @Deprecated("Use the property 'device' instead")
     @get:Internal
@@ -248,7 +248,7 @@ abstract class KotlinNativeSimulatorTest : KotlinNativeTest() {
             checkExitCode: Boolean,
             testGradleFilter: Set<String>,
             testNegativeGradleFilter: Set<String>,
-            userArgs: List<String>
+            userArgs: List<String>,
         ): List<String> =
             listOfNotNull(
                 "simctl",
