@@ -1869,6 +1869,11 @@ public inline fun <T> Iterable<T>.forEach(action: (T) -> Unit): Unit {
     for (element in this) action(element)
 }
 
+@kotlin.internal.HidesMembers
+public inline fun <T> List<T>.forEach(action: (T) -> Unit): Unit {
+    for (element in this) action(element)
+}
+
 /**
  * Performs the given [action] on each element, providing sequential index with the element.
  * @param [action] function that takes the index of an element and the element itself
