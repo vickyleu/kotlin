@@ -17124,6 +17124,11 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
   @TestDataPath("$PROJECT_ROOT")
   @RunWith(JUnit3RunnerWithInners.class)
   public static class ExtensionFunctions extends AbstractLightAnalysisModeTest {
+    @TestMetadata("selectingLambdas.kt")
+    public void ignoreSelectingLambdas() {
+      runTest("compiler/testData/codegen/box/extensionFunctions/selectingLambdas.kt");
+    }
+
     private void runTest(String testDataFilePath) {
       KotlinTestUtils.runTest(this::doTest, TargetBackend.JVM_IR, testDataFilePath);
     }
@@ -18330,11 +18335,6 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
     @TestMetadata("emptyIntersectionWarning.kt")
     public void ignoreEmptyIntersectionWarning() {
       runTest("compiler/testData/codegen/box/fir/emptyIntersectionWarning.kt");
-    }
-
-    @TestMetadata("selectingLambdas.kt")
-    public void ignoreSelectingLambdas() {
-      runTest("compiler/testData/codegen/box/fir/selectingLambdas.kt");
     }
 
     @TestMetadata("typeParameterInClashingAccessor.kt")
