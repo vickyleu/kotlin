@@ -437,7 +437,15 @@ internal class ClassMemberGenerator(
                     )
                 else ->
                     factory.createExpressionBody(
-                        visitor.convertToIrExpression(firDefaultValue)
+                        visitor.convertToIrExpression(firDefaultValue).let {
+                            with(visitor.implicitCastInserter) {
+                                it.insertSpecialCast(
+                                    firDefaultValue,
+                                    firDefaultValue.resolvedType,
+                                    firValueParameter.returnTypeRef.coneType,
+                                )
+                            }
+                        }
                     )
             }
         }

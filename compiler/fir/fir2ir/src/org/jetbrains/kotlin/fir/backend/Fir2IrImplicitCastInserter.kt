@@ -195,6 +195,21 @@ class Fir2IrImplicitCastInserter(private val c: Fir2IrComponents) : Fir2IrCompon
         expression: FirExpression,
         valueType: ConeKotlinType,
         expectedType: ConeKotlinType,
+        substitutedExpectedType: ConeKotlinType = expectedType,
+    ): IrExpression {
+        return doInsertSpecialCast(expression, valueType, expectedType).let {
+            with(adapterGenerator) {
+                val samFunctionType = getFunctionTypeForPossibleSamType(substitutedExpectedType) ?: substitutedExpectedType
+                it.applySuspendConversionIfNeeded(expression, samFunctionType)
+                    .applySamConversionIfNeeded(expression)
+            }
+        }
+    }
+
+    internal fun IrExpression.doInsertSpecialCast(
+        expression: FirExpression,
+        valueType: ConeKotlinType,
+        expectedType: ConeKotlinType,
     ): IrExpression {
         if (this is IrTypeOperatorCall) {
             return this

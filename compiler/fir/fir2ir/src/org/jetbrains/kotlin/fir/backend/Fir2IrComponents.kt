@@ -55,6 +55,8 @@ interface Fir2IrComponents {
 
     val annotationsFromPluginRegistrar: Fir2IrIrGeneratedDeclarationsRegistrar
 
+    val adapterGenerator: AdapterGenerator
+
     /**
      * A set of FIR files serving as input for the fir2ir ([Fir2IrConverter.generateIrModuleFragment] function) for conversion to IR.
      *
