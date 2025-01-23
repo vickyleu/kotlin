@@ -13,7 +13,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.logging.kotlinInfo
 import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider
-import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
+import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguator
 import org.jetbrains.kotlin.gradle.targets.js.NpmVersions
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnv
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
@@ -32,7 +32,7 @@ abstract class AbstractNodeJsRootExtension(
     val project: Project,
     private val nodeJs: () -> NodeJsEnvSpec,
     rootDir: String,
-) : HasPlatformDisambiguate {
+) : HasPlatformDisambiguator {
 
     init {
         check(project.rootProject == project)

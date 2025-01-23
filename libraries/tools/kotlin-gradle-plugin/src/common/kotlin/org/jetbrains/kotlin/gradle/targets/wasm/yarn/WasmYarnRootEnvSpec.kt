@@ -5,15 +5,15 @@
 
 package org.jetbrains.kotlin.gradle.targets.wasm.yarn
 
-import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguate
-import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmPlatformDisambiguate
+import org.jetbrains.kotlin.gradle.targets.web.HasPlatformDisambiguator
+import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmPlatformDisambiguator
 import org.jetbrains.kotlin.gradle.targets.web.yarn.AbstractYarnRootEnvSpec
 
 /**
  * Spec for Yarn - package manager to install NPM dependencies
  */
 abstract class WasmYarnRootEnvSpec : AbstractYarnRootEnvSpec() {
-    companion object : HasPlatformDisambiguate by WasmPlatformDisambiguate {
+    companion object : HasPlatformDisambiguator by WasmPlatformDisambiguator {
         val YARN: String
             get() = extensionName("kotlinYarnSpec")
     }
