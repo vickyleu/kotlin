@@ -8,7 +8,7 @@ package kotlin.concurrent.atomics
 /**
  * An [Int] value that may be updated atomically.
  *
- * Instances of [AtomicInt] are represented by [java.util.concurrent.atomic.AtomicInteger] and provide the the same atomicity guarantees.
+ * Instances of [AtomicInt] are represented by [java.util.concurrent.atomic.AtomicInteger] and provide the same atomicity guarantees.
  *
  * @sample samples.concurrent.atomics.AtomicJvmSamples.processItems
  */
@@ -85,7 +85,7 @@ public actual class AtomicInt(value: Int) {
 /**
  * A [Long] value that may be updated atomically.
  *
- * Instances of [AtomicLong] are represented by [java.util.concurrent.atomic.AtomicLong] and provide the the same atomicity guarantees.
+ * Instances of [AtomicLong] are represented by [java.util.concurrent.atomic.AtomicLong] and provide the same atomicity guarantees.
  */
 @SinceKotlin("2.1")
 @ExperimentalAtomicApi
@@ -160,11 +160,11 @@ public actual class AtomicLong(value: Long) {
 /**
  * A [Boolean] value that may be updated atomically.
  *
- * Instances of [AtomicBoolean] are represented by [java.util.concurrent.atomic.AtomicBoolean] and provide the the same atomicity guarantees.
+ * Instances of [AtomicBoolean] are represented by [java.util.concurrent.atomic.AtomicBoolean] and provide the same atomicity guarantees.
  */
 @SinceKotlin("2.1")
 @ExperimentalAtomicApi
-public actual class AtomicBoolean (value: Boolean) {
+public actual class AtomicBoolean(value: Boolean) {
     /**
      * Atomically loads the value from this [AtomicBoolean].
      *
@@ -221,11 +221,11 @@ public actual class AtomicBoolean (value: Boolean) {
 /**
  * An object reference that may be updated atomically.
  *
- * Instances of [AtomicReference] are represented by [java.util.concurrent.atomic.AtomicReference] and provide the the same atomicity guarantees.
+ * Instances of [AtomicReference] are represented by [java.util.concurrent.atomic.AtomicReference] and provide the same atomicity guarantees.
  */
 @SinceKotlin("2.1")
 @ExperimentalAtomicApi
-public actual class AtomicReference<T> (value: T) {
+public actual class AtomicReference<T>(value: T) {
     /**
      * Atomically loads the value from this [AtomicReference].
      *
