@@ -95,7 +95,7 @@ class WasmLoweringFacade(
         )
         val wasmCompiledFileFragments = allModules.map { codeGenerator.generateModuleAsSingleFileFragment(it) }
 
-        val specialITableTypes = WasmBackendContext.getSpecialITableTypes(backendContext.irBuiltIns).map {
+        val specialITableTypes = WasmBackendContext.getSpecialITableTypes(backendContext).map {
             (moduleInfo.symbolTable.irFactory as IrFactoryImplForWasmIC).declarationSignature(it.owner)
         }
 

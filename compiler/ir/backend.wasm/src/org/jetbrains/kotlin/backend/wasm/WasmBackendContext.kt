@@ -133,30 +133,32 @@ class WasmBackendContext(
     )
 
     companion object {
-        fun getSpecialITableTypes(irBuiltIns: IrBuiltIns) = listOf(
-            irBuiltIns.collectionClass,
-            irBuiltIns.setClass,
-            irBuiltIns.listClass,
-            irBuiltIns.mapClass,
-            irBuiltIns.mapEntryClass,
-            irBuiltIns.iterableClass,
-            irBuiltIns.iteratorClass,
-            irBuiltIns.listIteratorClass,
-            irBuiltIns.mutableCollectionClass,
-            irBuiltIns.mutableSetClass,
-            irBuiltIns.mutableListClass,
-            irBuiltIns.mutableMapClass,
-            irBuiltIns.mutableMapEntryClass,
-            irBuiltIns.mutableIterableClass,
-            irBuiltIns.mutableIteratorClass,
-            irBuiltIns.mutableListIteratorClass,
-            irBuiltIns.comparableClass,
-            irBuiltIns.charSequenceClass,
+        fun getSpecialITableTypes(context: WasmBackendContext) = listOf(
+            context.irBuiltIns.collectionClass,
+            context.irBuiltIns.setClass,
+            context.irBuiltIns.listClass,
+            context.irBuiltIns.mapClass,
+            context.irBuiltIns.mapEntryClass,
+            context.irBuiltIns.iterableClass,
+            context.irBuiltIns.iteratorClass,
+            context.irBuiltIns.listIteratorClass,
+            context.irBuiltIns.mutableCollectionClass,
+            context.irBuiltIns.mutableSetClass,
+            context.irBuiltIns.mutableListClass,
+            context.irBuiltIns.mutableMapClass,
+            context.irBuiltIns.mutableMapEntryClass,
+            context.irBuiltIns.mutableIterableClass,
+            context.irBuiltIns.mutableIteratorClass,
+            context.irBuiltIns.mutableListIteratorClass,
+            context.irBuiltIns.comparableClass,
+            context.irBuiltIns.charSequenceClass,
+            context.wasmSymbols.enumEntries,
+            context.wasmSymbols.sequence!!,
             //FUNCTION_INTERFACE_CLASS
         )
     }
 
     val specialSlotITableTypes by lazy(LazyThreadSafetyMode.NONE) {
-        getSpecialITableTypes(irBuiltIns)
+        getSpecialITableTypes(this)
     }
 }

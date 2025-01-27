@@ -172,7 +172,7 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
         val wasmCompiledFileFragments = allModules.map { codeGenerator.generateModuleAsSingleFileFragment(it) }
 
         @OptIn(UnsafeDuringIrConstructionAPI::class)
-        val specialITableTypes = WasmBackendContext.getSpecialITableTypes(backendContext.irBuiltIns).map {
+        val specialITableTypes = WasmBackendContext.getSpecialITableTypes(backendContext).map {
             irFactory.declarationSignature(it.owner)
         }
 
