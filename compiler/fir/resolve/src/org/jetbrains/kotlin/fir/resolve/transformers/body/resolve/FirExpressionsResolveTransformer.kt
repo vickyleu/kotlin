@@ -1733,15 +1733,14 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
             // If the get call arguments are SAM converted, unwrap the SAM conversion.
             // Otherwise, we might fail resolution if the get and set operator parameter types are different
             // (different SAM types or one is a SAM type and the other isn't).
+            val unwrappedSamIndex = (index as? FirSamConversionExpression)?.expression ?: index
             generateTemporaryVariable(
                 session.moduleData,
-                source = index.source?.fakeElement(fakeSourceElementKind),
+                source = unwrappedSamIndex.source?.fakeElement(fakeSourceElementKind),
                 name = SpecialNames.subscribeOperatorIndex(i),
-                initializer = index,
-                typeRef = index.resolvedType.toFirResolvedTypeRef(),
-            ).also {
-                it.replaceBodyResolveState(FirPropertyBodyResolveState.INITIALIZER_RESOLVED)
-            }
+                initializer = unwrappedSamIndex,
+                typeRef = unwrappedSamIndex.resolvedType.toFirResolvedTypeRef(),
+            )
         }
 
         arrayVariable.transformSingle(transformer, ResolutionMode.ContextIndependent)
@@ -1749,6 +1748,17 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
 
         val arrayAccess = arrayVariable.toQualifiedAccess()
         val indicesQualifiedAccess = indexVariables.map { it.toQualifiedAccess() }
+
+        // If the get call arguments were SAM conversions, they were unwrapped for the variable initializers.
+        // We need to reapply the SAM conversions here because the get call won't be completed again (where the SAM conversions could be
+        // applied automatically).
+        // SAM conversions will be applied automatically for the set call during completion.
+        val indicesQualifiedAccessForGet = indicesQualifiedAccess.mapIndexed { index, qualifiedAccess ->
+            val samConversion = flattenedGetCallArguments[index] as? FirSamConversionExpression ?: return@mapIndexed qualifiedAccess
+            buildSamConversionExpressionCopy(samConversion) {
+                expression = qualifiedAccess
+            }
+        }
 
         val getCall = buildFunctionCall {
             source = indexedAccessAugmentedAssignment.arrayAccessSource?.fakeElement(fakeSourceElementKind)
@@ -1766,14 +1776,14 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
                 if (argument is FirVarargArgumentsExpression) {
                     buildVarargArgumentsExpression {
                         val varargSize = argument.arguments.size
-                        arguments += indicesQualifiedAccess.subList(i, i + varargSize)
+                        arguments += indicesQualifiedAccessForGet.subList(i, i + varargSize)
                         i += varargSize
                         source = argument.source
                         coneTypeOrNull = argument.resolvedType
                         coneElementTypeOrNull = argument.coneElementTypeOrNull
                     }
                 } else {
-                    indicesQualifiedAccess[i++]
+                    indicesQualifiedAccessForGet[i++]
                 }
             }
             argumentList = buildResolvedArgumentList(
