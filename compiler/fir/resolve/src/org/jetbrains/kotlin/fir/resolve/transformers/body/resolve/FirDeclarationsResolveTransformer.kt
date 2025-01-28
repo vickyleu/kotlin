@@ -1248,6 +1248,7 @@ open class FirDeclarationsResolveTransformer(
         return lambda
     }
 
+    @OnlyForDefaultLanguageFeatureDisabled(LanguageFeature.ResolveTopLevelLambdasAsSyntheticCallArgument)
     private fun FirAnonymousFunction.computeReturnTypeRef(expected: FirResolvedTypeRef?): FirResolvedTypeRef {
         val returnType = computeReturnType(
             session,

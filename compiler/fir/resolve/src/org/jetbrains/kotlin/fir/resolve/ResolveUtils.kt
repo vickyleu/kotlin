@@ -145,10 +145,10 @@ internal fun FirAnonymousFunction.computeReturnType(
         return commonSuperType
     }
 
-    return if (isPassedAsFunctionArgument && !commonSuperType.fullyExpandedType(session).isUnit) {
-        expectedReturnType ?: commonSuperType
-    } else {
-        commonSuperType
+    return when {
+        !isLambda && returnTypeRef is FirResolvedTypeRef -> expectedReturnType ?: error("123")
+        isPassedAsFunctionArgument && !commonSuperType.fullyExpandedType(session).isUnit -> expectedReturnType ?: commonSuperType
+        else -> commonSuperType
     }
 }
 
