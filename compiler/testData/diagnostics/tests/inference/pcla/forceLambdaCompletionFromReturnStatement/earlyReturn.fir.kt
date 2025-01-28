@@ -10,7 +10,7 @@ fun main(b: Boolean) {
         if (b) {
             return@build <!CANNOT_INFER_PARAMETER_TYPE!>{ <!VALUE_PARAMETER_WITHOUT_EXPLICIT_TYPE!>arg<!> ->
                 arg.<!UNRESOLVED_REFERENCE!>length<!>
-            }
+            }<!>
         }
         container.consume({ arg: String -> })
     }
