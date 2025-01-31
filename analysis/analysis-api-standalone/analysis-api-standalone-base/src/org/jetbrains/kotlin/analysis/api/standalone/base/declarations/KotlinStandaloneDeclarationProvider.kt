@@ -66,6 +66,11 @@ class KotlinStandaloneDeclarationProvider internal constructor(
             ?: getAllTypeAliasesByClassId(classId).firstOrNull()
     }
 
+    override fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration? {
+        return getAllClassesByFqName(fqName).firstOrNull()
+            ?: getAllTypeAliasesByByFqName(fqName).firstOrNull()
+    }
+
     override fun getAllClassesByClassId(classId: ClassId): Collection<KtClassOrObject> =
         index.classMap[classId.packageFqName]
             ?.filter { ktClassOrObject ->
@@ -73,12 +78,20 @@ class KotlinStandaloneDeclarationProvider internal constructor(
             }
             ?: emptyList()
 
+    override fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject> {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllTypeAliasesByClassId(classId: ClassId): Collection<KtTypeAlias> =
         index.typeAliasMap[classId.packageFqName]
             ?.filter { ktTypeAlias ->
                 ktTypeAlias.getClassId() == classId && ktTypeAlias.inScope
             }
             ?: emptyList()
+
+    override fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias> {
+        TODO("Not yet implemented")
+    }
 
     override fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name> {
         val classifiers = index.classMap[packageFqName].orEmpty() + index.typeAliasMap[packageFqName].orEmpty()

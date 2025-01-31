@@ -25,12 +25,24 @@ public class KotlinCompositeDeclarationProvider private constructor(
         return providers.firstNotNullOfOrNull { it.getClassLikeDeclarationByClassId(classId) }
     }
 
+    override fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration? {
+        return providers.firstNotNullOfOrNull { it.getClassLikeDeclarationByFqName(fqName) }
+    }
+
     override fun getAllClassesByClassId(classId: ClassId): Collection<KtClassOrObject> {
         return providers.flatMap { it.getAllClassesByClassId(classId) }
     }
 
+    override fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject> {
+        return providers.flatMap { it.getAllClassesByFqName(fqName) }
+    }
+
     override fun getAllTypeAliasesByClassId(classId: ClassId): Collection<KtTypeAlias> {
         return providers.flatMap { it.getAllTypeAliasesByClassId(classId) }
+    }
+
+    override fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias> {
+        return providers.flatMap { it.getAllTypeAliasesByByFqName(fqName) }
     }
 
     override fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name> {

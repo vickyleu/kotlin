@@ -128,7 +128,7 @@ internal class SymbolKotlinAsJavaSupport(project: Project) : KotlinAsJavaSupport
         searchScope: GlobalSearchScope
     ): Collection<KtClassOrObject> = project.createDeclarationProvider(searchScope, contextualModule = null).run {
         getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName).flatMap {
-            getAllClassesByClassId(ClassId.topLevel(packageFqName.child(it)))
+            getAllClassesByFqName(packageFqName.child(it))
         }
     }
 
@@ -147,27 +147,9 @@ internal class SymbolKotlinAsJavaSupport(project: Project) : KotlinAsJavaSupport
         return project.createDeclarationProvider(searchScope, contextualModule = null).findFilesForScript(scriptFqName)
     }
 
-    private fun FqName.toClassIdSequence(): Sequence<ClassId> {
-        var currentName = shortNameOrSpecial()
-        if (currentName.isSpecial) return emptySequence()
-        var currentParent = parentOrNull() ?: return emptySequence()
-        var currentRelativeName = currentName.asString()
-
-        return sequence {
-            while (true) {
-                yield(ClassId(currentParent, FqName(currentRelativeName), isLocal = false))
-                currentName = currentParent.shortNameOrSpecial()
-                if (currentName.isSpecial) break
-                currentParent = currentParent.parentOrNull() ?: break
-                currentRelativeName = "${currentName.asString()}.$currentRelativeName"
-            }
-        }
-    }
-
     override fun findClassOrObjectDeclarations(fqName: FqName, searchScope: GlobalSearchScope): Collection<KtClassOrObject> =
-        fqName.toClassIdSequence().flatMap {
-            project.createDeclarationProvider(searchScope, contextualModule = null).getAllClassesByClassId(it)
-        }
+        project.createDeclarationProvider(searchScope, contextualModule = null)
+            .getAllClassesByFqName(fqName)
             .filter { it.isFromSourceOrLibraryBinary() }
             .toSet()
 

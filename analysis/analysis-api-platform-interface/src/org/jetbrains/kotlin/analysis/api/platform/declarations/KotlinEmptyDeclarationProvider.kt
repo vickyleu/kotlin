@@ -13,8 +13,11 @@ import org.jetbrains.kotlin.psi.*
 
 public object KotlinEmptyDeclarationProvider : KotlinDeclarationProvider {
     override fun getClassLikeDeclarationByClassId(classId: ClassId): KtClassLikeDeclaration? = null
+    override fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration? = null
     override fun getAllClassesByClassId(classId: ClassId): List<KtClassOrObject> = emptyList()
+    override fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject> = emptyList()
     override fun getAllTypeAliasesByClassId(classId: ClassId): List<KtTypeAlias> = emptyList()
+    override fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias> = emptyList()
     override fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name> = emptySet()
     override fun getTopLevelProperties(callableId: CallableId): List<KtProperty> = emptyList()
     override fun getTopLevelFunctions(callableId: CallableId): List<KtNamedFunction> = emptyList()

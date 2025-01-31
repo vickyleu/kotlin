@@ -27,9 +27,13 @@ import org.jetbrains.kotlin.psi.*
  */
 public interface KotlinDeclarationProvider : KotlinComposableProvider {
     public fun getClassLikeDeclarationByClassId(classId: ClassId): KtClassLikeDeclaration?
+    public fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration?
 
     public fun getAllClassesByClassId(classId: ClassId): Collection<KtClassOrObject>
+    public fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject>
+
     public fun getAllTypeAliasesByClassId(classId: ClassId): Collection<KtTypeAlias>
+    public fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias>
 
     public fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name>
 

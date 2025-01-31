@@ -190,6 +190,37 @@ class LLFirResolveExtensionToolDeclarationProvider internal constructor(
             .firstNotNullOfOrNull { it.getClassLikeDeclarationByClassId(classId) }
     }
 
+//        if (fqName.isRoot) return null
+//
+//        /*
+//         * Coverts [a.b.c.d] into ClassIds.
+//         * 0. /a.b.c.d
+//         * 1. a/b.c.d
+//         * 2. a/b/c.d
+//         * 3. a/b/c/d
+//         */
+//        val classIds = fqName.toClassIdSequence().toList().asReversed()
+//        sequence {
+//            for (extension in extensionProvider.extensions) {
+//                for (extensionFile in extension.getKtFiles()) {
+//
+//                }
+//            }
+//        }
+
+
+    override fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration? = forbidAnalysis {
+        TODO()
+    }
+
+    override fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject> = forbidAnalysis {
+        TODO()
+    }
+
+    override fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias> = forbidAnalysis {
+        TODO()
+    }
+
     override fun getAllClassesByClassId(classId: ClassId): Collection<KtClassOrObject> = forbidAnalysis {
         return getDeclarationProvidersByPackage(classId.packageFqName) { it.mayHaveTopLevelClassifier(classId.getTopLevelShortClassName()) }
             .flatMapTo(mutableListOf()) { it.getAllClassesByClassId(classId) }
@@ -272,6 +303,34 @@ class LLFirResolveExtensionToolDeclarationProvider internal constructor(
         return extensionProvider.getFilesByPackage(packageFqName)
             .filter { filter(it) }
             .map { createDeclarationProviderByFile(it) }
+    }
+
+    private fun FqName.toClassIdSequence(): Sequence<ClassId> {
+        var currentName = shortNameOrSpecial()
+        if (currentName.isSpecial) return emptySequence()
+        var currentParent = parentOrNull() ?: return emptySequence()
+        var currentRelativeName = currentName.asString()
+
+        return sequence {
+            while (true) {
+                yield(ClassId(currentParent, FqName(currentRelativeName), isLocal = false))
+                currentName = currentParent.shortNameOrSpecial()
+                if (currentName.isSpecial) break
+                currentParent = currentParent.parentOrNull() ?: break
+                currentRelativeName = "${currentName.asString()}.$currentRelativeName"
+            }
+        }
+    }
+
+    private inline fun getDeclarationProvidersByFqName(
+        fqName: FqName,
+        crossinline filter: (ClassId, KaResolveExtensionFile) -> Boolean,
+    ): Sequence<KotlinFileBasedDeclarationProvider> = forbidAnalysis {
+        fqName.toClassIdSequence().flatMap { classId ->
+            extensionProvider.getFilesByPackage(classId.packageFqName)
+                .filter { filter(classId, it) }
+                .map { createDeclarationProviderByFile(it) }
+        }
     }
 
     private fun createDeclarationProviderByFile(file: KaResolveExtensionFile): KotlinFileBasedDeclarationProvider = forbidAnalysis {

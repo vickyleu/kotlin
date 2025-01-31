@@ -32,8 +32,39 @@ public class KotlinFileBasedDeclarationProvider(public val kotlinFile: KtFile) :
         return getClassLikeDeclarationsByClassId(classId).firstOrNull()
     }
 
+    override fun getClassLikeDeclarationByFqName(fqName: FqName): KtClassLikeDeclaration? {
+        return getClassLikeDeclarationsByFqName(fqName).firstOrNull()
+    }
+
     override fun getAllClassesByClassId(classId: ClassId): Collection<KtClassOrObject> {
         return getClassLikeDeclarationsByClassId(classId).filterIsInstance<KtClassOrObject>().toList()
+    }
+
+    override fun getAllClassesByFqName(fqName: FqName): Collection<KtClassOrObject> {
+        return getClassLikeDeclarationsByFqName(fqName).filterIsInstance<KtClassOrObject>().toList()
+    }
+
+    private fun getClassLikeDeclarationsByFqName(fqName: FqName): Sequence<KtClassLikeDeclaration> {
+        if (fqName.isRoot) return emptySequence()
+        val packageFqName = kotlinFile.packageFqName
+
+        val classId = when {
+            // in root all qualifiers might exist
+            packageFqName.isRoot -> ClassId(packageFqName = packageFqName, relativeClassName = fqName, isLocal = false)
+            // it is possible to find declarations with the same package or subpackage
+            !fqName.startsWith(packageFqName) -> return emptySequence()
+            else -> {
+                val pathSegments = fqName.pathSegments()
+                val relativePath = pathSegments.subList(packageFqName.pathSegments().size, pathSegments.size).map(Name::asString)
+                ClassId(
+                    packageFqName = packageFqName,
+                    relativeClassName = FqName.fromSegments(relativePath),
+                    isLocal = false,
+                )
+            }
+        }
+
+        return getClassLikeDeclarationsByClassId(classId)
     }
 
     private fun getClassLikeDeclarationsByClassId(classId: ClassId): Sequence<KtClassLikeDeclaration> {
@@ -82,6 +113,10 @@ public class KotlinFileBasedDeclarationProvider(public val kotlinFile: KtFile) :
 
     override fun getAllTypeAliasesByClassId(classId: ClassId): Collection<KtTypeAlias> {
         return getClassLikeDeclarationsByClassId(classId).filterIsInstance<KtTypeAlias>().toList()
+    }
+
+    override fun getAllTypeAliasesByByFqName(fqName: FqName): Collection<KtTypeAlias> {
+        return getClassLikeDeclarationsByFqName(fqName).filterIsInstance<KtTypeAlias>().toList()
     }
 
     override fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name> {
