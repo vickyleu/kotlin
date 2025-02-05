@@ -714,17 +714,21 @@ class BodyGenerator(
                 //TODO: check why it could be needed
                 generateRefCast(receiver.type, klass.defaultType, isRefNullCast = false, location)
 
-                body.buildStructGet(wasmFileCodegenContext.referenceGcType(klassSymbol), anyToVtableId, location)
+                body.buildStructGet(wasmFileCodegenContext.referenceGcType(klassSymbol), anyVtableFieldId, location)
                 val vTableSlotId = WasmSymbol(vfSlot + 1) //First element is always contains Special ITable
                 body.buildStructGet(vTableGcTypeReference, vTableSlotId, location)
                 body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(functionTypeReference))
             } else {
+                val anyClassReference = wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass)
+                val anyVTableGcTypeReference = wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass)
+
                 generateExpression(call.dispatchReceiver!!)
 
                 val specialITableSlot = backendContext.specialSlotITableTypes.indexOf(klassSymbol)
                 if (specialITableSlot != -1) {
                     body.commentGroupStart { "Special Interface call: ${function.fqNameWhenAvailable}" }
-                    generateSpecialITableFromAny(location)
+                    body.buildStructGet(anyClassReference, anyVtableFieldId, location)
+                    body.buildStructGet(anyVTableGcTypeReference, symbolZero, location)
                     body.buildStructGet(
                         wasmFileCodegenContext.interfaceTableTypes.specialSlotITableType,
                         WasmSymbol(specialITableSlot),
@@ -736,7 +740,12 @@ class BodyGenerator(
                     body.buildStructGet(vTableGcTypeReference, WasmSymbol(vfSlot), location)
                 } else if (getFunctionInvokeMethod(klass) == function) {
                     body.commentGroupStart { "Functional Interface call: ${function.fqNameWhenAvailable}" }
-                    generateSpecialITableFromAny(location)
+                    body.buildStructGet(anyClassReference, anyVtableFieldId, location)
+                    body.buildStructGet(
+                        anyVTableGcTypeReference,
+                        symbolZero,
+                        location
+                    )
                     body.buildStructGet(
                         wasmFileCodegenContext.interfaceTableTypes.specialSlotITableType,
                         WasmSymbol(backendContext.specialSlotITableTypes.size),
@@ -751,7 +760,7 @@ class BodyGenerator(
                     body.buildRefCastStatic(functionTypeReference, location)
                 } else {
                     body.commentGroupStart { "Interface call: ${function.fqNameWhenAvailable}" }
-                    body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), anyToITableId, location)
+                    body.buildStructGet(anyClassReference, WasmSymbol(1), location)
                     generateExpression(call.dispatchReceiver!!)
                     body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
                     body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
@@ -871,7 +880,8 @@ class BodyGenerator(
                     body.buildBlock("SpecialIFaceTestSuccess", WasmI32) { success ->
                         body.buildBlock("SpecialIFaceTestFail") { fail ->
                             body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
-                            generateSpecialITableFromAny(location)
+                            body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), symbolZero, location)
+                            body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), symbolZero, location)
 
                             body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
                             body.buildStructGet(
@@ -893,7 +903,12 @@ class BodyGenerator(
                         body.buildBlock("FunctionTestSuccess", WasmI32) { result ->
                             body.buildBlock("FunctionTestFail") { fail ->
                                 body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
-                                generateSpecialITableFromAny(location)
+                                body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), symbolZero, location)
+                                body.buildStructGet(
+                                    wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass),
+                                    symbolZero,
+                                    location
+                                )
 
                                 body.buildBrInstr(WasmOp.BR_ON_NULL, fail, location)
                                 body.buildStructGet(
