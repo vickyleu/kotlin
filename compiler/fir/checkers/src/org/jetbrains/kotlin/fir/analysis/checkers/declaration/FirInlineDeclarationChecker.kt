@@ -109,6 +109,9 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
 
             val somethingInlinable = inlineFunction.valueParameters.any { it.isInlinable(context.session) }
             val inlineOnly = inlineFunction.isInlineOnly(session)
+            val hasReifiedParameter = inlineFunction.typeParameters.any { it.symbol.isReified }
+
+            val containingFunction = inlineFunction.symbol.callableId.toString()
 
             val calleeEffectiveVisibility = accessedDeclarationEffectiveVisibility(accessExpression, accessedSymbol, context)
 
@@ -153,9 +156,11 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     append("FUN_HAVE_INLINABLE_ARG: ${somethingInlinable}; ")
                     append("INLINE_ONLY_ANNOTATION: ${inlineOnly}; ")
                     append("CONTAINING_DECLARATION: $containingDeclaration; ")
+                    append("HAS_REIFIED_PARAMETER: $hasReifiedParameter; ")
+                    append("CONTAINING_FUNCTION: $containingFunction; ")
                 }
                 reporter.reportOn(
-                    source, FirErrors.INVALID_VISIBILITY_FROM_INLINE, "ROMANV; $str", context
+                    source, FirErrors.INVALID_VISIBILITY_FROM_INLINE, "ROMANV; ${str}ROMANV;", context
                 )
             }
 
