@@ -171,6 +171,10 @@ class WasmSerializer(outputStream: OutputStream) {
             }
         }
 
+    private fun serializeClassSuperType(classSuperType: Pair<IdSignature, IdSignature>) {
+        serializePair(classSuperType, ::serializeIdSignature, ::serializeIdSignature)
+    }
+
     private fun serializeWasmGlobal(global: WasmGlobal) =
         serializeNamedModuleField(global, listOf(global.isMutable, global.importPair == null)) {
             serializeWasmType(global.type)
@@ -622,8 +626,6 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeReferencableAndDefinable(functionTypes, ::serializeIdSignature, ::serializeWasmFunctionType)
             serializeReferencableAndDefinable(gcTypes, ::serializeIdSignature, ::serializeWasmTypeDeclaration)
             serializeReferencableAndDefinable(vTableGcTypes, ::serializeIdSignature, ::serializeWasmTypeDeclaration)
-            serializeMap(typeInfo, ::serializeIdSignature, ::serializeConstantDataElement)
-            serializeReferencableElements(classIds, ::serializeIdSignature, ::serializeInt)
             serializeReferencableElements(interfaceIds, ::serializeIdSignature, ::serializeInt)
             serializeReferencableElements(stringLiteralAddress, ::serializeString, ::serializeInt)
             serializeReferencableElements(stringLiteralPoolId, ::serializeString, ::serializeInt)
@@ -631,7 +633,6 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeMap(jsFuns, ::serializeIdSignature, ::serializeJsCodeSnippet)
             serializeMap(jsModuleImports, ::serializeIdSignature, ::serializeString)
             serializeList(exports, ::serializeWasmExport)
-            serializeNullable(scratchMemAddr) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeNullable(stringPoolSize) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeNullable(throwableTagIndex) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeNullable(jsExceptionTagIndex) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
@@ -643,7 +644,24 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeList(classAssociatedObjectsInstanceGetters, ::serializeClassAssociatedObjects)
             serializeNullable(builtinIdSignatures, ::serializeBuiltinIdSignatures)
             serializeNullable(specialITableTypes, ::serializeInterfaceTableTypes)
+            serializeNullable(rttiElements, ::serializeRttiElements)
         }
+
+    private fun serializeRttiElements(rttiElements: RttiElements?) {
+        serializeNullable(rttiElements) { rttiElements ->
+            serializeList(rttiElements.globals) { rttiGlobal ->
+                serializeWasmGlobal(rttiGlobal.global)
+                serializeIdSignature(rttiGlobal.classSignature)
+                serializeNullable(rttiGlobal.superClassSignature, ::serializeIdSignature)
+            }
+
+            serializeReferencableElements(
+                rttiElements.globalReferences,
+                ::serializeIdSignature,
+                ::serializeWasmGlobal
+            )
+        }
+    }
 
     private fun serializeInterfaceTableTypes(specialITableTypes: SpecialITableTypes) {
         serializeWasmSymbolReadOnly(specialITableTypes.wasmAnyArrayType, ::serializeWasmArrayDeclaration)

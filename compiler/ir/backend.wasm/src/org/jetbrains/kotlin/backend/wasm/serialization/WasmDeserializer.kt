@@ -605,8 +605,6 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         functionTypes = deserializeFunctionTypes(),
         gcTypes = deserializeGcTypes(),
         vTableGcTypes = deserializeVTableGcTypes(),
-        typeInfo = deserializeTypeInfo(),
-        classIds = deserializeClassIds(),
         interfaceIds = deserializeInterfaceIds(),
         stringLiteralAddress = deserializeStringLiteralAddress(),
         stringLiteralPoolId = deserializeStringLiteralPoolId(),
@@ -614,7 +612,6 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         jsFuns = deserializeJsFuns(),
         jsModuleImports = deserializeJsModuleImports(),
         exports = deserializeExports(),
-        scratchMemAddr = deserializeNullableIntSymbol(),
         stringPoolSize = deserializeNullableIntSymbol(),
         throwableTagIndex = deserializeNullableIntSymbol(),
         jsExceptionTagIndex = deserializeNullableIntSymbol(),
@@ -626,6 +623,7 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         classAssociatedObjectsInstanceGetters = deserializeClassAssociatedObjectInstanceGetters(),
         builtinIdSignatures = deserializeBuiltinIdSignatures(),
         specialITableTypes = deserializeInterfaceTableTypes(),
+        rttiElements = deserializeRttiElements(),
     )
 
     private fun deserializeFunctions() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunction)
@@ -635,8 +633,6 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
     private fun deserializeFunctionTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunctionType)
     private fun deserializeGcTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeTypeDeclaration)
     private fun deserializeVTableGcTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeTypeDeclaration)
-    private fun deserializeTypeInfo() = deserializeMap(::deserializeIdSignature, ::deserializeConstantDataElement)
-    private fun deserializeClassIds() = deserializeReferencableElements(::deserializeIdSignature, ::deserializeInt)
     private fun deserializeInterfaceIds() = deserializeReferencableElements(::deserializeIdSignature, ::deserializeInt)
     private fun deserializeStringLiteralAddress() = deserializeReferencableElements(::deserializeString, ::deserializeInt)
     private fun deserializeStringLiteralPoolId() = deserializeReferencableElements(::deserializeString, ::deserializeInt)
@@ -670,6 +666,26 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
                 specialSlotITableType = deserializeSymbol(::deserializeStructDeclaration),
                 specialSlotITableTypeToInt32 = deserializeSymbol(::deserializeFunctionType),
                 specialSlotITableTypeToUnit = deserializeSymbol(::deserializeFunctionType),
+            )
+        }
+
+    private fun deserializeRttiElements(): RttiElements? =
+        deserializeNullable {
+            val globals = deserializeList {
+                RttiGlobal(
+                    global = deserializeGlobal(),
+                    classSignature = deserializeIdSignature(),
+                    superClassSignature = deserializeNullable(::deserializeIdSignature)
+                )
+            }
+            val globalReferences = deserializeReferencableElements(
+                ::deserializeIdSignature,
+                ::deserializeGlobal
+            )
+
+            RttiElements(
+                globals = globals,
+                globalReferences = globalReferences,
             )
         }
 

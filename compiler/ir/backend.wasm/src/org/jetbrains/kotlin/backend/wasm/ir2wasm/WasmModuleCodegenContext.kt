@@ -11,8 +11,6 @@ import org.jetbrains.kotlin.ir.declarations.IrDeclaration
 import org.jetbrains.kotlin.ir.declarations.IrValueParameter
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.IrType
-import org.jetbrains.kotlin.ir.types.defaultType
-import org.jetbrains.kotlin.ir.types.isNothing
 import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.isInterface
 import org.jetbrains.kotlin.wasm.ir.*
@@ -32,10 +30,6 @@ class WasmFileCodegenContext(
 
     fun referenceConstantArray(resource: Pair<List<Long>, WasmType>): WasmSymbol<Int> =
         wasmFileFragment.constantArrayDataSegmentId.reference(resource)
-
-    fun generateTypeInfo(irClass: IrClassSymbol, typeInfo: ConstantDataElement) {
-        wasmFileFragment.typeInfo[irClass.getReferenceKey()] = typeInfo
-    }
 
     fun addExport(wasmExport: WasmExport<*>) {
         wasmFileFragment.exports += wasmExport
@@ -97,7 +91,8 @@ class WasmFileCodegenContext(
         if (irClass.owner.isInterface) {
             wasmFileFragment.interfaceIds.reference(irClass.getSignature())
         } else {
-            wasmFileFragment.classIds.reference(irClass.getReferenceKey())
+            error("NO CLASS REFS")
+//            wasmFileFragment.classIds.reference(irClass.getReferenceKey())
         }
 
     fun addJsFun(irFunction: IrFunctionSymbol, importName: WasmSymbol<String>, jsCode: String) {
@@ -108,10 +103,6 @@ class WasmFileCodegenContext(
     fun addJsModuleImport(irFunction: IrFunctionSymbol, module: String) {
         wasmFileFragment.jsModuleImports[irFunction.getReferenceKey()] = module
     }
-
-    val scratchMemAddr: WasmSymbol<Int>
-        get() = wasmFileFragment.scratchMemAddr
-            ?: WasmSymbol<Int>().also { wasmFileFragment.scratchMemAddr = it }
 
     val stringPoolSize: WasmSymbol<Int>
         get() = wasmFileFragment.stringPoolSize
@@ -184,6 +175,25 @@ class WasmFileCodegenContext(
             wasmFileFragment.specialITableTypes = it
         }
     }
+
+    private val rttiElements: RttiElements by lazy {
+        RttiElements().also {
+            wasmFileFragment.rttiElements = it
+        }
+    }
+
+    fun defineRttiGlobal(global: WasmGlobal, irClass: IrClassSymbol, irSuperClass: IrClassSymbol?) {
+        rttiElements.globals.add(
+            RttiGlobal(
+                global = global,
+                classSignature = irClass.getReferenceKey(),
+                superClassSignature = irSuperClass?.getReferenceKey()
+            )
+        )
+    }
+
+    fun referenceRttiGlobal(irClass: IrClassSymbol): WasmSymbol<WasmGlobal> =
+        rttiElements.globalReferences.reference(irClass.getReferenceKey())
 }
 
 class WasmModuleMetadataCache(private val backendContext: WasmBackendContext) {

@@ -7,66 +7,44 @@
 
 package kotlin.wasm.internal
 
-internal const val TYPE_INFO_ELEMENT_SIZE = 4
-
-internal const val TYPE_INFO_TYPE_PACKAGE_NAME_LENGTH_OFFSET = 0
-internal const val TYPE_INFO_TYPE_PACKAGE_NAME_ID_OFFSET = TYPE_INFO_TYPE_PACKAGE_NAME_LENGTH_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_TYPE_PACKAGE_NAME_PRT_OFFSET = TYPE_INFO_TYPE_PACKAGE_NAME_ID_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_TYPE_SIMPLE_NAME_LENGTH_OFFSET = TYPE_INFO_TYPE_PACKAGE_NAME_PRT_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_TYPE_SIMPLE_NAME_ID_OFFSET = TYPE_INFO_TYPE_SIMPLE_NAME_LENGTH_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_TYPE_SIMPLE_NAME_PRT_OFFSET = TYPE_INFO_TYPE_SIMPLE_NAME_ID_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_SUPER_TYPE_OFFSET = TYPE_INFO_TYPE_SIMPLE_NAME_PRT_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_ITABLE_SIZE_OFFSET = TYPE_INFO_SUPER_TYPE_OFFSET + TYPE_INFO_ELEMENT_SIZE
-internal const val TYPE_INFO_ITABLE_OFFSET = TYPE_INFO_ITABLE_SIZE_OFFSET + TYPE_INFO_ELEMENT_SIZE
-
 internal class TypeInfoData(val typeId: Int, val packageName: String, val typeName: String)
 
-internal val TypeInfoData.isInterfaceType
-    get() = typeId < 0
+@Suppress("UNUSED_PARAMETER")
+@WasmArrayOf(Int::class, isNullable = false)
+internal class WasmIntImmutableArray(size: Int) {
+    @WasmOp(WasmOp.ARRAY_GET)
+    fun get(index: Int): Int =
+        implementedAsIntrinsic
 
-internal fun getTypeInfoTypeDataByPtr(typeInfoPtr: Int): TypeInfoData {
-    val packageName = getPackageName(typeInfoPtr)
-    val simpleName = getSimpleName(typeInfoPtr)
-    return TypeInfoData(typeInfoPtr, packageName, simpleName)
+    @WasmOp(WasmOp.ARRAY_LEN)
+    fun len(): Int =
+        implementedAsIntrinsic
 }
 
-internal fun getSimpleName(typeInfoPtr: Int) = getString(
-    typeInfoPtr,
-    TYPE_INFO_TYPE_SIMPLE_NAME_LENGTH_OFFSET,
-    TYPE_INFO_TYPE_SIMPLE_NAME_ID_OFFSET,
-    TYPE_INFO_TYPE_SIMPLE_NAME_PRT_OFFSET
+// This is a very special class which NOT effectively derived from Any.
+internal class Rtti @WasmPrimitiveConstructor constructor(
+    val supportedIFaces: WasmIntImmutableArray?,
+    val superClassRtti: Rtti?,
+    val packageNameAddress: Int,
+    val packageNameLength: Int,
+    val packageNamePoolId: Int,
+    val simpleNameAddress: Int,
+    val simpleNameLength: Int,
+    val simpleNamePoolId: Int,
 )
-
-internal fun getPackageName(typeInfoPtr: Int) = getString(
-    typeInfoPtr,
-    TYPE_INFO_TYPE_PACKAGE_NAME_LENGTH_OFFSET,
-    TYPE_INFO_TYPE_PACKAGE_NAME_ID_OFFSET,
-    TYPE_INFO_TYPE_PACKAGE_NAME_PRT_OFFSET
-)
-
-private fun getString(typeInfoPtr: Int, lengthOffset: Int, idOffset: Int, ptrOffset: Int): String {
-    val length = wasm_i32_load(typeInfoPtr + lengthOffset)
-    val id = wasm_i32_load(typeInfoPtr + idOffset)
-    val ptr = wasm_i32_load(typeInfoPtr + ptrOffset)
-    return stringLiteral(id, ptr, length)
-}
-
-internal fun getSuperTypeId(typeInfoPtr: Int): Int =
-    wasm_i32_load(typeInfoPtr + TYPE_INFO_SUPER_TYPE_OFFSET)
 
 internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
-    val interfaceListSize = wasm_i32_load(obj.typeInfo + TYPE_INFO_ITABLE_SIZE_OFFSET)
-    val interfaceListPtr = obj.typeInfo + TYPE_INFO_ITABLE_OFFSET
+    val rtti = obj.rtti ?: return -1
+    val interfaceArray = rtti.supportedIFaces ?: return -1
+    val interfaceArraySize = interfaceArray.len()
 
     var interfaceSlot = 0
-    var currentPtr = interfaceListPtr
-    while (interfaceSlot < interfaceListSize) {
-        val supportedInterface = wasm_i32_load(currentPtr)
+    while (interfaceSlot < interfaceArraySize) {
+        val supportedInterface = interfaceArray.get(interfaceSlot)
         if (supportedInterface == interfaceId) {
             return interfaceSlot
         }
         interfaceSlot++
-        currentPtr += TYPE_INFO_ELEMENT_SIZE
     }
     return -1
 }
@@ -77,5 +55,9 @@ internal fun <T> wasmIsInterface(obj: Any): Boolean =
     implementedAsIntrinsic
 
 @ExcludedFromCodegen
-internal fun <T> wasmTypeId(): Int =
+internal fun <T> wasmGetInterfaceId(): Int =
+    implementedAsIntrinsic
+
+@ExcludedFromCodegen
+internal fun <T> wasmGetTypeRtti(): Rtti =
     implementedAsIntrinsic

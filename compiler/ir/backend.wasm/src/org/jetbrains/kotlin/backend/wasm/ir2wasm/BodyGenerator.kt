@@ -57,11 +57,14 @@ class BodyGenerator(
 
     fun getStructFieldRef(field: IrField): WasmSymbol<Int> {
         val klass = field.parentAsClass
-        val metadata = wasmModuleMetadataCache.getClassMetadata(klass.symbol)
-        val fieldId = metadata.fields.indexOf(field) + 2 //Implicit vtable and itable fields
-        return WasmSymbol(fieldId)
+        if (klass.symbol != backendContext.wasmSymbols.wasmRtti) {
+            val metadata = wasmModuleMetadataCache.getClassMetadata(klass.symbol)
+            val fieldId = metadata.fields.indexOf(field) + 2 //Implicit vtable and itable fields
+            return WasmSymbol(fieldId)
+        } else {
+            return WasmSymbol(klass.fields.indexOf(field))
+        }
     }
-
 
     // Generates code for the given IR element. Leaves something on the stack unless expression was of the type Void.
     internal fun generateExpression(expression: IrExpression) {
@@ -583,7 +586,7 @@ class BodyGenerator(
             body.buildRefNull(WasmHeapType.Simple.None, location)
         }
 
-        body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
+        body.buildGetGlobal(wasmFileCodegenContext.referenceRttiGlobal(klassSymbol), location)
         body.buildConstI32(0, location) // Any::_hashCode
         body.commentGroupEnd()
     }
@@ -857,10 +860,16 @@ class BodyGenerator(
         val location = call.getSourceLocation()
 
         when (function.symbol) {
-            wasmSymbols.wasmTypeId -> {
+            wasmSymbols.wasmGetInterfaceId -> {
                 val klass = call.typeArguments[0]!!.getClass()
-                    ?: error("No class given for wasmTypeId intrinsic")
+                    ?: error("No class given for wasmGetInterfaceId intrinsic")
                 body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klass.symbol), location)
+            }
+
+            wasmSymbols.wasmGetTypeRtti -> {
+                val klass = call.typeArguments[0]!!.getClass()
+                    ?: error("No class given for wasmGetTypeRtti intrinsic")
+                body.buildGetGlobal(wasmFileCodegenContext.referenceRttiGlobal(klass.symbol), location)
             }
 
             wasmSymbols.wasmIsInterface -> {
@@ -979,10 +988,6 @@ class BodyGenerator(
 
                 generateRefCast(fromType, toType, isRefNullCast = false, location)
                 generateInstanceFieldAccess(field, location)
-            }
-
-            wasmSymbols.unsafeGetScratchRawMemory -> {
-                body.buildConstI32Symbol(wasmFileCodegenContext.scratchMemAddr, location)
             }
 
             wasmSymbols.returnArgumentIfItIsKotlinAny -> {

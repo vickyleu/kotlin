@@ -9,8 +9,9 @@ import kotlin.reflect.KClass
 
 @PublishedApi
 internal fun findAssociatedObject(klass: KClass<*>, key: Int): Any? {
-    val klassId = (klass as? KClassImpl<*>)?.typeData?.typeId ?: return null
-    return tryGetAssociatedObject(klassId, key)
+    return null
+//    val klassId = (klass as? KClassImpl<*>)?.typeData?.typeId ?: return null
+//    return tryGetAssociatedObject(klassId, key)
 }
 
 internal fun tryGetAssociatedObject(

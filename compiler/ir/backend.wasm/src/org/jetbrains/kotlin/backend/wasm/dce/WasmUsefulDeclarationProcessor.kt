@@ -78,7 +78,7 @@ internal class WasmUsefulDeclarationProcessor(
                 true
             }
 
-            context.wasmSymbols.wasmTypeId,
+            context.wasmSymbols.wasmGetInterfaceId,
             context.wasmSymbols.refCastNull,
             context.wasmSymbols.refTest,
             context.wasmSymbols.wasmArrayCopy -> {

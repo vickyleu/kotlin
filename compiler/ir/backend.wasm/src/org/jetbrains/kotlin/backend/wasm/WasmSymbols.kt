@@ -53,9 +53,9 @@ class WasmSymbols(
         override val createContravariantKTypeProjection = getInternalFunction("createContravariantKTypeProjection")
         override val kTypeClass: IrClassSymbol = getIrClass(FqName("kotlin.reflect.KClass"))
 
-        val getTypeInfoTypeDataByPtr: IrSimpleFunctionSymbol = getInternalFunction("getTypeInfoTypeDataByPtr")
         val wasmTypeInfoData: IrClassSymbol = getInternalClass("TypeInfoData")
         val kClassImpl: IrClassSymbol = getInternalClass("KClassImpl")
+        val kClassIFaceImpl: IrClassSymbol = getInternalClass("KClassIFaceImpl")
         val getInterfaceSlot = getInternalFunction("getInterfaceSlot")
     }
 
@@ -237,7 +237,10 @@ class WasmSymbols(
     val registerRootSuiteBlock = maybeGetFunction("registerRootSuiteBlock", kotlinTestPackageFqName)
     val runRootSuites = maybeGetFunction("runRootSuites", kotlinTestPackageFqName)
 
-    val wasmTypeId = getInternalFunction("wasmTypeId")
+    val wasmGetInterfaceId = getInternalFunction("wasmGetInterfaceId")
+    val wasmGetTypeRtti = getInternalFunction("wasmGetTypeRtti")
+    val wasmRtti = getInternalClass("Rtti")
+    val wasmIntImmutableArray = getInternalClass("WasmIntImmutableArray")
 
     val wasmIsInterface = getInternalFunction("wasmIsInterface")
 
@@ -247,7 +250,6 @@ class WasmSymbols(
     val nullableFloatIeee754Equals = getInternalFunction("nullableFloatIeee754Equals")
     val nullableDoubleIeee754Equals = getInternalFunction("nullableDoubleIeee754Equals")
 
-    val unsafeGetScratchRawMemory = getInternalFunction("unsafeGetScratchRawMemory")
     val returnArgumentIfItIsKotlinAny = getInternalFunction("returnArgumentIfItIsKotlinAny")
 
     val startCoroutineUninterceptedOrReturnIntrinsics =
