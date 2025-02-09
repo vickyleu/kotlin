@@ -419,6 +419,9 @@ class WasmCompiledModuleFragment(
 
         tryGetAssociatedObject.instructions.clear()
         with(WasmExpressionBuilder(tryGetAssociatedObject.instructions)) {
+            wasmCompiledFileFragments.forEach { fragment ->
+                fragment.classAssociatedObjectsInstanceGetters
+            }
 //            wasmCompiledFileFragments.forEach { fragment ->
 //                for ((klass, associatedObjectsInstanceGetters) in fragment.classAssociatedObjectsInstanceGetters) {
 //                    val klassId = typeIds[klass] ?: continue // Can be removed by dce so no reflection for this

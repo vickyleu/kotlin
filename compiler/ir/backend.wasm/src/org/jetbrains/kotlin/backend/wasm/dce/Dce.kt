@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.ir.backend.js.dce.DceDumpNameCache
 import org.jetbrains.kotlin.ir.backend.js.utils.findUnitGetInstanceFunction
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.IrBody
+import org.jetbrains.kotlin.ir.util.fields
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
@@ -70,6 +71,7 @@ private fun buildRoots(modules: List<IrModuleFragment>, context: WasmBackendCont
 
     add(context.wasmSymbols.reflectionSymbols.getInterfaceSlot.owner)
     add(context.wasmSymbols.wasmRtti.owner)
+    context.wasmSymbols.wasmRtti.fields.forEach { add(it.owner) }
     add(context.irBuiltIns.throwableClass.owner)
     add(context.findUnitGetInstanceFunction())
 
