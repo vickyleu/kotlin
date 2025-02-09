@@ -243,7 +243,7 @@ class WasmSymbols(
     val wasmRtti = getInternalClass("Rtti").also {
         it.owner.visibility = DescriptorVisibilities.PUBLIC
     }
-    val wasmIntImmutableArray = getInternalClass("WasmIntImmutableArray")
+    val wasmLongImmutableArray = getInternalClass("WasmLongImmutableArray")
 
     val wasmIsInterface = getInternalFunction("wasmIsInterface")
 

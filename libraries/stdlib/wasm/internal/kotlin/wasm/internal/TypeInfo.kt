@@ -7,13 +7,13 @@
 
 package kotlin.wasm.internal
 
-internal class TypeInfoData(val typeId: Int, val packageName: String, val typeName: String)
+internal class TypeInfoData(val typeId: Long, val packageName: String, val typeName: String)
 
 @Suppress("UNUSED_PARAMETER")
-@WasmArrayOf(Int::class, isNullable = false)
-internal class WasmIntImmutableArray(size: Int) {
+@WasmArrayOf(Long::class, isNullable = false)
+internal class WasmLongImmutableArray(size: Int) {
     @WasmOp(WasmOp.ARRAY_GET)
-    fun get(index: Int): Int =
+    fun get(index: Int): Long =
         implementedAsIntrinsic
 
     @WasmOp(WasmOp.ARRAY_LEN)
@@ -23,7 +23,7 @@ internal class WasmIntImmutableArray(size: Int) {
 
 // This is a very special class which NOT effectively derived from Any.
 internal class Rtti @WasmPrimitiveConstructor constructor(
-    val supportedIFaces: WasmIntImmutableArray?,
+    val supportedIFaces: WasmLongImmutableArray?,
     val superClassRtti: Rtti?,
     val packageNameAddress: Int,
     val packageNameLength: Int,
@@ -33,7 +33,7 @@ internal class Rtti @WasmPrimitiveConstructor constructor(
     val simpleNamePoolId: Int,
 )
 
-internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
+internal fun getInterfaceSlot(obj: Any, interfaceId: Long): Int {
     val rtti = obj.rtti ?: return -1
     val interfaceArray = rtti.supportedIFaces ?: return -1
     val interfaceArraySize = interfaceArray.len()
@@ -55,7 +55,7 @@ internal fun <T> wasmIsInterface(obj: Any): Boolean =
     implementedAsIntrinsic
 
 @ExcludedFromCodegen
-internal fun <T> wasmGetInterfaceId(): Int =
+internal fun <T> wasmGetInterfaceId(): Long =
     implementedAsIntrinsic
 
 @ExcludedFromCodegen
