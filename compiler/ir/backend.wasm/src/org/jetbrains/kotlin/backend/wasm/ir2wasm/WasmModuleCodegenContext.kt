@@ -12,7 +12,6 @@ import org.jetbrains.kotlin.ir.declarations.IrValueParameter
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.IdSignature
-import org.jetbrains.kotlin.ir.util.isInterface
 import org.jetbrains.kotlin.wasm.ir.*
 
 class WasmFileCodegenContext(
@@ -87,13 +86,8 @@ class WasmFileCodegenContext(
     fun referenceFunctionType(irFunction: IrFunctionSymbol): WasmSymbol<WasmFunctionType> =
         wasmFileFragment.functionTypes.reference(irFunction.getReferenceKey())
 
-    fun referenceTypeId(irClass: IrClassSymbol): WasmSymbol<Int> =
-        if (irClass.owner.isInterface) {
-            wasmFileFragment.interfaceIds.reference(irClass.getSignature())
-        } else {
-            error("NO CLASS REFS")
-//            wasmFileFragment.classIds.reference(irClass.getReferenceKey())
-        }
+    fun referenceInterfaceId(irClass: IrClassSymbol): Int =
+        irClass.getSignature().hashCode()
 
     fun addJsFun(irFunction: IrFunctionSymbol, importName: WasmSymbol<String>, jsCode: String) {
         wasmFileFragment.jsFuns[irFunction.getReferenceKey()] =

@@ -537,7 +537,7 @@ class DeclarationGenerator(
         val supportedPushedBack = forward + back
 
         for (iFace in supportedPushedBack) {
-            builder.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(iFace.symbol), location)
+            builder.buildConstI32(wasmFileCodegenContext.referenceInterfaceId(iFace.symbol), location)
         }
 
         builder.buildInstr(

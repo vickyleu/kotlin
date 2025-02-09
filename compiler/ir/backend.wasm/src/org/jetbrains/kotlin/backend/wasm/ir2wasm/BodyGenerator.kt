@@ -768,7 +768,7 @@ class BodyGenerator(
                     body.commentGroupStart { "Interface call: ${function.fqNameWhenAvailable}" }
                     body.buildStructGet(anyClassReference, WasmSymbol(1), location)
                     generateExpression(call.dispatchReceiver!!)
-                    body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
+                    body.buildConstI32(wasmFileCodegenContext.referenceInterfaceId(klassSymbol), location)
                     body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
                     body.buildInstr(
                         WasmOp.ARRAY_GET,
@@ -863,7 +863,7 @@ class BodyGenerator(
             wasmSymbols.wasmGetInterfaceId -> {
                 val klass = call.typeArguments[0]!!.getClass()
                     ?: error("No class given for wasmGetInterfaceId intrinsic")
-                body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(klass.symbol), location)
+                body.buildConstI32(wasmFileCodegenContext.referenceInterfaceId(klass.symbol), location)
             }
 
             wasmSymbols.wasmGetTypeRtti -> {
@@ -948,7 +948,7 @@ class BodyGenerator(
                         }
                     } else {
                         body.commentGroupStart { "Check interface supported" }
-                        body.buildConstI32Symbol(wasmFileCodegenContext.referenceTypeId(irInterface.symbol), location)
+                        body.buildConstI32(wasmFileCodegenContext.referenceInterfaceId(irInterface.symbol), location)
                         body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
                         body.buildConstI32(-1, location)
                         body.buildInstr(WasmOp.I32_NE, location)

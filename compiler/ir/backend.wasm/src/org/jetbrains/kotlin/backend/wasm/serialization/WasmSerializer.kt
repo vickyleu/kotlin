@@ -626,7 +626,6 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeReferencableAndDefinable(functionTypes, ::serializeIdSignature, ::serializeWasmFunctionType)
             serializeReferencableAndDefinable(gcTypes, ::serializeIdSignature, ::serializeWasmTypeDeclaration)
             serializeReferencableAndDefinable(vTableGcTypes, ::serializeIdSignature, ::serializeWasmTypeDeclaration)
-            serializeReferencableElements(interfaceIds, ::serializeIdSignature, ::serializeInt)
             serializeReferencableElements(stringLiteralAddress, ::serializeString, ::serializeInt)
             serializeReferencableElements(stringLiteralPoolId, ::serializeString, ::serializeInt)
             serializeReferencableElements(constantArrayDataSegmentId, { serializePair(it, { serializeList(it, ::serializeLong) }, ::serializeWasmType)}, ::serializeInt)

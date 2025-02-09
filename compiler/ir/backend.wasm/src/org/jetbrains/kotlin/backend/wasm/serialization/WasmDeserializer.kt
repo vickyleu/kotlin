@@ -605,7 +605,6 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
         functionTypes = deserializeFunctionTypes(),
         gcTypes = deserializeGcTypes(),
         vTableGcTypes = deserializeVTableGcTypes(),
-        interfaceIds = deserializeInterfaceIds(),
         stringLiteralAddress = deserializeStringLiteralAddress(),
         stringLiteralPoolId = deserializeStringLiteralPoolId(),
         constantArrayDataSegmentId = deserializeConstantArrayDataSegmentId(),
@@ -633,7 +632,6 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
     private fun deserializeFunctionTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeFunctionType)
     private fun deserializeGcTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeTypeDeclaration)
     private fun deserializeVTableGcTypes() = deserializeReferencableAndDefinable(::deserializeIdSignature, ::deserializeTypeDeclaration)
-    private fun deserializeInterfaceIds() = deserializeReferencableElements(::deserializeIdSignature, ::deserializeInt)
     private fun deserializeStringLiteralAddress() = deserializeReferencableElements(::deserializeString, ::deserializeInt)
     private fun deserializeStringLiteralPoolId() = deserializeReferencableElements(::deserializeString, ::deserializeInt)
     private fun deserializeConstantArrayDataSegmentId(): ReferencableElements<Pair<List<Long>, WasmType>, Int> = deserializeReferencableElements({ deserializePair({ deserializeList(::deserializeLong) }, ::deserializeType) }, ::deserializeInt)
