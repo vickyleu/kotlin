@@ -46,6 +46,7 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.progress.ProgressIndicatorAndCompilationCanceledStatus
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.jvm.KotlinJavaPsiFacade
+import org.jetbrains.kotlin.util.PhaseMeasurementType
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import java.io.File
 
@@ -277,7 +278,7 @@ object KotlinToJVMBytecodeCompiler {
         val configuration = environment.configuration
         val codegenFactory = JvmIrCodegenFactory(configuration)
         val performanceManager = environment.configuration[CLIConfigurationKeys.PERF_MANAGER]
-        performanceManager?.notifyIRGenerationStarted()
+        performanceManager?.notifyPhaseStarted(PhaseMeasurementType.IrGeneration)
         val backendInput = codegenFactory.convertToIr(
             environment.project,
             environment.getSourceFiles(),
@@ -289,7 +290,7 @@ object KotlinToJVMBytecodeCompiler {
             ignoreErrors = false,
             skipBodies = false,
         )
-        performanceManager?.notifyIRGenerationFinished()
+        performanceManager?.notifyPhaseFinished(PhaseMeasurementType.IrGeneration)
         return Pair(codegenFactory, backendInput)
     }
 
@@ -315,8 +316,8 @@ object KotlinToJVMBytecodeCompiler {
         // Can be null for Scripts/REPL
         val performanceManager = environment.configuration.perfManager
         performanceManager?.let {
-            it.notifyCompilerInitialized()
-            it.notifyAnalysisStarted()
+            it.notifyPhaseFinished(PhaseMeasurementType.Initialization)
+            it.notifyPhaseStarted(PhaseMeasurementType.Analysis)
         }
 
         val resolvedKlibs = environment.configuration.get(JVMConfigurationKeys.KLIB_PATHS)?.let { klibPaths ->
@@ -348,7 +349,7 @@ object KotlinToJVMBytecodeCompiler {
             )
         }
 
-        performanceManager?.notifyAnalysisFinished()
+        performanceManager?.notifyPhaseFinished(PhaseMeasurementType.Analysis)
 
         val analysisResult = analyzerWithCompilerReport.analysisResult
 
@@ -410,10 +411,10 @@ object KotlinToJVMBytecodeCompiler {
         ProgressIndicatorAndCompilationCanceledStatus.checkCanceled()
 
         if (reportGenerationStarted) {
-            performanceManager?.notifyIRLoweringStarted()
+            performanceManager?.notifyPhaseStarted(PhaseMeasurementType.IrLowering)
         }
         return codegenFactory.invokeLowerings(state, backendInput)
-            .also { if (reportGenerationStarted) performanceManager?.notifyIRLoweringFinished() }
+            .also { if (reportGenerationStarted) performanceManager?.notifyPhaseFinished(PhaseMeasurementType.IrLowering) }
     }
 
     internal fun runCodegen(
@@ -430,13 +431,12 @@ object KotlinToJVMBytecodeCompiler {
         val performanceManager = configuration[CLIConfigurationKeys.PERF_MANAGER]
 
         if (reportGenerationFinished) {
-            performanceManager?.notifyBackendGenerationStarted()
+            performanceManager?.notifyPhaseStarted(PhaseMeasurementType.BackendGeneration)
         }
-
         codegenFactory.invokeCodegen(codegenInput)
 
         if (reportGenerationFinished) {
-            performanceManager?.notifyBackendGenerationFinished()
+            performanceManager?.notifyPhaseFinished(PhaseMeasurementType.BackendGeneration)
         }
 
         ProgressIndicatorAndCompilationCanceledStatus.checkCanceled()

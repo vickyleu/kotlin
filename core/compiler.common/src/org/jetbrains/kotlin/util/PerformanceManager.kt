@@ -146,43 +146,7 @@ abstract class PerformanceManager(private val presentableName: String) {
         this.lines = this.lines + lines
     }
 
-    open fun notifyCompilerInitialized() {
-        notifyPhaseFinished(PhaseMeasurementType.Initialization)
-    }
-
-    open fun notifyAnalysisStarted() {
-        notifyPhaseStarted(PhaseMeasurementType.Analysis)
-    }
-
-    open fun notifyAnalysisFinished() {
-        notifyPhaseFinished(PhaseMeasurementType.Analysis)
-    }
-
-    open fun notifyIRGenerationStarted() {
-        notifyPhaseStarted(PhaseMeasurementType.IrGeneration)
-    }
-
-    open fun notifyIRGenerationFinished() {
-        notifyPhaseFinished(PhaseMeasurementType.IrGeneration)
-    }
-
-    open fun notifyIRLoweringStarted() {
-        notifyPhaseStarted(PhaseMeasurementType.IrLowering)
-    }
-
-    open fun notifyIRLoweringFinished() {
-        notifyPhaseFinished(PhaseMeasurementType.IrLowering)
-    }
-
-    open fun notifyBackendGenerationStarted() {
-        notifyPhaseStarted(PhaseMeasurementType.BackendGeneration)
-    }
-
-    open fun notifyBackendGenerationFinished() {
-        notifyPhaseFinished(PhaseMeasurementType.BackendGeneration)
-    }
-
-    private fun notifyPhaseStarted(newPhaseType: PhaseMeasurementType) {
+    fun notifyPhaseStarted(newPhaseType: PhaseMeasurementType) {
         // Here should be the following check: `if (!isEnabled) return`.
         // However, currently it's dropped to keep compatibility with build systems that don't call `enableCollectingPerformanceStatistics`,
         // but take some measurements from this manager.
@@ -194,7 +158,7 @@ abstract class PerformanceManager(private val presentableName: String) {
         currentPhaseType = newPhaseType
     }
 
-    private fun notifyPhaseFinished(phaseType: PhaseMeasurementType) {
+    fun notifyPhaseFinished(phaseType: PhaseMeasurementType) {
         // Here should be the following check: `if (!isEnabled) return`.
         // However, currently it's dropped to keep compatibility with build systems that don't call `enableCollectingPerformanceStatistics`
         // but take some measurements from this manager.
@@ -304,4 +268,13 @@ abstract class PerformanceManager(private val presentableName: String) {
 
 fun <T> PerformanceManager?.tryMeasureTime(measurementClass: KClass<*>, block: () -> T): T {
     return if (this == null) return block() else measureTime(measurementClass, block)
+}
+
+inline fun <T> PerformanceManager?.trackPhase(phase: PhaseMeasurementType, fn: () -> T): T {
+    this?.notifyPhaseStarted(phase)
+    try {
+        return fn()
+    } finally {
+        this?.notifyPhaseFinished(phase)
+    }
 }
