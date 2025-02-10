@@ -453,7 +453,7 @@ class DeclarationGenerator(
                 WasmStructFieldDeclaration(
                     name = "field",
                     type = wasmModuleTypeTransformer.transformFieldType(wasmArrayAnnotation.type),
-                    isMutable = declaration.symbol != backendContext.wasmSymbols.wasmLongImmutableArray
+                    isMutable = declaration.symbol != backendContext.wasmSymbols.wasmIntImmutableArray
                 )
             )
 
@@ -537,13 +537,13 @@ class DeclarationGenerator(
         val supportedPushedBack = forward + back
 
         for (iFace in supportedPushedBack) {
-            builder.buildConstI64(wasmFileCodegenContext.referenceInterfaceId(iFace.symbol), location)
+            builder.buildConstI32(wasmFileCodegenContext.referenceInterfaceId(iFace.symbol), location)
         }
 
         builder.buildInstr(
             WasmOp.ARRAY_NEW_FIXED,
             location,
-            WasmImmediate.GcType(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmLongImmutableArray)),
+            WasmImmediate.GcType(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmIntImmutableArray)),
             WasmImmediate.ConstI32(supportedPushedBack.size)
         )
     }

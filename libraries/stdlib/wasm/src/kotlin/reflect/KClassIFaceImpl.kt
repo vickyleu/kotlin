@@ -19,7 +19,7 @@ internal class KClassIFaceImpl<T : Any> @WasmPrimitiveConstructor constructor(in
     override fun equals(other: Any?): Boolean =
         (this === other) || (other is KClassIFaceImpl<*> && other.typeData.typeId == typeData.typeId)
 
-    override fun hashCode(): Int = typeData.typeId.toInt()
+    override fun hashCode(): Int = typeData.typeId
 
     override fun toString(): String = "interface $qualifiedName"
 }
