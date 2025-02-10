@@ -788,8 +788,14 @@ class BodyGenerator(
             }
             body.commentGroupEnd()
         } else {
-            // Static function call
-            body.buildCall(wasmFileCodegenContext.referenceFunction(function.symbol), location)
+            if (function.parentClassOrNull?.symbol == backendContext.wasmSymbols.wasmRtti) {
+                val field = (function as? IrSimpleFunction)?.correspondingPropertySymbol?.owner?.backingField ?: error("Cannot find field for rtti")
+                val fieldIndex = getStructFieldRef(field)
+                body.buildStructGet(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmRtti), fieldIndex, location)
+            } else {
+                // Static function call
+                body.buildCall(wasmFileCodegenContext.referenceFunction(function.symbol), location)
+            }
         }
 
         // Unit types don't cross function boundaries
