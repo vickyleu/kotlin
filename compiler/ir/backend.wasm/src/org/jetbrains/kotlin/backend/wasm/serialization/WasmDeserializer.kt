@@ -681,9 +681,12 @@ class WasmDeserializer(inputStream: InputStream, private val skipLocalNames: Boo
                 ::deserializeGlobal
             )
 
+            val rttiType = deserializeSymbol(::deserializeStructDeclaration)
+
             RttiElements(
                 globals = globals,
                 globalReferences = globalReferences,
+                rttiType = rttiType,
             )
         }
 

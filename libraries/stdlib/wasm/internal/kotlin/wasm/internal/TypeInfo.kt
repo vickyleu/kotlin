@@ -21,21 +21,8 @@ internal class WasmIntImmutableArray(size: Int) {
         implementedAsIntrinsic
 }
 
-// This is a very special class which NOT effectively derived from Any.
-internal class Rtti @WasmPrimitiveConstructor constructor(
-    val supportedIFaces: WasmIntImmutableArray?,
-    val superClassRtti: Rtti?,
-    val packageNameAddress: Int,
-    val packageNameLength: Int,
-    val packageNamePoolId: Int,
-    val simpleNameAddress: Int,
-    val simpleNameLength: Int,
-    val simpleNamePoolId: Int,
-)
-
 internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
-    val rtti = obj.rtti ?: return -1
-    val interfaceArray = rtti.supportedIFaces ?: return -1
+    val interfaceArray = wasmGetRttiSupportedInterfaces(obj) ?: return -1
     val interfaceArraySize = interfaceArray.len()
 
     var interfaceSlot = 0
@@ -59,5 +46,25 @@ internal fun <T> wasmGetInterfaceId(): Int =
     implementedAsIntrinsic
 
 @ExcludedFromCodegen
-internal fun <T> wasmGetTypeRtti(): Rtti =
+internal fun <T> wasmGetTypeRtti(): kotlin.wasm.internal.reftypes.structref =
     implementedAsIntrinsic
+
+@ExcludedFromCodegen
+internal fun wasmGetObjectRtti(obj: Any): kotlin.wasm.internal.reftypes.structref =
+    implementedAsIntrinsic
+
+@Suppress("UNUSED_PARAMETER")
+@ExcludedFromCodegen
+internal fun wasmGetRttiSupportedInterfaces(obj: Any): WasmIntImmutableArray? =
+    implementedAsIntrinsic
+
+@Suppress("UNUSED_PARAMETER")
+@ExcludedFromCodegen
+internal fun wasmGetRttiIntField(intFieldIndex: Int, obj: kotlin.wasm.internal.reftypes.structref): Int =
+    implementedAsIntrinsic
+
+@Suppress("UNUSED_PARAMETER")
+@ExcludedFromCodegen
+internal fun wasmGetRttiSuperClass(rtti: kotlin.wasm.internal.reftypes.structref): kotlin.wasm.internal.reftypes.structref? =
+    implementedAsIntrinsic
+

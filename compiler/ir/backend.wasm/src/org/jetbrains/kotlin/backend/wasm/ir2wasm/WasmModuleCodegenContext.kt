@@ -176,6 +176,8 @@ class WasmFileCodegenContext(
         }
     }
 
+    val rttiType: WasmSymbol<WasmStructDeclaration> get() = rttiElements.rttiType
+
     fun defineRttiGlobal(global: WasmGlobal, irClass: IrClassSymbol, irSuperClass: IrClassSymbol?) {
         rttiElements.globals.add(
             RttiGlobal(

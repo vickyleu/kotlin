@@ -70,6 +70,7 @@ class WasmSymbols(
     )
 
     internal val tryGetAssociatedObject = getInternalFunction("tryGetAssociatedObject")
+    internal val wasmIntImmutableArray = getInternalClass("WasmIntImmutableArray")
 
     override val throwNullPointerException = getInternalFunction("THROW_NPE")
     override val throwISE = getInternalFunction("THROW_ISE")
@@ -240,10 +241,10 @@ class WasmSymbols(
 
     val wasmGetInterfaceId = getInternalFunction("wasmGetInterfaceId")
     val wasmGetTypeRtti = getInternalFunction("wasmGetTypeRtti")
-    val wasmRtti = getInternalClass("Rtti").also {
-        it.owner.visibility = DescriptorVisibilities.PUBLIC
-    }
-    val wasmIntImmutableArray = getInternalClass("WasmIntImmutableArray")
+    val wasmGetRttiSupportedInterfaces = getInternalFunction("wasmGetRttiSupportedInterfaces")
+    val wasmGetRttiIntField = getInternalFunction("wasmGetRttiIntField")
+    val wasmGetRttiSuperClass = getInternalFunction("wasmGetRttiSuperClass")
+    val wasmGetObjectRtti = getInternalFunction("wasmGetObjectRtti")
 
     val wasmIsInterface = getInternalFunction("wasmIsInterface")
 

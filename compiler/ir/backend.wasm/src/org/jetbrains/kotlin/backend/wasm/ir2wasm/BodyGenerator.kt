@@ -57,13 +57,9 @@ class BodyGenerator(
 
     fun getStructFieldRef(field: IrField): WasmSymbol<Int> {
         val klass = field.parentAsClass
-        if (klass.symbol != backendContext.wasmSymbols.wasmRtti) {
-            val metadata = wasmModuleMetadataCache.getClassMetadata(klass.symbol)
-            val fieldId = metadata.fields.indexOf(field) + 2 //Implicit vtable and itable fields
-            return WasmSymbol(fieldId)
-        } else {
-            return WasmSymbol(klass.fields.indexOf(field))
-        }
+        val metadata = wasmModuleMetadataCache.getClassMetadata(klass.symbol)
+        val fieldId = metadata.fields.indexOf(field) + 3 //Implicit vtable, itable and rtti fields
+        return WasmSymbol(fieldId)
     }
 
     // Generates code for the given IR element. Leaves something on the stack unless expression was of the type Void.
@@ -604,7 +600,7 @@ class BodyGenerator(
             generateAnyParameters(parentClass.symbol, location)
             val irFields: List<IrField> = parentClass.allFields(backendContext.irBuiltIns)
             irFields.forEachIndexed { index, field ->
-                if (index > 1) {
+                if (index > 0) {
                     generateDefaultInitializerForType(wasmModuleTypeTransformer.transformType(field.type), body)
                 }
             }
@@ -661,6 +657,14 @@ class BodyGenerator(
             } else {
                 generateBox(call.arguments[0]!!, type)
             }
+            return
+        }
+
+        if (call.symbol == wasmSymbols.wasmGetRttiIntField) {
+            val fieldIndex = (call.arguments[0] as? IrConst)?.value as? Int ?: error("Invalid field index")
+            generateExpression(call.arguments[1]!!)
+            body.buildRefCastStatic(wasmFileCodegenContext.rttiType, location)
+            body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(fieldIndex), location)
             return
         }
 
@@ -788,14 +792,8 @@ class BodyGenerator(
             }
             body.commentGroupEnd()
         } else {
-            if (function.parentClassOrNull?.symbol == backendContext.wasmSymbols.wasmRtti) {
-                val field = (function as? IrSimpleFunction)?.correspondingPropertySymbol?.owner?.backingField ?: error("Cannot find field for rtti")
-                val fieldIndex = getStructFieldRef(field)
-                body.buildStructGet(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmRtti), fieldIndex, location)
-            } else {
-                // Static function call
-                body.buildCall(wasmFileCodegenContext.referenceFunction(function.symbol), location)
-            }
+            // Static function call
+            body.buildCall(wasmFileCodegenContext.referenceFunction(function.symbol), location)
         }
 
         // Unit types don't cross function boundaries
@@ -876,6 +874,20 @@ class BodyGenerator(
                 val klass = call.typeArguments[0]!!.getClass()
                     ?: error("No class given for wasmGetTypeRtti intrinsic")
                 body.buildGetGlobal(wasmFileCodegenContext.referenceRttiGlobal(klass.symbol), location)
+            }
+
+            wasmSymbols.wasmGetRttiSupportedInterfaces -> {
+                body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
+                body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(0), location)
+            }
+
+            wasmSymbols.wasmGetRttiSuperClass -> {
+                body.buildRefCastStatic(wasmFileCodegenContext.rttiType, location)
+                body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(1), location)
+            }
+
+            wasmSymbols.wasmGetObjectRtti -> {
+                body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
             }
 
             wasmSymbols.wasmIsInterface -> {

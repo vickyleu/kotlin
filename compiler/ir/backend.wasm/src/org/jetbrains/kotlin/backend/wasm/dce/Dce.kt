@@ -70,8 +70,6 @@ private fun buildRoots(modules: List<IrModuleFragment>, context: WasmBackendCont
     }
 
     add(context.wasmSymbols.reflectionSymbols.getInterfaceSlot.owner)
-    add(context.wasmSymbols.wasmRtti.owner)
-    context.wasmSymbols.wasmRtti.fields.forEach { add(it.owner) }
     add(context.irBuiltIns.throwableClass.owner)
     add(context.findUnitGetInstanceFunction())
 

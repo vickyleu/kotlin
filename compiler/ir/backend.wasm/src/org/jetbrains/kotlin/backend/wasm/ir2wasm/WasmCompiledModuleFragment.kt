@@ -47,6 +47,7 @@ class RttiGlobal(
 class RttiElements(
     val globals: MutableList<RttiGlobal> = mutableListOf(),
     val globalReferences: ReferencableElements<IdSignature, WasmGlobal> = ReferencableElements(),
+    val rttiType: WasmSymbol<WasmStructDeclaration> = WasmSymbol()
 )
 
 class WasmCompiledFileFragment(
@@ -198,11 +199,11 @@ class WasmCompiledModuleFragment(
         additionalTypes.add(parameterlessNoReturnFunctionType)
         tags.forEach { additionalTypes.add(it.type) }
 
-        val specialITableTypes = createAndBindSpecialITableTypes()
+        val syntheticTypes = mutableListOf<WasmTypeDeclaration>()
+        createAndBindSpecialITableTypes(syntheticTypes)
+        val globals = getGlobals(syntheticTypes)
 
-        val globals = getGlobals()
-
-        val recursiveTypeGroups = getTypes(specialITableTypes, canonicalFunctionTypes, additionalTypes)
+        val recursiveTypeGroups = getTypes(syntheticTypes, canonicalFunctionTypes, additionalTypes)
 
         return WasmModule(
             recGroups = recursiveTypeGroups,
@@ -222,7 +223,29 @@ class WasmCompiledModuleFragment(
         ).apply { calculateIds() }
     }
 
-    private fun createRttiTypeAndProcessRttiGlobals(globals: MutableList<WasmGlobal>) {
+    private fun createRttiTypeAndProcessRttiGlobals(globals: MutableList<WasmGlobal>, additionalTypes: MutableList<WasmTypeDeclaration>) {
+        val wasmIntArray = WasmArrayDeclaration("IntArray", WasmStructFieldDeclaration("Int", WasmI32, false))
+        additionalTypes.add(wasmIntArray)
+
+        val rttiTypeDeclarationSymbol = WasmSymbol<WasmStructDeclaration>()
+        val rttiTypeDeclaration = WasmStructDeclaration(
+            name = "RTTI",
+            fields = listOf(
+                WasmStructFieldDeclaration("supportedIFaces", WasmRefNullType(WasmHeapType.Type(WasmSymbol(wasmIntArray))), false),
+                WasmStructFieldDeclaration("superClassRtti", WasmRefNullType(WasmHeapType.Type(rttiTypeDeclarationSymbol)), false),
+                WasmStructFieldDeclaration("packageNameAddress", WasmI32, false),
+                WasmStructFieldDeclaration("packageNameLength", WasmI32, false),
+                WasmStructFieldDeclaration("packageNamePoolId", WasmI32, false),
+                WasmStructFieldDeclaration("simpleNameAddress", WasmI32, false),
+                WasmStructFieldDeclaration("simpleNameLength", WasmI32, false),
+                WasmStructFieldDeclaration("simpleNamePoolId", WasmI32, false),
+            ),
+            superType = null,
+            isFinal = true
+        )
+        rttiTypeDeclarationSymbol.bind(rttiTypeDeclaration)
+        additionalTypes.add(rttiTypeDeclaration)
+
         val rttiGlobals = mutableMapOf<IdSignature, RttiGlobal>()
         wasmCompiledFileFragments.forEach { fragment ->
             fragment.rttiElements?.globals?.forEach { global ->
@@ -235,6 +258,7 @@ class WasmCompiledModuleFragment(
                 globalReferences.unbound.forEach { unbound ->
                     unbound.value.bind(rttiGlobals[unbound.key]!!.global)
                 }
+                rttiType.bind(rttiTypeDeclaration)
             }
         }
 
@@ -244,14 +268,12 @@ class WasmCompiledModuleFragment(
         rttiGlobals.values.sortedBy(::wasmRttiGlobalOrderKey).mapTo(globals) { it.global }
     }
 
-    private fun createAndBindSpecialITableTypes(): List<WasmTypeDeclaration> {
-        val specialITableTypes = mutableListOf<WasmTypeDeclaration>()
-
+    private fun createAndBindSpecialITableTypes(syntheticTypes: MutableList<WasmTypeDeclaration>): MutableList<WasmTypeDeclaration> {
         val wasmAnyArrayType = WasmArrayDeclaration(
             name = "AnyArray",
             field = WasmStructFieldDeclaration("", WasmRefNullType(WasmHeapType.Simple.Any), false)
         )
-        specialITableTypes.add(wasmAnyArrayType)
+        syntheticTypes.add(wasmAnyArrayType)
 
         val wasmFuncArrayType = WasmArrayDeclaration(
             name = "FuncArray",
@@ -261,7 +283,7 @@ class WasmCompiledModuleFragment(
                 isMutable = false
             )
         )
-        specialITableTypes.add(wasmFuncArrayType)
+        syntheticTypes.add(wasmFuncArrayType)
 
         val specialSlotITableTypeSlots = mutableListOf<WasmStructFieldDeclaration>()
         val wasmAnyRefStructField = WasmStructFieldDeclaration("", WasmAnyRef, false)
@@ -281,17 +303,17 @@ class WasmCompiledModuleFragment(
             superType = null,
             isFinal = true
         )
-        specialITableTypes.add(specialSlotITableType)
+        syntheticTypes.add(specialSlotITableType)
 
         val specialSlotITableHeapTypeRef = WasmRefNullType(WasmHeapType.Type(WasmSymbol(specialSlotITableType)))
 
         val specialSlotITableTypeToInt32 =
             WasmFunctionType(listOf(specialSlotITableHeapTypeRef), listOf(WasmI32))
-        specialITableTypes.add(specialSlotITableTypeToInt32)
+        syntheticTypes.add(specialSlotITableTypeToInt32)
 
         val specialSlotITableTypeToUnit =
             WasmFunctionType(listOf(specialSlotITableHeapTypeRef), listOf())
-        specialITableTypes.add(specialSlotITableTypeToUnit)
+        syntheticTypes.add(specialSlotITableTypeToUnit)
 
         wasmCompiledFileFragments.forEach { fragment ->
             fragment.specialITableTypes?.let { specialITableTypes ->
@@ -303,7 +325,7 @@ class WasmCompiledModuleFragment(
             }
         }
 
-        return specialITableTypes
+        return syntheticTypes
     }
 
     private fun getTags(throwableDeclaration: WasmTypeDeclaration): List<WasmTag> {
@@ -354,8 +376,9 @@ class WasmCompiledModuleFragment(
 
         val mixInIndexesForGroups = mutableMapOf<Hash128Bits, Int>()
         val groupsWithMixIns = mutableListOf<RecursiveTypeGroup>()
+
         recursiveGroups.mapTo(groupsWithMixIns) { group ->
-            if (group.any { it in gcTypes }) {
+            if (group.any { it in gcTypes } && group.singleOrNull() !is WasmArrayDeclaration) {
                 addMixInGroup(group, mixInIndexesForGroups)
             } else {
                 group
@@ -367,13 +390,13 @@ class WasmCompiledModuleFragment(
         return groupsWithMixIns
     }
 
-    private fun getGlobals() = mutableListOf<WasmGlobal>().apply {
+    private fun getGlobals(additionalTypes: MutableList<WasmTypeDeclaration>) = mutableListOf<WasmGlobal>().apply {
         wasmCompiledFileFragments.forEach { fragment ->
             addAll(fragment.globalFields.elements)
             addAll(fragment.globalVTables.elements)
             addAll(fragment.globalClassITables.elements.distinct())
         }
-        createRttiTypeAndProcessRttiGlobals(this)
+        createRttiTypeAndProcessRttiGlobals(this, additionalTypes)
     }
 
     private fun createAndExportMemory(exports: MutableList<WasmExport<*>>): WasmMemory {

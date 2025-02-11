@@ -394,12 +394,12 @@ class DeclarationGenerator(
             buildConstI32(simpleName.length, location)
             buildConstI32Symbol(simpleNamePoolId, location)
 
-            buildStructNew(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmRtti), location)
+            buildStructNew(wasmFileCodegenContext.rttiType, location)
         }
 
         val rttiGlobal = WasmGlobal(
             name = "${klass.fqNameWhenAvailable}_rtti",
-            type = WasmRefType(WasmHeapType.Type(wasmFileCodegenContext.referenceGcType(backendContext.wasmSymbols.wasmRtti))),
+            type = WasmRefType(WasmHeapType.Type(wasmFileCodegenContext.rttiType)),
             isMutable = false,
             init = initRttiGlobal
         )
@@ -461,24 +461,6 @@ class DeclarationGenerator(
             return
         }
 
-        if (symbol == backendContext.wasmSymbols.wasmRtti) {
-            val fields = declaration.fields.map {
-                WasmStructFieldDeclaration(
-                    name = it.name.toString(),
-                    type = wasmModuleTypeTransformer.transformFieldType(it.type),
-                    isMutable = false
-                )
-            }
-            val structType = WasmStructDeclaration(
-                name = "RTTI",
-                fields = fields.toList(),
-                superType = null,
-                isFinal = declaration.modality == Modality.FINAL
-            )
-            wasmFileCodegenContext.defineGcType(symbol, structType)
-            return
-        }
-
         val nameStr = declaration.fqNameWhenAvailable.toString()
 
         if (declaration.isInterface) {
@@ -500,6 +482,7 @@ class DeclarationGenerator(
             val fields = mutableListOf<WasmStructFieldDeclaration>()
             fields.add(WasmStructFieldDeclaration("vtable", vtableRefGcType, false))
             fields.add(WasmStructFieldDeclaration("itable", WasmRefNullType(WasmHeapType.Type(wasmFileCodegenContext.interfaceTableTypes.wasmAnyArrayType)), false))
+            fields.add(WasmStructFieldDeclaration("rtti", WasmRefType(WasmHeapType.Type(wasmFileCodegenContext.rttiType)), false))
             declaration.allFields(irBuiltIns).mapTo(fields) {
                 WasmStructFieldDeclaration(
                     name = it.name.toString(),

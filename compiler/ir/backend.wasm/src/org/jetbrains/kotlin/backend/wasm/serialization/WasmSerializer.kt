@@ -659,6 +659,8 @@ class WasmSerializer(outputStream: OutputStream) {
                 ::serializeIdSignature,
                 ::serializeWasmGlobal
             )
+
+            serializeWasmSymbolReadOnly(rttiElements.rttiType, ::serializeWasmStructDeclaration)
         }
     }
 
