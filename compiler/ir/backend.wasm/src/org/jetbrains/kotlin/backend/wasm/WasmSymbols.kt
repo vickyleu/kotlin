@@ -70,7 +70,7 @@ class WasmSymbols(
     )
 
     internal val tryGetAssociatedObject = getInternalFunction("tryGetAssociatedObject")
-    internal val wasmIntImmutableArray = getInternalClass("WasmIntImmutableArray")
+    internal val wasmLongImmutableArray = getInternalClass("WasmLongImmutableArray")
 
     override val throwNullPointerException = getInternalFunction("THROW_NPE")
     override val throwISE = getInternalFunction("THROW_ISE")

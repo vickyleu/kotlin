@@ -224,7 +224,7 @@ class WasmCompiledModuleFragment(
     }
 
     private fun createRttiTypeAndProcessRttiGlobals(globals: MutableList<WasmGlobal>, additionalTypes: MutableList<WasmTypeDeclaration>) {
-        val wasmIntArray = WasmArrayDeclaration("IntArray", WasmStructFieldDeclaration("Int", WasmI32, false))
+        val wasmIntArray = WasmArrayDeclaration("LongArray", WasmStructFieldDeclaration("Long", WasmI64, false))
         additionalTypes.add(wasmIntArray)
 
         val rttiTypeDeclarationSymbol = WasmSymbol<WasmStructDeclaration>()
