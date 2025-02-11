@@ -26634,6 +26634,12 @@ public class FirLightTreeBlackBoxCodegenTestGenerated extends AbstractFirLightTr
     }
 
     @Test
+    @TestMetadata("reproducer.kt")
+    public void testReproducer() {
+      runTest("compiler/testData/codegen/box/inline/reproducer.kt");
+    }
+
+    @Test
     @TestMetadata("returnLocalClassFromBlock.kt")
     public void testReturnLocalClassFromBlock() {
       runTest("compiler/testData/codegen/box/inline/returnLocalClassFromBlock.kt");
