@@ -1,5 +1,5 @@
 // RUN_PIPELINE_TILL: FRONTEND
-// LANGUAGE: +ContextSensitiveEnumResolutionInWhen
+// LANGUAGE: +ContextSensitiveResolutionUsingExpectedType
 // FILE: JavaEnum.java
 
 public enum JavaEnum {

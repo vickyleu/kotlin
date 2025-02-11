@@ -1,5 +1,5 @@
 // RUN_PIPELINE_TILL: FRONTEND
-// LANGUAGE: +ContextSensitiveEnumResolutionInWhen
+// LANGUAGE: +ContextSensitiveResolutionUsingExpectedType
 // KT-58939
 
 enum class A {
