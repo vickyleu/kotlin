@@ -18,11 +18,9 @@ import org.jetbrains.kotlin.fir.declarations.FirAnonymousFunction
 import org.jetbrains.kotlin.fir.declarations.InlineStatus.*
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.resolve.fqName
-import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.name.JvmStandardClassIds.JVM_SERIALIZABLE_LAMBDA_ANNOTATION_FQ_NAME
 
 object FirJvmSerializableLambdaChecker : FirAnnotationChecker(MppCheckerKind.Common) {
-    private val JVM_SERIALIZABLE_LAMBDA_ANNOTATION_FQ_NAME = FqName("kotlin.jvm.JvmSerializableLambda")
-
     override fun check(expression: FirAnnotation, context: CheckerContext, reporter: DiagnosticReporter) {
         if (expression.fqName(context.session) == JVM_SERIALIZABLE_LAMBDA_ANNOTATION_FQ_NAME) {
             val declaration = context.containingDeclarations.last()
