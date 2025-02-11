@@ -690,7 +690,7 @@ class BodyResolveContext(
         val session = sessionHolder.session
 
         val withContextSensitiveResolution =
-            session.languageVersionSettings.supportsFeature(LanguageFeature.ContextSensitiveResolutionUsingExpectedType)
+            session.languageVersionSettings.supportsFeature(LanguageFeature.ContextSensitiveEnumResolutionInWhen)
 
         if (withContextSensitiveResolution) {
             val subjectClassSymbol = (subjectType?.lowerBoundIfFlexible() as? ConeClassLikeType)
