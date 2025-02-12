@@ -360,7 +360,7 @@ open class FirSupertypeResolverVisitor(
 
     private fun resolveSpecificClassLikeSupertypes(
         classLikeDeclaration: FirClassLikeDeclaration,
-        resolveSuperTypeRefs: (FirSpecificTypeResolverTransformer, ScopeClassDeclaration) -> List<FirResolvedTypeRef>,
+        resolveSuperTypeRefs: (FirSpecificTypeResolverTransformer, TypeResolutionConfiguration) -> List<FirResolvedTypeRef>,
     ): List<FirResolvedTypeRef> {
         when (val status = supertypeComputationSession.getSupertypesComputationStatus(classLikeDeclaration)) {
             is SupertypeComputationStatus.Computed -> return status.supertypeRefs
@@ -392,7 +392,7 @@ open class FirSupertypeResolverVisitor(
             @OptIn(PrivateForInline::class)
             resolveSuperTypeRefs(
                 transformer,
-                ScopeClassDeclaration(scopes, classDeclarationsStack),
+                TypeResolutionConfiguration(scopes, classDeclarationsStack),
             )
         }
 
@@ -435,7 +435,7 @@ open class FirSupertypeResolverVisitor(
     ): List<FirResolvedTypeRef> {
         return resolveSpecificClassLikeSupertypes(classLikeDeclaration) { transformer, scopeDeclaration ->
             supertypeRefs.mapTo(mutableListOf()) {
-                val superTypeRef = it.transform<FirTypeRef, ScopeClassDeclaration>(transformer, scopeDeclaration)
+                val superTypeRef = it.transform<FirTypeRef, TypeResolutionConfiguration>(transformer, scopeDeclaration)
                 val typeParameterType = superTypeRef.coneTypeSafe<ConeTypeParameterType>()
                 val typealiasSymbol = superTypeRef.coneTypeSafe<ConeClassLikeType>()?.toTypeAliasSymbol(session)
                 if (resolveRecursively && typealiasSymbol != null) {
@@ -477,7 +477,7 @@ open class FirSupertypeResolverVisitor(
         klass: FirClassLikeDeclaration,
         supertypeRefs: MutableList<FirResolvedTypeRef>,
         typeResolveTransformer: FirSpecificTypeResolverTransformer,
-        scopeDeclaration: ScopeClassDeclaration,
+        scopeDeclaration: TypeResolutionConfiguration,
     ) {
         if (supertypeGenerationExtensions.isEmpty()) return
         val typeResolveService = TypeResolveServiceForPlugins(typeResolveTransformer, scopeDeclaration)
@@ -493,7 +493,7 @@ open class FirSupertypeResolverVisitor(
     private fun addSupertypesToGeneratedNestedClasses(
         klass: FirRegularClass,
         typeResolveTransformer: FirSpecificTypeResolverTransformer,
-        scopeDeclaration: ScopeClassDeclaration,
+        scopeDeclaration: TypeResolutionConfiguration,
     ) {
         if (supertypeGenerationExtensions.isEmpty()) return
         val typeResolveService = TypeResolveServiceForPlugins(typeResolveTransformer, scopeDeclaration)
@@ -534,7 +534,7 @@ open class FirSupertypeResolverVisitor(
 
     private class TypeResolveServiceForPlugins(
         val typeResolveTransformer: FirSpecificTypeResolverTransformer,
-        val scopeDeclaration: ScopeClassDeclaration,
+        val scopeDeclaration: TypeResolutionConfiguration,
     ) : FirSupertypeGenerationExtension.TypeResolveService() {
         override fun resolveUserType(type: FirUserTypeRef): FirResolvedTypeRef {
             return typeResolveTransformer.withBareTypes(allowed = true) {
