@@ -71,7 +71,21 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
             resolveDeprecations
         )
 
+        if (configuration.qualifiedForContextSensitiveResolution != null) {
+            val resolvedSymbol = resolveSymbol(configuration.qualifiedForContextSensitiveResolution, qualifier, qualifierResolver)
 
+            if (resolvedSymbol != null) {
+                collector.processCandidate(
+                    resolvedSymbol,
+                    // TODO: ...
+                    ConeSubstitutor.Empty,
+                )
+            }
+
+            check(!configuration.scopes.iterator().hasNext())
+
+            return collector.getResult()
+        }
 
         for (scope in configuration.scopes) {
             if (collector.applicability == CandidateApplicability.RESOLVED) break

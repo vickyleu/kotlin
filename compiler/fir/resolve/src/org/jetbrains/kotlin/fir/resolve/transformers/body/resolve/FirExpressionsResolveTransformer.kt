@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.resolve.transformers.body.resolve
 
 import org.jetbrains.kotlin.*
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.declarations.*
@@ -1036,6 +1037,7 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
                 typeOperatorCall.transformConversionTypeRef(transformer, ResolutionMode.ContextIndependent)
             }
         }.transformTypeOperatorCallChildren()
+            .resolveConversionTypeRefInContextSensitiveMode()
 
         val conversionTypeRef = resolved.conversionTypeRef.withTypeArgumentsForBareType(resolved.argument, typeOperatorCall.operation)
         resolved.transformChildren(object : FirDefaultTransformer<Any?>() {
@@ -1099,6 +1101,43 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
         }
 
         return transformOtherChildren(transformer, ResolutionMode.ContextIndependent)
+    }
+
+    private fun FirTypeOperatorCall.resolveConversionTypeRefInContextSensitiveMode(): FirTypeOperatorCall {
+        if (!session.languageVersionSettings.supportsFeature(LanguageFeature.ContextSensitiveResolutionUsingExpectedType)) return this
+
+        // if the type is resolved correctly, we don't need to re-run the resolution
+        val errorTypeRef = conversionTypeRef as? FirErrorTypeRef ?: return this
+
+        // don't re-run resolution if it's something beside an unresolved reference or a visibility error
+        if (errorTypeRef.diagnostic !is ConeUnresolvedTypeQualifierError && errorTypeRef.diagnostic !is ConeVisibilityError) return this
+
+        // We only re-run resolution for simple name qualifiers
+        val userTypeRef = errorTypeRef.delegatedTypeRef as? FirUserTypeRef ?: return this
+        if (userTypeRef.qualifier.size != 1) return this
+
+        val argument = argumentList.arguments.singleOrNull() ?: error("Not a single argument: ${this.render()}")
+
+        val classToLookAt = argument.resolvedType.getClassRepresentativeForContextSensitiveResolution(session) ?: return this
+
+        val resultingTypeRef = typeResolverTransformer.withBareTypes {
+            typeResolverTransformer.transformTypeRef(
+                userTypeRef,
+                TypeResolutionConfiguration(
+                    scopes = emptyList(),
+                    context.containingClassDeclarations,
+                    context.file,
+                    context.topContainerForTypeResolution,
+                    classToLookAt,
+                )
+            )
+        }
+
+        if (resultingTypeRef is FirErrorTypeRef || resultingTypeRef.coneType is ConeErrorType) return this
+
+        replaceConversionTypeRef(resultingTypeRef)
+
+        return this
     }
 
     @OptIn(UnresolvedExpressionTypeAccess::class)

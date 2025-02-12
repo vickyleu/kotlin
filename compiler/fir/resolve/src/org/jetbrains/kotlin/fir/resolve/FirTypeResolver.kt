@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.scopes.FirScope
+import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.FirTypeRef
 
@@ -34,6 +35,7 @@ class TypeResolutionConfiguration(
     // Note: sometimes we don't have useSiteFile in IDE context
     val useSiteFile: FirFile?,
     val topContainer: FirDeclaration? = null,
+    val qualifiedForContextSensitiveResolution: FirClassSymbol<*>? = null,
 )
 
 data class FirTypeResolutionResult(
