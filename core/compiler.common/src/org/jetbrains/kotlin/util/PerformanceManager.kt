@@ -188,7 +188,7 @@ abstract class PerformanceManager(private val presentableName: String) {
         // but take some measurements from this manager.
 
         assert(phaseStartNanos == null) { "The measurement for phase $currentPhaseType must have been finished before starting $newPhaseType" }
-        assert(newPhaseType > currentPhaseType) { "The measurement for phase $newPhaseType must be performed before $currentPhaseType" }
+        assert(newPhaseType >= currentPhaseType) { "The measurement for phase $newPhaseType must be performed before $currentPhaseType" }
 
         phaseStartNanos = currentTime()
         currentPhaseType = newPhaseType
@@ -224,8 +224,11 @@ abstract class PerformanceManager(private val presentableName: String) {
     }
 
     private fun finishPhase(phaseType: PhaseMeasurementType) {
-        assert(!phaseMeasurementsMs.containsKey(phaseType)) { "The measurement for phase $phaseType is already performed" }
-        phaseMeasurementsMs[phaseType] = TimeUnit.NANOSECONDS.toMillis(currentTime() - phaseStartNanos!!)
+        if (phaseType != currentPhaseType) { // It's allowed to measure the current phase multiple times
+            assert(!phaseMeasurementsMs.containsKey(phaseType)) { "The measurement for phase $phaseType is already performed" }
+        }
+        phaseMeasurementsMs[phaseType] =
+            (phaseMeasurementsMs[phaseType] ?: 0) + TimeUnit.NANOSECONDS.toMillis(currentTime() - phaseStartNanos!!)
         phaseStartNanos = null
     }
 

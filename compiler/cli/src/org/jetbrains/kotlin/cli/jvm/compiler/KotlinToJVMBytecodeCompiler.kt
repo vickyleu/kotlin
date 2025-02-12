@@ -413,7 +413,7 @@ object KotlinToJVMBytecodeCompiler {
             performanceManager?.notifyIRLoweringStarted()
         }
         return codegenFactory.invokeLowerings(state, backendInput)
-            .also { performanceManager?.notifyIRLoweringFinished() }
+            .also { if (reportGenerationStarted) performanceManager?.notifyIRLoweringFinished() }
     }
 
     internal fun runCodegen(
@@ -429,7 +429,10 @@ object KotlinToJVMBytecodeCompiler {
 
         val performanceManager = configuration[CLIConfigurationKeys.PERF_MANAGER]
 
-        performanceManager?.notifyBackendGenerationStarted()
+        if (reportGenerationFinished) {
+            performanceManager?.notifyBackendGenerationStarted()
+        }
+
         codegenFactory.invokeCodegen(codegenInput)
 
         if (reportGenerationFinished) {

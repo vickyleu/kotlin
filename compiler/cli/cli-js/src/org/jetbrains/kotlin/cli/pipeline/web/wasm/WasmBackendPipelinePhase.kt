@@ -124,6 +124,11 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
         generateDwarf: Boolean
     ): WasmCompilerResult {
         val performanceManager = configuration.perfManager
+        performanceManager?.let {
+            it.notifyCompilerInitialized()
+            it.notifyIRGenerationStarted()
+        }
+
         val generateDts = configuration.getBoolean(JSConfigurationKeys.GENERATE_DTS)
         val generateSourceMaps = configuration.getBoolean(JSConfigurationKeys.SOURCE_MAP)
         val useDebuggerCustomFormatters = configuration.getBoolean(JSConfigurationKeys.USE_DEBUGGER_CUSTOM_FORMATTERS)
@@ -179,8 +184,6 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
             useDebuggerCustomFormatters = useDebuggerCustomFormatters
         )
 
-        performanceManager?.notifyBackendGenerationFinished()
-
         writeCompilationResult(
             result = res,
             dir = outputDir,
@@ -188,7 +191,7 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
             useDebuggerCustomFormatters = useDebuggerCustomFormatters
         )
 
-        performanceManager?.notifyIRGenerationFinished()
+        performanceManager?.notifyBackendGenerationFinished()
 
         return res
     }

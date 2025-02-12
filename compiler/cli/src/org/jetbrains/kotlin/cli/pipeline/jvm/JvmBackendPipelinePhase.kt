@@ -33,7 +33,6 @@ object JvmBackendPipelinePhase : PipelinePhase<JvmFir2IrPipelineArtifact, JvmBin
         PerformanceNotifications.IrLoweringStarted
     ),
     postActions = setOf(
-        PerformanceNotifications.BackendGenerationFinished,
         CheckCompilationErrors.CheckDiagnosticCollector
     )
 ) {
