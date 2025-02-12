@@ -149,6 +149,12 @@ public class FirLightTreeDiagnosticsWithoutAliasExpansionTestGenerated extends A
     }
 
     @Nested
+    @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType")
+    @TestDataPath("$PROJECT_ROOT")
+    public class ContextSensitiveResolutionUsinhExpectedType {
+    }
+
+    @Nested
     @TestMetadata("compiler/fir/analysis-tests/testData/resolve/diagnostics")
     @TestDataPath("$PROJECT_ROOT")
     public class Diagnostics {

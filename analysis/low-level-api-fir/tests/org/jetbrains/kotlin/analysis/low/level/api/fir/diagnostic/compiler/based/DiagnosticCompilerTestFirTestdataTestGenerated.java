@@ -2259,6 +2259,38 @@ public class DiagnosticCompilerTestFirTestdataTestGenerated extends AbstractDiag
     }
 
     @Nested
+    @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType")
+    @TestDataPath("$PROJECT_ROOT")
+    public class ContextSensitiveResolutionUsinhExpectedType {
+      @Test
+      public void testAllFilesPresentInContextSensitiveResolutionUsinhExpectedType() {
+        KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType"), Pattern.compile("^([^.]+)\\.kt$"), null, true, "lightTree");
+      }
+
+      @Nested
+      @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition")
+      @TestDataPath("$PROJECT_ROOT")
+      public class TypePosition {
+        @Test
+        public void testAllFilesPresentInTypePosition() {
+          KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition"), Pattern.compile("^([^.]+)\\.kt$"), null, true, "lightTree");
+        }
+
+        @Test
+        @TestMetadata("either.kt")
+        public void testEither() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition/either.kt");
+        }
+
+        @Test
+        @TestMetadata("simple.kt")
+        public void testSimple() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition/simple.kt");
+        }
+      }
+    }
+
+    @Nested
     @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contracts")
     @TestDataPath("$PROJECT_ROOT")
     public class Contracts {

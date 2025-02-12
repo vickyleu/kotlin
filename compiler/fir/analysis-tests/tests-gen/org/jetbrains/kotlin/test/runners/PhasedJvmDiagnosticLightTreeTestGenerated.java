@@ -51794,6 +51794,28 @@ public class PhasedJvmDiagnosticLightTreeTestGenerated extends AbstractPhasedJvm
     }
 
     @Nested
+    @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType")
+    @TestDataPath("$PROJECT_ROOT")
+    public class ContextSensitiveResolutionUsinhExpectedType {
+      @Nested
+      @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition")
+      @TestDataPath("$PROJECT_ROOT")
+      public class TypePosition {
+        @Test
+        @TestMetadata("either.kt")
+        public void testEither() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition/either.kt");
+        }
+
+        @Test
+        @TestMetadata("simple.kt")
+        public void testSimple() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsinhExpectedType/typePosition/simple.kt");
+        }
+      }
+    }
+
+    @Nested
     @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contracts")
     @TestDataPath("$PROJECT_ROOT")
     public class Contracts {
