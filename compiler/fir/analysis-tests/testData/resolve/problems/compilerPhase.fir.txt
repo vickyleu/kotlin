@@ -32,16 +32,16 @@ FILE: compilerPhase.kt
 
         public open override fun invoke(phaseConfig: R|PhaseConfig|, phaserState: R|PhaserState<Data>|, context: R|Context|, input: R|Data|): R|Data| {
             lval output: R|Data| = when () {
-                R|<local>/phaseConfig|.R|/PhaseConfig.needProfiling| ->  {
-                    this@R|/NamedCompilerPhase|.R|/NamedCompilerPhase.runAndProfile|(R|<local>/phaseConfig|, R|<local>/phaserState|, R|<local>/context|, R|<local>/input|)
-                }
-                else ->  {
-                    R|<local>/phaserState|.R|/downlevel|<R|Data|, R|Data|>(Int(1), <L> = downlevel@fun <anonymous>(): R|Data| <inline=Inline, kind=UNKNOWN>  {
-                        ^ this@R|/NamedCompilerPhase|.R|/NamedCompilerPhase.lower|.R|SubstitutionOverride</CompilerPhase.invoke: R|Data|>|(R|<local>/phaseConfig|, R|<local>/phaserState|, R|<local>/context|, R|<local>/input|)
+                    R|<local>/phaseConfig|.R|/PhaseConfig.needProfiling| ->  {
+                        this@R|/NamedCompilerPhase|.R|/NamedCompilerPhase.runAndProfile|(R|<local>/phaseConfig|, R|<local>/phaserState|, R|<local>/context|, R|<local>/input|)
                     }
-                    )
+                    else ->  {
+                        R|<local>/phaserState|.R|/downlevel|<R|Data|, R|Data|>(Int(1), <L> = downlevel@fun <anonymous>(): R|Data| <inline=Inline, kind=UNKNOWN>  {
+                            ^ this@R|/NamedCompilerPhase|.R|/NamedCompilerPhase.lower|.R|SubstitutionOverride</CompilerPhase.invoke: R|Data|>|(R|<local>/phaseConfig|, R|<local>/phaserState|, R|<local>/context|, R|<local>/input|)
+                        }
+                        )
+                    }
                 }
-            }
 
             this@R|/NamedCompilerPhase|.R|/NamedCompilerPhase.runAfter|(R|<local>/phaseConfig|, R|<local>/phaserState|, R|<local>/context|, R|<local>/output|)
         }

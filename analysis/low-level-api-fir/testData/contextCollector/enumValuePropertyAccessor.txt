@@ -49,16 +49,16 @@ FILE: [ResolvedTo(IMPORTS)] enumValuePropertyAccessor.kt
 
         public final static [ResolvedTo(STATUS)] enum entry NORTH: R|Direction| = LAZY_EXPRESSION
         public final static [ResolvedTo(BODY_RESOLVE)] enum entry EAST: R|Direction| = object : R|Direction| {
-            private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
-                super<R|Direction|>()
-            }
-
-            public open override [ResolvedTo(BODY_RESOLVE)] val code: R|kotlin/Int|
-                public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Int| {
-                    ^ Int(2)
+                private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
+                    super<R|Direction|>()
                 }
 
-        }
+                public open override [ResolvedTo(BODY_RESOLVE)] val code: R|kotlin/Int|
+                    public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Int| {
+                        ^ Int(2)
+                    }
+
+            }
 
         public final static [ResolvedTo(STATUS)] enum entry SOUTH: R|Direction| = LAZY_EXPRESSION
         public final static [ResolvedTo(STATUS)] enum entry WEST: R|Direction| = LAZY_EXPRESSION

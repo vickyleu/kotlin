@@ -23,14 +23,14 @@ FILE: localScopes.kt
         R|<local>/base|.R|<local>/baz|()
         R|<local>/base|.R|/Bar.foo|()
         lval anonymous: R|<anonymous>| = object : R|Bar| {
-            private constructor(): R|<anonymous>| {
-                super<R|Bar|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Bar|>()
+                }
 
-            public final fun baz(): R|kotlin/Unit| {
-            }
+                public final fun baz(): R|kotlin/Unit| {
+                }
 
-        }
+            }
 
         R|<local>/anonymous|.R|/<anonymous>.baz|()
         R|<local>/anonymous|.R|/Bar.foo|()

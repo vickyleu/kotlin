@@ -274,9 +274,9 @@ FILE: [ResolvedTo(IMPORTS)] statement2.kts
         }
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(RAW_FIR)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(RAW_FIR)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()
@@ -307,9 +307,9 @@ FILE: [ResolvedTo(IMPORTS)] statement2.kts
         }
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(RAW_FIR)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(RAW_FIR)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(CONSTANT_EVALUATION)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()
@@ -340,9 +340,9 @@ FILE: [ResolvedTo(IMPORTS)] statement2.kts
         }
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(RAW_FIR)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(RAW_FIR)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(ANNOTATION_ARGUMENTS)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()
@@ -373,9 +373,9 @@ FILE: [ResolvedTo(IMPORTS)] statement2.kts
         }
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(RAW_FIR)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(RAW_FIR)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()
@@ -408,9 +408,9 @@ FILE: [ResolvedTo(BODY_RESOLVE)] statement2.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(BODY_RESOLVE)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(BODY_RESOLVE)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()

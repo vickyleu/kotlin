@@ -20,9 +20,9 @@ FILE: tryInGenerated.kt
     }
     public final fun test(list: R|kotlin/collections/List<Ref<*>>|): R|kotlin/Unit| {
         lval data: R|kotlin/String|by try {
-            R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(0))
-        }
-        finally {
-        }
+                R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(0))
+            }
+            finally {
+            }
 
     }

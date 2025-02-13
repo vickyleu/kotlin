@@ -27,10 +27,10 @@ FILE: [ResolvedTo(IMPORTS)] superTypeCallee_objectLiteral.kt
 
     }
     public final [ResolvedTo(BODY_RESOLVE)] val child: R|test/Base| = object : R|test/Base| {
-        private [ResolvedTo(BODY_RESOLVE)] constructor(): R|test/<anonymous>| {
-            super<R|test/Base|>()
-        }
+            private [ResolvedTo(BODY_RESOLVE)] constructor(): R|test/<anonymous>| {
+                super<R|test/Base|>()
+            }
 
-    }
+        }
 
         public [ResolvedTo(BODY_RESOLVE)] get(): R|test/Base|

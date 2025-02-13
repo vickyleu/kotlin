@@ -48,14 +48,14 @@ FILE: constValNotTopLevelOrObject.kt
         }
 
         public final val M: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
+
+                public final const val m: R|kotlin/Int| = Int(3)
+                    public get(): R|kotlin/Int|
+
             }
-
-            public final const val m: R|kotlin/Int| = Int(3)
-                public get(): R|kotlin/Int|
-
-        }
 
             public get(): R|kotlin/Any|
 
@@ -70,14 +70,14 @@ FILE: constValNotTopLevelOrObject.kt
         }
 
         public final val t: R|D.O| = object : R|D.O| {
-            private constructor(): R|<anonymous>| {
-                super<R|D.O|>()
+                private constructor(): R|<anonymous>| {
+                    super<R|D.O|>()
+                }
+
+                public final const val x: R|kotlin/Int| = Int(15)
+                    public get(): R|kotlin/Int|
+
             }
-
-            public final const val x: R|kotlin/Int| = Int(15)
-                public get(): R|kotlin/Int|
-
-        }
 
             public get(): R|D.O|
 

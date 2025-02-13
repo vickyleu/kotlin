@@ -41,15 +41,15 @@ FILE: [ResolvedTo(IMPORTS)] enumValueFunction.kt
         }
 
         public final static [ResolvedTo(BODY_RESOLVE)] enum entry VALUE: R|Foo| = object : R|Foo| {
-            private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
-                super<R|Foo|>()
-            }
+                private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
+                    super<R|Foo|>()
+                }
 
-            public final [ResolvedTo(BODY_RESOLVE)] fun run(): R|kotlin/Int| {
-                ^run Int(1)
-            }
+                public final [ResolvedTo(BODY_RESOLVE)] fun run(): R|kotlin/Int| {
+                    ^run Int(1)
+                }
 
-        }
+            }
 
         public final static [ResolvedTo(STATUS)] fun values(): R|kotlin/Array<Foo>| {
         }

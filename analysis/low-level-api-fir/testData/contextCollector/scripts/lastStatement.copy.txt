@@ -57,7 +57,7 @@ FILE: [ResolvedTo(IMPORTS)] lastStatement.kts
         public? final? [ResolvedTo(RAW_FIR)] fun foo([ResolvedTo(RAW_FIR)] i: Int, [ResolvedTo(RAW_FIR)] action: ( (Int) -> Unit )): R|kotlin/Unit| { LAZY_BLOCK }
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/foo|(R|/scriptFunction|(), <L> = [ResolvedTo(BODY_RESOLVE)] foo@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/Int|): R|kotlin/Unit| <inline=NoInline>  {
-            R|/scriptFunction|()
-        }
-        )
+                R|/scriptFunction|()
+            }
+            )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Unit|

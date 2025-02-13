@@ -25,6 +25,8 @@ class FirBodyRenderer {
     }
 
     fun render(variable: FirVariable) {
+        printer.pushIndent()
+
         variable.initializer?.let {
             printer.print(" = ")
             it.accept(visitor)
@@ -33,6 +35,8 @@ class FirBodyRenderer {
             printer.print("by ")
             it.accept(visitor)
         }
+
+        printer.popIndent()
     }
 
     fun renderBody(block: FirBlock?, additionalStatements: List<FirStatement> = emptyList()) {

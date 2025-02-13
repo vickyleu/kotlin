@@ -5,20 +5,20 @@ FILE: simple.kt
     }
     public final fun test_1(): R|kotlin/Unit| {
         lval l0: R|() -> kotlin/Unit| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
         lval l1: R|some/MyInlineableFunction0<kotlin/Unit>| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
         lval l2: R|@R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|()  some/MyInlineableFunction0<kotlin/Unit>| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
         lval l3: R|some/MyInlineableFunction0<kotlin/Unit>| = @R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|() fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
         R|/runUsual|(R|<local>/l0|)
         R|/runUsual<Inapplicable(INAPPLICABLE): /runUsual>#|(R|<local>/l1|)

@@ -58,10 +58,10 @@ FILE: throwableSubclass.kt
         }
 
         lval obj: R|<anonymous><Z>| = object : R|kotlin/Throwable| {
-            private constructor(): R|<anonymous><Z>| {
-                super<R|kotlin/Throwable|>()
-            }
+                private constructor(): R|<anonymous><Z>| {
+                    super<R|kotlin/Throwable|>()
+                }
 
-        }
+            }
 
     }

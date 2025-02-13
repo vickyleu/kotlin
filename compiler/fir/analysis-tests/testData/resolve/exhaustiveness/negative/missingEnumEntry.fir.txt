@@ -18,42 +18,42 @@ FILE: missingEnumEntry.kt
     }
     public final fun test_1(enum: R|SomeEnum|): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = when (R|<local>/enum|) {
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
-                Int(1)
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
+                    Int(1)
+                }
             }
-        }
 
         lval y: R|kotlin/Int| = when (R|<local>/enum|) {
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
-                Int(1)
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
+                    Int(2)
+                }
             }
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
-                Int(2)
-            }
-        }
 
     }
     public final fun test_2(enum: R|SomeEnum?|): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = when (R|<local>/enum|) {
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
-                Int(1)
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
+                    Int(2)
+                }
             }
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
-                Int(2)
-            }
-        }
 
         lval y: R|kotlin/Int| = when (R|<local>/enum|) {
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
-                Int(1)
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
+                    Int(2)
+                }
+                ==($subj$, Null(null)) ->  {
+                    Int(3)
+                }
             }
-            ==($subj$, Q|SomeEnum|.R|/SomeEnum.B|) ->  {
-                Int(2)
-            }
-            ==($subj$, Null(null)) ->  {
-                Int(3)
-            }
-        }
 
     }
     public final fun test_3(enum: R|SomeEnum|): R|kotlin/Unit| {

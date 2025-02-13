@@ -51,11 +51,11 @@ FILE: singletonConstructors.kt
         }
 
         public final static enum entry X: R|E| = object : R|E| {
-            private constructor(): R|<anonymous>| {
-                super<R|E|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|E|>()
+                }
 
-        }
+            }
 
         public final fun foo(): R|kotlin/Unit| {
             <Unresolved name: X>#()

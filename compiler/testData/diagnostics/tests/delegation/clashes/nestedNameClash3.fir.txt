@@ -3,12 +3,12 @@ FILE: nestedNameClash3.kt
 
     public final fun main(): R|kotlin/Unit| {
         lval data: R|second/MyClass| = R|second/MyClass.MyClass|(object : R|second/Base<second/Base<kotlin/Int>>| {
-            private constructor(): R|second/<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|second/<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-        }
-        )
+            }
+            )
         R|<local>/data|.R|second/MyClass.foo|()
     }
     public abstract interface Base<A> : R|kotlin/Any| {

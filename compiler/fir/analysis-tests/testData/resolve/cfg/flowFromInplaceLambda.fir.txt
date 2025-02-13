@@ -235,21 +235,21 @@ FILE: flowFromInplaceLambda.kt
     }
     public final fun expectedType(): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = R|/select|<R|kotlin/Int|>(vararg(R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
-            ^ R|/materialize|<R|kotlin/Int|>()
-        }
-        ), R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
-            ^ R|/materialize|<R|kotlin/Int|>()
-        }
-        )))
+                ^ R|/materialize|<R|kotlin/Int|>()
+            }
+            ), R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
+                ^ R|/materialize|<R|kotlin/Int|>()
+            }
+            )))
         R|<local>/x|.R|kotlin/Int.inc|()
     }
     public final fun expectedTypeNested(): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = R|/id|<R|kotlin/Int|>(R|/noContract|<R|kotlin/Int|>(<L> = noContract@fun <anonymous>(): R|kotlin/Int| <inline=NoInline>  {
-            ^ R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
-                ^ R|/materialize|<R|kotlin/Int|>()
+                ^ R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
+                    ^ R|/materialize|<R|kotlin/Int|>()
+                }
+                )
             }
-            )
-        }
-        ))
+            ))
         R|<local>/x|.R|kotlin/Int.inc|()
     }

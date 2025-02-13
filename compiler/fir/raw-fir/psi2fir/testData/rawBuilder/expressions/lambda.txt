@@ -22,10 +22,10 @@ FILE: lambda.kt
     }
     public? final? fun foo(): Int {
         lval l1: <implicit> = fun <implicit>.<anonymous>(t: Tuple): <implicit> <inline=Unknown>  {
-            lval x: <implicit> = t#.x#
-            lval y: <implicit> = t#.y#
-            x#.plus#(y#)
-        }
+                lval x: <implicit> = t#.x#
+                lval y: <implicit> = t#.y#
+                x#.plus#(y#)
+            }
 
         use#(<L> = use@fun <implicit>.<anonymous>(<destruct>: <implicit>): <implicit> <inline=Unknown>  {
             lval x: <implicit> = R|<local>/<destruct>|.component1#()
@@ -70,17 +70,17 @@ FILE: lambda.kt
         )
     }
     public? final? val simple: <implicit> = fun <implicit>.<anonymous>(): <implicit> <inline=Unknown>  {
-        ^ Unit
-    }
+            ^ Unit
+        }
 
         public? get(): <implicit>
     public? final? val simpleWithArrow: <implicit> = fun <implicit>.<anonymous>(<no-parameters>)(): <implicit> <inline=Unknown>  {
-        ^ Unit
-    }
+            ^ Unit
+        }
 
         public? get(): <implicit>
     public? final? val another: <implicit> = fun <implicit>.<anonymous>(): <implicit> <inline=Unknown>  {
-        IntegerLiteral(42)
-    }
+            IntegerLiteral(42)
+        }
 
         public? get(): <implicit>

@@ -12,15 +12,15 @@ FILE: [ResolvedTo(BODY_RESOLVE)] lambdasInWithBodyFunction.kt
 
         public final [ResolvedTo(BODY_RESOLVE)] fun foo(): R|kotlin/Unit| {
             [ResolvedTo(BODY_RESOLVE)] lval a: R|kotlin/Int| = R|/with|<R|kotlin/Int|, R|kotlin/Int|>(Int(1), <L> = [ResolvedTo(BODY_RESOLVE)] with@fun [ResolvedTo(BODY_RESOLVE)] R|kotlin/Int|.<anonymous>(): R|kotlin/Int| <inline=Inline, kind=UNKNOWN>  {
-                ^ this@R|special/anonymous|.R|/let|<R|kotlin/Int|, R|kotlin/Int|>(<L> = [ResolvedTo(BODY_RESOLVE)] let@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/Int|): R|kotlin/Int| <inline=Inline, kind=UNKNOWN>  {
-                    ^ R|<local>/it|
+                    ^ this@R|special/anonymous|.R|/let|<R|kotlin/Int|, R|kotlin/Int|>(<L> = [ResolvedTo(BODY_RESOLVE)] let@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/Int|): R|kotlin/Int| <inline=Inline, kind=UNKNOWN>  {
+                        ^ R|<local>/it|
+                    }
+                    )
+                }
+                ).R|/let|<R|kotlin/Int|, R|kotlin/Int|>(<L> = [ResolvedTo(BODY_RESOLVE)] let@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/Int|): R|kotlin/Int| <inline=Inline, kind=UNKNOWN>  {
+                    ^ Int(2)
                 }
                 )
-            }
-            ).R|/let|<R|kotlin/Int|, R|kotlin/Int|>(<L> = [ResolvedTo(BODY_RESOLVE)] let@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/Int|): R|kotlin/Int| <inline=Inline, kind=UNKNOWN>  {
-                ^ Int(2)
-            }
-            )
         }
 
     }

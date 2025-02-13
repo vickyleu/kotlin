@@ -9,16 +9,16 @@ FILE: [ResolvedTo(BODY_RESOLVE)] declarationsInPropertyInitScript.kts
             }
 
             public final [ResolvedTo(BODY_RESOLVE)] val a: R|kotlin/Unit| = this@R|/A|.R|kotlin/run|<R|A|, R|kotlin/Unit|>(<L> = [ResolvedTo(BODY_RESOLVE)] run@fun [ResolvedTo(BODY_RESOLVE)] R|A|.<anonymous>(): R|kotlin/Unit| <inline=Inline, kind=EXACTLY_ONCE>  {
-                local final [ResolvedTo(BODY_RESOLVE)] class X : R|kotlin/Any| {
-                    public [ResolvedTo(BODY_RESOLVE)] constructor(): R|<local>/X| {
-                        super<R|kotlin/Any|>()
+                    local final [ResolvedTo(BODY_RESOLVE)] class X : R|kotlin/Any| {
+                        public [ResolvedTo(BODY_RESOLVE)] constructor(): R|<local>/X| {
+                            super<R|kotlin/Any|>()
+                        }
+
                     }
 
+                    [ResolvedTo(BODY_RESOLVE)] lval y: R|kotlin/Int| = Int(10)
                 }
-
-                [ResolvedTo(BODY_RESOLVE)] lval y: R|kotlin/Int| = Int(10)
-            }
-            )
+                )
                 public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Unit|
 
         }

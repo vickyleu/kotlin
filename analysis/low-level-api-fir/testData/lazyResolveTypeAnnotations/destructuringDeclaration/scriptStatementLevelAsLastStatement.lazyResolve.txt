@@ -40,15 +40,15 @@ FILE: [ResolvedTo(RAW_FIR)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(RAW_FIR)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(RAW_FIR)] get(): <implicit>
 
@@ -95,15 +95,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(RAW_FIR)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(RAW_FIR)] get(): <implicit>
 
@@ -150,15 +150,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(COMPILER_REQUIRED_ANNOTATIONS)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(COMPILER_REQUIRED_ANNOTATIONS)] get(): <implicit>
 
@@ -205,15 +205,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(COMPANION_GENERATION)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(COMPANION_GENERATION)] get(): <implicit>
 
@@ -260,15 +260,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(SUPER_TYPES)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(SUPER_TYPES)] get(): <implicit>
 
@@ -315,15 +315,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(TYPES)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(TYPES)] get(): <implicit>
 
@@ -370,15 +370,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(STATUS)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(STATUS)] get(): <implicit>
 
@@ -425,15 +425,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(EXPECT_ACTUAL_MATCHING)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(EXPECT_ACTUAL_MATCHING)] get(): <implicit>
 
@@ -480,15 +480,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public? [ResolvedTo(RAW_FIR)] get(): <implicit>
 
         public final [ResolvedTo(CONTRACTS)] val $$result: <implicit> = when () {
-            Boolean(true) ->  {
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
-                @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                Boolean(true) ->  {
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval a: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval b: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval <destruct>: <implicit> = Pair#(LAZY_EXPRESSION, LAZY_EXPRESSION)
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval c: <implicit> = LAZY_EXPRESSION
+                    @Anno[Unresolved](LAZY_EXPRESSION) [ResolvedTo(RAW_FIR)] lval d: <implicit> = LAZY_EXPRESSION
+                }
             }
-        }
 
             public [ResolvedTo(CONTRACTS)] get(): <implicit>
 
@@ -535,15 +535,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|kotlin/String|
 
         public final [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] [PostponedSymbolsForAnnotationResolutionKey=[FirConstructorSymbol util/Pair.Pair]] val $$result: R|kotlin/Unit| = when () {
-            Boolean(true) ->  {
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                Boolean(true) ->  {
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                }
             }
-        }
 
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|kotlin/Unit|
 
@@ -590,15 +590,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|kotlin/String|
 
         public final [ResolvedTo(CONSTANT_EVALUATION)] [PostponedSymbolsForAnnotationResolutionKey=[FirConstructorSymbol util/Pair.Pair]] val $$result: R|kotlin/Unit| = when () {
-            Boolean(true) ->  {
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                Boolean(true) ->  {
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/Collection<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Array<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/collections/List<@R|util/Anno|(LAZY_EXPRESSION)  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                }
             }
-        }
 
             public [ResolvedTo(CONSTANT_EVALUATION)] get(): R|kotlin/Unit|
 
@@ -645,15 +645,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|kotlin/String|
 
         public final [ResolvedTo(ANNOTATION_ARGUMENTS)] val $$result: R|kotlin/Unit| = when () {
-            Boolean(true) ->  {
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                Boolean(true) ->  {
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(RAW_FIR)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                }
             }
-        }
 
             public [ResolvedTo(ANNOTATION_ARGUMENTS)] get(): R|kotlin/Unit|
 
@@ -700,15 +700,15 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevelAsLastStatement.kts
             public [ResolvedTo(IMPLICIT_TYPES_BODY_RESOLVE)] get(): R|kotlin/String|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = when () {
-            Boolean(true) ->  {
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                Boolean(true) ->  {
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                }
             }
-        }
 
             public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Unit|
 
@@ -755,15 +755,15 @@ FILE: [ResolvedTo(BODY_RESOLVE)] scriptStatementLevelAsLastStatement.kts
             public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/String|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = when () {
-            Boolean(true) ->  {
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
-                @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
-                @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
-                @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                Boolean(true) ->  {
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(a ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval a: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(b ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval b: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                    @R|util/Anno|[Types](str = <strcat>(String(destr 1 ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval <destruct>: R|util/Pair| = R|util/Pair.Pair|(Null(null), Null(null))
+                    @R|util/Anno|[Types](str = <strcat>(String(c ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval c: R|@R|util/Anno|(str = <strcat>(String(a type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(a nested type ), R|util/constant|))  kotlin/collections/Collection<@R|util/Anno|(str = <strcat>(String(a nested nested type ), R|util/constant|))  kotlin/String>>?| = R|<local>/<destruct>|.R|util/Pair.component1|()
+                    @R|util/Anno|[Types](str = <strcat>(String(d ), R|util/prop|)) [ResolvedTo(BODY_RESOLVE)] lval d: R|@R|util/Anno|(str = <strcat>(String(b type ), R|util/constant|))  kotlin/Array<@R|util/Anno|(str = <strcat>(String(b nested type ), R|util/constant|))  kotlin/collections/List<@R|util/Anno|(str = <strcat>(String(b nested nested type ), R|util/constant|))  kotlin/Int>>?| = R|<local>/<destruct>|.R|util/Pair.component2|()
+                }
             }
-        }
 
             public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Unit|
 

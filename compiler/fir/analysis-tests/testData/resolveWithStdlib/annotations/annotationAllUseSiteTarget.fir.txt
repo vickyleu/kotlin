@@ -104,9 +104,9 @@ FILE: annotationAllUseSiteTarget.kt
             }
 
         @ALL:R|p/ParamProperty|() @ALL:R|p/ParamField|() @ALL:R|p/PropertyField|() @ALL:R|p/ParamPropertyField|() @ALL:R|p/Default|() @ALL:R|p/Inapplicable|() public final val delegatedVal: R|kotlin/Int|by R|kotlin/lazy|<R|kotlin/Int|>(<L> = lazy@fun <anonymous>(): R|kotlin/Int| <inline=NoInline>  {
-            ^ Int(7)
-        }
-        )
+                ^ Int(7)
+            }
+            )
             @R|p/GetterSetter|() @R|p/ParamGetter|() @R|p/ParamGetterSetter|() @R|p/Default|() public get(): R|kotlin/Int| {
                 ^ this@R|p/My|.D|p/My.delegatedVal|.R|kotlin/getValue|<R|kotlin/Int|>(this@R|p/My|, ::R|p/My.delegatedVal|)
             }

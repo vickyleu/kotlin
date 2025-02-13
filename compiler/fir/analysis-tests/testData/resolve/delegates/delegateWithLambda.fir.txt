@@ -27,9 +27,9 @@ FILE: delegateWithLambda.kt
         }
 
         public final val x: R|kotlin/String|by R|/lazy|<R|kotlin/String|>(<L> = lazy@fun <anonymous>(): R|kotlin/String| <inline=NoInline>  {
-            ^ R|/materialize|<R|kotlin/String|>()
-        }
-        )
+                ^ R|/materialize|<R|kotlin/String|>()
+            }
+            )
             public get(): R|kotlin/String| {
                 ^ this@R|/Test|.D|/Test.x|.R|SubstitutionOverride</LazyDelegate.getValue: R|kotlin/String|>|(this@R|/Test|, ::R|/Test.x|)
             }

@@ -1,4 +1,4 @@
-A:
+A: 
   [Enhancement]: public open fun removeAt(i: R|kotlin/Int|): R|kotlin/Int!| from Use site scope of /A [id: 0]
     [Enhancement]: public open fun removeAt(i: R|kotlin/Int|): R|kotlin/Int!| from Java enhancement scope for /Java1 [id: 0]
       [SubstitutionOverride(DeclarationSite)]: public abstract override fun removeAt(index: R|kotlin/Int|): R|kotlin/Int!| from Substitution scope for [Use site scope of kotlin/collections/AbstractMutableList] for type Java1 [id: 1]

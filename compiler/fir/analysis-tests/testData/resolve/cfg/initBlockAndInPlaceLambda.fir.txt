@@ -13,9 +13,9 @@ FILE: initBlockAndInPlaceLambda.kt
 
         init {
             lval c: R|C?| = R|<local>/a|.R|/A.b|?.{ $subj$.R|kotlin/let|<R|B|, R|C|>(<L> = let@fun <anonymous>(it: R|B|): R|C| <inline=Inline, kind=EXACTLY_ONCE>  {
-                ^ R|/C.C|(R|<local>/a|, R|<local>/it|)
-            }
-            ) }
+                    ^ R|/C.C|(R|<local>/a|, R|<local>/it|)
+                }
+                ) }
         }
 
     }

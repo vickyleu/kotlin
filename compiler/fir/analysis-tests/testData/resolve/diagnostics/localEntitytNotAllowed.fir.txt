@@ -22,31 +22,31 @@ FILE: localEntitytNotAllowed.kt
         }
 
         public final val a: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
-
-            local final object D : R|kotlin/Any| {
-                private constructor(): R|<local>/<anonymous>.D| {
+                private constructor(): R|<anonymous>| {
                     super<R|kotlin/Any|>()
                 }
 
-                local final object G : R|kotlin/Any| {
-                    private constructor(): R|<local>/<anonymous>.D.G| {
+                local final object D : R|kotlin/Any| {
+                    private constructor(): R|<local>/<anonymous>.D| {
                         super<R|kotlin/Any|>()
+                    }
+
+                    local final object G : R|kotlin/Any| {
+                        private constructor(): R|<local>/<anonymous>.D.G| {
+                            super<R|kotlin/Any|>()
+                        }
+
+                    }
+
+                    local abstract interface Z : R|kotlin/Any| {
                     }
 
                 }
 
-                local abstract interface Z : R|kotlin/Any| {
+                local abstract interface Y : R|kotlin/Any| {
                 }
 
             }
-
-            local abstract interface Y : R|kotlin/Any| {
-            }
-
-        }
 
             public get(): R|kotlin/Any|
 
@@ -72,17 +72,17 @@ FILE: localEntitytNotAllowed.kt
             }
 
             lval c: R|<anonymous>| = object : R|kotlin/Any| {
-                private constructor(): R|<anonymous>| {
-                    super<R|kotlin/Any|>()
+                    private constructor(): R|<anonymous>| {
+                        super<R|kotlin/Any|>()
+                    }
+
+                    public final val t: R|kotlin/String| = String(test)
+                        public get(): R|kotlin/String|
+
+                    local abstract interface U : R|kotlin/Any| {
+                    }
+
                 }
-
-                public final val t: R|kotlin/String| = String(test)
-                    public get(): R|kotlin/String|
-
-                local abstract interface U : R|kotlin/Any| {
-                }
-
-            }
 
         }
 

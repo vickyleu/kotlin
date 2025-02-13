@@ -29,37 +29,37 @@ FILE: enums.kt
             internal [ContainingClassKey=Planet] get(): Double
 
         public final static [ContainingClassKey=Planet] enum entry MERCURY: R|Planet| = object : R|Planet| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|Planet|>(Double(1.0), Double(2.0))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|Planet|>(Double(1.0), Double(2.0))
+                }
 
-            public? open? override fun sayHello(): R|kotlin/Unit| {
-                println#(String(Hello!!!))
-            }
+                public? open? override fun sayHello(): R|kotlin/Unit| {
+                    println#(String(Hello!!!))
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=Planet] enum entry VENERA: R|Planet| = object : R|Planet| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|Planet|>(Double(3.0), Double(4.0))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|Planet|>(Double(3.0), Double(4.0))
+                }
 
-            public? open? override fun sayHello(): R|kotlin/Unit| {
-                println#(String(Ola!!!))
-            }
+                public? open? override fun sayHello(): R|kotlin/Unit| {
+                    println#(String(Ola!!!))
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=Planet] enum entry EARTH: R|Planet| = object : R|Planet| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|Planet|>(Double(5.0), Double(6.0))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|Planet|>(Double(5.0), Double(6.0))
+                }
 
-            public? open? override fun sayHello(): R|kotlin/Unit| {
-                println#(String(Privet!!!))
-            }
+                public? open? override fun sayHello(): R|kotlin/Unit| {
+                    println#(String(Privet!!!))
+                }
 
-        }
+            }
 
         public? final? val g: Double = G#.times#(m#).div#(r#.times#(r#))
             public? [ContainingClassKey=Planet] get(): Double
@@ -95,53 +95,53 @@ FILE: enums.kt
             public? [ContainingClassKey=PseudoInsn] get(): String
 
         public final static [ContainingClassKey=PseudoInsn] enum entry FIX_STACK_BEFORE_JUMP: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry FAKE_ALWAYS_TRUE_IFEQ: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>(String(()I))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>(String(()I))
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry FAKE_ALWAYS_FALSE_IFEQ: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>(String(()I))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>(String(()I))
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry SAVE_STACK_BEFORE_TRY: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry RESTORE_STACK_IN_TRY_CATCH: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry STORE_NOT_NULL: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=PseudoInsn] enum entry AS_NOT_NULL: R|PseudoInsn| = object : R|PseudoInsn| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|PseudoInsn|>(String((Ljava/lang/Object;)Ljava/lang/Object;))
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|PseudoInsn|>(String((Ljava/lang/Object;)Ljava/lang/Object;))
+                }
 
-        }
+            }
 
         public? final? fun emit(): R|kotlin/Unit| {
         }

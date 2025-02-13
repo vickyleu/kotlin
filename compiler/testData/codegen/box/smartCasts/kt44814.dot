@@ -734,9 +734,9 @@ digraph kt44814_kt {
     }
     ($subj$ is R|FirLightSourceElement|) ->  {
         lval modifierListNode: R|LighterASTNode| = this@R|/FirModifierList.Companion.getModifierList|.R|/FirLightSourceElement.lighterASTNode|.R|/LighterASTNode.getChildren|(this@R|/FirModifierList.Companion.getModifierList|.R|/FirLightSourceElement.treeStructure|).R|kotlin/collections/find|<R|LighterASTNode?|>(<L> = find@fun <anonymous>(it: R|LighterASTNode?|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
-            ^ ==(R|<local>/it|?.{ $subj$.R|/LighterASTNode.tokenType| }, Q|TokenType|.R|/TokenType.Companion.MODIFIER_LIST|)
-        }
-        ) ?: ^getModifierList Null(null)
+                ^ ==(R|<local>/it|?.{ $subj$.R|/LighterASTNode.tokenType| }, Q|TokenType|.R|/TokenType.Companion.MODIFIER_LIST|)
+            }
+            ) ?: ^getModifierList Null(null)
         R|/FirModifierList.FirLightModifierList.FirLightModifierList|(R|<local>/modifierListNode|, this@R|/FirModifierList.Companion.getModifierList|.R|/FirLightSourceElement.treeStructure|)
     }
 }

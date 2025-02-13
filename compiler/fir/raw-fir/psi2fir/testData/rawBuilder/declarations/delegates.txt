@@ -1,24 +1,24 @@
 FILE: delegates.kt
     public? final? val x: Intby lazy#(<L> = lazy@fun <implicit>.<anonymous>(): <implicit> <inline=Unknown>  {
-        IntegerLiteral(1).plus#(IntegerLiteral(2))
-    }
-    )
+            IntegerLiteral(1).plus#(IntegerLiteral(2))
+        }
+        )
         public? get(): <implicit> {
             ^ D|/x|.getValue#(Null(null), ::R|/x|)
         }
     public? final? val delegate: <implicit> = object : ReadWriteProperty<Any?, Int> {
-        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-            super<<implicit>>()
-        }
+            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                super<<implicit>>()
+            }
 
-        public? open? override fun getValue(thisRef: Any?, property: KProperty<*>): Int {
-            ^getValue IntegerLiteral(1)
-        }
+            public? open? override fun getValue(thisRef: Any?, property: KProperty<*>): Int {
+                ^getValue IntegerLiteral(1)
+            }
 
-        public? open? override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int): R|kotlin/Unit| {
-        }
+            public? open? override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int): R|kotlin/Unit| {
+            }
 
-    }
+        }
 
         public? get(): <implicit>
     public? final? val value: <implicit>by delegate#

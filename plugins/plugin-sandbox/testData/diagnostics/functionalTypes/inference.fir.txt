@@ -11,9 +11,9 @@ FILE: inference.kt
         }
         )
         lval f: R|() -> kotlin/Unit| = R|/id<CS errors: /id>#|<R|() -> kotlin/Unit|>(@R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|() id@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            ^@id Unit
-        }
-        )
+                ^@id Unit
+            }
+            )
         R|/InlineableId|<R|@R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|()  some/MyInlineableFunction0<kotlin/Unit>|>(InlineableId@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
             ^@InlineableId Unit
         }

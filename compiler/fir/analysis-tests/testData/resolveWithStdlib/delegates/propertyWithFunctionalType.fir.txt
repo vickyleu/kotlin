@@ -11,9 +11,9 @@ FILE: propertyWithFunctionalType.kt
         }
 
         public final var conventer: R|(B) -> B|by this@R|/A|.R|/A.property|<R|(B) -> B|>(property@fun <anonymous>(it: R|B|): R|B| <inline=NoInline>  {
-            ^ R|<local>/it|
-        }
-        )
+                ^ R|<local>/it|
+            }
+            )
             public get(): R|(B) -> B| {
                 ^ this@R|/A|.D|/A.conventer|.R|SubstitutionOverride<kotlin/properties/ReadWriteProperty.getValue: R|(B) -> B|>|(this@R|/A|, ::R|/A.conventer|)
             }
@@ -22,9 +22,9 @@ FILE: propertyWithFunctionalType.kt
             }
 
         public final var conventerWithExpectedType: R|(B) -> B|by this@R|/A|.R|/A.property|<R|(B) -> B|>(property@fun <anonymous>(it: R|B|): R|B| <inline=NoInline>  {
-            ^ R|<local>/it|
-        }
-        )
+                ^ R|<local>/it|
+            }
+            )
             public get(): R|(B) -> B| {
                 ^ this@R|/A|.D|/A.conventerWithExpectedType|.R|SubstitutionOverride<kotlin/properties/ReadWriteProperty.getValue: R|(B) -> B|>|(this@R|/A|, ::R|/A.conventerWithExpectedType|)
             }

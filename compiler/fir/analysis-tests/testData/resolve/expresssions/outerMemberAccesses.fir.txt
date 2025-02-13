@@ -32,27 +32,27 @@ FILE: O.kt
                 public final fun test(): R|kotlin/Unit| {
                     lval x: R|kotlin/Int| = this@R|/O.Derived|.R|/O.Derived.bar|
                     lval o: R|<anonymous>| = object : R|Wrapper| {
-                        private constructor(): R|<anonymous>| {
-                            super<R|Wrapper|>(this@R|/O.Derived.Some|.R|/O.Derived.Some.z|)
-                        }
-
-                        public final fun local(): R|kotlin/Unit| {
-                            lval y: R|kotlin/String!| = this@R|/O.Derived|.R|/Base.foo|()
-                        }
-
-                        public final val oo: R|<anonymous>| = object : R|kotlin/Any| {
                             private constructor(): R|<anonymous>| {
-                                super<R|kotlin/Any|>()
+                                super<R|Wrapper|>(this@R|/O.Derived.Some|.R|/O.Derived.Some.z|)
                             }
 
-                            public final val zz: R|kotlin/Boolean| = this@R|/O.Derived.Some|.R|/O.Derived.Some.z|
-                                public get(): R|kotlin/Boolean|
+                            public final fun local(): R|kotlin/Unit| {
+                                lval y: R|kotlin/String!| = this@R|/O.Derived|.R|/Base.foo|()
+                            }
+
+                            public final val oo: R|<anonymous>| = object : R|kotlin/Any| {
+                                    private constructor(): R|<anonymous>| {
+                                        super<R|kotlin/Any|>()
+                                    }
+
+                                    public final val zz: R|kotlin/Boolean| = this@R|/O.Derived.Some|.R|/O.Derived.Some.z|
+                                        public get(): R|kotlin/Boolean|
+
+                                }
+
+                                public get(): R|<anonymous>|
 
                         }
-
-                            public get(): R|<anonymous>|
-
-                    }
 
                 }
 
@@ -61,15 +61,15 @@ FILE: O.kt
             public final fun test(): R|kotlin/Unit| {
                 lval x: R|kotlin/Int| = this@R|/O.Derived|.R|/O.Derived.bar|
                 lval o: R|<anonymous>| = object : R|kotlin/Any| {
-                    private constructor(): R|<anonymous>| {
-                        super<R|kotlin/Any|>()
-                    }
+                        private constructor(): R|<anonymous>| {
+                            super<R|kotlin/Any|>()
+                        }
 
-                    public final fun local(): R|kotlin/Unit| {
-                        lval y: R|kotlin/String!| = this@R|/O.Derived|.R|/Base.foo|()
-                    }
+                        public final fun local(): R|kotlin/Unit| {
+                            lval y: R|kotlin/String!| = this@R|/O.Derived|.R|/Base.foo|()
+                        }
 
-                }
+                    }
 
             }
 

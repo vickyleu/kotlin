@@ -16,11 +16,11 @@ FILE: questionableSmartCast.kt
     public final fun main(a: R|A|): R|kotlin/Unit| {
         R|/foo|(R|<local>/a|)
         lval anonymousA: R|A| = object : R|C| {
-            private constructor(): R|<anonymous>| {
-                super<R|C|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|C|>()
+                }
 
-        }
+            }
 
         R|/foo|(R|<local>/anonymousA|)
     }

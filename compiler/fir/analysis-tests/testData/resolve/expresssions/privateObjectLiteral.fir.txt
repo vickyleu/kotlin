@@ -5,15 +5,15 @@ FILE: privateObjectLiteral.kt
         }
 
         private final val x: R|<anonymous>| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public final fun foo(): R|kotlin/Int| {
-                ^foo Int(42)
-            }
+                public final fun foo(): R|kotlin/Int| {
+                    ^foo Int(42)
+                }
 
-        }
+            }
 
             private get(): R|<anonymous>|
 
@@ -21,15 +21,15 @@ FILE: privateObjectLiteral.kt
             public get(): R|kotlin/Int|
 
         internal final val z: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public final fun foo(): R|kotlin/Int| {
-                ^foo Int(13)
-            }
+                public final fun foo(): R|kotlin/Int| {
+                    ^foo Int(13)
+                }
 
-        }
+            }
 
             internal get(): R|kotlin/Any|
 

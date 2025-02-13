@@ -31,86 +31,86 @@ FILE: exhaustiveness_sealedSubClass.kt
     }
     public final fun test_1(e: R|A|): R|kotlin/Unit| {
         lval a: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|C|) ->  {
-                Int(1)
+                ($subj$ is R|C|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|D|) ->  {
+                    Int(2)
+                }
+                ($subj$ is R|E|) ->  {
+                    Int(3)
+                }
             }
-            ($subj$ is R|D|) ->  {
-                Int(2)
-            }
-            ($subj$ is R|E|) ->  {
-                Int(3)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval b: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|B|) ->  {
-                Int(1)
+                ($subj$ is R|B|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|C|) ->  {
+                    Int(2)
+                }
             }
-            ($subj$ is R|C|) ->  {
-                Int(2)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval c: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|B|) ->  {
-                Int(1)
+                ($subj$ is R|B|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|C|) ->  {
+                    Int(2)
+                }
+                ($subj$ is R|E|) ->  {
+                    Int(3)
+                }
+                ($subj$ is R|D|) ->  {
+                    Int(4)
+                }
             }
-            ($subj$ is R|C|) ->  {
-                Int(2)
-            }
-            ($subj$ is R|E|) ->  {
-                Int(3)
-            }
-            ($subj$ is R|D|) ->  {
-                Int(4)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval d: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|E|) ->  {
-                Int(1)
+                ($subj$ is R|E|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|A|) ->  {
+                    Int(2)
+                }
             }
-            ($subj$ is R|A|) ->  {
-                Int(2)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
     }
     public final fun test_2(e: R|A|): R|kotlin/Unit| {
         lval a: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|D|) ->  {
-                Int(1)
+                ($subj$ is R|D|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|E|) ->  {
+                    Int(2)
+                }
             }
-            ($subj$ is R|E|) ->  {
-                Int(2)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval b: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|B|) ->  {
-                Int(1)
+                ($subj$ is R|B|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|D|) ->  {
+                    Int(2)
+                }
+                ($subj$ is R|E|) ->  {
+                    Int(3)
+                }
             }
-            ($subj$ is R|D|) ->  {
-                Int(2)
-            }
-            ($subj$ is R|E|) ->  {
-                Int(3)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval c: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|B|) ->  {
-                Int(1)
+                ($subj$ is R|B|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|D|) ->  {
+                    Int(2)
+                }
             }
-            ($subj$ is R|D|) ->  {
-                Int(2)
-            }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
         lval d: R|kotlin/Int| = when (R|<local>/e|) {
-            ($subj$ is R|C|) ->  {
-                Int(1)
+                ($subj$ is R|C|) ->  {
+                    Int(1)
+                }
             }
-        }
-        .R|kotlin/Int.plus|(Int(0))
+            .R|kotlin/Int.plus|(Int(0))
     }

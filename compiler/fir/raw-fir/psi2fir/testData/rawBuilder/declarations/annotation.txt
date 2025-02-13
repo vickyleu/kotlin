@@ -27,18 +27,18 @@ FILE: annotation.kt
         }
 
         @base() public final static [ContainingClassKey=My] enum entry FIRST: R|My| = object : R|My| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|My|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|My|>()
+                }
 
-        }
+            }
 
         @base() public final static [ContainingClassKey=My] enum entry SECOND: R|My| = object : R|My| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|My|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|My|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=My] fun values(): R|kotlin/Array<My>| {
         }
@@ -90,18 +90,18 @@ FILE: annotation.kt
         }
 
         @derived(IntegerLiteral(1)) public final static [ContainingClassKey=MyDerived] enum entry FIRST: R|MyDerived| = object : R|MyDerived| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|MyDerived|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|MyDerived|>()
+                }
 
-        }
+            }
 
         @derived(IntegerLiteral(1)) public final static [ContainingClassKey=MyDerived] enum entry SECOND: R|MyDerived| = object : R|MyDerived| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|MyDerived|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|MyDerived|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=MyDerived] fun values(): R|kotlin/Array<MyDerived>| {
         }

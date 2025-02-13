@@ -5,15 +5,15 @@ FILE: EnumWithToString.kt
         }
 
         public final static enum entry ENTRY: R|Some| = object : R|Some| {
-            private constructor(): R|<anonymous>| {
-                super<R|Some|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Some|>()
+                }
 
-            public open override fun toString(): R|kotlin/String| {
-                ^toString String(Entry)
-            }
+                public open override fun toString(): R|kotlin/String| {
+                    ^toString String(Entry)
+                }
 
-        }
+            }
 
         public open override fun toString(): R|kotlin/String| {
             ^toString String(Some)

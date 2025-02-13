@@ -14,8 +14,8 @@ FILE: safeCallInvoke.kt
         }
 
         public final val bar: R|() -> kotlin/Unit| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
             public get(): R|() -> kotlin/Unit|
 

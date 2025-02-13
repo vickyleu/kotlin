@@ -5,14 +5,14 @@ FILE: a.kt
         }
 
         public final val O: R|B| = object : R|B| {
-            private constructor(): R|<anonymous>| {
-                super<R|B|>()
+                private constructor(): R|<anonymous>| {
+                    super<R|B|>()
+                }
+
+                protected open override val message: R|kotlin/String| = String(expression expected)
+                    protected get(): R|kotlin/String|
+
             }
-
-            protected open override val message: R|kotlin/String| = String(expression expected)
-                protected get(): R|kotlin/String|
-
-        }
 
             public get(): R|B|
 

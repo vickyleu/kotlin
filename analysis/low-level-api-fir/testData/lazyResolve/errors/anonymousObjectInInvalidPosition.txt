@@ -109,14 +109,14 @@ FILE: [ResolvedTo(IMPORTS)] anonymousObjectInInvalidPosition.kt
 BODY_RESOLVE:
 FILE: [ResolvedTo(IMPORTS)] anonymousObjectInInvalidPosition.kt
     private final [ResolvedTo(BODY_RESOLVE)] val resolveMe: <ERROR TYPE REF: Wrong number of type arguments> = ERROR_EXPR(Should have initializer)Null(null) = object : R|A<kotlin/Int>| {
-        private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-            super<R|kotlin/Any|>()
-        }
+            private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                super<R|kotlin/Any|>()
+            }
 
-        public open override [ResolvedTo(BODY_RESOLVE)] fun x(): R|kotlin/Unit| {
-        }
+            public open override [ResolvedTo(BODY_RESOLVE)] fun x(): R|kotlin/Unit| {
+            }
 
-    }
+        }
 
         private [ResolvedTo(BODY_RESOLVE)] get(): <ERROR TYPE REF: Wrong number of type arguments>
     public abstract [ResolvedTo(STATUS)] interface A<[ResolvedTo(STATUS)] T> : R|kotlin/Any| {
@@ -127,14 +127,14 @@ FILE: [ResolvedTo(IMPORTS)] anonymousObjectInInvalidPosition.kt
 FILE RAW TO BODY:
 FILE: [ResolvedTo(BODY_RESOLVE)] anonymousObjectInInvalidPosition.kt
     private final [ResolvedTo(BODY_RESOLVE)] val resolveMe: <ERROR TYPE REF: Wrong number of type arguments> = ERROR_EXPR(Should have initializer)Null(null) = object : R|A<kotlin/Int>| {
-        private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-            super<R|kotlin/Any|>()
-        }
+            private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                super<R|kotlin/Any|>()
+            }
 
-        public open override [ResolvedTo(BODY_RESOLVE)] fun x(): R|kotlin/Unit| {
-        }
+            public open override [ResolvedTo(BODY_RESOLVE)] fun x(): R|kotlin/Unit| {
+            }
 
-    }
+        }
 
         private [ResolvedTo(BODY_RESOLVE)] get(): <ERROR TYPE REF: Wrong number of type arguments>
     public abstract [ResolvedTo(BODY_RESOLVE)] interface A<[ResolvedTo(BODY_RESOLVE)] T> : R|kotlin/Any| {

@@ -17,8 +17,8 @@ FILE: lambdas.kt
         when () {
             (R|<local>/x| is R|kotlin/Int|) ->  {
                 lval lambda: R|() -> kotlin/Int| = fun <anonymous>(): R|kotlin/Int| <inline=Unknown>  {
-                    ^ R|<local>/x|.R|kotlin/Int.inc|()
-                }
+                        ^ R|<local>/x|.R|kotlin/Int.inc|()
+                    }
 
             }
         }

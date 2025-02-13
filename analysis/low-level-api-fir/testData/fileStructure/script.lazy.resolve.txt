@@ -45,9 +45,9 @@ FILE: [ResolvedTo(BODY_RESOLVE)] script.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(BODY_RESOLVE)] build@fun [ResolvedTo(BODY_RESOLVE)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()

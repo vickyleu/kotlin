@@ -23,23 +23,23 @@ FILE: delegateWithAnonymousObject.kt
         }
 
         public final var issueListView: R|IssueListView|by this@R|/IssuesListUserProfile|.R|/delegate|<R|IssuesListUserProfile|, R|IssuesListUserProfile|, R|IssueListView|>(<L> = delegate@fun <anonymous>(): R|kotlin/properties/ReadWriteProperty<IssuesListUserProfile, IssueListView>| <inline=NoInline>  {
-            ^ object : R|kotlin/properties/ReadWriteProperty<IssuesListUserProfile, IssueListView>| {
-                private constructor(): R|<anonymous>| {
-                    super<R|kotlin/Any|>()
-                }
+                ^ object : R|kotlin/properties/ReadWriteProperty<IssuesListUserProfile, IssueListView>| {
+                    private constructor(): R|<anonymous>| {
+                        super<R|kotlin/Any|>()
+                    }
 
-                public open override operator fun getValue(thisRef: R|IssuesListUserProfile|, property: R|kotlin/reflect/KProperty<*>|): R|IssueListView| {
-                    ^getValue R|/IssueListView.IssueListView|()
-                }
+                    public open override operator fun getValue(thisRef: R|IssuesListUserProfile|, property: R|kotlin/reflect/KProperty<*>|): R|IssueListView| {
+                        ^getValue R|/IssueListView.IssueListView|()
+                    }
 
-                public open override operator fun setValue(thisRef: R|IssuesListUserProfile|, property: R|kotlin/reflect/KProperty<*>|, value: R|IssueListView|): R|kotlin/Unit| {
-                    ^setValue R|/IssueListView.IssueListView|().R|/IssueListView.updateFrom|(R|<local>/value|)
+                    public open override operator fun setValue(thisRef: R|IssuesListUserProfile|, property: R|kotlin/reflect/KProperty<*>|, value: R|IssueListView|): R|kotlin/Unit| {
+                        ^setValue R|/IssueListView.IssueListView|().R|/IssueListView.updateFrom|(R|<local>/value|)
+                    }
+
                 }
 
             }
-
-        }
-        )
+            )
             public get(): R|IssueListView| {
                 ^ this@R|/IssuesListUserProfile|.D|/IssuesListUserProfile.issueListView|.R|SubstitutionOverride<kotlin/properties/ReadWriteProperty.getValue: R|IssueListView|>|(this@R|/IssuesListUserProfile|, ::R|/IssuesListUserProfile.issueListView|)
             }

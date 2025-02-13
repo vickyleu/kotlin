@@ -29,8 +29,8 @@ FILE: withContextInType.kt
         }
 
         public open val x: R|@ContextFunctionTypeParams (A) -> kotlin/Unit| = context(<unused var>: R|A|) fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
+                ^ Unit
+            }
 
             public get(): R|@ContextFunctionTypeParams (A) -> kotlin/Unit|
 

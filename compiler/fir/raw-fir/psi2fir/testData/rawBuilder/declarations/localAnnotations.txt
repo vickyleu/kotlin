@@ -2,8 +2,8 @@ FILE: localAnnotations.kt
     public? final? fun foo(): R|kotlin/Unit| {
         @Anno1() lval a: <implicit> = @Anno2() IntegerLiteral(1)
         lval b: <implicit> = @AnonymousFunction() fun <anonymous>(@AnonymousParameter() a: @AnonymousParameterType() Int): R|kotlin/Unit| <inline=Unknown>  {
-            @Anno() foo#()
-        }
+                @Anno() foo#()
+            }
 
         @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
             @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
@@ -32,8 +32,8 @@ FILE: localAnnotations.kt
                     public? [ContainingClassKey=LocalNested] get(): <implicit>
 
                 public? final? val b: <implicit> = @AnonymousFunction() fun <anonymous>(@AnonymousParameter() a: @AnonymousParameterType() Int): R|kotlin/Unit| <inline=Unknown>  {
-                    @Anno() foo#()
-                }
+                        @Anno() foo#()
+                    }
 
                     public? [ContainingClassKey=LocalNested] get(): <implicit>
 
@@ -65,8 +65,8 @@ FILE: localAnnotations.kt
                     @Fun() public? final? fun localMember(): @FunType() Int {
                         @Anno1() lval a: <implicit> = @Anno2() IntegerLiteral(1)
                         lval b: <implicit> = @AnonymousFunction() fun <anonymous>(@AnonymousParameter() a: @AnonymousParameterType() Int): R|kotlin/Unit| <inline=Unknown>  {
-                            @Anno() foo#()
-                        }
+                                @Anno() foo#()
+                            }
 
                         @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
                             @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
@@ -115,8 +115,8 @@ FILE: localAnnotations.kt
             @Fun() public? final? fun localMember(): @FunType() Int {
                 @Anno1() lval a: <implicit> = @Anno2() IntegerLiteral(1)
                 lval b: <implicit> = @AnonymousFunction() fun <anonymous>(@AnonymousParameter() a: @AnonymousParameterType() Int): R|kotlin/Unit| <inline=Unknown>  {
-                    @Anno() foo#()
-                }
+                        @Anno() foo#()
+                    }
 
                 @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
                     @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
@@ -150,8 +150,8 @@ FILE: localAnnotations.kt
                         public? [ContainingClassKey=Local] get(): @PropType() String {
                             @Anno1() lval a: <implicit> = @Anno2() IntegerLiteral(1)
                             lval b: <implicit> = @AnonymousFunction() fun <anonymous>(@AnonymousParameter() a: @AnonymousParameterType() Int): R|kotlin/Unit| <inline=Unknown>  {
-                                @Anno() foo#()
-                            }
+                                    @Anno() foo#()
+                                }
 
                             @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {
                                 @Anno() local final? fun boo(@Anno() a: @Anno() Int): @Anno() Int {

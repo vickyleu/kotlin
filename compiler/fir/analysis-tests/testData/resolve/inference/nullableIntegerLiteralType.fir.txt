@@ -3,25 +3,25 @@ FILE: nullableIntegerLiteralType.kt
     }
     public final fun test_1(b: R|kotlin/Boolean|): R|kotlin/Unit| {
         lval x: R|kotlin/Int?| = when () {
-            R|<local>/b| ->  {
-                Int(1)
+                R|<local>/b| ->  {
+                    Int(1)
+                }
+                else ->  {
+                    Null(null)
+                }
             }
-            else ->  {
-                Null(null)
-            }
-        }
 
         R|/takeInt<Inapplicable(UNSAFE_CALL): /takeInt>#|(R|<local>/x|)
     }
     public final fun test_2(b: R|kotlin/Boolean|, y: R|kotlin/Int|): R|kotlin/Unit| {
         lval x: R|kotlin/Int?| = when () {
-            R|<local>/b| ->  {
-                R|<local>/y|
+                R|<local>/b| ->  {
+                    R|<local>/y|
+                }
+                else ->  {
+                    Null(null)
+                }
             }
-            else ->  {
-                Null(null)
-            }
-        }
 
         R|/takeInt<Inapplicable(UNSAFE_CALL): /takeInt>#|(R|<local>/x|)
     }

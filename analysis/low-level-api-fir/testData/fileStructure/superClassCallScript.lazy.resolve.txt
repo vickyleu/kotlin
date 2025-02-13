@@ -34,17 +34,17 @@ FILE: [ResolvedTo(BODY_RESOLVE)] superClassCallScript.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val f: R|A| = object : R|A| {
-            private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
-                super<R|A|>([ResolvedTo(BODY_RESOLVE)] fun [ResolvedTo(BODY_RESOLVE)] R|A|.<anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-                    local final [ResolvedTo(BODY_RESOLVE)] fun bar(): R|kotlin/String| {
-                        ^bar Q|B|.<Unresolved name: prop>#.R|kotlin/toString|()
+                private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
+                    super<R|A|>([ResolvedTo(BODY_RESOLVE)] fun [ResolvedTo(BODY_RESOLVE)] R|A|.<anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
+                        local final [ResolvedTo(BODY_RESOLVE)] fun bar(): R|kotlin/String| {
+                            ^bar Q|B|.<Unresolved name: prop>#.R|kotlin/toString|()
+                        }
+
                     }
-
+                    )
                 }
-                )
-            }
 
-        }
+            }
 
             public [ResolvedTo(BODY_RESOLVE)] get(): R|A|
 

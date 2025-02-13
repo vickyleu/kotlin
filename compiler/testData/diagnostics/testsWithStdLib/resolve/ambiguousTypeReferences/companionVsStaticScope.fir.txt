@@ -34,7 +34,7 @@ FILE: companionVsStaticScope.kt
     public final val y: R|Foo.Bar| = R|/take|<R|Foo.Bar|>(Q|Foo.Bar|)
         public get(): R|Foo.Bar|
     public final val z: R|Foo.Bar| = Q|Foo.Bar|.R|kotlin/let|<R|Foo.Bar|, R|Foo.Bar|>(<L> = let@fun <anonymous>(it: R|Foo.Bar|): R|Foo.Bar| <inline=Inline, kind=EXACTLY_ONCE>  {
-        ^ R|<local>/it|
-    }
-    )
+            ^ R|<local>/it|
+        }
+        )
         public get(): R|Foo.Bar|

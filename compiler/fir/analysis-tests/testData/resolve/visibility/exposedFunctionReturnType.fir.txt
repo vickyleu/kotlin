@@ -26,15 +26,15 @@ FILE: exposedFunctionReturnType.kt
         }
 
         public final static enum entry FIRST: R|Some| = object : R|Some| {
-            private constructor(): R|<anonymous>| {
-                super<R|Some|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Some|>()
+                }
 
-            public open override fun foo(): R|Some| {
-                ^foo R|/Some.FIRST|
-            }
+                public open override fun foo(): R|Some| {
+                    ^foo R|/Some.FIRST|
+                }
 
-        }
+            }
 
         public abstract fun foo(): R|Some|
 

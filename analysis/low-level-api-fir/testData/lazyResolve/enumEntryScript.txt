@@ -389,11 +389,11 @@ FILE: [ResolvedTo(IMPORTS)] enumEntryScript.kts
             }
 
             @R|Anno|[Types]() public final static [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=Foo] enum entry ResolveMe: R|Foo| = object : R|Foo| {
-                private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                    super<R|Foo|>()
-                }
+                    private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                        super<R|Foo|>()
+                    }
 
-            }
+                }
 
             public final static [ResolvedTo(STATUS)] [ContainingClassKey=Foo] fun values(): R|kotlin/Array<Foo>| {
             }
@@ -426,11 +426,11 @@ FILE: [ResolvedTo(BODY_RESOLVE)] enumEntryScript.kts
             }
 
             @R|Anno|[Types]() public final static [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=Foo] enum entry ResolveMe: R|Foo| = object : R|Foo| {
-                private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                    super<R|Foo|>()
-                }
+                    private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                        super<R|Foo|>()
+                    }
 
-            }
+                }
 
             public final static [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=Foo] fun values(): R|kotlin/Array<Foo>| {
             }

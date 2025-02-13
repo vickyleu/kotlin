@@ -22,26 +22,26 @@ FILE: enum.kt
             public get(): R|Some|
 
         public final static enum entry FIRST: R|SomeEnum| = object : R|SomeEnum| {
-            private constructor(): R|<anonymous>| {
-                super<R|SomeEnum|>(Q|O1|)
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|SomeEnum|>(Q|O1|)
+                }
 
-            public open override fun check(y: R|Some|): R|kotlin/Boolean| {
-                ^check Boolean(true)
-            }
+                public open override fun check(y: R|Some|): R|kotlin/Boolean| {
+                    ^check Boolean(true)
+                }
 
-        }
+            }
 
         public final static enum entry SECOND: R|SomeEnum| = object : R|SomeEnum| {
-            private constructor(): R|<anonymous>| {
-                super<R|SomeEnum|>(Q|O2|)
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|SomeEnum|>(Q|O2|)
+                }
 
-            public open override fun check(y: R|Some|): R|kotlin/Boolean| {
-                ^check ==(R|<local>/y|, Q|O2|)
-            }
+                public open override fun check(y: R|Some|): R|kotlin/Boolean| {
+                    ^check ==(R|<local>/y|, Q|O2|)
+                }
 
-        }
+            }
 
         public abstract fun check(y: R|Some|): R|kotlin/Boolean|
 
@@ -77,32 +77,32 @@ FILE: enum.kt
         }
 
         public final static enum entry E1: R|EnumClass| = object : R|EnumClass| {
-            private constructor(): R|<anonymous>| {
-                super<R|EnumClass|>()
+                private constructor(): R|<anonymous>| {
+                    super<R|EnumClass|>()
+                }
+
+                public open override fun foo(): R|kotlin/Int| {
+                    ^foo Int(1)
+                }
+
+                public open override val bar: R|kotlin/String| = String(a)
+                    public get(): R|kotlin/String|
+
             }
-
-            public open override fun foo(): R|kotlin/Int| {
-                ^foo Int(1)
-            }
-
-            public open override val bar: R|kotlin/String| = String(a)
-                public get(): R|kotlin/String|
-
-        }
 
         public final static enum entry E2: R|EnumClass| = object : R|EnumClass| {
-            private constructor(): R|<anonymous>| {
-                super<R|EnumClass|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|EnumClass|>()
+                }
 
-        }
+            }
 
         public final static enum entry E3: R|EnumClass| = object : R|EnumClass| {
-            private constructor(): R|<anonymous>| {
-                super<R|EnumClass|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|EnumClass|>()
+                }
 
-        }
+            }
 
         public abstract fun foo(): R|kotlin/Int|
 

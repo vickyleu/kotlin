@@ -21,57 +21,57 @@ FILE: b.kt
 FILE: c.kt
     public final fun test_1(base: R|Base|): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = when (R|<local>/base|) {
-            ($subj$ is R|A|) ->  {
-                Int(1)
+                ($subj$ is R|A|) ->  {
+                    Int(1)
+                }
             }
-        }
 
         lval y: R|kotlin/Int| = when (R|<local>/base|) {
-            ==($subj$, Q|B|) ->  {
-                Int(1)
+                ==($subj$, Q|B|) ->  {
+                    Int(1)
+                }
             }
-        }
 
         lval z: R|kotlin/Int| = when (R|<local>/base|) {
-            ($subj$ is R|A|) ->  {
-                Int(1)
+                ($subj$ is R|A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|B|) ->  {
+                    Int(2)
+                }
             }
-            ==($subj$, Q|B|) ->  {
-                Int(2)
-            }
-        }
 
     }
     public final fun test_2(base: R|Base?|): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = when (R|<local>/base|) {
-            ($subj$ is R|A|) ->  {
-                Int(1)
+                ($subj$ is R|A|) ->  {
+                    Int(1)
+                }
+                ($subj$ is R|B|) ->  {
+                    Int(2)
+                }
             }
-            ($subj$ is R|B|) ->  {
-                Int(2)
-            }
-        }
 
         lval y: R|kotlin/Int| = when (R|<local>/base|) {
-            ($subj$ is R|A|) ->  {
-                Int(1)
+                ($subj$ is R|A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|B|) ->  {
+                    Int(2)
+                }
             }
-            ==($subj$, Q|B|) ->  {
-                Int(2)
-            }
-        }
 
         lval z: R|kotlin/Int| = when (R|<local>/base|) {
-            ($subj$ is R|A|) ->  {
-                Int(1)
+                ($subj$ is R|A|) ->  {
+                    Int(1)
+                }
+                ==($subj$, Q|B|) ->  {
+                    Int(2)
+                }
+                ==($subj$, Null(null)) ->  {
+                    Int(3)
+                }
             }
-            ==($subj$, Q|B|) ->  {
-                Int(2)
-            }
-            ==($subj$, Null(null)) ->  {
-                Int(3)
-            }
-        }
 
     }
     public final fun test_3(base: R|Base|): R|kotlin/Unit| {

@@ -5,9 +5,9 @@ FILE: kt50386.kt
     }
     public final fun test(output: R|(ScrapingOffOutput) -> kotlin/Unit|): R|kotlin/Unit| {
         lval p: <ERROR TYPE REF: Ambiguity: presenter, [/presenter, /presenter]> = <Ambiguity: presenter, [/presenter, /presenter]>#(R|<local>/output|, <L> = presenter@fun <anonymous>(): R|ScrapingOffPresenter| <inline=Unknown>  {
-            ^ R|/ScrapingOffPresenter.ScrapingOffPresenter|()
-        }
-        )
+                ^ R|/ScrapingOffPresenter.ScrapingOffPresenter|()
+            }
+            )
     }
     public abstract class Presenter<Events, Model, Output> : R|kotlin/Any| {
         public constructor<Events, Model, Output>(outputExtraBufferCapacity: R|kotlin/Int| = Int(16)): R|Presenter<Events, Model, Output>| {

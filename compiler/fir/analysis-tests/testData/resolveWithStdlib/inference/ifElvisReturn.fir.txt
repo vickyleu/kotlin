@@ -10,13 +10,13 @@ FILE: ifElvisReturn.kt
     }
     public final fun foo(b: R|B|, cond: R|kotlin/Boolean|): R|kotlin/Unit| {
         lval x: R|B| = when () {
-            R|<local>/cond| ->  {
-                R|<local>/b|
+                R|<local>/cond| ->  {
+                    R|<local>/b|
+                }
+                else ->  {
+                    R|/materialize|<R|B|>() ?: ^foo Unit
+                }
             }
-            else ->  {
-                R|/materialize|<R|B|>() ?: ^foo Unit
-            }
-        }
 
         R|<local>/x|.R|/B.bar|()
     }

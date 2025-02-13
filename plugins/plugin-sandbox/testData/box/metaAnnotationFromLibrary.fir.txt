@@ -46,32 +46,32 @@ FILE: module_main_metaAnnotationFromLibrary.kt
     }
     public final fun box(): R|kotlin/String| {
         lval a: R|<anonymous>| = object : R|Zero| {
-            private constructor(): R|<anonymous>| {
-                super<R|Zero|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Zero|>()
+                }
 
-        }
+            }
 
         lval b: R|<anonymous>| = object : R|First| {
-            private constructor(): R|<anonymous>| {
-                super<R|First|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|First|>()
+                }
 
-        }
+            }
 
         lval c: R|<anonymous>| = object : R|Second| {
-            private constructor(): R|<anonymous>| {
-                super<R|Second|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Second|>()
+                }
 
-        }
+            }
 
         lval d: R|<anonymous>| = object : R|Third| {
-            private constructor(): R|<anonymous>| {
-                super<R|Third|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|Third|>()
+                }
 
-        }
+            }
 
         ^box String(OK)
     }

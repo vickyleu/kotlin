@@ -11,8 +11,8 @@ FILE: main.kt
         }
         )
         lval x: R|(kotlin/Int) -> kotlin/Boolean| = fun <anonymous>(x: R|kotlin/Int|): R|kotlin/Boolean| <inline=Unknown>  {
-            ^ CMP(>, R|<local>/x|.R|kotlin/Int.compareTo|(Int(1)))
-        }
+                ^ CMP(>, R|<local>/x|.R|kotlin/Int.compareTo|(Int(1)))
+            }
 
         Q|JavaUsage|.R|/JavaUsage.foo*s<Inapplicable(INAPPLICABLE): /JavaUsage.foo>#|(R|<local>/x|)
     }

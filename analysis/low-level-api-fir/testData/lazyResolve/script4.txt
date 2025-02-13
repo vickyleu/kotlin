@@ -332,9 +332,9 @@ FILE: [ResolvedTo(IMPORTS)] script4.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(BODY_RESOLVE)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(BODY_RESOLVE)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: <ERROR TYPE REF: Unresolved name: execute> = @R|kotlin/Suppress|[Types](names = vararg(String(abc))) @R|kotlin/Deprecated|[Types](message = String(it is deprecated)) R|/builder|.<Unresolved name: execute>#()
@@ -363,9 +363,9 @@ FILE: [ResolvedTo(BODY_RESOLVE)] script4.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val builder: R|Builder| = R|/build|(<L> = [ResolvedTo(BODY_RESOLVE)] [MatchingParameterFunctionTypeKey=@ExtensionFunctionType kotlin/Function1<Builder, kotlin/Unit>] build@fun [ResolvedTo(BODY_RESOLVE)] R|Builder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|/Builder.version| = String(321)
-        }
-        )
+                this@R|special/anonymous|.R|/Builder.version| = String(321)
+            }
+            )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|Builder|
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: <ERROR TYPE REF: Unresolved name: execute> = @R|kotlin/Suppress|[Types](names = vararg(String(abc))) @R|kotlin/Deprecated|[Types](message = String(it is deprecated)) R|/builder|.<Unresolved name: execute>#()

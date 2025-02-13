@@ -20,16 +20,16 @@ FILE: locals.kt
         }
 
         lval code: <implicit> = object : Any {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<Any>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<Any>()
+                }
 
-            public? final? fun foo(): <implicit> {
-                ^foo hashCode#()
-            }
+                public? final? fun foo(): <implicit> {
+                    ^foo hashCode#()
+                }
 
-        }
-        .foo#()
+            }
+            .foo#()
         ^withLocals sum#(code#, Local#(IntegerLiteral(1)).diff#(), fun <anonymous>(x: Int, y: Int): <implicit> <inline=Unknown>  {
             ^@sum x#.plus#(y#)
         }

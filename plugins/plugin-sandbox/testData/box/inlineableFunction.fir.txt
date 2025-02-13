@@ -8,43 +8,43 @@ FILE: inlineableFunction.kt
     public final fun test_1(): R|kotlin/Int| {
         lvar x: R|kotlin/Int| = Int(0)
         lval l0: R|() -> kotlin/Unit| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-             {
-                lval <unary>: R|kotlin/Int| = R|<local>/x|
-                R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
-                R|<local>/<unary>|
-            }
+                 {
+                    lval <unary>: R|kotlin/Int| = R|<local>/x|
+                    R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                    R|<local>/<unary>|
+                }
 
-            Q|kotlin/Unit|
-        }
+                Q|kotlin/Unit|
+            }
 
         lval l1: R|some/MyInlineableFunction0<kotlin/Unit>| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-             {
-                lval <unary>: R|kotlin/Int| = R|<local>/x|
-                R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
-                R|<local>/<unary>|
-            }
+                 {
+                    lval <unary>: R|kotlin/Int| = R|<local>/x|
+                    R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                    R|<local>/<unary>|
+                }
 
-            Q|kotlin/Unit|
-        }
+                Q|kotlin/Unit|
+            }
 
         lval l2: R|@R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|()  some/MyInlineableFunction0<kotlin/Unit>| = fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-             {
-                lval <unary>: R|kotlin/Int| = R|<local>/x|
-                R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
-                R|<local>/<unary>|
-            }
+                 {
+                    lval <unary>: R|kotlin/Int| = R|<local>/x|
+                    R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                    R|<local>/<unary>|
+                }
 
-        }
+            }
 
         lval l3: R|some/MyInlineableFunction0<kotlin/Unit>| = @R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|() fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-             {
-                lval <unary>: R|kotlin/Int| = R|<local>/x|
-                R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
-                R|<local>/<unary>|
-            }
+                 {
+                    lval <unary>: R|kotlin/Int| = R|<local>/x|
+                    R|<local>/x| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                    R|<local>/<unary>|
+                }
 
-            Q|kotlin/Unit|
-        }
+                Q|kotlin/Unit|
+            }
 
         R|/runUsual|(R|<local>/l0|)
         R|/runUsual|(<L> = runUsual@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {

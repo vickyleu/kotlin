@@ -31,15 +31,15 @@ FILE: RedundantVisibilityModifierCheckerWithExplicitApiMode.kt
             public get(): R|kotlin/Int|
 
         public final val z: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public final fun foo(): R|kotlin/Int| {
-                ^foo Int(13)
-            }
+                public final fun foo(): R|kotlin/Int| {
+                    ^foo Int(13)
+                }
 
-        }
+            }
 
             public get(): R|kotlin/Any|
 
@@ -56,15 +56,15 @@ FILE: RedundantVisibilityModifierCheckerWithExplicitApiMode.kt
             public get(): R|kotlin/Int|
 
         public final val z: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public final fun foo(): R|kotlin/Int| {
-                ^foo Int(13)
-            }
+                public final fun foo(): R|kotlin/Int| {
+                    ^foo Int(13)
+                }
 
-        }
+            }
 
             public get(): R|kotlin/Any|
 

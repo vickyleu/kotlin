@@ -13,8 +13,8 @@ FILE: main.kt
         }
         )
         lval y: R|(kotlin/Int) -> kotlin/String| = fun <anonymous>(x: R|kotlin/Int|): R|kotlin/String| <inline=Unknown>  {
-            ^ R|<local>/x|.R|kotlin/Int.toString|()
-        }
+                ^ R|<local>/x|.R|kotlin/Int.toString|()
+            }
 
         Q|JavaClass|.R|/JavaClass.foo2*s|(R|<local>/y|)
         Q|JavaClass|.R|/JavaClass.foo3*s|<R|kotlin/Int!|>(foo3@fun <anonymous>(it: R|kotlin/Int!|): R|kotlin/String!| <inline=NoInline>  {

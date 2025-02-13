@@ -52,13 +52,13 @@ FILE: defaultProperties.kt
     }
     public final fun test(targetString: R|kotlin/String|): R|kotlin/String| {
         lval json: R|kotlinx/serialization/json/Json| = R|kotlinx/serialization/json/Json|(<L> = Json@fun R|kotlinx/serialization/json/JsonBuilder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|kotlinx/serialization/json/JsonBuilder.encodeDefaults| = Boolean(true)
-        }
-        )
+                this@R|special/anonymous|.R|kotlinx/serialization/json/JsonBuilder.encodeDefaults| = Boolean(true)
+            }
+            )
         lval c: R|SomeClass| = R|/SomeClass.SomeClass|(Int(1)).R|kotlin/apply|<R|SomeClass|>(<L> = apply@fun R|SomeClass|.<anonymous>(): R|kotlin/Unit| <inline=Inline, kind=EXACTLY_ONCE>  {
-            this@R|special/anonymous|.R|/SomeClass.body| = String(x)
-        }
-        )
+                this@R|special/anonymous|.R|/SomeClass.body| = String(x)
+            }
+            )
         lval s: R|kotlin/String| = R|<local>/json|.R|kotlinx/serialization/json/Json.encodeToString|<R|SomeClass|>(Q|SomeClass|.R|/SomeClass.Companion.serializer|(), R|<local>/c|)
         when () {
             !=(R|<local>/s|, R|<local>/targetString|) ->  {

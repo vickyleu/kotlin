@@ -73,9 +73,9 @@ FILE: incorrectReturnFromNothingLambda.kt
                 }
                 ).R|kotlin/collections/map|<R|kotlin/Int|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|kotlin/Int|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
                     lval int: R|kotlin/Int| = R|/failable|().R|/onFailure|<R|kotlin/Int|, R|kotlin/Unit|>(<L> = onFailure@fun <anonymous>(it: R|Failure<kotlin/Unit>|): R|kotlin/Nothing| <inline=Inline, kind=UNKNOWN>  {
-                        ^doAThing R|<local>/it|
-                    }
-                    )
+                            ^doAThing R|<local>/it|
+                        }
+                        )
                     ^ R|<local>/mkB|.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/String|>|(R|<local>/int|)
                 }
                 )

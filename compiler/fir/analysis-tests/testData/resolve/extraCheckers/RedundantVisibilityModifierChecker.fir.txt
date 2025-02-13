@@ -23,15 +23,15 @@ FILE: RedundantVisibilityModifierChecker.kt
         }
 
         internal final val z: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public final fun foo(): R|kotlin/Int| {
-                ^foo Int(13)
-            }
+                public final fun foo(): R|kotlin/Int| {
+                    ^foo Int(13)
+                }
 
-        }
+            }
 
             internal get(): R|kotlin/Any|
 
@@ -97,11 +97,11 @@ FILE: RedundantVisibilityModifierChecker.kt
             public get(): R|kotlin/Int|
 
         public final static enum entry FIRST: R|F| = object : R|F| {
-            private constructor(): R|<anonymous>| {
-                super<R|F|>(Int(42))
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|F|>(Int(42))
+                }
 
-        }
+            }
 
         public final static fun values(): R|kotlin/Array<F>| {
         }

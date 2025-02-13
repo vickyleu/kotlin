@@ -21,25 +21,25 @@ FILE: exhaustiveness_sealedObject.kt
     }
     public final fun test_1(a: R|A|): R|kotlin/Unit| {
         lval s: R|kotlin/String| = when (R|<local>/a|) {
-            ($subj$ is R|B|) ->  {
-                String()
+                ($subj$ is R|B|) ->  {
+                    String()
+                }
+                ($subj$ is R|C|) ->  {
+                    String()
+                }
             }
-            ($subj$ is R|C|) ->  {
-                String()
-            }
-        }
 
         R|/takeString|(R|<local>/s|)
     }
     public final fun test_2(a: R|A|): R|kotlin/Unit| {
         lval s: R|kotlin/String| = when (R|<local>/a|) {
-            ($subj$ is R|B|) ->  {
-                String()
+                ($subj$ is R|B|) ->  {
+                    String()
+                }
+                ==($subj$, Q|C|) ->  {
+                    String()
+                }
             }
-            ==($subj$, Q|C|) ->  {
-                String()
-            }
-        }
 
         R|/takeString|(R|<local>/s|)
     }

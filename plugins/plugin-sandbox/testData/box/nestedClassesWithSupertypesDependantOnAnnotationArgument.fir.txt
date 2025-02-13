@@ -12,11 +12,11 @@ FILE: nestedClassesWithSupertypesDependantOnAnnotationArgument.kt
     }
     public final fun box(): R|kotlin/String| {
         lval x: R|<anonymous>| = object : R|Some.Generated| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-        }
+            }
 
         ^box R|<local>/x|.R|/A.test|()
     }

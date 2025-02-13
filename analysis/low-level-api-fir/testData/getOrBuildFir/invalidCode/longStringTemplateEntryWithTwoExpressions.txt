@@ -12,7 +12,7 @@ FILE: [ResolvedTo(IMPORTS)] longStringTemplateEntryWithTwoExpressions.kt
     public final [ResolvedTo(BODY_RESOLVE)] fun test(): R|kotlin/Unit| {
         [ResolvedTo(BODY_RESOLVE)] lval a: R|kotlin/Int| = Int(1)
         [ResolvedTo(BODY_RESOLVE)] lval b: R|kotlin/String| = <strcat>(R|<local>/a|, [ResolvedTo(BODY_RESOLVE)] fun <anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-            ^ Unit
-        }
-        )
+                ^ Unit
+            }
+            )
     }

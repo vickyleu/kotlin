@@ -74,13 +74,13 @@ FILE: RedundantExplicitTypeChecker.kt
     }
     public final fun test(boolean: R|kotlin/Boolean|): R|kotlin/Unit| {
         lval expectedLong: R|kotlin/Long| = when () {
-            R|<local>/boolean| ->  {
-                Long(42)
+                R|<local>/boolean| ->  {
+                    Long(42)
+                }
+                else ->  {
+                    ^test Unit
+                }
             }
-            else ->  {
-                ^test Unit
-            }
-        }
 
     }
     public final class My : R|kotlin/Any| {

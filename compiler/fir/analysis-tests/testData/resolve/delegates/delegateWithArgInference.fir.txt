@@ -28,10 +28,10 @@ FILE: delegateWithArgInference.kt
         ^id R|<local>/v|
     }
     public final val x: R|kotlin/Int|by R|/makeIntDelegate|(R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
-        lval x: R|kotlin/String| = R|/materialize|<R|kotlin/String|>()
-        ^ R|/materialize2|<R|kotlin/Int|>()
-    }
-    ))
+            lval x: R|kotlin/String| = R|/materialize|<R|kotlin/String|>()
+            ^ R|/materialize2|<R|kotlin/Int|>()
+        }
+        ))
         public get(): R|kotlin/Int| {
             ^ D|/x|.R|SubstitutionOverride</Delegate.getValue: R|kotlin/Int|>|(Null(null), ::R|/x|)
         }

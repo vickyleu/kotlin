@@ -1259,20 +1259,20 @@ FILE: [ResolvedTo(BODY_RESOLVE)] complexRedeclaration.kt
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] val p: R|P| = object : R|P| {
-            private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|P|>()
-            }
+                private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|P|>()
+                }
 
-        }
+            }
 
             public [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=P] get(): R|P|
 
         public final [ResolvedTo(BODY_RESOLVE)] val r: R|P| = object : R|P| {
-            private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|P|>()
-            }
+                private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|P|>()
+                }
 
-        }
+            }
 
             public [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=P] get(): R|P|
 
@@ -1305,10 +1305,10 @@ FILE: [ResolvedTo(BODY_RESOLVE)] complexRedeclaration.kt
         }
 
         [ResolvedTo(BODY_RESOLVE)] lval a: R|<anonymous>| = object : R|P| {
-            private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|P|>()
-            }
+                private [ResolvedTo(BODY_RESOLVE)] [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|P|>()
+                }
 
-        }
+            }
 
     }

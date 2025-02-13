@@ -26,9 +26,9 @@ FILE: inlineLambdasAreInplace.kt
     public final fun testGeneric(): R|kotlin/Unit| {
         lvar x: R|kotlin/String?| = String()
         lval lambda: R|() -> kotlin/Unit| = R|/any|<R|() -> kotlin/Unit|>(<L> = any@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            R|<local>/x| = Null(null)
-        }
-        )
+                R|<local>/x| = Null(null)
+            }
+            )
         R|<local>/x| = String()
         R|<local>/lambda|.R|SubstitutionOverride<kotlin/Function0.invoke: R|kotlin/Unit|>|()
         R|<local>/x|.R|kotlin/String.length<Inapplicable(UNSTABLE_SMARTCAST): kotlin/String.length>#|
@@ -36,9 +36,9 @@ FILE: inlineLambdasAreInplace.kt
     public final fun testNoinline(): R|kotlin/Unit| {
         lvar x: R|kotlin/String?| = String()
         lval lambda: R|() -> kotlin/Unit| = R|/noinline|(<L> = noinline@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            R|<local>/x| = Null(null)
-        }
-        )
+                R|<local>/x| = Null(null)
+            }
+            )
         R|<local>/x| = String()
         R|<local>/lambda|.R|SubstitutionOverride<kotlin/Function0.invoke: R|kotlin/Unit|>|()
         R|<local>/x|.R|kotlin/String.length<Inapplicable(UNSTABLE_SMARTCAST): kotlin/String.length>#|
@@ -46,9 +46,9 @@ FILE: inlineLambdasAreInplace.kt
     public final fun testCrossinline(): R|kotlin/Unit| {
         lvar x: R|kotlin/String?| = String()
         lval lambda: R|() -> kotlin/Unit| = R|/crossinline|(<L> = crossinline@fun <anonymous>(): R|kotlin/Unit| <inline=CrossInline>  {
-            R|<local>/x| = Null(null)
-        }
-        )
+                R|<local>/x| = Null(null)
+            }
+            )
         R|<local>/x| = String()
         R|<local>/lambda|.R|SubstitutionOverride<kotlin/Function0.invoke: R|kotlin/Unit|>|()
         R|<local>/x|.R|kotlin/String.length<Inapplicable(UNSTABLE_SMARTCAST): kotlin/String.length>#|

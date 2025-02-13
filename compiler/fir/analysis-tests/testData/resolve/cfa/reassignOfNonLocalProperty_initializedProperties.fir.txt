@@ -20,12 +20,12 @@ FILE: reassignOfNonLocalProperty_initializedProperties.kt
         }
 
         public final val a: R|kotlin/String| = this@R|/Some|.R|kotlin/run|<R|Some|, R|kotlin/String|>(<L> = run@fun R|Some|.<anonymous>(): R|kotlin/String| <inline=Inline, kind=EXACTLY_ONCE>  {
-            this@R|special/anonymous|.R|/Some.x| = String(error)
-            this@R|special/anonymous|.R|/y| = String(error)
-            R|/z| = String(error)
-            ^ String(hello)
-        }
-        )
+                this@R|special/anonymous|.R|/Some.x| = String(error)
+                this@R|special/anonymous|.R|/y| = String(error)
+                R|/z| = String(error)
+                ^ String(hello)
+            }
+            )
             public get(): R|kotlin/String|
 
         public final var b: R|kotlin/String| = String(hello)

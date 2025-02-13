@@ -11,23 +11,23 @@ FILE: insideSAM.fir.kt
     }
     public final fun regressionTestOverrides(): R|kotlin/Unit| {
         lval anonymous: R|StableInterface| = object : R|StableInterface| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-            public open override fun experimentalMethod(): R|kotlin/Unit| {
-            }
+                public open override fun experimentalMethod(): R|kotlin/Unit| {
+                }
 
-        }
+            }
 
         lval lambda: R|StableInterface| = R|/StableInterface|(<L> = StableInterface@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            ^@StableInterface Unit
-        }
-        )
+                ^@StableInterface Unit
+            }
+            )
     }
     @R|ExperimentalKotlinAnnotation|() public final fun suppressed(): R|kotlin/Unit| {
         lval lambda: R|StableInterface| = R|/StableInterface|(<L> = StableInterface@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            ^@StableInterface Unit
-        }
-        )
+                ^@StableInterface Unit
+            }
+            )
     }

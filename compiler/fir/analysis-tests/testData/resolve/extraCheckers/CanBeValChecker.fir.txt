@@ -102,9 +102,9 @@ FILE: CanBeValChecker.kt
     }
     public final fun withReadonlyDeligate(): R|kotlin/Unit| {
         lval s: R|kotlin/String|by R|kotlin/lazy|<R|kotlin/String|>(<L> = lazy@fun <anonymous>(): R|kotlin/String| <inline=NoInline>  {
-            ^ String(Hello!)
-        }
-        )
+                ^ String(Hello!)
+            }
+            )
         R|<local>/s|.R|kotlin/Any.hashCode|()
     }
     public final fun getPair(): R|kotlin/Pair<kotlin/Int, kotlin/String>| {

@@ -13,11 +13,11 @@ FILE: tryCatch.kt
     }
     public final fun test_2(): R|kotlin/Unit| {
         lval x: R|kotlin/Int| = try {
-            Int(1)
-        }
-        catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
-            Int(2)
-        }
+                Int(1)
+            }
+            catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
+                Int(2)
+            }
 
     }
     public final fun test_3(b: R|kotlin/Boolean|): R|kotlin/Unit| {
@@ -32,16 +32,16 @@ FILE: tryCatch.kt
                 lval x: R|kotlin/Int| = Int(1)
                 when () {
                     R|<local>/b|.R|kotlin/Boolean.not|() ->  {
-                        break@@@[Boolean(true)]
+                        break@@@[Boolean(true)] 
                     }
                 }
 
             }
             catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
-                continue@@@[Boolean(true)]
+                continue@@@[Boolean(true)] 
             }
             catch (e: R|{kotlin/RuntimeException=} java/lang/RuntimeException|) {
-                break@@@[Boolean(true)]
+                break@@@[Boolean(true)] 
             }
 
             lval y: R|kotlin/Int| = Int(2)

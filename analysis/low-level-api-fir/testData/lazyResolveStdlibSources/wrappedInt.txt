@@ -834,43 +834,43 @@ FILE: [ResolvedTo(BODY_RESOLVE)] TypeReference.kt
         private final [ResolvedTo(BODY_RESOLVE)] fun asString([ResolvedTo(BODY_RESOLVE)] convertPrimitiveToWrapper: R|kotlin/Boolean|): R|kotlin/String| {
             [ResolvedTo(BODY_RESOLVE)] lval javaClass: R|java/lang/Class<out kotlin/Any>?| = (this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.classifier| as? R|kotlin/reflect/KClass<*>|)?.{ $subj$.R|kotlin/jvm/java|<R|CapturedType(*)|> }
             [ResolvedTo(BODY_RESOLVE)] lval klass: R|kotlin/String!| = when () {
-                ==(R|<local>/javaClass|, Null(null)) ->  {
-                    this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.classifier|.R|kotlin/Any.toString|()
+                    ==(R|<local>/javaClass|, Null(null)) ->  {
+                        this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.classifier|.R|kotlin/Any.toString|()
+                    }
+                    !=(this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.flags|.R|kotlin/Int.and|(this@R|kotlin/jvm/internal/TypeReference.Companion|.R|kotlin/jvm/internal/TypeReference.Companion.IS_NOTHING_TYPE|), Int(0)) ->  {
+                        String(kotlin.Nothing)
+                    }
+                    R|<local>/javaClass|.R|java/lang/Class.isArray| ->  {
+                        (this@R|kotlin/jvm/internal/TypeReference|, R|<local>/javaClass|).R|kotlin/jvm/internal/TypeReference.arrayClassName|
+                    }
+                    R|<local>/convertPrimitiveToWrapper| && R|<local>/javaClass|.R|java/lang/Class.isPrimitive| ->  {
+                        (this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.classifier| as R|kotlin/reflect/KClass<*>|).R|kotlin/jvm/javaObjectType|<R|CapturedType(*)|>.R|java/lang/Class.name|
+                    }
+                    else ->  {
+                        R|<local>/javaClass|.R|java/lang/Class.name|
+                    }
                 }
-                !=(this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.flags|.R|kotlin/Int.and|(this@R|kotlin/jvm/internal/TypeReference.Companion|.R|kotlin/jvm/internal/TypeReference.Companion.IS_NOTHING_TYPE|), Int(0)) ->  {
-                    String(kotlin.Nothing)
-                }
-                R|<local>/javaClass|.R|java/lang/Class.isArray| ->  {
-                    (this@R|kotlin/jvm/internal/TypeReference|, R|<local>/javaClass|).R|kotlin/jvm/internal/TypeReference.arrayClassName|
-                }
-                R|<local>/convertPrimitiveToWrapper| && R|<local>/javaClass|.R|java/lang/Class.isPrimitive| ->  {
-                    (this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.classifier| as R|kotlin/reflect/KClass<*>|).R|kotlin/jvm/javaObjectType|<R|CapturedType(*)|>.R|java/lang/Class.name|
-                }
-                else ->  {
-                    R|<local>/javaClass|.R|java/lang/Class.name|
-                }
-            }
 
             [ResolvedTo(BODY_RESOLVE)] lval args: R|kotlin/String| = when () {
-                this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.arguments|.R|SubstitutionOverride<kotlin/collections/List.isEmpty: R|kotlin/Boolean|>|() ->  {
-                    String()
-                }
-                else ->  {
-                    this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.arguments|.R|kotlin/collections/joinToString|<R|kotlin/reflect/KTypeProjection|>(String(, ), String(<), String(>), <L> = [ResolvedTo(BODY_RESOLVE)] [MatchingParameterFunctionTypeKey=kotlin/Function1<T, kotlin/CharSequence>?] joinToString@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/reflect/KTypeProjection|): R|kotlin/CharSequence| <inline=NoInline>  {
-                        ^ (this@R|kotlin/jvm/internal/TypeReference|, R|<local>/it|).R|kotlin/jvm/internal/TypeReference.asString|()
+                    this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.arguments|.R|SubstitutionOverride<kotlin/collections/List.isEmpty: R|kotlin/Boolean|>|() ->  {
+                        String()
                     }
-                    )
+                    else ->  {
+                        this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.arguments|.R|kotlin/collections/joinToString|<R|kotlin/reflect/KTypeProjection|>(String(, ), String(<), String(>), <L> = [ResolvedTo(BODY_RESOLVE)] [MatchingParameterFunctionTypeKey=kotlin/Function1<T, kotlin/CharSequence>?] joinToString@fun <anonymous>([ResolvedTo(BODY_RESOLVE)] it: R|kotlin/reflect/KTypeProjection|): R|kotlin/CharSequence| <inline=NoInline>  {
+                            ^ (this@R|kotlin/jvm/internal/TypeReference|, R|<local>/it|).R|kotlin/jvm/internal/TypeReference.asString|()
+                        }
+                        )
+                    }
                 }
-            }
 
             [ResolvedTo(BODY_RESOLVE)] lval nullable: R|kotlin/String| = when () {
-                this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.isMarkedNullable| ->  {
-                    String(?)
+                    this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.isMarkedNullable| ->  {
+                        String(?)
+                    }
+                    else ->  {
+                        String()
+                    }
                 }
-                else ->  {
-                    String()
-                }
-            }
 
             [ResolvedTo(BODY_RESOLVE)] lval result: R|kotlin/String| = R|<local>/klass|.R|kotlin/String.plus|(R|<local>/args|).R|kotlin/String.plus|(R|<local>/nullable|)
             ^asString when ([ResolvedTo(BODY_RESOLVE)] lval upper: R|kotlin/reflect/KType?| = this@R|kotlin/jvm/internal/TypeReference|.R|kotlin/jvm/internal/TypeReference.platformTypeUpperBound|) {

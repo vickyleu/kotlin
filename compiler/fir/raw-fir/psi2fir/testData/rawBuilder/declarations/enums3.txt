@@ -17,37 +17,37 @@ FILE: enums3.kt
                     internal [ContainingClassKey=Planet] get(): Double
 
                 public final static [ContainingClassKey=Planet] enum entry MERCURY: R|<local>/Planet| = object : R|<local>/Planet| {
-                    private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                        super<R|<local>/Planet|>(Double(1.0), Double(2.0))
-                    }
+                        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                            super<R|<local>/Planet|>(Double(1.0), Double(2.0))
+                        }
 
-                    public? open? override fun sayHello(): R|kotlin/Unit| {
-                        println#(String(Hello!!!))
-                    }
+                        public? open? override fun sayHello(): R|kotlin/Unit| {
+                            println#(String(Hello!!!))
+                        }
 
-                }
+                    }
 
                 public final static [ContainingClassKey=Planet] enum entry VENERA: R|<local>/Planet| = object : R|<local>/Planet| {
-                    private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                        super<R|<local>/Planet|>(Double(3.0), Double(4.0))
-                    }
+                        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                            super<R|<local>/Planet|>(Double(3.0), Double(4.0))
+                        }
 
-                    public? open? override fun sayHello(): R|kotlin/Unit| {
-                        println#(String(Ola!!!))
-                    }
+                        public? open? override fun sayHello(): R|kotlin/Unit| {
+                            println#(String(Ola!!!))
+                        }
 
-                }
+                    }
 
                 public final static [ContainingClassKey=Planet] enum entry EARTH: R|<local>/Planet| = object : R|<local>/Planet| {
-                    private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                        super<R|<local>/Planet|>(Double(5.0), Double(6.0))
-                    }
+                        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                            super<R|<local>/Planet|>(Double(5.0), Double(6.0))
+                        }
 
-                    public? open? override fun sayHello(): R|kotlin/Unit| {
-                        println#(String(Privet!!!))
-                    }
+                        public? open? override fun sayHello(): R|kotlin/Unit| {
+                            println#(String(Privet!!!))
+                        }
 
-                }
+                    }
 
                 public? final? val g: Double = G#.times#(m#).div#(r#.times#(r#))
                     public? [ContainingClassKey=Planet] get(): Double

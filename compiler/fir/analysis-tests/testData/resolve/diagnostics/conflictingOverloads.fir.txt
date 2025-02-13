@@ -96,11 +96,11 @@ FILE: conflictingOverloads.kt
         }
 
         public final val Companion: R|kotlin/Any| = object : R|kotlin/Any| {
-            private constructor(): R|<anonymous>| {
-                super<R|kotlin/Any|>()
-            }
+                private constructor(): R|<anonymous>| {
+                    super<R|kotlin/Any|>()
+                }
 
-        }
+            }
 
             public get(): R|kotlin/Any|
 

@@ -20,12 +20,12 @@ FILE: ifInDelegated.kt
     }
     public final fun test(list: R|kotlin/collections/List<Ref<*>>|, arg: R|kotlin/Boolean|): R|kotlin/Unit| {
         lval data: R|kotlin/String|by when () {
-            R|<local>/arg| ->  {
-                R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(0))
+                R|<local>/arg| ->  {
+                    R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(0))
+                }
+                else ->  {
+                    R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(1))
+                }
             }
-            else ->  {
-                R|<local>/list|.R|/getElement|<R|kotlin/String|>(Int(1))
-            }
-        }
 
     }

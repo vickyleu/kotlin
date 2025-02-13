@@ -27,9 +27,9 @@ FILE: kt41982.kt
         }
 
         public final var start: R|kotlin/Long|by this@R|/Test|.R|/long|<R|Test|, R|Test|>(<L> = long@fun <anonymous>(): R|kotlin/Long?| <inline=NoInline>  {
-            ^ Long(0)
-        }
-        )
+                ^ Long(0)
+            }
+            )
             public get(): R|kotlin/Long| {
                 ^ this@R|/Test|.D|/Test.start|.R|SubstitutionOverride</Delegate.getValue: R|kotlin/Long|>|(this@R|/Test|, ::R|/Test.start|)
             }

@@ -96,9 +96,9 @@ FILE: abstractAndSealed.kt
 
         lval serial: R|kotlinx/serialization/KSerializer<Bottom>| = Q|Bottom|.R|/Bottom.Companion.serializer|()
         lval j: R|kotlinx/serialization/json/Json| = R|kotlinx/serialization/json/Json|(<L> = Json@fun R|kotlinx/serialization/json/JsonBuilder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-            this@R|special/anonymous|.R|kotlinx/serialization/json/JsonBuilder.encodeDefaults| = Boolean(true)
-        }
-        )
+                this@R|special/anonymous|.R|kotlinx/serialization/json/JsonBuilder.encodeDefaults| = Boolean(true)
+            }
+            )
         lval s: R|kotlin/String| = R|<local>/j|.R|kotlinx/serialization/json/Json.encodeToString|<R|Bottom|>(R|<local>/serial|, R|/Bottom.Bottom|())
         when () {
             !=(R|<local>/s|, String({"x":"X","y":"Y"})) ->  {

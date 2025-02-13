@@ -3,8 +3,8 @@ FILE: valCapturedInLambda.kt
         when () {
             (R|<local>/x| is R|kotlin/String|) ->  {
                 lval thunk: R|() -> kotlin/String| = fun <anonymous>(): R|kotlin/String| <inline=Unknown>  {
-                    ^ R|<local>/x|
-                }
+                        ^ R|<local>/x|
+                    }
 
                 ^test_1 R|<local>/thunk|.R|SubstitutionOverride<kotlin/Function0.invoke: R|kotlin/String|>|()
             }
@@ -16,8 +16,8 @@ FILE: valCapturedInLambda.kt
         when () {
             (R|<local>/x| is R|kotlin/String|) ->  {
                 lval thunk: R|() -> kotlin/String| = fun <anonymous>(): R|kotlin/String| <inline=Unknown>  {
-                    ^ R|<local>/x|.R|kotlin/String.plus|(String(a))
-                }
+                        ^ R|<local>/x|.R|kotlin/String.plus|(String(a))
+                    }
 
                 ^test_2 R|<local>/thunk|.R|SubstitutionOverride<kotlin/Function0.invoke: R|kotlin/String|>|()
             }

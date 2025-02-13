@@ -1,24 +1,24 @@
 FILE: delegatesWithAnnotations.kt
     @Anno(<strcat>(String(x annotation ), x#)) public? final? val x: Intby lazy#(<L> = lazy@fun <implicit>.<anonymous>(): <implicit> <inline=Unknown>  {
-        IntegerLiteral(1).plus#(IntegerLiteral(2))
-    }
-    )
+            IntegerLiteral(1).plus#(IntegerLiteral(2))
+        }
+        )
         public? get(): <implicit> {
             ^ D|/x|.getValue#(Null(null), ::R|/x|)
         }
     @Anno(<strcat>(String(delegate annotation ), x#)) field:@PROPERTY_DELEGATE_FIELD:Anno(<strcat>(String(delegate: delegate annotation ), x#)) public? final? val delegate: <implicit> = object : ReadWriteProperty<@Anno(<strcat>(String(ReadWriteProperty first type argument ), x#)) Any?, @Anno(<strcat>(String(ReadWriteProperty second type argument ), x#)) Int> {
-        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-            super<<implicit>>()
-        }
+            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                super<<implicit>>()
+            }
 
-        @Anno(<strcat>(String(getValue ), x#)) public? open? override fun getValue(thisRef: Any?, property: KProperty<*>): @Anno(<strcat>(String(getValue return type ), x#)) Int {
-            ^getValue IntegerLiteral(1)
-        }
+            @Anno(<strcat>(String(getValue ), x#)) public? open? override fun getValue(thisRef: Any?, property: KProperty<*>): @Anno(<strcat>(String(getValue return type ), x#)) Int {
+                ^getValue IntegerLiteral(1)
+            }
 
-        @Anno(<strcat>(String(setValue ), x#)) public? open? override fun setValue(thisRef: Any?, property: KProperty<*>, value: @Anno(<strcat>(String(setValue value parameter type ), x#)) Int): R|kotlin/Unit| {
-        }
+            @Anno(<strcat>(String(setValue ), x#)) public? open? override fun setValue(thisRef: Any?, property: KProperty<*>, value: @Anno(<strcat>(String(setValue value parameter type ), x#)) Int): R|kotlin/Unit| {
+            }
 
-    }
+        }
 
         public? get(): <implicit>
     @Anno(<strcat>(String(value annotation ), x#)) field:@PROPERTY_DELEGATE_FIELD:Anno(<strcat>(String(delegate: value annotation ), x#)) public? final? val value: <implicit>by delegate#

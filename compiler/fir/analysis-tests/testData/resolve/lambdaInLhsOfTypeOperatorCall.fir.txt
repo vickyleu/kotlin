@@ -9,9 +9,9 @@ FILE: lambdaInLhsOfTypeOperatorCall.kt
     }
     public final fun test_2(s: R|kotlin/String|): R|kotlin/Unit| {
         lval func: R|B<kotlin/Int, kotlin/Int>| = (fun <anonymous>(): R|kotlin/Int| <inline=Unknown>  {
-            ^ R|<local>/s|.R|kotlin/String.length|
-        }
-         as R|B<kotlin/Int, kotlin/Int>|)
+                ^ R|<local>/s|.R|kotlin/String.length|
+            }
+             as R|B<kotlin/Int, kotlin/Int>|)
     }
     public final class B<out K, V> : R|kotlin/Any| {
         public constructor<out K, V>(k: R|K|, v: R|V|): R|B<K, V>| {

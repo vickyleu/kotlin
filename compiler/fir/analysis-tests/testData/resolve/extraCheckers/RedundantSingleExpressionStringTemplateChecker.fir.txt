@@ -25,13 +25,13 @@ FILE: RedundantSingleExpressionStringTemplateChecker.kt
             public get(): R|ProductGroup?|
 
         public final val name: R|kotlin/String| = when () {
-            ==(this@R|/ProductGroup|.R|/ProductGroup.parent|, Null(null)) ->  {
-                this@R|/ProductGroup|.R|/ProductGroup.short_name|
+                ==(this@R|/ProductGroup|.R|/ProductGroup.parent|, Null(null)) ->  {
+                    this@R|/ProductGroup|.R|/ProductGroup.short_name|
+                }
+                else ->  {
+                    <strcat>(this@R|/ProductGroup|.R|/ProductGroup.parent|.R|/ProductGroup.name|, String( ), this@R|/ProductGroup|.R|/ProductGroup.short_name|)
+                }
             }
-            else ->  {
-                <strcat>(this@R|/ProductGroup|.R|/ProductGroup.parent|.R|/ProductGroup.name|, String( ), this@R|/ProductGroup|.R|/ProductGroup.short_name|)
-            }
-        }
 
             public get(): R|kotlin/String|
 

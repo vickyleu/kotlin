@@ -40,15 +40,15 @@ FILE: Platform.kt
         }
 
         private final val loaders: R|kotlin/collections/Map<KonanTarget, Configurables>| = this@R|/PlatformManager|.R|/HostManager.enabled|.R|kotlin/collections/map|<R|KonanTarget|, R|kotlin/Pair<KonanTarget, Configurables>|>(<L> = map@fun <anonymous>(it: R|KonanTarget|): R|kotlin/Pair<KonanTarget, Configurables>| <inline=Inline, kind=UNKNOWN>  {
-            ^ R|<local>/it|.R|kotlin/to|<R|KonanTarget|, R|Configurables|>(this@R|/PlatformManager|.R|/PlatformManager.loadConfigurables|(R|<local>/it|))
-        }
-        ).R|kotlin/collections/toMap|<R|KonanTarget|, R|Configurables|>()
+                ^ R|<local>/it|.R|kotlin/to|<R|KonanTarget|, R|Configurables|>(this@R|/PlatformManager|.R|/PlatformManager.loadConfigurables|(R|<local>/it|))
+            }
+            ).R|kotlin/collections/toMap|<R|KonanTarget|, R|Configurables|>()
             private get(): R|kotlin/collections/Map<KonanTarget, Configurables>|
 
         private final val platforms: R|kotlin/collections/Map<KonanTarget, Platform>| = this@R|/PlatformManager|.R|/PlatformManager.loaders|.R|kotlin/collections/map|<R|KonanTarget|, R|Configurables|, R|kotlin/Pair<KonanTarget, Platform>|>(<L> = map@fun <anonymous>(it: R|kotlin/collections/Map.Entry<KonanTarget, Configurables>|): R|kotlin/Pair<KonanTarget, Platform>| <inline=Inline, kind=UNKNOWN>  {
-            ^ R|<local>/it|.R|SubstitutionOverride<kotlin/collections/Map.Entry.key: R|KonanTarget|>|.R|kotlin/to|<R|KonanTarget|, R|Platform|>(R|/Platform.Platform|(R|<local>/it|.R|SubstitutionOverride<kotlin/collections/Map.Entry.value: R|Configurables|>|))
-        }
-        ).R|kotlin/collections/toMap|<R|KonanTarget|, R|Platform|>()
+                ^ R|<local>/it|.R|SubstitutionOverride<kotlin/collections/Map.Entry.key: R|KonanTarget|>|.R|kotlin/to|<R|KonanTarget|, R|Platform|>(R|/Platform.Platform|(R|<local>/it|.R|SubstitutionOverride<kotlin/collections/Map.Entry.value: R|Configurables|>|))
+            }
+            ).R|kotlin/collections/toMap|<R|KonanTarget|, R|Platform|>()
             private get(): R|kotlin/collections/Map<KonanTarget, Platform>|
 
         public abstract fun targetManager(userRequest: R|kotlin/String?| = Null(null)): R|TargetManager|

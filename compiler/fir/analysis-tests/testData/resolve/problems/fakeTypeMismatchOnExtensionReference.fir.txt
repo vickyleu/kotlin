@@ -9,12 +9,12 @@ FILE: fakeTypeMismatchOnExtensionReference.kt
     }
     public final fun foo(dumpStrategy: R|kotlin/String|): R|kotlin/Unit| {
         lval dump: R|IrElement.() -> kotlin/String| = when () {
-            ==(R|<local>/dumpStrategy|, String(KotlinLike)) ->  {
-                Q|IrElement|::R|/dumpKotlinLike|
+                ==(R|<local>/dumpStrategy|, String(KotlinLike)) ->  {
+                    Q|IrElement|::R|/dumpKotlinLike|
+                }
+                else ->  {
+                    Q|IrElement|::R|/dump|
+                }
             }
-            else ->  {
-                Q|IrElement|::R|/dump|
-            }
-        }
 
     }

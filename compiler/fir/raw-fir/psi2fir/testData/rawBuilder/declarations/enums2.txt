@@ -22,26 +22,26 @@ FILE: enums2.kt
             public? [ContainingClassKey=SomeEnum] get(): Some
 
         public final static [ContainingClassKey=SomeEnum] enum entry FIRST: R|SomeEnum| = object : R|SomeEnum| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|SomeEnum|>(O1#)
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|SomeEnum|>(O1#)
+                }
 
-            public? open? override fun check(y: Some): Boolean {
-                ^check Boolean(true)
-            }
+                public? open? override fun check(y: Some): Boolean {
+                    ^check Boolean(true)
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=SomeEnum] enum entry SECOND: R|SomeEnum| = object : R|SomeEnum| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|SomeEnum|>(O2#)
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|SomeEnum|>(O2#)
+                }
 
-            public? open? override fun check(y: Some): Boolean {
-                ^check ==(y#, O2#)
-            }
+                public? open? override fun check(y: Some): Boolean {
+                    ^check ==(y#, O2#)
+                }
 
-        }
+            }
 
         public? abstract fun check(y: Some): Boolean
 

@@ -22,8 +22,8 @@ FILE: innerTypeFromSuperClassInBody.kt
 
         public final fun bar(): R|kotlin/Unit| {
             lval y: R|A.Inner<kotlin/String>.() -> kotlin/Unit| = fun R|A.Inner<kotlin/String>|.<anonymous>(): R|kotlin/Unit| <inline=Unknown>  {
-                ^ Unit
-            }
+                    ^ Unit
+                }
 
             this@R|/B|.R|SubstitutionOverride</B.foo: R|kotlin/Unit|>|(R|<local>/y|)
             R|/baz|(R|<local>/y|)

@@ -5,34 +5,34 @@ FILE: localDeclarationsInEnumEntry.kt
         }
 
         public final static [ContainingClassKey=SomeEnum] enum entry A: R|SomeEnum| = object : R|SomeEnum| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|SomeEnum|>()
-            }
-
-            init {
-                local final? fun foo(): R|kotlin/Unit| {
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|SomeEnum|>()
                 }
 
-                local final? class Local : R|kotlin/Any| {
-                    public? [ContainingClassKey=Local] constructor(): R|<local>/Local| {
+                init {
+                    local final? fun foo(): R|kotlin/Unit| {
+                    }
+
+                    local final? class Local : R|kotlin/Any| {
+                        public? [ContainingClassKey=Local] constructor(): R|<local>/Local| {
+                            super<R|kotlin/Any|>()
+                        }
+
+                    }
+
+                }
+
+                local final? [ContainingClassKey=<anonymous>] class Nested : R|kotlin/Any| {
+                    public? [ContainingClassKey=Nested] constructor(): R|<local>/<anonymous>.Nested| {
                         super<R|kotlin/Any|>()
                     }
 
                 }
 
-            }
-
-            local final? [ContainingClassKey=<anonymous>] class Nested : R|kotlin/Any| {
-                public? [ContainingClassKey=Nested] constructor(): R|<local>/<anonymous>.Nested| {
-                    super<R|kotlin/Any|>()
+                public? final? fun foo(): R|kotlin/Unit| {
                 }
 
             }
-
-            public? final? fun foo(): R|kotlin/Unit| {
-            }
-
-        }
 
         public final static [ContainingClassKey=SomeEnum] fun values(): R|kotlin/Array<SomeEnum>| {
         }

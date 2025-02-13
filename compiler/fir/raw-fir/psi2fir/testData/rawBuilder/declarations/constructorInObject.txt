@@ -14,15 +14,15 @@ FILE: constructorInObject.kt
         }
 
         public final static [ContainingClassKey=B] enum entry X: R|B| = object : R|B| {
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|B|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|B|>()
+                }
 
-            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                super<R|B|>()
-            }
+                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                    super<R|B|>()
+                }
 
-        }
+            }
 
         public final static [ContainingClassKey=B] fun values(): R|kotlin/Array<B>| {
         }
@@ -48,10 +48,10 @@ FILE: constructorInObject.kt
 
     }
     public? final? val anonObject: <implicit> = object : R|kotlin/Any| {
-        private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-            super<R|kotlin/Any|>()
-        }
+            private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                super<R|kotlin/Any|>()
+            }
 
-    }
+        }
 
         public? get(): <implicit>

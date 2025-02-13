@@ -46,19 +46,19 @@ FILE: instanceAccessBeforeSuperCall.kt
     }
     public final fun main(): R|kotlin/Unit| {
         lval x1: R|kotlin/String.() -> kotlin/String| = when () {
-            Boolean(true) ->  {
-                fun R|kotlin/String|.<anonymous>(): R|kotlin/String| <inline=Unknown>  {
-                    ^ this@R|special/anonymous|
-                }
+                Boolean(true) ->  {
+                    fun R|kotlin/String|.<anonymous>(): R|kotlin/String| <inline=Unknown>  {
+                        ^ this@R|special/anonymous|
+                    }
 
-            }
-            else ->  {
-                fun R|kotlin/String|.<anonymous>(): R|kotlin/String| <inline=Unknown>  {
-                    ^ this@R|special/anonymous|
                 }
+                else ->  {
+                    fun R|kotlin/String|.<anonymous>(): R|kotlin/String| <inline=Unknown>  {
+                        ^ this@R|special/anonymous|
+                    }
 
+                }
             }
-        }
 
     }
     public final fun test(f: R|F|): R|kotlin/Unit| {

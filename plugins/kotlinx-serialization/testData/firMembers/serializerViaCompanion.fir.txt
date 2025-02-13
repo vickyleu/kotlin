@@ -102,9 +102,9 @@ FILE: serializerViaCompanion.kt
             }
 
             public open override val descriptor: R|kotlinx/serialization/descriptors/SerialDescriptor| = R|kotlinx/serialization/descriptors/buildClassSerialDescriptor|(String(Partially-Overridden), <L> = buildClassSerialDescriptor@fun R|kotlinx/serialization/descriptors/ClassSerialDescriptorBuilder|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
-                this@R|special/anonymous|.R|kotlinx/serialization/descriptors/ClassSerialDescriptorBuilder.element|(String(i), R|kotlinx/serialization/descriptors/PrimitiveSerialDescriptor|(String(i), Q|kotlinx/serialization/descriptors/PrimitiveKind.INT|))
-            }
-            )
+                    this@R|special/anonymous|.R|kotlinx/serialization/descriptors/ClassSerialDescriptorBuilder.element|(String(i), R|kotlinx/serialization/descriptors/PrimitiveSerialDescriptor|(String(i), Q|kotlinx/serialization/descriptors/PrimitiveKind.INT|))
+                }
+                )
                 public get(): R|kotlinx/serialization/descriptors/SerialDescriptor|
 
             public open override fun serialize(encoder: R|kotlinx/serialization/encoding/Encoder|, value: R|com/example/PartiallyOverridden|): R|kotlin/Unit| {

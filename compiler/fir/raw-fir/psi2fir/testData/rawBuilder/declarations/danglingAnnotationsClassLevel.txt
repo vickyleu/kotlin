@@ -36,12 +36,12 @@ FILE: danglingAnnotationsClassLevel.kt
             }
 
             lval r: I = object : I {
-                private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
-                    super<<implicit>>()
-                }
+                    private [ContainingClassKey=<anonymous>] constructor(): R|<anonymous>| {
+                        super<<implicit>>()
+                    }
 
-                [ContainingClassKey=<anonymous>] @Suppress(String()) @MustBeDocumented() <DANGLING MODIFIER: Top level declaration expected>
-            }
+                    [ContainingClassKey=<anonymous>] @Suppress(String()) @MustBeDocumented() <DANGLING MODIFIER: Top level declaration expected>
+                }
 
         }
 

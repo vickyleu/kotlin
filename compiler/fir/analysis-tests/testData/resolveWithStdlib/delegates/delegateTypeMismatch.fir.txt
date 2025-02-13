@@ -42,9 +42,9 @@ FILE: delegateTypeMismatch.kt
             }
 
         public final var typeNormalizer: R|(KotlinType) -> KotlinType|by this@R|/A|.R|/A.property|<R|(KotlinType) -> KotlinType|>(property@fun <anonymous>(it: R|KotlinType|): R|KotlinType| <inline=NoInline>  {
-            ^ R|<local>/it|
-        }
-        )
+                ^ R|<local>/it|
+            }
+            )
             public get(): R|(KotlinType) -> KotlinType| {
                 ^ this@R|/A|.D|/A.typeNormalizer|.R|SubstitutionOverride<kotlin/properties/ReadWriteProperty.getValue: R|(KotlinType) -> KotlinType|>|(this@R|/A|, ::R|/A.typeNormalizer|)
             }

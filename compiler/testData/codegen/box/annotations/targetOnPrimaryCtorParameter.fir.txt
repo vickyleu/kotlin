@@ -48,17 +48,17 @@ FILE: targetOnPrimaryCtorParameter.kt
     public final fun box(): R|kotlin/String| {
         lval clazz: R|kotlin/reflect/KClass<Foo>| = <getClass>(Q|Foo|)
         lval parameterAnnotations: R|kotlin/collections/Set<kotlin/String>| = R|<local>/clazz|.R|SubstitutionOverride<kotlin/reflect/KClass.constructors: R|kotlin/collections/Collection<kotlin/reflect/KFunction<Foo>>|>|.R|kotlin/collections/single|<R|kotlin/reflect/KFunction<Foo>|>().R|SubstitutionOverride<kotlin/reflect/KFunction.parameters: R|kotlin/collections/List<kotlin/reflect/KParameter>|>|.R|kotlin/collections/single|<R|kotlin/reflect/KParameter|>().R|kotlin/reflect/KAnnotatedElement.annotations|.R|kotlin/collections/map|<R|kotlin/Annotation|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|kotlin/Annotation|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
-            ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
-        }
-        ).R|kotlin/collections/toSet|<R|kotlin/String|>()
+                ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
+            }
+            ).R|kotlin/collections/toSet|<R|kotlin/String|>()
         lval propertyAnnotations: R|kotlin/collections/Set<kotlin/String>| = R|<local>/clazz|.R|kotlin/reflect/full/declaredMemberProperties|<R|Foo|>.R|kotlin/collections/single|<R|kotlin/reflect/KProperty1<Foo, *>|>().R|kotlin/reflect/KAnnotatedElement.annotations|.R|kotlin/collections/map|<R|kotlin/Annotation|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|kotlin/Annotation|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
-            ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
-        }
-        ).R|kotlin/collections/toSet|<R|kotlin/String|>()
+                ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
+            }
+            ).R|kotlin/collections/toSet|<R|kotlin/String|>()
         lval fieldAnnotations: R|kotlin/collections/Set<kotlin/String>| = <getClass>(Q|Foo|).R|kotlin/jvm/java|<R|Foo|>.R|SubstitutionOverride<java/lang/Class.getDeclaredField: R|java/lang/reflect/Field!|>|(String(param)).R|java/lang/reflect/AccessibleObject.annotations|.R|kotlin/collections/map|<R|kotlin/Annotation!|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|kotlin/Annotation!|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
-            ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation!|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
-        }
-        ).R|kotlin/collections/toSet|<R|kotlin/String|>()
+                ^ R|<local>/it|.R|kotlin/jvm/annotationClass|<R|kotlin/Annotation!|>.R|SubstitutionOverride<kotlin/reflect/KClass.simpleName: R|kotlin/String?|>| ?: String()
+            }
+            ).R|kotlin/collections/toSet|<R|kotlin/String|>()
         when () {
             !=(R|<local>/parameterAnnotations|, R|kotlin/collections/setOf|<R|kotlin/String|>(vararg(String(NoTarget), String(PropValueField), String(ParameterOnly)))) ->  {
                 ^box String(Parameters:).R|kotlin/String.plus|(R|<local>/parameterAnnotations|.R|kotlin/collections/joinToString|<R|kotlin/String|>())

@@ -9,25 +9,25 @@ FILE: [ResolvedTo(BODY_RESOLVE)] enumClassWithBodyScript.kts
             }
 
             public final static [ResolvedTo(BODY_RESOLVE)] enum entry X: R|A| = object : R|A| {
-                private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
-                    super<R|A|>()
-                }
+                    private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
+                        super<R|A|>()
+                    }
 
-                public final [ResolvedTo(BODY_RESOLVE)] fun localInX(): R|kotlin/Int| {
-                    ^localInX Int(1)
-                }
+                    public final [ResolvedTo(BODY_RESOLVE)] fun localInX(): R|kotlin/Int| {
+                        ^localInX Int(1)
+                    }
 
-            }
+                }
 
             public final static [ResolvedTo(BODY_RESOLVE)] enum entry Y: R|A| = object : R|A| {
-                private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
-                    super<R|A|>()
-                }
+                    private [ResolvedTo(BODY_RESOLVE)] constructor(): R|<anonymous>| {
+                        super<R|A|>()
+                    }
 
-                public open override [ResolvedTo(BODY_RESOLVE)] fun foo(): R|kotlin/Unit| {
-                }
+                    public open override [ResolvedTo(BODY_RESOLVE)] fun foo(): R|kotlin/Unit| {
+                    }
 
-            }
+                }
 
             public final static [ResolvedTo(BODY_RESOLVE)] enum entry Z: R|A|
             public open [ResolvedTo(BODY_RESOLVE)] fun foo(): R|kotlin/Unit| {

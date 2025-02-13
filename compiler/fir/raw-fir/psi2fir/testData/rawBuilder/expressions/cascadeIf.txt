@@ -29,49 +29,49 @@ FILE: cascadeIf.kt
     }
     public? final? fun example(): R|kotlin/Unit| {
         lval a: <implicit> = when () {
-            Boolean(true) ->  {
-                Boolean(true)
+                Boolean(true) ->  {
+                    Boolean(true)
+                }
+                else ->  {
+                    Boolean(false)
+                }
             }
-            else ->  {
-                Boolean(false)
-            }
-        }
 
         lval b: <implicit> = when () {
-            Boolean(true) ->  {
+                Boolean(true) ->  {
+                }
+                else ->  {
+                    Boolean(false)
+                }
             }
-            else ->  {
-                Boolean(false)
-            }
-        }
 
         lval c: <implicit> = when () {
-            Boolean(true) ->  {
-                Boolean(true)
+                Boolean(true) ->  {
+                    Boolean(true)
+                }
             }
-        }
 
         lval d: <implicit> = when () {
-            Boolean(true) ->  {
-                Boolean(true)
+                Boolean(true) ->  {
+                    Boolean(true)
+                }
             }
-        }
 
         lval e: <implicit> = when () {
-            Boolean(true) ->  {
+                Boolean(true) ->  {
+                }
+                else ->  {
+                    Boolean(false)
+                }
             }
-            else ->  {
-                Boolean(false)
-            }
-        }
 
         lval f: <implicit> = when () {
-            Boolean(true) ->  {
-                Boolean(true)
+                Boolean(true) ->  {
+                    Boolean(true)
+                }
+                else ->  {
+                }
             }
-            else ->  {
-            }
-        }
 
         fun <implicit>.<anonymous>(): <implicit> <inline=Unknown>  {
             when () {
