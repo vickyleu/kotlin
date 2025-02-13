@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.KlibConfigurationKeys
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.config.messageCollector
 import org.jetbrains.kotlin.descriptors.impl.ModuleDescriptorImpl
@@ -206,6 +207,7 @@ class FirNativeKlibSerializerFacade(testServices: TestServices) : AbstractNative
                     sourceBaseDirs = sourceBaseDirs,
                     languageVersionSettings = languageVersionSettings,
                     shouldCheckSignaturesOnUniqueness = shouldCheckSignaturesOnUniqueness,
+                    reuseExistingSignaturesForSymbols = languageVersionSettings.supportsFeature(LanguageFeature.IrInlinerBeforeKlibSerialization)
                 ),
                 diagnosticReporter = irDiagnosticReporter,
                 irBuiltIns = irBuiltIns,
