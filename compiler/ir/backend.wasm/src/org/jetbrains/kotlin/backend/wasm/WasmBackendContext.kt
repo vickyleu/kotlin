@@ -42,6 +42,7 @@ class WasmBackendContext(
     val irModuleFragment: IrModuleFragment,
     propertyLazyInitialization: Boolean,
     override val configuration: CompilerConfiguration,
+    val moduleImportController: ModuleImportControllerBase?,
 ) : JsCommonBackendContext {
     val phaseConfig = configuration.phaseConfig ?: PhaseConfig()
     val isDebugFriendlyCompilation = configuration.getBoolean(WasmConfigurationKeys.WASM_FORCE_DEBUG_FRIENDLY_COMPILATION)

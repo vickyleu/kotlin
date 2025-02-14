@@ -38,6 +38,7 @@ class BodyGenerator(
     private val functionContext: WasmFunctionCodegenContext,
     private val wasmModuleMetadataCache: WasmModuleMetadataCache,
     private val wasmModuleTypeTransformer: WasmModuleTypeTransformer,
+    private val useStringPool: Boolean
 ) : IrVisitorVoid() {
     val body: WasmExpressionBuilder = functionContext.bodyGen
 
@@ -443,7 +444,7 @@ class BodyGenerator(
     }
 
     override fun visitConst(expression: IrConst): Unit =
-        generateConstExpression(expression, body, wasmFileCodegenContext, backendContext, expression.getSourceLocation())
+        generateConstExpression(expression, body, wasmFileCodegenContext, backendContext, expression.getSourceLocation(), useStringPool)
 
     override fun visitGetField(expression: IrGetField) {
         val field: IrField = expression.symbol.owner
