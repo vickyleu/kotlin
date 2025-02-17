@@ -10,15 +10,24 @@ import org.jetbrains.kotlin.backend.wasm.WasmBackendContext
 import org.jetbrains.kotlin.ir.declarations.IdSignatureRetriever
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
 import org.jetbrains.kotlin.ir.declarations.IrValueParameter
-import org.jetbrains.kotlin.ir.symbols.*
+import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
+import org.jetbrains.kotlin.ir.symbols.IrFieldSymbol
+import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
+import org.jetbrains.kotlin.ir.symbols.IrSymbol
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.wasm.ir.*
 
-class WasmFileCodegenContext(
+open class WasmFileCodegenContext(
     private val wasmFileFragment: WasmCompiledFileFragment,
-    private val idSignatureRetriever: IdSignatureRetriever,
+    protected val idSignatureRetriever: IdSignatureRetriever,
 ) {
+    open fun handleFunctionWithIEC(declaration: IrFunctionSymbol): Boolean = false
+    open fun handleFieldWithIEC(declaration: IrFieldSymbol, wasmType: WasmType): Boolean = false
+    open fun handleVTableWithIEC(declaration: IrClassSymbol): Boolean = false
+    open fun handleClassITableWithIEC(declaration: IrClassSymbol): Boolean = false
+    open fun handleRTTIWithIEC(declaration: IrClassSymbol, superType: IrClassSymbol?): Boolean = false
+
     private fun IrSymbol.getReferenceKey(): IdSignature =
         idSignatureRetriever.declarationSignature(this.owner as IrDeclaration)!!
 
@@ -38,19 +47,19 @@ class WasmFileCodegenContext(
     private fun IrClassSymbol.getSignature(): IdSignature =
         idSignatureRetriever.declarationSignature(this.owner)!!
 
-    fun defineFunction(irFunction: IrFunctionSymbol, wasmFunction: WasmFunction) {
+    open fun defineFunction(irFunction: IrFunctionSymbol, wasmFunction: WasmFunction) {
         wasmFileFragment.functions.define(irFunction.getReferenceKey(), wasmFunction)
     }
 
-    fun defineGlobalField(irField: IrFieldSymbol, wasmGlobal: WasmGlobal) {
+    open fun defineGlobalField(irField: IrFieldSymbol, wasmGlobal: WasmGlobal, doNotExportWithIEC: Boolean) {
         wasmFileFragment.globalFields.define(irField.getReferenceKey(), wasmGlobal)
     }
 
-    fun defineGlobalVTable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
+    open fun defineGlobalVTable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
         wasmFileFragment.globalVTables.define(irClass.getReferenceKey(), wasmGlobal)
     }
 
-    fun defineGlobalClassITable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
+    open fun defineGlobalClassITable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
         wasmFileFragment.globalClassITables.define(irClass.getReferenceKey(), wasmGlobal)
     }
 
@@ -179,7 +188,7 @@ class WasmFileCodegenContext(
 
     val rttiType: WasmSymbol<WasmStructDeclaration> get() = rttiElements.rttiType
 
-    fun defineRttiGlobal(global: WasmGlobal, irClass: IrClassSymbol, irSuperClass: IrClassSymbol?) {
+    open fun defineRttiGlobal(global: WasmGlobal, irClass: IrClassSymbol, irSuperClass: IrClassSymbol?) {
         rttiElements.globals.add(
             RttiGlobal(
                 global = global,

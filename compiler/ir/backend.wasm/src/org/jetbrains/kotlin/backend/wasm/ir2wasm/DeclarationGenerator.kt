@@ -97,16 +97,9 @@ class DeclarationGenerator(
             "Sanity check that $declaration is a real function that can be used in calls"
         }
 
+        if (wasmFileCodegenContext.handleFunctionWithIEC(declaration.symbol)) return
+
         val functionTypeSymbol = wasmFileCodegenContext.referenceFunctionType(declaration.symbol)
-
-        val isImportedFromDependency = backendContext.moduleImportController?.importIfNeededOrFalse(declaration, "func_") { descriptor ->
-            wasmFileCodegenContext.defineFunction(
-                declaration.symbol,
-                WasmFunction.Imported(watName, functionTypeSymbol, descriptor)
-            )
-        }
-        if (isImportedFromDependency == true) return
-
         val wasmImportModule = declaration.getWasmImportDescriptor()
         val jsCode = declaration.getJsFunAnnotation()
 
@@ -321,20 +314,10 @@ class DeclarationGenerator(
 
         if (klass.isAbstractOrSealed) return
 
+        if (wasmFileCodegenContext.handleVTableWithIEC(symbol)) return
+
         val vTableTypeReference = wasmFileCodegenContext.referenceVTableGcType(symbol)
         val vTableRefGcType = WasmRefType(WasmHeapType.Type(vTableTypeReference))
-
-        val isImportedFromDependency = backendContext.moduleImportController?.importIfNeededOrFalse(klass, "vtable_") { descriptor ->
-            val global = WasmGlobal(
-                name = "<classVTable>",
-                type = vTableRefGcType,
-                isMutable = false,
-                init = emptyList(),
-                importPair = descriptor
-            )
-            wasmFileCodegenContext.defineGlobalVTable(irClass = symbol, wasmGlobal = global)
-        }
-        if (isImportedFromDependency == true) return
 
         val initVTableGlobal = buildWasmExpression {
             val location = SourceLocation.NoLocation("Create instance of vtable struct")
@@ -387,17 +370,7 @@ class DeclarationGenerator(
         val symbol = klass.symbol
         val superType = klass.getSuperClass(irBuiltIns)?.symbol
 
-        val isImportedFromDependency = backendContext.moduleImportController?.importIfNeededOrFalse(klass, "rtti_") { descriptor ->
-            val rttiGlobal = WasmGlobal(
-                name = "${klass.fqNameWhenAvailable}_rtti",
-                type = WasmRefType(WasmHeapType.Type(wasmFileCodegenContext.rttiType)),
-                isMutable = false,
-                init = emptyList(),
-                importPair = descriptor
-            )
-            wasmFileCodegenContext.defineRttiGlobal(global = rttiGlobal, irClass = symbol, irSuperClass = superType)
-        }
-        if (isImportedFromDependency == true) return
+        if (wasmFileCodegenContext.handleRTTIWithIEC(symbol, superType)) return
 
         val fqnShouldBeEmitted = backendContext.configuration.languageVersionSettings.getFlag(allowFullyQualifiedNameInKClass)
         val qualifier =
@@ -447,17 +420,7 @@ class DeclarationGenerator(
         if (klass.isAbstractOrSealed) return
         if (!klass.hasInterfaceSuperClass()) return
 
-        val isImportedFromDependency = backendContext.moduleImportController?.importIfNeededOrFalse(klass, "itable_") { descriptor ->
-            val global = WasmGlobal(
-                name = "<classITable>",
-                type = WasmRefType(WasmHeapType.Type(wasmFileCodegenContext.interfaceTableTypes.wasmAnyArrayType)),
-                isMutable = false,
-                init = emptyList(),
-                importPair = descriptor
-            )
-            wasmFileCodegenContext.defineGlobalClassITable(irClass = klass.symbol, wasmGlobal = global)
-        }
-        if (isImportedFromDependency == true) return
+        if (wasmFileCodegenContext.handleClassITableWithIEC(klass.symbol)) return
 
         val location = SourceLocation.NoLocation("Create instance of itable struct")
 
@@ -583,17 +546,7 @@ class DeclarationGenerator(
         if (!declaration.isStatic) return
         val wasmType = wasmModuleTypeTransformer.transformType(declaration.type)
 
-        val isImportedFromDependency = backendContext.moduleImportController?.importIfNeededOrFalse(declaration, "field_") { descriptor ->
-            val global = WasmGlobal(
-                name = declaration.fqNameWhenAvailable.toString(),
-                type = wasmType,
-                isMutable = true,
-                init = emptyList(),
-                importPair = descriptor
-            )
-            wasmFileCodegenContext.defineGlobalField(declaration.symbol, global)
-        }
-        if (isImportedFromDependency == true) return
+        if (wasmFileCodegenContext.handleFieldWithIEC(declaration.symbol, wasmType)) return
 
         val initBody = mutableListOf<WasmInstr>()
         val wasmExpressionGenerator = WasmExpressionBuilder(initBody, skipCommentInstructions = skipCommentInstructions)
@@ -646,7 +599,9 @@ class DeclarationGenerator(
             init = initBody
         )
 
-        wasmFileCodegenContext.defineGlobalField(declaration.symbol, global)
+        val doNotExportByEIC = declaration != backendContext.findUnitInstanceField()
+
+        wasmFileCodegenContext.defineGlobalField(declaration.symbol, global, doNotExportByEIC)
     }
 }
 

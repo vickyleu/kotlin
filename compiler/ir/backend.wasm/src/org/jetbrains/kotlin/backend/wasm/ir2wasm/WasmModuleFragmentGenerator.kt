@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.ir.backend.js.objectGetInstanceFunction
 import org.jetbrains.kotlin.ir.backend.js.utils.findUnitGetInstanceFunction
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
+import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.fileOrNull
 import org.jetbrains.kotlin.ir.visitors.acceptVoid
 
@@ -21,11 +22,28 @@ class WasmModuleFragmentGenerator(
     private val skipCommentInstructions: Boolean,
     private val useStringPool: Boolean,
 ) {
-    fun generateModuleAsSingleFileFragment(irModuleFragment: IrModuleFragment): WasmCompiledFileFragment {
+    fun generateModuleAsSingleFileFragment(
+        irModuleFragment: IrModuleFragment,
+    ): WasmCompiledFileFragment {
         val wasmFileFragment = WasmCompiledFileFragment(fragmentTag = null)
         val wasmFileCodegenContext = WasmFileCodegenContext(wasmFileFragment, idSignatureRetriever)
-        val wasmModuleTypeTransformer = WasmModuleTypeTransformer(backendContext, wasmFileCodegenContext)
+        generate(irModuleFragment, wasmFileCodegenContext)
+        return wasmFileFragment
+    }
 
+    fun generateModuleAsSingleFileFragmentWithIEC(
+        irModuleFragment: IrModuleFragment,
+        moduleName: String,
+        importDeclarations: Set<IdSignature>,
+    ): WasmCompiledFileFragment {
+        val wasmFileFragment = WasmCompiledFileFragment(fragmentTag = null)
+        val wasmFileCodegenContext = WasmFileCodegenContextWithImport(wasmFileFragment, idSignatureRetriever, moduleName, importDeclarations)
+        generate(irModuleFragment, wasmFileCodegenContext)
+        return wasmFileFragment
+    }
+
+    private fun generate(irModuleFragment: IrModuleFragment, wasmFileCodegenContext: WasmFileCodegenContext) {
+        val wasmModuleTypeTransformer = WasmModuleTypeTransformer(backendContext, wasmFileCodegenContext)
         for (irFile in irModuleFragment.files) {
             compileIrFile(
                 irFile,
@@ -38,7 +56,6 @@ class WasmModuleFragmentGenerator(
                 useStringPool,
             )
         }
-        return wasmFileFragment
     }
 }
 

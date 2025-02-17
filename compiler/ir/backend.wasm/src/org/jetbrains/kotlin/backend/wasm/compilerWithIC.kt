@@ -51,7 +51,6 @@ open class WasmCompilerWithIC(
             mainModule,
             propertyLazyInitialization = configuration.getBoolean(JSConfigurationKeys.PROPERTY_LAZY_INITIALIZATION),
             configuration = configuration,
-            moduleImportController = null,
         )
 
         idSignatureRetriever = context.irFactory as IdSignatureRetriever

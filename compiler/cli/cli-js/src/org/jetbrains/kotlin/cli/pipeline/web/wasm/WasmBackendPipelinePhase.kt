@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.cli.pipeline.web.wasm
 
-import org.jetbrains.kotlin.backend.wasm.ModuleImportController
 import org.jetbrains.kotlin.backend.wasm.WasmCompilerResult
 import org.jetbrains.kotlin.backend.wasm.compileToLoweredIr
 import org.jetbrains.kotlin.backend.wasm.compileWasm
@@ -15,6 +14,7 @@ import org.jetbrains.kotlin.backend.wasm.ic.WasmModuleArtifact
 import org.jetbrains.kotlin.backend.wasm.ir2wasm.WasmCompiledFileFragment
 import org.jetbrains.kotlin.backend.wasm.ir2wasm.WasmModuleFragmentGenerator
 import org.jetbrains.kotlin.backend.wasm.ir2wasm.WasmModuleMetadataCache
+import org.jetbrains.kotlin.backend.wasm.ir2wasm.getAllReferencedDeclarations
 import org.jetbrains.kotlin.backend.wasm.writeCompilationResult
 import org.jetbrains.kotlin.cli.common.perfManager
 import org.jetbrains.kotlin.cli.js.IcCachesArtifacts
@@ -185,7 +185,6 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
             exportedDeclarations = setOf(FqName("main")),
             generateTypeScriptFragment = generateDts,
             propertyLazyInitialization = propertyLazyInitialization,
-            moduleImportController = null,
         )
 
         performanceManager?.notifyIRGenerationStarted()
@@ -249,10 +248,6 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
 
         val irFactory = IrFactoryImplForWasmIC(WholeWorldStageController())
 
-        val masterModuleName = "$outputName.master"
-
-        val moduleImportController = ModuleImportController(masterModuleName, irFactory)
-
         val irModuleInfo = loadIrForMultimoduleMode(
             depsDescriptors = module,
             irFactory = irFactory,
@@ -274,7 +269,6 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
             exportedDeclarations = setOf(FqName("main")),
             generateTypeScriptFragment = false,
             propertyLazyInitialization = propertyLazyInitialization,
-            moduleImportController = moduleImportController,
             disableOptimisations = true,
         )
 
@@ -294,16 +288,20 @@ object WasmBackendPipelinePhase : WebBackendPipelinePhase<WasmBackendPipelineArt
 
         val wasmCompiledFileFragments = mutableListOf<WasmCompiledFileFragment>()
 
-        moduleImportController.enableImport = false
-        val mainIrModuleFragment = allModules.last()
+        val masterModuleName = "$outputName.master"
 
+        val mainIrModuleFragment = allModules.last()
         val mainModuleFileFragment = codeGenerator.generateModuleAsSingleFileFragment(mainIrModuleFragment)
         wasmCompiledFileFragments.add(mainModuleFileFragment)
-        moduleImportController.addFileFragmentImports(mainModuleFileFragment)
 
-        moduleImportController.enableImport = true
         allModules.dropLast(1).forEach {
-            wasmCompiledFileFragments.add(codeGenerator.generateModuleAsSingleFileFragment(it))
+            wasmCompiledFileFragments.add(
+                codeGenerator.generateModuleAsSingleFileFragmentWithIEC(
+                    it,
+                    masterModuleName,
+                    getAllReferencedDeclarations(mainModuleFileFragment),
+                )
+            )
         }
 
         val res = compileWasm(
