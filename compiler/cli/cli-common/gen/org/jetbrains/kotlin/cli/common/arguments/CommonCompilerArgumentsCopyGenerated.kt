@@ -35,6 +35,7 @@ fun copyCommonCompilerArguments(from: CommonCompilerArguments, to: CommonCompile
     to.experimental = from.experimental?.copyOf()
     to.explicitApi = from.explicitApi
     to.explicitReturnTypes = from.explicitReturnTypes
+    to.fragmentDependencies = from.fragmentDependencies?.copyOf()
     to.fragmentRefines = from.fragmentRefines?.copyOf()
     to.fragmentSources = from.fragmentSources?.copyOf()
     to.fragments = from.fragments?.copyOf()
@@ -75,6 +76,7 @@ fun copyCommonCompilerArguments(from: CommonCompilerArguments, to: CommonCompile
     to.returnValueChecker = from.returnValueChecker
     to.script = from.script
     to.selfUpperBoundInference = from.selfUpperBoundInference
+    to.separateKmpCompilationScheme = from.separateKmpCompilationScheme
     to.skipMetadataVersionCheck = from.skipMetadataVersionCheck
     to.skipPrereleaseCheck = from.skipPrereleaseCheck
     to.stdlibCompilation = from.stdlibCompilation

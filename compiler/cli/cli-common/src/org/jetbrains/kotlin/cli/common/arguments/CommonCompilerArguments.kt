@@ -789,6 +789,31 @@ The corresponding calls' declarations may not be marked with @BuilderInference."
         }
 
     @Argument(
+        value = "-Xfragment-dependency",
+        valueDescription = "<fragment name>:<path>",
+        description = """Declare common klib dependencies for the specific fragment.
+This argument is required for any HMPP module except the platform leaf module: it takes dependencies from -cp/-libraries.
+The argument should be used only if the new compilation scheme is enabled with -Xseparate-kmp-compilation
+""",
+    )
+    var fragmentDependencies: Array<String>? = null
+        set(value) {
+            checkFrozen()
+            field = value
+        }
+
+    @Argument(
+        value = "-Xseparate-kmp-compilation",
+        valueDescription = "<fragment name>:<path>",
+        description = "Enables the separated compilation scheme, in which common source sets are analyzed againts their own dependencies"
+    )
+    var separateKmpCompilationScheme: Boolean = false
+        set(value) {
+            checkFrozen()
+            field = value
+        }
+
+    @Argument(
         value = "-Xignore-const-optimization-errors",
         description = "Ignore all compilation exceptions while optimizing some constant expressions."
     )
@@ -919,6 +944,7 @@ default: 'first-only-warn' in language version 2.2+, 'first-only' in version 2.1
             put(AnalysisFlags.muteExpectActualClassesWarning, expectActualClasses)
             put(AnalysisFlags.allowFullyQualifiedNameInKClass, true)
             put(AnalysisFlags.dontWarnOnErrorSuppression, dontWarnOnErrorSuppression)
+            put(AnalysisFlags.hierarchicalMultiplatformCompilation, separateKmpCompilationScheme)
             fillWarningLevelMap(collector)
             ReturnValueCheckerMode.fromString(returnValueChecker)?.also { put(AnalysisFlags.returnValueCheckerMode, it) } ?: collector.report(
                 CompilerMessageSeverity.ERROR,
