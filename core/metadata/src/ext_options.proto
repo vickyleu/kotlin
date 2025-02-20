@@ -22,13 +22,13 @@ import "google/protobuf/descriptor.proto";
 option java_outer_classname = "ExtOptionsProtoBuf";
 
 extend google.protobuf.FieldOptions {
-  optional bool skip_in_comparison = 50000;
-  optional bool name_id_in_table = 50001;
-  optional bool fq_name_id_in_table = 50002;
-  optional bool string_id_in_table = 50003;
-  optional bool type_id_in_table = 50004;
+  bool skip_in_comparison = 50000;
+  bool name_id_in_table = 50001;
+  bool fq_name_id_in_table = 50002;
+  bool string_id_in_table = 50003;
+  bool type_id_in_table = 50004;
 }
 
 extend google.protobuf.MessageOptions {
-  optional bool skip_message_in_comparison = 50100;
+  bool skip_message_in_comparison = 50100;
 }

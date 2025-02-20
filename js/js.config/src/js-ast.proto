@@ -36,7 +36,7 @@ enum SideEffects {
 message JsImportedModule {
     required int32 external_name = 1;
     required int32 internal_name = 2;
-    optional Expression plain_reference = 3;
+    Expression plain_reference = 3;
 }
 
 
@@ -44,11 +44,11 @@ message JsImportedModule {
 //
 
 message Expression {
-    optional int32 fileId = 1;
-    optional Location location = 2;
-    optional bool synthetic = 3 [default = false];
-    optional SideEffects side_effects = 4 [default = AFFECTS_STATE];
-    optional JsImportedModule local_alias = 5;
+    int32 fileId = 1;
+    Location location = 2;
+    bool synthetic = 3 [default = false];
+    SideEffects side_effects = 4 [default = AFFECTS_STATE];
+    JsImportedModule local_alias = 5;
     repeated Comment before_comments = 6;
     repeated Comment after_comments = 7;
 
@@ -96,7 +96,7 @@ message FalseLiteral {
 
 message RegExpLiteral {
     required int32 pattern_string_id = 1;
-    optional int32 flags_string_id = 2;
+    int32 flags_string_id = 2;
 }
 
 message ArrayLiteral {
@@ -105,7 +105,7 @@ message ArrayLiteral {
 
 message ObjectLiteral {
     repeated ObjectLiteralEntry entry = 1;
-    optional bool multiline = 2 [default = true];
+    bool multiline = 2 [default = true];
 }
 
 message ObjectLiteralEntry {
@@ -115,11 +115,11 @@ message ObjectLiteralEntry {
 
 message Function {
     repeated Parameter parameter = 1;
-    optional int32 name_id = 2;
+    int32 name_id = 2;
     required Statement body = 3;
-    optional bool local = 4 [default = false];
+    bool local = 4 [default = false];
     repeated Modifier modifier = 5;
-    optional bool is_es6_arrow = 6 [default = false];
+    bool is_es6_arrow = 6 [default = false];
 
     enum Modifier {
         STATIC = 1;
@@ -130,15 +130,15 @@ message Function {
 }
 
 message Class {
-    optional int32 name_id = 1;
-    optional Expression super_expression = 2;
-    optional Function constructor = 3;
+    int32 name_id = 1;
+    Expression super_expression = 2;
+    Function constructor = 3;
     repeated Function member = 4;
 }
 
 message Parameter {
     required int32 name_id = 1;
-    optional bool has_default_value = 2 [default = false];
+    bool has_default_value = 2 [default = false];
 }
 
 message DocComment {
@@ -234,20 +234,20 @@ message ArrayAccess {
 
 message NameReference {
     required int32 name_id = 1;
-    optional Expression qualifier = 2;
-    optional InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
+    Expression qualifier = 2;
+    InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
 }
 
 message PropertyReference {
     required int32 string_id = 1;
-    optional Expression qualifier = 2;
-    optional InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
+    Expression qualifier = 2;
+    InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
 }
 
 message Invocation {
     required Expression qualifier = 1;
     repeated Expression argument = 2;
-    optional InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
+    InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
 }
 
 message Instantiation {
@@ -260,9 +260,9 @@ message Instantiation {
 //
 
 message Statement {
-    optional int32 fileId = 1;
-    optional Location location = 2;
-    optional bool synthetic = 3 [default = false];
+    int32 fileId = 1;
+    Location location = 2;
+    bool synthetic = 3 [default = false];
     repeated Comment before_comments = 4;
     repeated Comment after_comments = 5;
 
@@ -291,7 +291,7 @@ message Statement {
 }
 
 message Return {
-    optional Expression value = 1;
+    Expression value = 1;
 }
 
 message Throw {
@@ -299,11 +299,11 @@ message Throw {
 }
 
 message Break {
-    optional int32 label_id = 1;
+    int32 label_id = 1;
 }
 
 message Continue {
-    optional int32 label_id = 1;
+    int32 label_id = 1;
 }
 
 message Debugger {
@@ -311,20 +311,20 @@ message Debugger {
 
 message ExpressionStatement {
     required Expression expression = 1;
-    optional int32 exported_tag_id = 2;
+    int32 exported_tag_id = 2;
 }
 
 message Vars {
     repeated VarDeclaration declaration = 1;
-    optional bool multiline = 2 [default = false];
-    optional int32 exported_package_id = 3;
+    bool multiline = 2 [default = false];
+    int32 exported_package_id = 3;
 }
 
 message VarDeclaration {
     required int32 name_id = 1;
-    optional Expression initial_value = 2;
-    optional int32 fileId = 3;
-    optional Location location = 4;
+    Expression initial_value = 2;
+    int32 fileId = 3;
+    Location location = 4;
 }
 
 message Block {
@@ -343,7 +343,7 @@ message Label {
 message If {
     required Expression condition = 1;
     required Statement then_statement = 2;
-    optional Statement else_statement = 3;
+    Statement else_statement = 3;
 }
 
 message Switch {
@@ -352,11 +352,11 @@ message Switch {
 }
 
 message SwitchEntry {
-    optional Expression label = 1;
+    Expression label = 1;
     repeated Statement statement = 2;
 
-    optional int32 fileId = 3;
-    optional Location location = 4;
+    int32 fileId = 3;
+    Location location = 4;
 }
 
 message While {
@@ -375,8 +375,8 @@ message For {
         Expression expression = 2;
         EmptyInit empty = 3;
     }
-    optional Expression condition = 4;
-    optional Expression increment = 5;
+    Expression condition = 4;
+    Expression increment = 5;
     required Statement body = 6;
 }
 
@@ -394,8 +394,8 @@ message ForIn {
 
 message Try {
     required Statement tryBlock = 1;
-    optional Catch catchBlock = 2;
-    optional Statement finallyBlock = 3;
+    Catch catchBlock = 2;
+    Statement finallyBlock = 3;
 }
 
 message Catch {
@@ -426,22 +426,22 @@ enum InlineStrategy {
 message Fragment {
     repeated ImportedModule imported_module = 1;
     repeated Import import_entry = 2;
-    optional CompositeBlock declaration_block = 3;
-    optional CompositeBlock export_block = 4;
-    optional CompositeBlock initializer_block = 5;
+    CompositeBlock declaration_block = 3;
+    CompositeBlock export_block = 4;
+    CompositeBlock initializer_block = 5;
     repeated NameBinding name_binding = 6;
     repeated ClassModel class_model = 7;
     repeated Expression module_expression = 8;
     repeated InlineModule inline_module = 9;
-    optional string package_fqn = 10;
-    optional Statement tests_invocation = 11;
-    optional Statement main_invocation = 12;
+    string package_fqn = 10;
+    Statement tests_invocation = 11;
+    Statement main_invocation = 12;
     repeated InlinedLocalDeclarations inlined_local_declarations = 13;
     repeated IrClassModel ir_class_model = 14;
-    optional string dts = 15;
-    optional int32 suite_function = 16;
+    string dts = 15;
+    int32 suite_function = 16;
     repeated int32 definitions = 17;
-    optional CompositeBlock polyfills = 18;
+    CompositeBlock polyfills = 18;
     repeated int32 optionalCrossModuleImports = 19;
 }
 
@@ -453,7 +453,7 @@ message InlinedLocalDeclarations {
 message ImportedModule {
     required int32 external_name_id = 1;
     required int32 internal_name_id = 2;
-    optional Expression plain_reference = 3;
+    Expression plain_reference = 3;
 }
 
 message Import {
@@ -468,16 +468,16 @@ message NameBinding {
 
 message ClassModel {
     required int32 name_id = 1;
-    optional int32 super_name_id = 2;
+    int32 super_name_id = 2;
     repeated int32 interface_name_id = 4;
-    optional CompositeBlock post_declaration_block = 3;
+    CompositeBlock post_declaration_block = 3;
 }
 
 message IrClassModel {
     required int32 name_id = 1;
     repeated int32 super_classes = 2;
-    optional CompositeBlock pre_declaration_block = 3;
-    optional CompositeBlock post_declaration_block = 4;
+    CompositeBlock pre_declaration_block = 3;
+    CompositeBlock post_declaration_block = 4;
 }
 
 message InlineModule {
@@ -498,15 +498,15 @@ message NameTable {
 
 message Name {
     required bool temporary = 1;
-    optional int32 identifier = 2;
-    optional LocalAlias local_name_id = 3;
-    optional bool imported = 4 [default = false];
-    optional SpecialFunction special_function = 5;
+    int32 identifier = 2;
+    LocalAlias local_name_id = 3;
+    bool imported = 4 [default = false];
+    SpecialFunction special_function = 5;
 }
 
 message LocalAlias {
     required int32 local_name_id = 1;
-    optional int32 tag = 2;
+    int32 tag = 2;
 }
 
 enum SpecialFunction {

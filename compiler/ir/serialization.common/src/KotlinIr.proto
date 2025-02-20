@@ -17,8 +17,8 @@ message FileEntry {
 
 message IrFile {
   repeated int32 declaration_id = 1 [packed=true];
-  optional FileEntry file_entry = 2; // Required: either `file_entry` or `file_entry_id` is present.
-  optional int32 file_entry_id = 7;  // Required: either `file_entry` or `file_entry_id` is present.
+  FileEntry file_entry = 2; // Required: either `file_entry` or `file_entry_id` is present.
+  int32 file_entry_id = 7;  // Required: either `file_entry` or `file_entry_id` is present.
   repeated int32 fq_name = 3 [packed=true];
   repeated IrConstructorCall annotation = 4;
   repeated int64 explicitly_exported_to_compiler = 5 [packed=true];
@@ -32,23 +32,23 @@ message IrFile {
 message CommonIdSignature {
   repeated int32 package_fq_name = 1 [packed=true];
   repeated int32 declaration_fq_name = 2 [packed = true];
-  optional int64 member_uniq_id = 3;
-  optional int64 flags = 4 [default = 0];
-  optional int32 debug_info = 5;
+  int64 member_uniq_id = 3;
+  int64 flags = 4 [default = 0];
+  int32 debug_info = 5;
 }
 
 message AccessorIdSignature {
   required int32 property_signature = 1;
   required int32 name = 2;
   required int64 accessor_hash_id = 3;
-  optional int64 flags = 4 [default = 0];
-  optional int32 debug_info = 5;
+  int64 flags = 4 [default = 0];
+  int32 debug_info = 5;
 }
 
 message FileLocalIdSignature {
   required int32 container = 1;
   required int64 local_id = 2;
-  optional int32 debug_info = 3;
+  int32 debug_info = 3;
 }
 
 message CompositeSignature {
@@ -58,8 +58,8 @@ message CompositeSignature {
 
 message LocalSignature {
   repeated int32 local_fq_name = 1 [packed=true];
-  optional int64 local_hash = 2;
-  optional int32 debug_info = 3;
+  int64 local_hash = 2;
+  int32 debug_info = 3;
 }
 
 message FileSignature {}
@@ -86,7 +86,7 @@ message IrSimpleTypeLegacy {
   required int64 classifier = 2;
   required bool has_question_mark = 3;
   repeated int64 argument = 4 [packed=true]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
-  optional IrTypeAbbreviation abbreviation = 5;
+  IrTypeAbbreviation abbreviation = 5;
 }
 
 enum IrSimpleTypeNullability {
@@ -98,9 +98,9 @@ enum IrSimpleTypeNullability {
 message IrSimpleType {
   repeated IrConstructorCall annotation = 1;
   required int64 classifier = 2;
-  optional IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
+  IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
   repeated int64 argument = 4 [packed=true]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
-  optional IrTypeAbbreviation abbreviation = 5;
+  IrTypeAbbreviation abbreviation = 5;
 }
 
 message IrTypeAbbreviation {
@@ -136,12 +136,12 @@ message IrType {
 
 message IrBreak {
   required int32 loop_id = 1;
-  optional int32 label = 2;
+  int32 label = 2;
 }
 
 message IrBlock {
   repeated IrStatement statement = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
 }
 
 message IrReturnableBlock {
@@ -150,12 +150,12 @@ message IrReturnableBlock {
 }
 
 message IrInlinedFunctionBlock {
-  optional int64 inlined_function_symbol = 1;
-  optional FileEntry inlined_function_file_entry = 2; // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
+  int64 inlined_function_symbol = 1;
+  FileEntry inlined_function_file_entry = 2; // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
   required IrBlock base = 3;
   required int32 inlined_function_start_offset = 4;
   required int32 inlined_function_end_offset = 5;
-  optional int32 inlined_function_file_entry_id = 6;  // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
+  int32 inlined_function_file_entry_id = 6;  // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
 }
 
 message MemberAccessCommon {
@@ -163,8 +163,8 @@ message MemberAccessCommon {
   repeated NullableIrExpression argument = 6;
 
   // Value argument serialization scheme before 2.2.0
-  optional IrExpression dispatch_receiver = 1;
-  optional IrExpression extension_receiver = 2;
+  IrExpression dispatch_receiver = 1;
+  IrExpression extension_receiver = 2;
   repeated NullableIrExpression regular_argument = 3;
 
   repeated int32 type_argument = 4 [packed=true];
@@ -176,61 +176,61 @@ message MemberAccessCommon {
 message IrCall {
   required int64 symbol = 1;
   required MemberAccessCommon member_access = 2;
-  optional int64 super = 3;
-  optional int32 origin_name = 4;
+  int64 super = 3;
+  int32 origin_name = 4;
 }
 
 message IrConstructorCall {
   required int64 symbol = 1;
   required int32 constructor_type_arguments_count = 2;
   required MemberAccessCommon member_access = 3;
-  optional int32 origin_name = 4;
+  int32 origin_name = 4;
 }
 
 message IrFunctionReference {
   required int64 symbol = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
   required MemberAccessCommon member_access = 3;
-  optional int64 reflection_target_symbol = 4;
+  int64 reflection_target_symbol = 4;
 }
 
 message IrLocalDelegatedPropertyReference {
   required int64 delegate = 1;
-  optional int64 getter = 2;
-  optional int64 setter = 3;
+  int64 getter = 2;
+  int64 setter = 3;
   required int64 symbol = 4;
-  optional int32 origin_name = 5;
+  int32 origin_name = 5;
 }
 
 message IrPropertyReference {
-  optional int64 field = 1;
-  optional int64 getter = 2;
-  optional int64 setter = 3;
-  optional int32 origin_name = 4;
+  int64 field = 1;
+  int64 getter = 2;
+  int64 setter = 3;
+  int32 origin_name = 4;
   required MemberAccessCommon member_access = 5;
   required int64 symbol = 6;
 }
 
 message IrRichFunctionReference {
   repeated IrExpression bound_values = 1;
-  optional int64 reflection_target_symbol = 2;
+  int64 reflection_target_symbol = 2;
   required int64 overridden_function_symbol = 3;
   required IrFunction invoke_function = 4;
-  optional int64 flags = 5 [default = 0];
-  optional int32 origin_name = 6;
+  int64 flags = 5 [default = 0];
+  int32 origin_name = 6;
 }
 
 message IrRichPropertyReference {
   repeated IrExpression bound_values = 1;
-  optional int64 reflection_target_symbol = 2;
+  int64 reflection_target_symbol = 2;
   required IrFunction getter_function = 3;
-  optional IrFunction setter_function = 4;
-  optional int32 origin_name = 5;
+  IrFunction setter_function = 4;
+  int32 origin_name = 5;
 }
 
 message IrComposite {
   repeated IrStatement statement = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
 }
 
 message IrClassReference {
@@ -255,7 +255,7 @@ message IrConst {
 
 message IrContinue {
   required int32 loop_id = 1;
-  optional int32 label = 2;
+  int32 label = 2;
 }
 
 message IrDelegatingConstructorCall {
@@ -282,18 +282,18 @@ message IrGetEnumValue {
 
 message FieldAccessCommon {
   required int64 symbol = 1;
-  optional int64 super = 2;
-  optional IrExpression receiver = 3;
+  int64 super = 2;
+  IrExpression receiver = 3;
 }
 
 message IrGetField {
   required FieldAccessCommon field_access = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
 }
 
 message IrGetValue {
   required int64 symbol = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
 }
 
 message IrGetObject {
@@ -307,9 +307,9 @@ message IrInstanceInitializerCall {
 message Loop {
   required int32 loop_id = 1;
   required IrExpression condition = 2;
-  optional int32 label = 3;
-  optional IrExpression body = 4;
-  optional int32 origin_name = 5;
+  int32 label = 3;
+  IrExpression body = 4;
+  int32 origin_name = 5;
 }
 
 message IrReturn {
@@ -320,13 +320,13 @@ message IrReturn {
 message IrSetField {
   required FieldAccessCommon field_access = 1;
   required IrExpression value = 2;
-  optional int32 origin_name = 3;
+  int32 origin_name = 3;
 }
 
 message IrSetValue {
   required int64 symbol = 1;
   required IrExpression value = 2;
-  optional int32 origin_name = 3;
+  int32 origin_name = 3;
 }
 
 message IrSpreadElement {
@@ -345,7 +345,7 @@ message IrThrow {
 message IrTry {
   required IrExpression result = 1;
   repeated IrStatement catch = 2;
-  optional IrExpression finally = 3;
+  IrExpression finally = 3;
 }
 
 message IrTypeOp {
@@ -368,7 +368,7 @@ message IrVarargElement {
 
 message IrWhen {
   repeated IrStatement branch = 1;
-  optional int32 origin_name = 2;
+  int32 origin_name = 2;
 }
 
 message IrWhile {
@@ -386,7 +386,7 @@ message IrErrorExpression {
 
 message IrErrorCallExpression {
   required int32 description = 1;
-  optional IrExpression receiver = 2;
+  IrExpression receiver = 2;
   repeated IrExpression value_argument = 3;
 }
 
@@ -508,7 +508,7 @@ message IrExpression {
 }
 
 message NullableIrExpression {
-  optional IrExpression expression = 1;
+  IrExpression expression = 1;
 }
 
 /* ------ Declarations --------------------------------------------- */
@@ -517,7 +517,7 @@ message IrDeclarationBase {
   required int64 symbol = 1;
   required int32 origin_name = 2;
   required int64 coordinates = 3;
-  optional int64 flags = 4 [default = 0];
+  int64 flags = 4 [default = 0];
   repeated IrConstructorCall annotation = 5;
 }
 
@@ -525,18 +525,18 @@ message IrFunctionBase {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
   repeated IrTypeParameter type_parameter = 3;
-  optional IrValueParameter dispatch_receiver = 4;
+  IrValueParameter dispatch_receiver = 4;
   repeated IrValueParameter context_parameter = 9;
-  optional IrValueParameter extension_receiver = 5;
+  IrValueParameter extension_receiver = 5;
   repeated IrValueParameter regular_parameter = 6;
-  optional int32 body = 7;
-  //optional int32 context_receiver_parameters_count = 8;
+  int32 body = 7;
+  //int32 context_receiver_parameters_count = 8;
 }
 
 message IrFunction {
   required IrFunctionBase base = 1;
   repeated int64 overridden = 2 [packed=true]; // TODO: supposed to be deleted
-  //optional UniqId corresponding_property = 7;
+  //UniqId corresponding_property = 7;
 }
 
 message IrConstructor {
@@ -546,36 +546,36 @@ message IrConstructor {
 message IrField {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  optional int32 initializer = 3;
+  int32 initializer = 3;
 }
 
 message IrLocalDelegatedProperty {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  optional IrVariable delegate = 3;
-  optional IrFunction getter = 4;
-  optional IrFunction setter = 5;
+  IrVariable delegate = 3;
+  IrFunction getter = 4;
+  IrFunction setter = 5;
 }
 
 message IrProperty {
   required IrDeclarationBase base = 1;
   required int32 name = 2;
-  optional IrField backing_field = 3;
-  optional IrFunction getter = 4;
-  optional IrFunction setter = 5;
+  IrField backing_field = 3;
+  IrFunction getter = 4;
+  IrFunction setter = 5;
 }
 
 message IrVariable {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  optional IrExpression initializer = 3;
+  IrExpression initializer = 3;
 }
 
 message IrValueParameter {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  optional int32 vararg_element_type = 3;
-  optional int32 default_value = 4;
+  int32 vararg_element_type = 3;
+  int32 default_value = 4;
 }
 
 message IrTypeParameter {
@@ -587,12 +587,12 @@ message IrTypeParameter {
 message IrClass {
   required IrDeclarationBase base = 1;
   required int32 name = 2;
-  optional IrValueParameter this_receiver = 3;
+  IrValueParameter this_receiver = 3;
   repeated IrTypeParameter type_parameter = 4;
   repeated IrDeclaration declaration = 5;
   repeated int32 super_type = 6 [packed=true];
-  optional IrInlineClassRepresentation inline_class_representation = 7;
-  optional IrMultiFieldValueClassRepresentation multi_field_value_class_representation = 9;
+  IrInlineClassRepresentation inline_class_representation = 7;
+  IrMultiFieldValueClassRepresentation multi_field_value_class_representation = 9;
   repeated int64 sealed_subclass = 8 [packed=true];
 }
 
@@ -605,8 +605,8 @@ message IrTypeAlias {
 message IrEnumEntry {
   required IrDeclarationBase base = 1;
   required int32 name = 2;
-  optional int32 initializer = 3;
-  optional IrClass corresponding_class = 4;
+  int32 initializer = 3;
+  IrClass corresponding_class = 4;
 }
 
 message IrAnonymousInit {

@@ -34,9 +34,9 @@ message Module {
   // The names here are dot-separated, e.g. "org.foo.bar"
   repeated string jvm_package_name = 3;
 
-  optional StringTable string_table = 4;
+  StringTable string_table = 4;
 
-  optional QualifiedNameTable qualified_name_table = 5;
+  QualifiedNameTable qualified_name_table = 5;
 
   // Annotations on the whole module
   repeated Annotation annotation = 6;
