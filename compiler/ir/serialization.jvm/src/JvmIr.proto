@@ -1,4 +1,4 @@
-syntax = "proto2";
+edition = "2023";
 package org.jetbrains.kotlin.backend.jvm.serialization.proto;
 import "compiler/ir/serialization.common/src/KotlinIr.proto";
 

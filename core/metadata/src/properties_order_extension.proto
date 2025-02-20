@@ -1,3 +1,5 @@
+edition = "2023";
+
 package org.jetbrains.kotlin.metadata;
 
 import "core/metadata/src/metadata.proto";

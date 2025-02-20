@@ -1,4 +1,5 @@
-syntax = "proto2";
+edition = "2023";
+
 package org.jetbrains.kotlin.backend.common.serialization.proto;
 
 // Changes to this proto are tracked by KotlinAbiVersion version. See KotlinAbiVersion KDoc.
