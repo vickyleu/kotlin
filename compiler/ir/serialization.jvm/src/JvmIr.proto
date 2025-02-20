@@ -21,6 +21,6 @@ message ClassOrFile {
   repeated string string = 4 [features.repeated_field_encoding = EXPANDED];
   repeated XStatementOrExpression body = 5 [features.repeated_field_encoding = EXPANDED];
   repeated string debug_info = 6 [features.repeated_field_encoding = EXPANDED];
-  required string file_facade_fq_name = 7;
+  string file_facade_fq_name = 7 [features.field_presence = LEGACY_REQUIRED];
   repeated common.serialization.proto.FileEntry file_entry = 8 [features.repeated_field_encoding = EXPANDED];
 }

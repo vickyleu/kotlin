@@ -27,7 +27,7 @@ option java_outer_classname = "KlibMetadataProtoBuf";
 option optimize_for = LITE_RUNTIME;
 
 message Header {
-  required string module_name = 1;
+  string module_name = 1 [features.field_presence = LEGACY_REQUIRED];
   /*
     Possible values are listed in KlibMetadataHeaderFlags class.
   */
@@ -48,11 +48,11 @@ message Header {
 }
 
 message File {
-  required string name = 1;
+  string name = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message DescriptorUniqId {
-  required int64 index = 1;
+  int64 index = 1 [features.field_presence = LEGACY_REQUIRED];
 
   option (org.jetbrains.kotlin.metadata.skip_message_in_comparison) = true;
 }

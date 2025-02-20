@@ -36,7 +36,7 @@ message QualifiedNameTable {
   message QualifiedName {
     int32 parent_qualified_name = 1 [default = -1];
     // id in the StringTable
-    required int32 short_name = 2;
+    int32 short_name = 2 [features.field_presence = LEGACY_REQUIRED];
     Kind kind = 3 [default = PACKAGE];
 
     enum Kind {
@@ -110,11 +110,11 @@ message Annotation {
       int32 flags = 10 [default = 0];
     }
 
-    required int32 name_id = 1 [(name_id_in_table) = true];
-    required Value value = 2;
+    int32 name_id = 1 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
+    Value value = 2 [features.field_presence = LEGACY_REQUIRED];
   }
 
-  required int32 id = 1 [(fq_name_id_in_table) = true];
+  int32 id = 1 [(fq_name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   repeated Argument argument = 2 [features.repeated_field_encoding = EXPANDED];
 }
@@ -174,9 +174,9 @@ message Type {
 }
 
 message TypeParameter {
-  required int32 id = 1;
+  int32 id = 1 [features.field_presence = LEGACY_REQUIRED];
 
-  required int32 name = 2 [(name_id_in_table) = true];
+  int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   bool reified = 3 [default = false];
 
@@ -220,7 +220,7 @@ message Class {
   */
   int32 flags = 1 [default = 6 /* public final class, no annotations */];
 
-  required int32 fq_name = 3 [(fq_name_id_in_table) = true];
+  int32 fq_name = 3 [(fq_name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   int32 companion_object_name = 4 [(name_id_in_table) = true];
 
@@ -325,7 +325,7 @@ message Function {
   int32 flags = 9 [default = 6 /* public final function, no annotations */];
   int32 old_flags = 1 [default = 6];
 
-  required int32 name = 2 [(name_id_in_table) = true];
+  int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   Type return_type = 3;
   int32 return_type_id = 7 [(type_id_in_table) = true];
@@ -375,7 +375,7 @@ message Property {
   int32 flags = 11 [default = 518 /* public (6) final property with getter (512) */];
   int32 old_flags = 1 [default = 2054];
 
-  required int32 name = 2 [(name_id_in_table) = true];
+  int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   Type return_type = 3;
   int32 return_type_id = 9 [(type_id_in_table) = true];
@@ -430,7 +430,7 @@ message ValueParameter {
   */
   int32 flags = 1 [default = 0];
 
-  required int32 name = 2 [(name_id_in_table) = true];
+  int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   Type type = 3;
   int32 type_id = 5 [(type_id_in_table) = true];
@@ -450,7 +450,7 @@ message TypeAlias {
   */
   int32 flags = 1 [default = 6 /* public, no annotations */];
 
-  required int32 name = 2 [(name_id_in_table) = true];
+  int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
   repeated TypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
 
@@ -632,6 +632,6 @@ message Expression {
 }
 
 message CompilerPluginData {
-  required int32 plugin_id = 1 [(string_id_in_table) = true];
-  required bytes data = 2;
+  int32 plugin_id = 1 [(string_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
+  bytes data = 2 [features.field_presence = LEGACY_REQUIRED];
 }

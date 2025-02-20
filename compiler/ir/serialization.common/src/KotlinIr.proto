@@ -11,7 +11,7 @@ option optimize_for = LITE_RUNTIME;
 /* ------ Top Level --------------------------------------------- */
 
 message FileEntry {
-  required string name = 1;
+  string name = 1 [features.field_presence = LEGACY_REQUIRED];
   repeated int32 line_start_offset = 2 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
@@ -38,22 +38,22 @@ message CommonIdSignature {
 }
 
 message AccessorIdSignature {
-  required int32 property_signature = 1;
-  required int32 name = 2;
-  required int64 accessor_hash_id = 3;
+  int32 property_signature = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
+  int64 accessor_hash_id = 3 [features.field_presence = LEGACY_REQUIRED];
   int64 flags = 4 [default = 0];
   int32 debug_info = 5;
 }
 
 message FileLocalIdSignature {
-  required int32 container = 1;
-  required int64 local_id = 2;
+  int32 container = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 local_id = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 debug_info = 3;
 }
 
 message CompositeSignature {
-  required int32 container_sig = 1;
-  required int32 inner_sig = 2;
+  int32 container_sig = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 inner_sig = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message LocalSignature {
@@ -83,8 +83,8 @@ message IdSignature {
 
 message IrSimpleTypeLegacy {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
-  required int64 classifier = 2;
-  required bool has_question_mark = 3;
+  int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
+  bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
   repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
 }
@@ -97,7 +97,7 @@ enum IrSimpleTypeNullability {
 
 message IrSimpleType {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
-  required int64 classifier = 2;
+  int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
   IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
   repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
@@ -105,8 +105,8 @@ message IrSimpleType {
 
 message IrTypeAbbreviation {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
-  required int64 type_alias = 2;
-  required bool has_question_mark = 3;
+  int64 type_alias = 2 [features.field_presence = LEGACY_REQUIRED];
+  bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
   repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
 }
 
@@ -135,7 +135,7 @@ message IrType {
 
 
 message IrBreak {
-  required int32 loop_id = 1;
+  int32 loop_id = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 label = 2;
 }
 
@@ -145,16 +145,16 @@ message IrBlock {
 }
 
 message IrReturnableBlock {
-  required int64 symbol = 1;
-  required IrBlock base = 2;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrBlock base = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrInlinedFunctionBlock {
   int64 inlined_function_symbol = 1;
   FileEntry inlined_function_file_entry = 2; // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
-  required IrBlock base = 3;
-  required int32 inlined_function_start_offset = 4;
-  required int32 inlined_function_end_offset = 5;
+  IrBlock base = 3 [features.field_presence = LEGACY_REQUIRED];
+  int32 inlined_function_start_offset = 4 [features.field_presence = LEGACY_REQUIRED];
+  int32 inlined_function_end_offset = 5 [features.field_presence = LEGACY_REQUIRED];
   int32 inlined_function_file_entry_id = 6;  // Required: either `inlined_function_file_entry` or `inlined_function_file_entry_id` is present.
 }
 
@@ -174,31 +174,31 @@ message MemberAccessCommon {
 }
 
 message IrCall {
-  required int64 symbol = 1;
-  required MemberAccessCommon member_access = 2;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  MemberAccessCommon member_access = 2 [features.field_presence = LEGACY_REQUIRED];
   int64 super = 3;
   int32 origin_name = 4;
 }
 
 message IrConstructorCall {
-  required int64 symbol = 1;
-  required int32 constructor_type_arguments_count = 2;
-  required MemberAccessCommon member_access = 3;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 constructor_type_arguments_count = 2 [features.field_presence = LEGACY_REQUIRED];
+  MemberAccessCommon member_access = 3 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 4;
 }
 
 message IrFunctionReference {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 2;
-  required MemberAccessCommon member_access = 3;
+  MemberAccessCommon member_access = 3 [features.field_presence = LEGACY_REQUIRED];
   int64 reflection_target_symbol = 4;
 }
 
 message IrLocalDelegatedPropertyReference {
-  required int64 delegate = 1;
+  int64 delegate = 1 [features.field_presence = LEGACY_REQUIRED];
   int64 getter = 2;
   int64 setter = 3;
-  required int64 symbol = 4;
+  int64 symbol = 4 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 5;
 }
 
@@ -207,15 +207,15 @@ message IrPropertyReference {
   int64 getter = 2;
   int64 setter = 3;
   int32 origin_name = 4;
-  required MemberAccessCommon member_access = 5;
-  required int64 symbol = 6;
+  MemberAccessCommon member_access = 5 [features.field_presence = LEGACY_REQUIRED];
+  int64 symbol = 6 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrRichFunctionReference {
   repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
   int64 reflection_target_symbol = 2;
-  required int64 overridden_function_symbol = 3;
-  required IrFunction invoke_function = 4;
+  int64 overridden_function_symbol = 3 [features.field_presence = LEGACY_REQUIRED];
+  IrFunction invoke_function = 4 [features.field_presence = LEGACY_REQUIRED];
   int64 flags = 5 [default = 0];
   int32 origin_name = 6;
 }
@@ -223,7 +223,7 @@ message IrRichFunctionReference {
 message IrRichPropertyReference {
   repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
   int64 reflection_target_symbol = 2;
-  required IrFunction getter_function = 3;
+  IrFunction getter_function = 3 [features.field_presence = LEGACY_REQUIRED];
   IrFunction setter_function = 4;
   int32 origin_name = 5;
 }
@@ -234,8 +234,8 @@ message IrComposite {
 }
 
 message IrClassReference {
-  required int64 class_symbol = 1;
-  required int32 class_type = 2;
+  int64 class_symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 class_type = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrConst {
@@ -254,84 +254,84 @@ message IrConst {
 }
 
 message IrContinue {
-  required int32 loop_id = 1;
+  int32 loop_id = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 label = 2;
 }
 
 message IrDelegatingConstructorCall {
-  required int64 symbol = 1;
-  required MemberAccessCommon member_access = 2;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  MemberAccessCommon member_access = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrDoWhile {
-  required Loop loop = 1;
+  Loop loop = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrEnumConstructorCall {
-  required int64 symbol = 1;
-  required MemberAccessCommon member_access = 2;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  MemberAccessCommon member_access = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrGetClass {
-  required IrExpression argument = 1;
+  IrExpression argument = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrGetEnumValue {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message FieldAccessCommon {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
   int64 super = 2;
   IrExpression receiver = 3;
 }
 
 message IrGetField {
-  required FieldAccessCommon field_access = 1;
+  FieldAccessCommon field_access = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 2;
 }
 
 message IrGetValue {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 2;
 }
 
 message IrGetObject {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrInstanceInitializerCall {
-  required int64 symbol = 1;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message Loop {
-  required int32 loop_id = 1;
-  required IrExpression condition = 2;
+  int32 loop_id = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression condition = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 label = 3;
   IrExpression body = 4;
   int32 origin_name = 5;
 }
 
 message IrReturn {
-  required int64 return_target = 1;
-  required IrExpression value = 2;
+  int64 return_target = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression value = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrSetField {
-  required FieldAccessCommon field_access = 1;
-  required IrExpression value = 2;
+  FieldAccessCommon field_access = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression value = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 3;
 }
 
 message IrSetValue {
-  required int64 symbol = 1;
-  required IrExpression value = 2;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression value = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 origin_name = 3;
 }
 
 message IrSpreadElement {
-  required IrExpression expression = 1;
-  required int64 coordinates = 2;
+  IrExpression expression = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 coordinates = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrStringConcat {
@@ -339,23 +339,23 @@ message IrStringConcat {
 }
 
 message IrThrow {
-  required IrExpression value = 1;
+  IrExpression value = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrTry {
-  required IrExpression result = 1;
+  IrExpression result = 1 [features.field_presence = LEGACY_REQUIRED];
   repeated IrStatement catch = 2 [features.repeated_field_encoding = EXPANDED];
   IrExpression finally = 3;
 }
 
 message IrTypeOp {
-  required IrTypeOperator operator = 1;
-  required int32 operand = 2;
-  required IrExpression argument = 3;
+  IrTypeOperator operator = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 operand = 2 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression argument = 3 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrVararg {
-  required int32 element_type = 1;
+  int32 element_type = 1 [features.field_presence = LEGACY_REQUIRED];
   repeated IrVarargElement element = 2 [features.repeated_field_encoding = EXPANDED];
 }
 
@@ -372,20 +372,20 @@ message IrWhen {
 }
 
 message IrWhile {
-  required Loop loop = 1;
+  Loop loop = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrFunctionExpression {
-  required IrFunction function = 1;
-  required int32 origin_name = 2;
+  IrFunction function = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 origin_name = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrErrorExpression {
-  required int32 description = 1;
+  int32 description = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrErrorCallExpression {
-  required int32 description = 1;
+  int32 description = 1 [features.field_presence = LEGACY_REQUIRED];
   IrExpression receiver = 2;
   repeated IrExpression value_argument = 3 [features.repeated_field_encoding = EXPANDED];
 }
@@ -393,8 +393,8 @@ message IrErrorCallExpression {
 /* ------ Dynamic expression --------------------------------------------- */
 
 message IrDynamicMemberExpression {
-  required int32 member_name = 1;
-  required IrExpression receiver = 2;
+  int32 member_name = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression receiver = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrDynamicOperatorExpression {
@@ -433,8 +433,8 @@ message IrDynamicOperatorExpression {
     ARRAY_ACCESS = 29;
     INVOKE = 30;
   }
-  required IrDynamicOperator operator = 1;
-  required IrExpression receiver = 2;
+  IrDynamicOperator operator = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression receiver = 2 [features.field_presence = LEGACY_REQUIRED];
   repeated IrExpression argument = 3 [features.repeated_field_encoding = EXPANDED];
 }
 
@@ -502,9 +502,9 @@ enum IrTypeOperator {
 
 
 message IrExpression {
-  required IrOperation operation = 1;
-  required int32 type = 2;
-  required int64 coordinates = 3;
+  IrOperation operation = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 type = 2 [features.field_presence = LEGACY_REQUIRED];
+  int64 coordinates = 3 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message NullableIrExpression {
@@ -514,16 +514,16 @@ message NullableIrExpression {
 /* ------ Declarations --------------------------------------------- */
 
 message IrDeclarationBase {
-  required int64 symbol = 1;
-  required int32 origin_name = 2;
-  required int64 coordinates = 3;
+  int64 symbol = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 origin_name = 2 [features.field_presence = LEGACY_REQUIRED];
+  int64 coordinates = 3 [features.field_presence = LEGACY_REQUIRED];
   int64 flags = 4 [default = 0];
   repeated IrConstructorCall annotation = 5 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrFunctionBase {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
   IrValueParameter dispatch_receiver = 4;
   repeated IrValueParameter context_parameter = 9 [features.repeated_field_encoding = EXPANDED];
@@ -534,59 +534,59 @@ message IrFunctionBase {
 }
 
 message IrFunction {
-  required IrFunctionBase base = 1;
+  IrFunctionBase base = 1 [features.field_presence = LEGACY_REQUIRED];
   repeated int64 overridden = 2 [packed=true, features.repeated_field_encoding = EXPANDED]; // TODO: supposed to be deleted
   //UniqId corresponding_property = 7;
 }
 
 message IrConstructor {
-  required IrFunctionBase base = 1;
+  IrFunctionBase base = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrField {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 initializer = 3;
 }
 
 message IrLocalDelegatedProperty {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   IrVariable delegate = 3;
   IrFunction getter = 4;
   IrFunction setter = 5;
 }
 
 message IrProperty {
-  required IrDeclarationBase base = 1;
-  required int32 name = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
   IrField backing_field = 3;
   IrFunction getter = 4;
   IrFunction setter = 5;
 }
 
 message IrVariable {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   IrExpression initializer = 3;
 }
 
 message IrValueParameter {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 vararg_element_type = 3;
   int32 default_value = 4;
 }
 
 message IrTypeParameter {
-  required IrDeclarationBase base = 1;
-  required int32 name = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
   repeated int32 super_type = 3 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
 message IrClass {
-  required IrDeclarationBase base = 1;
-  required int32 name = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
   IrValueParameter this_receiver = 3;
   repeated IrTypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
   repeated IrDeclaration declaration = 5 [features.repeated_field_encoding = EXPANDED];
@@ -597,21 +597,21 @@ message IrClass {
 }
 
 message IrTypeAlias {
-  required IrDeclarationBase base = 1;
-  required int64 name_type = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
   repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrEnumEntry {
-  required IrDeclarationBase base = 1;
-  required int32 name = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
   int32 initializer = 3;
   IrClass corresponding_class = 4;
 }
 
 message IrAnonymousInit {
-  required IrDeclarationBase base = 1;
-  required int32 body = 2;
+  IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 body = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 // TODO: we need an extension mechanism to accomodate new
@@ -640,8 +640,8 @@ message IrDeclaration {
 /* ------- IrStatements --------------------------------------------- */
 
 message IrBranch {
-  required IrExpression condition = 1;
-  required IrExpression result = 2;
+  IrExpression condition = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression result = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrBlockBody {
@@ -649,8 +649,8 @@ message IrBlockBody {
 }
 
 message IrCatch {
-  required IrVariable catch_parameter = 1;
-  required IrExpression result = 2;
+  IrVariable catch_parameter = 1 [features.field_presence = LEGACY_REQUIRED];
+  IrExpression result = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 enum IrSyntheticBodyKind {
@@ -660,12 +660,12 @@ enum IrSyntheticBodyKind {
 }
 
 message IrSyntheticBody {
-  required IrSyntheticBodyKind kind = 1;
+  IrSyntheticBodyKind kind = 1 [features.field_presence = LEGACY_REQUIRED];
 }
 
 // Let's try to map IrElement as well as IrStatement to IrStatement.
 message IrStatement {
-  required int64 coordinates = 1;
+  int64 coordinates = 1 [features.field_presence = LEGACY_REQUIRED];
   oneof statement {
     IrDeclaration declaration = 2;
     IrExpression expression = 3;
@@ -677,8 +677,8 @@ message IrStatement {
 }
 
 message IrInlineClassRepresentation {
-  required int32 underlying_property_name = 1;
-  required int32 underlying_property_type = 2;
+  int32 underlying_property_name = 1 [features.field_presence = LEGACY_REQUIRED];
+  int32 underlying_property_type = 2 [features.field_presence = LEGACY_REQUIRED];
 }
 
 message IrMultiFieldValueClassRepresentation {

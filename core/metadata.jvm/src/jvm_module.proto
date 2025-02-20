@@ -50,7 +50,7 @@ message Module {
 
 message PackageParts {
   // Dot-separated Kotlin FQ name of the package.
-  required string package_fq_name = 1;
+  string package_fq_name = 1 [features.field_presence = LEGACY_REQUIRED];
 
   // Short names of files, without extension, present in this package. Only single file facades and multi-file _parts_ are listed here
   // (multi-file facades are not present in this list, they are defined below). Only files whose JVM package name is equal to the
