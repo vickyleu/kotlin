@@ -119,7 +119,7 @@ extend org.jetbrains.kotlin.metadata.PackageFragment {
   bool is_empty = 172;
   string fq_name = 173;
   // id in StringTable
-  repeated int32 class_name = 174 [packed = true, features.repeated_field_encoding = EXPANDED];
+  repeated int32 class_name = 174 [features.repeated_field_encoding = PACKED];
 }
 
 extend org.jetbrains.kotlin.metadata.TypeAlias {

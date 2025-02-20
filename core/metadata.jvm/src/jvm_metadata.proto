@@ -54,17 +54,17 @@ message StringTableTypes {
     // If this field is present, the "substring" operation must be performed with the first element of this list as the start index,
     // and the second element as the end index.
     // If an operation is not NONE, it's applied _after_ this substring operation
-    repeated int32 substring_index = 4 [packed = true, features.repeated_field_encoding = EXPANDED];
+    repeated int32 substring_index = 4 [features.repeated_field_encoding = PACKED];
 
     // If this field is present, the "replaceAll" operation must be performed with the first element of this list as the code point
     // of the character to replace, and the second element as the code point of the replacement character
-    repeated int32 replace_char = 5 [packed = true, features.repeated_field_encoding = EXPANDED];
+    repeated int32 replace_char = 5 [features.repeated_field_encoding = PACKED];
   }
 
   repeated Record record = 1 [features.repeated_field_encoding = EXPANDED];
 
   // Indices of strings which are names of local classes or anonymous objects
-  repeated int32 local_name = 5 [packed = true, features.repeated_field_encoding = EXPANDED];
+  repeated int32 local_name = 5 [features.repeated_field_encoding = PACKED];
 }
 
 message JvmMethodSignature {
