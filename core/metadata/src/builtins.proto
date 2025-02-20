@@ -30,36 +30,36 @@ extend Package {
 }
 
 extend Class {
-  repeated Annotation class_annotation = 150;
+  repeated Annotation class_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend Constructor {
-  repeated Annotation constructor_annotation = 150;
+  repeated Annotation constructor_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend Function {
-  repeated Annotation function_annotation = 150;
+  repeated Annotation function_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend Property {
-  repeated Annotation property_annotation = 150;
-  repeated Annotation property_getter_annotation = 152;
-  repeated Annotation property_setter_annotation = 153;
+  repeated Annotation property_annotation = 150 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation property_getter_annotation = 152 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation property_setter_annotation = 153 [features.repeated_field_encoding = EXPANDED];
   Annotation.Argument.Value compile_time_value = 151;
 }
 
 extend EnumEntry {
-  repeated Annotation enum_entry_annotation = 150;
+  repeated Annotation enum_entry_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend ValueParameter {
-  repeated Annotation parameter_annotation = 150;
+  repeated Annotation parameter_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend Type {
-  repeated Annotation type_annotation = 150;
+  repeated Annotation type_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend TypeParameter {
-  repeated Annotation type_parameter_annotation = 150;
+  repeated Annotation type_parameter_annotation = 150 [features.repeated_field_encoding = EXPANDED];
 }

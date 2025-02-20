@@ -12,26 +12,26 @@ option optimize_for = LITE_RUNTIME;
 
 message FileEntry {
   required string name = 1;
-  repeated int32 line_start_offset = 2 [packed=true];
+  repeated int32 line_start_offset = 2 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
 message IrFile {
-  repeated int32 declaration_id = 1 [packed=true];
+  repeated int32 declaration_id = 1 [packed=true, features.repeated_field_encoding = EXPANDED];
   FileEntry file_entry = 2; // Required: either `file_entry` or `file_entry_id` is present.
   int32 file_entry_id = 7;  // Required: either `file_entry` or `file_entry_id` is present.
-  repeated int32 fq_name = 3 [packed=true];
-  repeated IrConstructorCall annotation = 4;
-  repeated int64 explicitly_exported_to_compiler = 5 [packed=true];
+  repeated int32 fq_name = 3 [packed=true, features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated int64 explicitly_exported_to_compiler = 5 [packed=true, features.repeated_field_encoding = EXPANDED];
 
   // WARNING: Don't occupy index 6 which was previously used for storing expect/actual table.
-  // repeated Actual actual = 6;
+  // repeated Actual actual = 6 [features.repeated_field_encoding = EXPANDED];
 }
 
 /* ------ IdSignature -------------------------------------------- */
 
 message CommonIdSignature {
-  repeated int32 package_fq_name = 1 [packed=true];
-  repeated int32 declaration_fq_name = 2 [packed = true];
+  repeated int32 package_fq_name = 1 [packed=true, features.repeated_field_encoding = EXPANDED];
+  repeated int32 declaration_fq_name = 2 [packed = true, features.repeated_field_encoding = EXPANDED];
   int64 member_uniq_id = 3;
   int64 flags = 4 [default = 0];
   int32 debug_info = 5;
@@ -57,7 +57,7 @@ message CompositeSignature {
 }
 
 message LocalSignature {
-  repeated int32 local_fq_name = 1 [packed=true];
+  repeated int32 local_fq_name = 1 [packed=true, features.repeated_field_encoding = EXPANDED];
   int64 local_hash = 2;
   int32 debug_info = 3;
 }
@@ -82,10 +82,10 @@ message IdSignature {
 // If x...xxx00 -> *
 
 message IrSimpleTypeLegacy {
-  repeated IrConstructorCall annotation = 1;
+  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   required int64 classifier = 2;
   required bool has_question_mark = 3;
-  repeated int64 argument = 4 [packed=true]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
 }
 
@@ -96,27 +96,27 @@ enum IrSimpleTypeNullability {
 }
 
 message IrSimpleType {
-  repeated IrConstructorCall annotation = 1;
+  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   required int64 classifier = 2;
   IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
-  repeated int64 argument = 4 [packed=true]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
 }
 
 message IrTypeAbbreviation {
-  repeated IrConstructorCall annotation = 1;
+  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   required int64 type_alias = 2;
   required bool has_question_mark = 3;
-  repeated int64 argument = 4 [packed=true]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
 }
 
 message IrDynamicType {
-  repeated IrConstructorCall annotation = 1;
+  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrDefinitelyNotNullType {
   // In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
-  repeated int32 types = 1 [packed=true];
+  repeated int32 types = 1 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
 message IrType {
@@ -140,7 +140,7 @@ message IrBreak {
 }
 
 message IrBlock {
-  repeated IrStatement statement = 1;
+  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
   int32 origin_name = 2;
 }
 
@@ -160,17 +160,17 @@ message IrInlinedFunctionBlock {
 
 message MemberAccessCommon {
   // Value argument serialization scheme after 2.2.0
-  repeated NullableIrExpression argument = 6;
+  repeated NullableIrExpression argument = 6 [features.repeated_field_encoding = EXPANDED];
 
   // Value argument serialization scheme before 2.2.0
   IrExpression dispatch_receiver = 1;
   IrExpression extension_receiver = 2;
-  repeated NullableIrExpression regular_argument = 3;
+  repeated NullableIrExpression regular_argument = 3 [features.repeated_field_encoding = EXPANDED];
 
-  repeated int32 type_argument = 4 [packed=true];
+  repeated int32 type_argument = 4 [packed=true, features.repeated_field_encoding = EXPANDED];
 
   // Previously used fields:
-  //repeated NullableIrExpression context_argument = 5;
+  //repeated NullableIrExpression context_argument = 5 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrCall {
@@ -212,7 +212,7 @@ message IrPropertyReference {
 }
 
 message IrRichFunctionReference {
-  repeated IrExpression bound_values = 1;
+  repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
   int64 reflection_target_symbol = 2;
   required int64 overridden_function_symbol = 3;
   required IrFunction invoke_function = 4;
@@ -221,7 +221,7 @@ message IrRichFunctionReference {
 }
 
 message IrRichPropertyReference {
-  repeated IrExpression bound_values = 1;
+  repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
   int64 reflection_target_symbol = 2;
   required IrFunction getter_function = 3;
   IrFunction setter_function = 4;
@@ -229,7 +229,7 @@ message IrRichPropertyReference {
 }
 
 message IrComposite {
-  repeated IrStatement statement = 1;
+  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
   int32 origin_name = 2;
 }
 
@@ -335,7 +335,7 @@ message IrSpreadElement {
 }
 
 message IrStringConcat {
-  repeated IrExpression argument = 1;
+  repeated IrExpression argument = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrThrow {
@@ -344,7 +344,7 @@ message IrThrow {
 
 message IrTry {
   required IrExpression result = 1;
-  repeated IrStatement catch = 2;
+  repeated IrStatement catch = 2 [features.repeated_field_encoding = EXPANDED];
   IrExpression finally = 3;
 }
 
@@ -356,7 +356,7 @@ message IrTypeOp {
 
 message IrVararg {
   required int32 element_type = 1;
-  repeated IrVarargElement element = 2;
+  repeated IrVarargElement element = 2 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrVarargElement {
@@ -367,7 +367,7 @@ message IrVarargElement {
 }
 
 message IrWhen {
-  repeated IrStatement branch = 1;
+  repeated IrStatement branch = 1 [features.repeated_field_encoding = EXPANDED];
   int32 origin_name = 2;
 }
 
@@ -387,7 +387,7 @@ message IrErrorExpression {
 message IrErrorCallExpression {
   required int32 description = 1;
   IrExpression receiver = 2;
-  repeated IrExpression value_argument = 3;
+  repeated IrExpression value_argument = 3 [features.repeated_field_encoding = EXPANDED];
 }
 
 /* ------ Dynamic expression --------------------------------------------- */
@@ -435,7 +435,7 @@ message IrDynamicOperatorExpression {
   }
   required IrDynamicOperator operator = 1;
   required IrExpression receiver = 2;
-  repeated IrExpression argument = 3;
+  repeated IrExpression argument = 3 [features.repeated_field_encoding = EXPANDED];
 }
 
 // TODO: we need an extension mechanism to accomodate new
@@ -518,24 +518,24 @@ message IrDeclarationBase {
   required int32 origin_name = 2;
   required int64 coordinates = 3;
   int64 flags = 4 [default = 0];
-  repeated IrConstructorCall annotation = 5;
+  repeated IrConstructorCall annotation = 5 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrFunctionBase {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  repeated IrTypeParameter type_parameter = 3;
+  repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
   IrValueParameter dispatch_receiver = 4;
-  repeated IrValueParameter context_parameter = 9;
+  repeated IrValueParameter context_parameter = 9 [features.repeated_field_encoding = EXPANDED];
   IrValueParameter extension_receiver = 5;
-  repeated IrValueParameter regular_parameter = 6;
+  repeated IrValueParameter regular_parameter = 6 [features.repeated_field_encoding = EXPANDED];
   int32 body = 7;
   //int32 context_receiver_parameters_count = 8;
 }
 
 message IrFunction {
   required IrFunctionBase base = 1;
-  repeated int64 overridden = 2 [packed=true]; // TODO: supposed to be deleted
+  repeated int64 overridden = 2 [packed=true, features.repeated_field_encoding = EXPANDED]; // TODO: supposed to be deleted
   //UniqId corresponding_property = 7;
 }
 
@@ -581,25 +581,25 @@ message IrValueParameter {
 message IrTypeParameter {
   required IrDeclarationBase base = 1;
   required int32 name = 2;
-  repeated int32 super_type = 3 [packed=true];
+  repeated int32 super_type = 3 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
 message IrClass {
   required IrDeclarationBase base = 1;
   required int32 name = 2;
   IrValueParameter this_receiver = 3;
-  repeated IrTypeParameter type_parameter = 4;
-  repeated IrDeclaration declaration = 5;
-  repeated int32 super_type = 6 [packed=true];
+  repeated IrTypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated IrDeclaration declaration = 5 [features.repeated_field_encoding = EXPANDED];
+  repeated int32 super_type = 6 [packed=true, features.repeated_field_encoding = EXPANDED];
   IrInlineClassRepresentation inline_class_representation = 7;
   IrMultiFieldValueClassRepresentation multi_field_value_class_representation = 9;
-  repeated int64 sealed_subclass = 8 [packed=true];
+  repeated int64 sealed_subclass = 8 [packed=true, features.repeated_field_encoding = EXPANDED];
 }
 
 message IrTypeAlias {
   required IrDeclarationBase base = 1;
   required int64 name_type = 2;
-  repeated IrTypeParameter type_parameter = 3;
+  repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrEnumEntry {
@@ -645,7 +645,7 @@ message IrBranch {
 }
 
 message IrBlockBody {
-  repeated IrStatement statement = 1;
+  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message IrCatch {
@@ -682,6 +682,6 @@ message IrInlineClassRepresentation {
 }
 
 message IrMultiFieldValueClassRepresentation {
-  repeated int32 underlying_property_name = 1 [packed=true];
-  repeated int32 underlying_property_type = 2 [packed=true];
+  repeated int32 underlying_property_name = 1 [packed=true, features.repeated_field_encoding = EXPANDED];
+  repeated int32 underlying_property_type = 2 [packed=true, features.repeated_field_encoding = EXPANDED];
 }

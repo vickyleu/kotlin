@@ -53,17 +53,17 @@ message StringTableTypes {
     // If this field is present, the "substring" operation must be performed with the first element of this list as the start index,
     // and the second element as the end index.
     // If an operation is not NONE, it's applied _after_ this substring operation
-    repeated int32 substring_index = 4 [packed = true];
+    repeated int32 substring_index = 4 [packed = true, features.repeated_field_encoding = EXPANDED];
 
     // If this field is present, the "replaceAll" operation must be performed with the first element of this list as the code point
     // of the character to replace, and the second element as the code point of the replacement character
-    repeated int32 replace_char = 5 [packed = true];
+    repeated int32 replace_char = 5 [packed = true, features.repeated_field_encoding = EXPANDED];
   }
 
-  repeated Record record = 1;
+  repeated Record record = 1 [features.repeated_field_encoding = EXPANDED];
 
   // Indices of strings which are names of local classes or anonymous objects
-  repeated int32 local_name = 5 [packed = true];
+  repeated int32 local_name = 5 [packed = true, features.repeated_field_encoding = EXPANDED];
 }
 
 message JvmMethodSignature {
@@ -116,19 +116,19 @@ extend Property {
 }
 
 extend Type {
-  repeated Annotation type_annotation = 100;
+  repeated Annotation type_annotation = 100 [features.repeated_field_encoding = EXPANDED];
   bool is_raw = 101;
 }
 
 extend TypeParameter {
-  repeated Annotation type_parameter_annotation = 100;
+  repeated Annotation type_parameter_annotation = 100 [features.repeated_field_encoding = EXPANDED];
 }
 
 extend Class {
   // If absent, assumed to be "main" (JvmProtoBufUtil.DEFAULT_MODULE_NAME)
   int32 class_module_name = 101 [(string_id_in_table) = true];
 
-  repeated Property class_local_variable = 102;
+  repeated Property class_local_variable = 102 [features.repeated_field_encoding = EXPANDED];
 
   // For anonymous objects from bodies of inline functions copied to the use site, the JVM internal name of the original
   // anonymous object this class is copied from
@@ -143,5 +143,5 @@ extend Class {
 extend Package {
   int32 package_module_name = 101 [(string_id_in_table) = true];
 
-  repeated Property package_local_variable = 102;
+  repeated Property package_local_variable = 102 [features.repeated_field_encoding = EXPANDED];
 }

@@ -49,8 +49,8 @@ message Expression {
     bool synthetic = 3 [default = false];
     SideEffects side_effects = 4 [default = AFFECTS_STATE];
     JsImportedModule local_alias = 5;
-    repeated Comment before_comments = 6;
-    repeated Comment after_comments = 7;
+    repeated Comment before_comments = 6 [features.repeated_field_encoding = EXPANDED];
+    repeated Comment after_comments = 7 [features.repeated_field_encoding = EXPANDED];
 
     oneof expression {
         int32 simple_name_reference = 22;
@@ -100,11 +100,11 @@ message RegExpLiteral {
 }
 
 message ArrayLiteral {
-    repeated Expression element = 1;
+    repeated Expression element = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message ObjectLiteral {
-    repeated ObjectLiteralEntry entry = 1;
+    repeated ObjectLiteralEntry entry = 1 [features.repeated_field_encoding = EXPANDED];
     bool multiline = 2 [default = true];
 }
 
@@ -114,11 +114,11 @@ message ObjectLiteralEntry {
 }
 
 message Function {
-    repeated Parameter parameter = 1;
+    repeated Parameter parameter = 1 [features.repeated_field_encoding = EXPANDED];
     int32 name_id = 2;
     required Statement body = 3;
     bool local = 4 [default = false];
-    repeated Modifier modifier = 5;
+    repeated Modifier modifier = 5 [features.repeated_field_encoding = EXPANDED];
     bool is_es6_arrow = 6 [default = false];
 
     enum Modifier {
@@ -133,7 +133,7 @@ message Class {
     int32 name_id = 1;
     Expression super_expression = 2;
     Function constructor = 3;
-    repeated Function member = 4;
+    repeated Function member = 4 [features.repeated_field_encoding = EXPANDED];
 }
 
 message Parameter {
@@ -142,7 +142,7 @@ message Parameter {
 }
 
 message DocComment {
-    repeated DocCommentTag tag = 1;
+    repeated DocCommentTag tag = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message DocCommentTag {
@@ -246,13 +246,13 @@ message PropertyReference {
 
 message Invocation {
     required Expression qualifier = 1;
-    repeated Expression argument = 2;
+    repeated Expression argument = 2 [features.repeated_field_encoding = EXPANDED];
     InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
 }
 
 message Instantiation {
     required Expression qualifier = 1;
-    repeated Expression argument = 2;
+    repeated Expression argument = 2 [features.repeated_field_encoding = EXPANDED];
 }
 
 
@@ -263,8 +263,8 @@ message Statement {
     int32 fileId = 1;
     Location location = 2;
     bool synthetic = 3 [default = false];
-    repeated Comment before_comments = 4;
-    repeated Comment after_comments = 5;
+    repeated Comment before_comments = 4 [features.repeated_field_encoding = EXPANDED];
+    repeated Comment after_comments = 5 [features.repeated_field_encoding = EXPANDED];
 
     oneof statement {
         Return return_statement = 21;
@@ -315,7 +315,7 @@ message ExpressionStatement {
 }
 
 message Vars {
-    repeated VarDeclaration declaration = 1;
+    repeated VarDeclaration declaration = 1 [features.repeated_field_encoding = EXPANDED];
     bool multiline = 2 [default = false];
     int32 exported_package_id = 3;
 }
@@ -328,11 +328,11 @@ message VarDeclaration {
 }
 
 message Block {
-    repeated Statement statement = 1;
+    repeated Statement statement = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message CompositeBlock {
-    repeated Statement statement = 1;
+    repeated Statement statement = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message Label {
@@ -348,12 +348,12 @@ message If {
 
 message Switch {
     required Expression expression = 1;
-    repeated SwitchEntry entry = 2;
+    repeated SwitchEntry entry = 2 [features.repeated_field_encoding = EXPANDED];
 }
 
 message SwitchEntry {
     Expression label = 1;
-    repeated Statement statement = 2;
+    repeated Statement statement = 2 [features.repeated_field_encoding = EXPANDED];
 
     int32 fileId = 3;
     Location location = 4;
@@ -424,25 +424,25 @@ enum InlineStrategy {
 // Fragment
 
 message Fragment {
-    repeated ImportedModule imported_module = 1;
-    repeated Import import_entry = 2;
+    repeated ImportedModule imported_module = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Import import_entry = 2 [features.repeated_field_encoding = EXPANDED];
     CompositeBlock declaration_block = 3;
     CompositeBlock export_block = 4;
     CompositeBlock initializer_block = 5;
-    repeated NameBinding name_binding = 6;
-    repeated ClassModel class_model = 7;
-    repeated Expression module_expression = 8;
-    repeated InlineModule inline_module = 9;
+    repeated NameBinding name_binding = 6 [features.repeated_field_encoding = EXPANDED];
+    repeated ClassModel class_model = 7 [features.repeated_field_encoding = EXPANDED];
+    repeated Expression module_expression = 8 [features.repeated_field_encoding = EXPANDED];
+    repeated InlineModule inline_module = 9 [features.repeated_field_encoding = EXPANDED];
     string package_fqn = 10;
     Statement tests_invocation = 11;
     Statement main_invocation = 12;
-    repeated InlinedLocalDeclarations inlined_local_declarations = 13;
-    repeated IrClassModel ir_class_model = 14;
+    repeated InlinedLocalDeclarations inlined_local_declarations = 13 [features.repeated_field_encoding = EXPANDED];
+    repeated IrClassModel ir_class_model = 14 [features.repeated_field_encoding = EXPANDED];
     string dts = 15;
     int32 suite_function = 16;
-    repeated int32 definitions = 17;
+    repeated int32 definitions = 17 [features.repeated_field_encoding = EXPANDED];
     CompositeBlock polyfills = 18;
-    repeated int32 optionalCrossModuleImports = 19;
+    repeated int32 optionalCrossModuleImports = 19 [features.repeated_field_encoding = EXPANDED];
 }
 
 message InlinedLocalDeclarations {
@@ -469,13 +469,13 @@ message NameBinding {
 message ClassModel {
     required int32 name_id = 1;
     int32 super_name_id = 2;
-    repeated int32 interface_name_id = 4;
+    repeated int32 interface_name_id = 4 [features.repeated_field_encoding = EXPANDED];
     CompositeBlock post_declaration_block = 3;
 }
 
 message IrClassModel {
     required int32 name_id = 1;
-    repeated int32 super_classes = 2;
+    repeated int32 super_classes = 2 [features.repeated_field_encoding = EXPANDED];
     CompositeBlock pre_declaration_block = 3;
     CompositeBlock post_declaration_block = 4;
 }
@@ -489,11 +489,11 @@ message InlineModule {
 //
 
 message StringTable {
-    repeated string entry = 1;
+    repeated string entry = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message NameTable {
-    repeated Name entry = 1;
+    repeated Name entry = 1 [features.repeated_field_encoding = EXPANDED];
 }
 
 message Name {
@@ -537,5 +537,5 @@ message Chunk {
 //
 
 message InlineData {
-    repeated string inline_function_tags = 1;
+    repeated string inline_function_tags = 1 [features.repeated_field_encoding = EXPANDED];
 }
