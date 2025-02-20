@@ -114,6 +114,8 @@ internal object ArgumentCheckingProcessor {
             is ConeResolutionAtomWithPostponedChild -> when (atom.expression) {
                 is FirAnonymousFunctionExpression -> preprocessLambdaArgument(atom)
                 is FirCallableReferenceAccess -> preprocessCallableReference(atom)
+                is FirPropertyAccessExpression -> preprocessSimpleNameReferenceForContextSensitiveResolution(atom)
+                else -> error("Unknown kind of atom with postponed child: ${atom.expression::class}")
             }
 
             is ConeSimpleLeafResolutionAtom, is ConeAtomWithCandidate -> resolvePlainExpressionArgument(atom)
@@ -305,6 +307,16 @@ internal object ArgumentCheckingProcessor {
         val expression = atom.callableReferenceExpression
         val lhs = context.bodyResolveComponents.doubleColonExpressionResolver.resolveDoubleColonLHS(expression)
         val postponedAtom = ConeResolvedCallableReferenceAtom(expression, expectedType, lhs, context.session)
+        atom.subAtom = postponedAtom
+        candidate.addPostponedAtom(postponedAtom)
+    }
+
+    private fun ArgumentContext.preprocessSimpleNameReferenceForContextSensitiveResolution(atom: ConeResolutionAtomWithPostponedChild) {
+        val expression = atom.expression as FirPropertyAccessExpression
+
+        if (expectedType == null) return
+
+        val postponedAtom = ConeSimpleNameForContextSensitiveResolution(expression, expectedType)
         atom.subAtom = postponedAtom
         candidate.addPostponedAtom(postponedAtom)
     }

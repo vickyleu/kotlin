@@ -123,8 +123,9 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
                 continue
 
             if (completionMode.allLambdasShouldBeAnalyzed) {
+                val postponedAtomsDependingOnFunctionType = postponedArguments.filter { it is ConeFunctionTypeRelatedAtom }
                 // Stage 3: fix variables for parameter types of all postponed arguments
-                for (argument in postponedArguments) {
+                for (argument in postponedAtomsDependingOnFunctionType) {
                     val variableWasFixed = postponedArgumentsInputTypesResolver.fixNextReadyVariableForParameterTypeIfNeeded(
                         this,
                         argument,
@@ -158,7 +159,7 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
                 }
             ) continue
 
-            // Stage 6: fix next ready type variable with proper constraints
+            // Stage 6: fix the next ready type variable with proper constraints
             if (fixNextReadyVariable(completionMode, topLevelAtoms, topLevelType, postponedArguments))
                 continue
 
@@ -180,7 +181,7 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
 
             // Stage 9: force analysis of remaining not analyzed postponed arguments and rerun stages if there are
             // It's either FULL or PCLA_POSTPONED_CALL modes (see `Forcing lambda analysis` at docs/fir/pcla.md)
-            if (completionMode.allLambdasShouldBeAnalyzed) {
+            if (completionMode.allPostponedAtomsShouldBeAnalyzed) {
                 if (analyzeRemainingNotAnalyzedPostponedArgument(postponedArguments) {
                         analyzer.analyze(it, withPCLASession = false)
                     }
@@ -208,10 +209,10 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
     }
 
     /**
-     * General documentation for builder inference algorithm is located at `/docs/fir/builder_inference.md`
+     * General documentation for PCLA is located at `/docs/fir/pcla.md`
      *
-     * This function checks if any of the postponed arguments are suitable for builder inference, and performs it for all eligible lambda arguments
-     * @return true if we got new proper constraints after builder inference
+     * This function checks if any of the postponed arguments are suitable for PCLA, and performs it for all eligible lambda arguments
+     * @return true if we got new proper constraints after PCLA
      */
     private fun ConstraintSystemCompletionContext.tryToCompleteWithPCLA(
         completionMode: ConstraintSystemCompletionMode,
@@ -365,6 +366,9 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
                         if (postponedAtom.needsResolution) {
                             postponedAtom.collectNotFixedVariables()
                         }
+                    }
+                    is ConeSimpleNameForContextSensitiveResolution -> {
+                        // Do nothing
                     }
                 }
             }

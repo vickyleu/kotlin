@@ -9,14 +9,22 @@ import org.jetbrains.kotlin.KtSourceElement
 import org.jetbrains.kotlin.builtins.functions.FunctionTypeKind
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.declarations.FirAnonymousFunction
+import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.lastExpression
+import org.jetbrains.kotlin.fir.references.FirErrorNamedReference
 import org.jetbrains.kotlin.fir.references.FirNamedReference
 import org.jetbrains.kotlin.fir.resolve.DoubleColonLHS
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.Candidate
+import org.jetbrains.kotlin.fir.resolve.calls.candidate.FirErrorReferenceWithCandidate
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.FirNamedReferenceWithCandidate
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.candidate
 import org.jetbrains.kotlin.fir.resolve.calls.stages.FirFakeArgumentForCallableReference
+import org.jetbrains.kotlin.fir.resolve.createConeDiagnosticForCandidateWithError
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeAmbiguityError
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeHiddenCandidateError
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeUnresolvedError
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeVisibilityError
 import org.jetbrains.kotlin.fir.resolve.inference.ConeTypeVariableForLambdaReturnType
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
@@ -88,6 +96,10 @@ sealed class ConeResolutionAtom : AbstractConeResolutionAtom() {
                     expression,
                     createRawAtom((expression.selector as? FirExpression)?.unwrapSmartcastExpression(), allowUnresolvedExpression)
                 )
+                is FirPropertyAccessExpression if expression.shouldBeResolvedInContextSensitiveMode() -> {
+                    ConeResolutionAtomWithPostponedChild(expression)
+                }
+
                 is FirResolvable -> when (val candidate = expression.candidate()) {
                     null -> ConeSimpleLeafResolutionAtom(expression, allowUnresolvedExpression)
                     else -> ConeAtomWithCandidate(expression, candidate)
@@ -107,6 +119,28 @@ sealed class ConeResolutionAtom : AbstractConeResolutionAtom() {
                 else -> ConeSimpleLeafResolutionAtom(expression, allowUnresolvedExpression)
             }
         }
+
+        private fun FirPropertyAccessExpression.shouldBeResolvedInContextSensitiveMode(): Boolean {
+            val diagnostic = when (val calleeReference = calleeReference) {
+                is FirErrorNamedReference -> calleeReference.diagnostic
+                is FirErrorReferenceWithCandidate -> calleeReference.diagnostic
+                else -> return false
+            }
+
+            // Only simple name expressions are supported
+            if (explicitReceiver != null) return false
+
+            return diagnostic.meansNoAvailableCandidate()
+        }
+
+        private fun ConeDiagnostic.meansNoAvailableCandidate(): Boolean =
+            when (this) {
+                is ConeUnresolvedError, is ConeVisibilityError, is ConeHiddenCandidateError -> true
+                is ConeAmbiguityError -> candidates.all {
+                    createConeDiagnosticForCandidateWithError(it.applicability, it as Candidate).meansNoAvailableCandidate()
+                }
+                else -> false
+            }
     }
 }
 
@@ -148,6 +182,9 @@ sealed class ConePostponedResolvedAtom : ConeResolutionAtom(), PostponedResolved
 
 //  ------------- Lambdas -------------
 
+// lambda or callable reference
+interface ConeFunctionTypeRelatedAtom
+
 class ConeResolvedLambdaAtom(
     override val expression: FirAnonymousFunctionExpression,
     expectedType: ConeKotlinType?,
@@ -161,7 +198,7 @@ class ConeResolvedLambdaAtom(
     // NB: It's not null right now only for lambdas inside the calls
     // TODO: Handle somehow that kind of lack of information once KT-67961 is fixed
     val sourceForFunctionExpression: KtSourceElement?,
-) : ConePostponedResolvedAtom() {
+) : ConePostponedResolvedAtom(), ConeFunctionTypeRelatedAtom {
     val anonymousFunction: FirAnonymousFunction = expression.anonymousFunction
 
     var typeVariableForLambdaReturnType: ConeTypeVariableForLambdaReturnType? = typeVariableForLambdaReturnType
@@ -198,7 +235,7 @@ class ConeLambdaWithTypeVariableAsExpectedTypeAtom(
     override val expression: FirAnonymousFunctionExpression,
     private val initialExpectedTypeType: ConeKotlinType,
     val candidateOfOuterCall: Candidate,
-) : ConePostponedResolvedAtom(), LambdaWithTypeVariableAsExpectedTypeMarker {
+) : ConePostponedResolvedAtom(), LambdaWithTypeVariableAsExpectedTypeMarker, ConeFunctionTypeRelatedAtom {
     val anonymousFunction: FirAnonymousFunction = expression.anonymousFunction
 
     var subAtom: ConeResolvedLambdaAtom? = null
@@ -237,7 +274,7 @@ class ConeResolvedCallableReferenceAtom(
     private val initialExpectedType: ConeKotlinType?,
     val lhs: DoubleColonLHS?,
     private val session: FirSession
-) : ConePostponedResolvedAtom(), PostponedCallableReferenceMarker {
+) : ConePostponedResolvedAtom(), PostponedCallableReferenceMarker, ConeFunctionTypeRelatedAtom {
     var subAtom: ConeAtomWithCandidate? = null
         private set
 
@@ -307,6 +344,15 @@ class ConeResolvedCallableReferenceAtom(
         require(expectedType is ConeKotlinType)
         revisedExpectedType = expectedType
     }
+}
+
+class ConeSimpleNameForContextSensitiveResolution(
+    override val expression: FirPropertyAccessExpression,
+    override val expectedType: ConeKotlinType,
+) : ConePostponedResolvedAtom() {
+    override val inputTypes: Collection<ConeKotlinType> = listOf(expectedType)
+    override val outputType: ConeKotlinType?
+        get() = null
 }
 
 //  -------------------------- Utils --------------------------
