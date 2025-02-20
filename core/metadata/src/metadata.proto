@@ -25,6 +25,7 @@ import "core/metadata/src/ext_options.proto";
 
 option java_outer_classname = "ProtoBuf";
 option optimize_for = LITE_RUNTIME;
+option features.utf8_validation = NONE;
 
 message StringTable {
   repeated string string = 1 [features.repeated_field_encoding = EXPANDED];

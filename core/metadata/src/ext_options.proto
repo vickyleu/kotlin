@@ -20,6 +20,7 @@ package org.jetbrains.kotlin.metadata;
 import "google/protobuf/descriptor.proto";
 
 option java_outer_classname = "ExtOptionsProtoBuf";
+option features.utf8_validation = NONE;
 
 extend google.protobuf.FieldOptions {
   bool skip_in_comparison = 50000;
