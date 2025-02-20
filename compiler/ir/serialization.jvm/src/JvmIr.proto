@@ -3,7 +3,6 @@ package org.jetbrains.kotlin.backend.jvm.serialization.proto;
 import "compiler/ir/serialization.common/src/KotlinIr.proto";
 
 option java_outer_classname = "JvmIr";
-option optimize_for = LITE_RUNTIME;
 option features.utf8_validation = NONE;
 
 /* Stored in JVM .class annotations */

@@ -24,7 +24,6 @@ import "core/metadata/src/ext_options.proto";
 // See their KDocs.
 
 option java_outer_classname = "ProtoBuf";
-option optimize_for = LITE_RUNTIME;
 option features.utf8_validation = NONE;
 
 message StringTable {

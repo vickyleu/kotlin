@@ -19,7 +19,6 @@ edition = "2023";
 package org.jetbrains.kotlin.serialization.js.ast;
 
 option java_outer_classname = "JsAstProtoBuf";
-option optimize_for = LITE_RUNTIME;
 option features.utf8_validation = NONE;
 
 

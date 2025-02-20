@@ -6,7 +6,6 @@ package org.jetbrains.kotlin.backend.common.serialization.proto;
 
 option java_multiple_files = true;
 option java_outer_classname = "KotlinIr";
-option optimize_for = LITE_RUNTIME;
 option features.utf8_validation = NONE;
 
 /* ------ Top Level --------------------------------------------- */
