@@ -37,6 +37,7 @@ message StringTableTypes {
     string string = 6;
 
     enum Operation {
+      option features.enum_type = CLOSED;
       NONE = 0;
 
       // replaceAll('$', '.')

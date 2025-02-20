@@ -29,6 +29,7 @@ message Location {
 }
 
 enum SideEffects {
+    option features.enum_type = CLOSED;
     AFFECTS_STATE = 1;
     DEPENDS_ON_STATE = 2;
     PURE = 3;
@@ -123,6 +124,7 @@ message Function {
     bool is_es6_arrow = 6 [default = false];
 
     enum Modifier {
+        option features.enum_type = CLOSED;
         STATIC = 1;
         GET = 2;
         SET = 3;
@@ -165,6 +167,7 @@ message BinaryOperation {
     Type type = 3 [features.field_presence = LEGACY_REQUIRED];
 
     enum Type {
+        option features.enum_type = CLOSED;
         MUL = 1;
         DIV = 2;
         MOD = 3;
@@ -210,6 +213,7 @@ message UnaryOperation {
     bool postfix = 3 [features.field_presence = LEGACY_REQUIRED];
 
     enum Type {
+        option features.enum_type = CLOSED;
         BIT_NOT = 1;
         DEC = 2;
         DELETE = 3;
@@ -416,6 +420,7 @@ message MultiLineComment {
 }
 
 enum InlineStrategy {
+    option features.enum_type = CLOSED;
     AS_FUNCTION = 0;
     IN_PLACE = 1;
     NOT_INLINE = 2;
@@ -511,6 +516,7 @@ message LocalAlias {
 }
 
 enum SpecialFunction {
+    option features.enum_type = CLOSED;
     DEFINE_INLINE_FUNCTION = 1;
     WRAP_FUNCTION = 2;
     TO_BOXED_CHAR = 3;

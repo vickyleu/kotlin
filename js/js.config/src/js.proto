@@ -109,6 +109,7 @@ message Classes {
 
 message Library {
   enum Kind {
+    option features.enum_type = CLOSED;
     PLAIN = 1;
     AMD = 2;
     COMMON_JS = 3;

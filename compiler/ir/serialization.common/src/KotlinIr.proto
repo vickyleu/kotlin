@@ -91,6 +91,7 @@ message IrSimpleTypeLegacy {
 }
 
 enum IrSimpleTypeNullability {
+  option features.enum_type = CLOSED;
   MARKED_NULLABLE = 0;
   NOT_SPECIFIED = 1;
   DEFINITELY_NOT_NULL = 2;
@@ -400,6 +401,7 @@ message IrDynamicMemberExpression {
 
 message IrDynamicOperatorExpression {
   enum IrDynamicOperator {
+    option features.enum_type = CLOSED;
     UNARY_PLUS = 1;
     UNARY_MINUS = 2;
     EXCL = 3;
@@ -488,6 +490,7 @@ message IrOperation {
 }
 
 enum IrTypeOperator {
+  option features.enum_type = CLOSED;
   CAST = 1;
   IMPLICIT_CAST = 2;
   IMPLICIT_NOTNULL = 3;
@@ -655,6 +658,7 @@ message IrCatch {
 }
 
 enum IrSyntheticBodyKind {
+  option features.enum_type = CLOSED;
   ENUM_VALUES = 1;
   ENUM_VALUEOF = 2;
   ENUM_ENTRIES = 3;

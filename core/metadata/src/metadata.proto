@@ -41,6 +41,7 @@ message QualifiedNameTable {
     Kind kind = 3 [default = PACKAGE];
 
     enum Kind {
+      option features.enum_type = CLOSED;
       CLASS = 0;
       PACKAGE = 1;
       LOCAL = 2;
@@ -56,6 +57,7 @@ message Annotation {
   message Argument {
     message Value {
       enum Type {
+        option features.enum_type = CLOSED;
         BYTE = 0;
         CHAR = 1;
         SHORT = 2;
@@ -123,6 +125,7 @@ message Annotation {
 message Type {
   message Argument {
     enum Projection {
+      option features.enum_type = CLOSED;
       IN = 0;
       OUT = 1;
       INV = 2;
@@ -182,6 +185,7 @@ message TypeParameter {
   bool reified = 3 [default = false];
 
   enum Variance {
+    option features.enum_type = CLOSED;
     IN = 0;
     OUT = 1;
     INV = 2;
@@ -196,6 +200,7 @@ message TypeParameter {
 
 message Class {
   enum Kind {
+    option features.enum_type = CLOSED;
     // 3 bits
     CLASS = 0;
     INTERFACE = 1;
@@ -479,6 +484,7 @@ message EnumEntry {
 }
 
 enum Modality {
+  option features.enum_type = CLOSED;
   // 2 bits
   FINAL = 0;
   OPEN = 1;
@@ -487,6 +493,7 @@ enum Modality {
 }
 
 enum Visibility {
+  option features.enum_type = CLOSED;
   // 3 bits
   INTERNAL = 0;
   PRIVATE = 1;
@@ -497,6 +504,7 @@ enum Visibility {
 }
 
 enum MemberKind {
+  option features.enum_type = CLOSED;
   // 2 bits
   DECLARATION = 0;
   FAKE_OVERRIDE = 1;
@@ -506,12 +514,14 @@ enum MemberKind {
 
 message VersionRequirement {
   enum Level {
+    option features.enum_type = CLOSED;
     WARNING = 0;
     ERROR = 1;
     HIDDEN = 2;
   }
 
   enum VersionKind {
+    option features.enum_type = CLOSED;
     LANGUAGE_VERSION = 0;
     COMPILER_VERSION = 1;
     API_VERSION = 2;
@@ -570,6 +580,7 @@ message Effect {
   // Those arguments are expected to be found in 'effectConstructorArguments' in exactly the same
   // order and amount as defined by signature, otherwise message should be dropped.
   enum EffectType {
+    option features.enum_type = CLOSED;
     // Returns(value: ConstantValue?)
     RETURNS_CONSTANT = 0;
 
@@ -589,6 +600,7 @@ message Effect {
   Expression conclusion_of_conditional_effect = 3;
 
   enum InvocationKind {
+    option features.enum_type = CLOSED;
     AT_MOST_ONCE = 0;
     EXACTLY_ONCE = 1;
     AT_LEAST_ONCE = 2;
@@ -610,6 +622,7 @@ message Expression {
   int32 value_parameter_reference = 2;
 
   enum ConstantValue {
+    option features.enum_type = CLOSED;
     TRUE = 0;
     FALSE = 1;
     NULL = 2;
