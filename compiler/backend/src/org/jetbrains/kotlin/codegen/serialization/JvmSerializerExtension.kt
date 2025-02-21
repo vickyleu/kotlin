@@ -117,7 +117,7 @@ class JvmSerializerExtension(
         writeLocalProperties(proto, partAsmType, JvmProtoBuf.packageLocalVariable)
     }
 
-    private fun <MessageType : GeneratedMessageLite.ExtendableMessage<MessageType>, BuilderType : GeneratedMessageLite.ExtendableBuilder<MessageType, BuilderType>> writeLocalProperties(
+    private fun <MessageType : GeneratedMessageLite.ExtendableMessage<MessageType, BuilderType>, BuilderType : GeneratedMessageLite.ExtendableBuilder<MessageType, BuilderType>> writeLocalProperties(
         proto: BuilderType,
         classAsmType: Type,
         extension: GeneratedMessageLite.GeneratedExtension<MessageType, List<ProtoBuf.Property>>
