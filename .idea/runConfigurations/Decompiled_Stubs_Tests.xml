@@ -11,8 +11,7 @@
       <option name="taskNames">
         <list>
           <option value=":analysis:decompiled:decompiler-to-file-stubs:test" />
-          <option value="--tests" />
-          <option value="*" />
+          <option value="--rerun" />
         </list>
       </option>
       <option name="vmOptions" />

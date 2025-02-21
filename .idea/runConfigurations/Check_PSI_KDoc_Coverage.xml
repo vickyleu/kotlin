@@ -10,7 +10,10 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":compiler:test --tests 'org.jetbrains.kotlin.psi.PsiKDocCoverageTest'" />
+          <option value=":compiler:test" />
+          <option value="--rerun" />
+          <option value="--tests" />
+          <option value="'org.jetbrains.kotlin.psi.PsiKDocCoverageTest'" />
         </list>
       </option>
       <option name="vmOptions" />
