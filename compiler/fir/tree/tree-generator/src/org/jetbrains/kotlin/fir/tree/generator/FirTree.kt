@@ -1206,6 +1206,12 @@ object FirTree : AbstractFirTreeBuilder() {
         +field("isImplicit", boolean)
     }
 
+    val superReceiverExpression: Element by element(Expression) {
+        parent(qualifiedAccessExpression)
+
+        +field("calleeReference", superReference)
+    }
+
     val inaccessibleReceiverExpression: Element by element(Expression) {
         parent(expression)
         parent(resolvable)

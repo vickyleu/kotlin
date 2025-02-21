@@ -3405,7 +3405,7 @@ open class PsiRawFirBuilder(
         override fun visitSuperExpression(expression: KtSuperExpression, data: FirElement?): FirElement {
             val superType = expression.superTypeQualifier
             val theSource = expression.toFirSourceElement()
-            return buildPropertyAccessExpression {
+            return buildSuperReceiverExpression {
                 this.source = theSource
                 calleeReference = buildExplicitSuperReference {
                     source = theSource.fakeElement(KtFakeSourceElementKind.ReferenceInAtomicQualifiedAccess)
