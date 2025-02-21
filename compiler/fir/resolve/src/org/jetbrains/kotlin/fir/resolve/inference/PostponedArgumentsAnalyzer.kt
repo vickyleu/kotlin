@@ -5,22 +5,30 @@
 
 package org.jetbrains.kotlin.fir.resolve.inference
 
+import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.config.LanguageFeature
+import org.jetbrains.kotlin.fakeElement
 import org.jetbrains.kotlin.fir.expressions.FirExpression
+import org.jetbrains.kotlin.fir.expressions.FirPropertyAccessExpression
+import org.jetbrains.kotlin.fir.expressions.builder.buildPropertyAccessExpression
+import org.jetbrains.kotlin.fir.expressions.builder.buildResolvedQualifier
 import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.lookupTracker
 import org.jetbrains.kotlin.fir.recordTypeResolveAsLookup
+import org.jetbrains.kotlin.fir.references.FirResolvedErrorReference
+import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildErrorNamedReference
+import org.jetbrains.kotlin.fir.references.builder.buildSimpleNamedReference
+import org.jetbrains.kotlin.fir.resolve.*
 import org.jetbrains.kotlin.fir.resolve.calls.*
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.*
 import org.jetbrains.kotlin.fir.resolve.calls.stages.ArgumentCheckingProcessor
 import org.jetbrains.kotlin.fir.resolve.dfa.cfg.lastStatement
 import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeUnresolvedReferenceError
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeLambdaArgumentConstraintPosition
-import org.jetbrains.kotlin.fir.resolve.isImplicitUnitForEmptyLambda
-import org.jetbrains.kotlin.fir.resolve.lambdaWithExplicitEmptyReturns
 import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.resolvedTypeFromPrototype
+import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.resolve.calls.components.PostponedArgumentsAnalyzerContext
 import org.jetbrains.kotlin.resolve.calls.inference.ConstraintSystemBuilder
@@ -74,6 +82,7 @@ class PostponedArgumentsAnalyzer(
                 )
 
             is ConeResolvedCallableReferenceAtom -> processCallableReference(argument, candidate)
+            is ConeSimpleNameForContextSensitiveResolution -> processSimpleNameForContextSensitiveResolution(argument, candidate)
         }
     }
 
@@ -121,6 +130,7 @@ class PostponedArgumentsAnalyzer(
         val namedReference = atom.resultingReference ?: buildErrorNamedReference {
             source = callableReferenceAccess.source
             diagnostic = ConeUnresolvedReferenceError(callableReferenceAccess.calleeReference.name)
+            name = callableReferenceAccess.calleeReference.name
         }
 
         callableReferenceAccess.apply {
@@ -136,6 +146,61 @@ class PostponedArgumentsAnalyzer(
                 resolvedType, source, resolutionContext.bodyResolveComponents.file.source
             )
         }
+    }
+
+    private fun processSimpleNameForContextSensitiveResolution(
+        atom: ConeSimpleNameForContextSensitiveResolution,
+        topLevelCandidate: Candidate,
+    ) {
+        atom.analyzed = true
+
+        val substitutor = topLevelCandidate.csBuilder.buildCurrentSubstitutor(emptyMap()) as ConeSubstitutor
+        val substitutedExpectedType = substitutor.safeSubstitute(topLevelCandidate.csBuilder, atom.expectedType) as ConeKotlinType
+
+        val representativeClass: FirRegularClassSymbol =
+            substitutedExpectedType.getClassRepresentativeForContextSensitiveResolution(resolutionContext.session)
+                ?: return
+
+        val originalExpression = atom.expression
+        val additionalQualifier = buildResolvedQualifier {
+            symbol = representativeClass
+            packageFqName = representativeClass.classId.packageFqName
+            relativeClassFqName = representativeClass.classId.relativeClassName
+            source = originalExpression.source?.fakeElement(KtFakeSourceElementKind.QualifierForContextSensitiveResolution)
+        }.apply {
+            setTypeOfQualifier(resolutionContext.bodyResolveComponents)
+        }
+
+        val newAccess = buildPropertyAccessExpression {
+            explicitReceiver = additionalQualifier
+            source = originalExpression.source
+            calleeReference = buildSimpleNamedReference {
+                source = originalExpression.calleeReference.source
+                name = originalExpression.calleeReference.name
+            }
+        }
+
+        val newExpression = callResolver.resolveVariableAccessAndSelectCandidate(
+            newAccess,
+            isUsedAsReceiver = false, isUsedAsGetClassReceiver = false,
+            callSite = originalExpression,
+            ResolutionMode.ContextIndependent,
+        ) as? FirPropertyAccessExpression ?: return
+
+        val newCalleeReference = newExpression.calleeReference
+        if (newCalleeReference !is FirResolvedNamedReference || newCalleeReference is FirResolvedErrorReference) return
+
+        atom.containingCallCandidate.setUpdatedArgumentFromContextSensitiveResolution(originalExpression, newExpression)
+
+        ArgumentCheckingProcessor.resolveArgumentExpression(
+            topLevelCandidate,
+            ConeResolutionAtom.createRawAtom(newExpression),
+            substitutedExpectedType,
+            CheckerSinkImpl(topLevelCandidate),
+            context = resolutionContext,
+            isReceiver = false,
+            isDispatch = false,
+        )
     }
 
     fun analyzeLambda(

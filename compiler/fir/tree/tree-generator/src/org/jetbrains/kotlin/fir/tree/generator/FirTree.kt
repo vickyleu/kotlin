@@ -1191,6 +1191,8 @@ object FirTree : AbstractFirTreeBuilder() {
     val errorNamedReference: Element by element(Reference) {
         parent(namedReference)
         parent(diagnosticHolder)
+
+        //+field("delegatedReference", namedReference, nullable = true)
     }
 
     val intersectionTypeRef: Element by element(TypeRefElement) {
