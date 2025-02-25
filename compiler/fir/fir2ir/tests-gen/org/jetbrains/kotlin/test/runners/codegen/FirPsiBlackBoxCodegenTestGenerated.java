@@ -53871,6 +53871,12 @@ public class FirPsiBlackBoxCodegenTestGenerated extends AbstractFirPsiBlackBoxCo
       }
 
       @Test
+      @TestMetadata("javaClasses.kt")
+      public void testJavaClasses() {
+        runTest("compiler/testData/codegen/box/reflection/modifiers/javaClasses.kt");
+      }
+
+      @Test
       @TestMetadata("javaVisibility.kt")
       public void testJavaVisibility() {
         runTest("compiler/testData/codegen/box/reflection/modifiers/javaVisibility.kt");

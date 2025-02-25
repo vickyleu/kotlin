@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.builtins.CompanionObjectMapping
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.builtins.isMappedIntrinsicCompanionObject
 import org.jetbrains.kotlin.descriptors.*
+import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.impl.ClassDescriptorImpl
 import org.jetbrains.kotlin.descriptors.impl.EmptyPackageFragmentDescriptor
 import org.jetbrains.kotlin.descriptors.runtime.components.ReflectKotlinClass
@@ -43,10 +44,9 @@ import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.jvm.internal.TypeIntrinsics
-import kotlin.metadata.KmClass
+import kotlin.metadata.*
 import kotlin.metadata.Modality
 import kotlin.metadata.internal.toKmClass
-import kotlin.metadata.modality
 import kotlin.reflect.*
 import kotlin.reflect.jvm.internal.KDeclarationContainerImpl.MemberBelonginess.DECLARED
 import kotlin.reflect.jvm.internal.KDeclarationContainerImpl.MemberBelonginess.INHERITED
@@ -307,19 +307,22 @@ internal class KClassImpl<T : Any>(
         get() = modality == Modality.SEALED
 
     override val isData: Boolean
-        get() = descriptor.isData
+        get() = kmClass?.isData == true
 
     override val isInner: Boolean
-        get() = descriptor.isInner
+        get() = when (val kmClass = kmClass) {
+            null -> jClass.declaringClass != null && !Modifier.isStatic(jClass.modifiers)
+            else -> kmClass.isInner
+        }
 
     override val isCompanion: Boolean
-        get() = descriptor.isCompanionObject
+        get() = kmClass?.kind == kotlin.metadata.ClassKind.COMPANION_OBJECT
 
     override val isFun: Boolean
-        get() = descriptor.isFun
+        get() = kmClass?.isFunInterface == true
 
     override val isValue: Boolean
-        get() = descriptor.isValue
+        get() = kmClass?.isValue == true
 
     override fun equals(other: Any?): Boolean =
         other is KClassImpl<*> && javaObjectType == other.javaObjectType
