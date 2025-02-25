@@ -51985,6 +51985,47 @@ public class PhasedJvmDiagnosticLightTreeTestGenerated extends AbstractPhasedJvm
     @TestDataPath("$PROJECT_ROOT")
     public class ContextSensitiveResolutionUsingExpectedType {
       @Nested
+      @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition")
+      @TestDataPath("$PROJECT_ROOT")
+      public class CallPosition {
+        @Test
+        @TestMetadata("ambiguouslyImported.kt")
+        public void testAmbiguouslyImported() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/ambiguouslyImported.kt");
+        }
+
+        @Test
+        @TestMetadata("ambiguouslyImportedInvisible.kt")
+        public void testAmbiguouslyImportedInvisible() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/ambiguouslyImportedInvisible.kt");
+        }
+
+        @Test
+        @TestMetadata("invisibleImported.kt")
+        public void testInvisibleImported() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/invisibleImported.kt");
+        }
+
+        @Test
+        @TestMetadata("simple.kt")
+        public void testSimple() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/simple.kt");
+        }
+
+        @Test
+        @TestMetadata("simpleDisabledFeature.kt")
+        public void testSimpleDisabledFeature() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/simpleDisabledFeature.kt");
+        }
+
+        @Test
+        @TestMetadata("typeParameter.kt")
+        public void testTypeParameter() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/callPosition/typeParameter.kt");
+        }
+      }
+
+      @Nested
       @TestMetadata("compiler/fir/analysis-tests/testData/resolve/contextSensitiveResolutionUsingExpectedType/typePosition")
       @TestDataPath("$PROJECT_ROOT")
       public class TypePosition {

@@ -21,7 +21,7 @@ fun foo() = 42
 
 val b =  a
 
-val ca = A()
+val ca = MyEnum()
 
 val ev = E.V
 

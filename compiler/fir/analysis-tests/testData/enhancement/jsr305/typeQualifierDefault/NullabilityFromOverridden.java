@@ -86,7 +86,7 @@ import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 
 @NullableApi
-public class B extends A implements AInt {
+public class B extends MyEnum implements AInt {
     // conflicts
     public String foo1(String x) { return ""; }
 
@@ -110,7 +110,7 @@ import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 
 @NonNullApi
-public class C extends A implements AInt {
+public class C extends MyEnum implements AInt {
     // no conflicts
     public String foo1(String x) { return ""; }
 
@@ -128,4 +128,3 @@ public class C extends A implements AInt {
     // no conflicts
     public String baz(String x) { return ""; }
 }
-

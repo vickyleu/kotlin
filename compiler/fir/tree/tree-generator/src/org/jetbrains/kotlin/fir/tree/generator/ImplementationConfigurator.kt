@@ -585,8 +585,7 @@ object ImplementationConfigurator : AbstractFirTreeImplementationConfigurator() 
             kind = Object
         }
 
-        impl(errorNamedReference) {
-        }
+        impl(errorNamedReference)
 
         impl(breakExpression) {
             defaultBuiltInType("Nothing")

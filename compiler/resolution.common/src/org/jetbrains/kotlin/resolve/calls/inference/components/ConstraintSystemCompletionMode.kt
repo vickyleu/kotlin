@@ -6,16 +6,18 @@
 package org.jetbrains.kotlin.resolve.calls.inference.components
 
 enum class ConstraintSystemCompletionMode(
-    val allLambdasShouldBeAnalyzed: Boolean,
+    val allPostponedAtomsShouldBeAnalyzed: Boolean,
+    val allLambdasShouldBeAnalyzed: Boolean = allPostponedAtomsShouldBeAnalyzed,
     val shouldForkPointConstraintsBeResolved: Boolean,
     val fixNotInferredTypeVariablesToErrorType: Boolean,
 ) {
     FULL(
-        allLambdasShouldBeAnalyzed = true,
+        allPostponedAtomsShouldBeAnalyzed = true,
         shouldForkPointConstraintsBeResolved = true,
         fixNotInferredTypeVariablesToErrorType = true,
     ),
     PCLA_POSTPONED_CALL(
+        allPostponedAtomsShouldBeAnalyzed = false,
         allLambdasShouldBeAnalyzed = true,
         shouldForkPointConstraintsBeResolved = false,
         fixNotInferredTypeVariablesToErrorType = false,
@@ -32,11 +34,13 @@ enum class ConstraintSystemCompletionMode(
      * ```
      */
     PARTIAL(
+        allPostponedAtomsShouldBeAnalyzed = false,
         allLambdasShouldBeAnalyzed = false,
         shouldForkPointConstraintsBeResolved = false,
         fixNotInferredTypeVariablesToErrorType = false,
     ),
     UNTIL_FIRST_LAMBDA(
+        allPostponedAtomsShouldBeAnalyzed = false,
         allLambdasShouldBeAnalyzed = false,
         /* See testData/diagnostics/tests/inference/inferenceForkRegressionSimple.kt */
         shouldForkPointConstraintsBeResolved = true,
