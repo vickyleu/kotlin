@@ -52735,6 +52735,12 @@ public class JvmAbiConsistencyTestBoxGenerated extends AbstractJvmAbiConsistency
       }
 
       @Test
+      @TestMetadata("javaClassModality.kt")
+      public void testJavaClassModality() {
+        runTest("compiler/testData/codegen/box/reflection/modifiers/javaClassModality.kt");
+      }
+
+      @Test
       @TestMetadata("javaVisibility.kt")
       public void testJavaVisibility() {
         runTest("compiler/testData/codegen/box/reflection/modifiers/javaVisibility.kt");
