@@ -22,7 +22,6 @@ import org.jetbrains.kotlin.fir.expressions.impl.FirResolvedArgumentList
 import org.jetbrains.kotlin.fir.expressions.impl.toAnnotationArgumentMapping
 import org.jetbrains.kotlin.fir.extensions.*
 import org.jetbrains.kotlin.fir.references.*
-import org.jetbrains.kotlin.fir.references.builder.buildErrorNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildExplicitSuperReference
 import org.jetbrains.kotlin.fir.references.builder.buildResolvedNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildSimpleNamedReference
@@ -391,10 +390,12 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
         }
         superReferenceContainer.resultType = resultType.coneType
         superReference.replaceSuperTypeRef(resultType)
-        superReferenceContainer.replaceCalleeReference(buildErrorNamedReference {
-            source = superReferenceContainer.source?.fakeElement(KtFakeSourceElementKind.ReferenceInAtomicQualifiedAccess)
-            diagnostic = superNotAvailableDiagnostic
-        })
+        superReferenceContainer.replaceCalleeReference(
+            buildErrorNamedReferenceWithNoName(
+                source = superReferenceContainer.source?.fakeElement(KtFakeSourceElementKind.ReferenceInAtomicQualifiedAccess),
+                diagnostic = superNotAvailableDiagnostic,
+            )
+        )
         return superReferenceContainer
     }
 
@@ -1703,10 +1704,10 @@ open class FirExpressionsResolveTransformer(transformer: FirAbstractBodyResolveT
 
         fun reportError(diagnostic: ConeDiagnostic): FirStatement {
             return chooseAssign().also {
-                val errorReference = buildErrorNamedReference {
+                val errorReference = buildErrorNamedReferenceWithNoName(
+                    diagnostic,
                     source = indexedAccessAugmentedAssignment.source
-                    this.diagnostic = diagnostic
-                }
+                )
                 it.replaceCalleeReference(errorReference)
             }
         }
