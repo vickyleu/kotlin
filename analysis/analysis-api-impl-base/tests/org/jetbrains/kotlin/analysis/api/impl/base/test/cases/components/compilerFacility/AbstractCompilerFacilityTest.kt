@@ -121,7 +121,7 @@ abstract class AbstractCompilerFacilityTest : AbstractAnalysisApiBasedTest() {
         }
 
         analyze(mainFile) {
-            val target = KaCompilerTarget.Jvm(isTestMode = true)
+            val target = KaCompilerTarget.Jvm(isTestMode = true, compiledClassHandler = null, debuggerExtension = null)
             val allowedErrorFilter: (KaDiagnostic) -> Boolean = { it.factoryName in ALLOWED_ERRORS }
 
             val exceptionExpected = mainModule.testModule.directives.contains(Directives.CODE_COMPILATION_EXCEPTION)

@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.util.parentsCodeFragmentA
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.fir.analysis.checkers.isNonReifiedTypeParameter
 import org.jetbrains.kotlin.fir.analysis.checkers.toRegularClassSymbol
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
@@ -32,10 +33,14 @@ import org.jetbrains.kotlin.fir.resolve.referencedMemberSymbol
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
+import org.jetbrains.kotlin.fir.types.ConeClassLikeType
+import org.jetbrains.kotlin.fir.types.ConeKotlinType
+import org.jetbrains.kotlin.fir.types.ConeTypeParameterType
 import org.jetbrains.kotlin.fir.types.FirResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.FirTypeRef
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.resolvedType
+import org.jetbrains.kotlin.fir.types.type
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitorVoid
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
@@ -60,12 +65,16 @@ object CodeFragmentCapturedValueAnalyzer {
         val selfSymbols = CodeFragmentDeclarationCollector().apply { codeFragment.accept(this) }.symbols.toSet()
         val capturedVisitor = CodeFragmentCapturedValueVisitor(resolveSession, selfSymbols)
         codeFragment.accept(capturedVisitor)
-        return CodeFragmentCapturedValueData(capturedVisitor.values, capturedVisitor.files)
+        return CodeFragmentCapturedValueData(capturedVisitor.values, capturedVisitor.files, capturedVisitor.reifiedTypeParameters)
     }
 }
 
 @KaImplementationDetail
-class CodeFragmentCapturedValueData(val symbols: List<CodeFragmentCapturedSymbol>, val files: List<KtFile>)
+class CodeFragmentCapturedValueData(
+    val symbols: List<CodeFragmentCapturedSymbol>,
+    val files: List<KtFile>,
+    val reifiedTypeParameters: Set<FirTypeParameterSymbol>,
+)
 
 private class CodeFragmentDeclarationCollector : FirDefaultVisitorVoid() {
     private val collectedSymbols = mutableListOf<FirBasedSymbol<*>>()
@@ -88,6 +97,7 @@ private class CodeFragmentCapturedValueVisitor(
 ) : FirDefaultVisitorVoid() {
     private val collectedMappings = LinkedHashMap<CodeFragmentCapturedId, CodeFragmentCapturedSymbol>()
     private val collectedFiles = LinkedHashSet<KtFile>()
+    private val collectedReifiedTypeParameters = HashSet<FirTypeParameterSymbol>()
 
     private val assignmentLhs = mutableListOf<FirBasedSymbol<*>>()
 
@@ -96,6 +106,9 @@ private class CodeFragmentCapturedValueVisitor(
 
     val files: List<KtFile>
         get() = collectedFiles.toList()
+
+    val reifiedTypeParameters: Set<FirTypeParameterSymbol>
+        get() = collectedReifiedTypeParameters.toSet()
 
     private val session: FirSession
         get() = resolveSession.useSiteFirSession
@@ -206,6 +219,19 @@ private class CodeFragmentCapturedValueVisitor(
                     processCall(element, symbol)
                 }
             }
+            is FirResolvedTypeRef -> {
+                processConeType(element.coneType)
+            }
+        }
+    }
+
+    private fun processConeType(type: ConeKotlinType) {
+        if (type is ConeTypeParameterType) {
+            val symbol = type.lookupTag.typeParameterSymbol
+            if (symbol.isReified) collectedReifiedTypeParameters.add(symbol)
+        }
+        for (typeArgument in type.typeArguments) {
+            typeArgument.type?.let { processConeType(it) }
         }
     }
 
@@ -216,7 +242,8 @@ private class CodeFragmentCapturedValueVisitor(
         // We visit the x in the first line before we visit the assignment and need to check the source to determine that the variable
         // is mutated.
         // The x in the second line isn't visited because it's a FirDesugaredAssignmentValueReferenceExpression.
-        val isMutated = assignmentLhs.lastOrNull() == symbol || element.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement
+        val isMutated =
+            assignmentLhs.lastOrNull() == symbol || element.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement
         when (symbol) {
             is FirValueParameterSymbol -> {
                 val isCrossingInlineBounds = isCrossingInlineBounds(element, symbol)
@@ -292,6 +319,8 @@ private class CodeFragmentCapturedValueVisitor(
         }
 
     private fun registerFileIfRequired(symbol: FirBasedSymbol<*>) {
+        if (symbol is FirTypeParameterSymbol && symbol.isReified) collectedReifiedTypeParameters.add(symbol)
+
         val needsRegistration = when (symbol) {
             is FirRegularClassSymbol -> symbol.isLocal
             is FirAnonymousObjectSymbol -> true
