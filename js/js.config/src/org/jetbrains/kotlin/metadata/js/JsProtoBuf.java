@@ -114,7 +114,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> 
         getAnnotationList();
@@ -123,7 +123,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index);
     /**
@@ -131,7 +131,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     int getAnnotationCount();
   }
@@ -409,7 +409,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -420,7 +420,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder> 
         getAnnotationOrBuilderList() {
@@ -431,7 +431,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
@@ -442,7 +442,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -453,7 +453,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder getAnnotationOrBuilder(
         int index) {
@@ -472,7 +472,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAnnotation(
@@ -486,7 +486,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -499,7 +499,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(
@@ -513,7 +513,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -526,7 +526,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void clearAnnotation() {
       annotation_ = emptyProtobufList();
@@ -536,7 +536,7 @@ public final class JsProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void removeAnnotation(int index) {
       ensureAnnotationIsMutable();
@@ -904,7 +904,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -916,7 +916,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public int getAnnotationCount() {
@@ -926,7 +926,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -937,7 +937,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -950,7 +950,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -964,7 +964,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
         copyOnWrite();
@@ -976,7 +976,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -989,7 +989,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1002,7 +1002,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1016,7 +1016,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAllAnnotation(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -1029,7 +1029,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder clearAnnotation() {
         copyOnWrite();
@@ -1041,7 +1041,7 @@ public final class JsProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder removeAnnotation(int index) {
         copyOnWrite();
@@ -1157,16 +1157,16 @@ public final class JsProtoBuf {
     int getId();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> 
         getAnnotationList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     int getAnnotationCount();
   }
@@ -1235,35 +1235,35 @@ public final class JsProtoBuf {
     public static final int ANNOTATION_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> annotation_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
       return annotation_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder> 
         getAnnotationOrBuilderList() {
       return annotation_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
       return annotation_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
       return annotation_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder getAnnotationOrBuilder(
         int index) {
@@ -1278,7 +1278,7 @@ public final class JsProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAnnotation(
@@ -1288,7 +1288,7 @@ public final class JsProtoBuf {
       annotation_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1297,7 +1297,7 @@ public final class JsProtoBuf {
       annotation_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(
@@ -1307,7 +1307,7 @@ public final class JsProtoBuf {
       annotation_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     private void addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -1316,13 +1316,13 @@ public final class JsProtoBuf {
           values, annotation_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     private void clearAnnotation() {
       annotation_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
      */
     private void removeAnnotation(int index) {
       ensureAnnotationIsMutable();
@@ -1479,7 +1479,7 @@ public final class JsProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -1487,20 +1487,20 @@ public final class JsProtoBuf {
             instance.getAnnotationList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       @java.lang.Override
       public int getAnnotationCount() {
         return instance.getAnnotationCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
         return instance.getAnnotation(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1509,7 +1509,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1519,7 +1519,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
         copyOnWrite();
@@ -1527,7 +1527,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1536,7 +1536,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder addAnnotation(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1545,7 +1545,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1555,7 +1555,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder addAllAnnotation(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -1564,7 +1564,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder clearAnnotation() {
         copyOnWrite();
@@ -1572,7 +1572,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 2;</code>
        */
       public Builder removeAnnotation(int index) {
         copyOnWrite();
@@ -1665,16 +1665,16 @@ public final class JsProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> 
         getFileList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     org.jetbrains.kotlin.metadata.js.JsProtoBuf.File getFile(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     int getFileCount();
   }
@@ -1692,35 +1692,35 @@ public final class JsProtoBuf {
     public static final int FILE_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> file_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> getFileList() {
       return file_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.js.JsProtoBuf.FileOrBuilder> 
         getFileOrBuilderList() {
       return file_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.Override
     public int getFileCount() {
       return file_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.js.JsProtoBuf.File getFile(int index) {
       return file_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     public org.jetbrains.kotlin.metadata.js.JsProtoBuf.FileOrBuilder getFileOrBuilder(
         int index) {
@@ -1735,7 +1735,7 @@ public final class JsProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setFile(
@@ -1745,7 +1745,7 @@ public final class JsProtoBuf {
       file_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFile(org.jetbrains.kotlin.metadata.js.JsProtoBuf.File value) {
@@ -1754,7 +1754,7 @@ public final class JsProtoBuf {
       file_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFile(
@@ -1764,7 +1764,7 @@ public final class JsProtoBuf {
       file_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     private void addAllFile(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> values) {
@@ -1773,13 +1773,13 @@ public final class JsProtoBuf {
           values, file_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     private void clearFile() {
       file_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
      */
     private void removeFile(int index) {
       ensureFileIsMutable();
@@ -1884,7 +1884,7 @@ public final class JsProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> getFileList() {
@@ -1892,20 +1892,20 @@ public final class JsProtoBuf {
             instance.getFileList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       @java.lang.Override
       public int getFileCount() {
         return instance.getFileCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.js.JsProtoBuf.File getFile(int index) {
         return instance.getFile(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder setFile(
           int index, org.jetbrains.kotlin.metadata.js.JsProtoBuf.File value) {
@@ -1914,7 +1914,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder setFile(
           int index, org.jetbrains.kotlin.metadata.js.JsProtoBuf.File.Builder builderForValue) {
@@ -1924,7 +1924,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder addFile(org.jetbrains.kotlin.metadata.js.JsProtoBuf.File value) {
         copyOnWrite();
@@ -1932,7 +1932,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder addFile(
           int index, org.jetbrains.kotlin.metadata.js.JsProtoBuf.File value) {
@@ -1941,7 +1941,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder addFile(
           org.jetbrains.kotlin.metadata.js.JsProtoBuf.File.Builder builderForValue) {
@@ -1950,7 +1950,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder addFile(
           int index, org.jetbrains.kotlin.metadata.js.JsProtoBuf.File.Builder builderForValue) {
@@ -1960,7 +1960,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder addAllFile(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.js.JsProtoBuf.File> values) {
@@ -1969,7 +1969,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder clearFile() {
         copyOnWrite();
@@ -1977,7 +1977,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.js.File file = 1;</code>
        */
       public Builder removeFile(int index) {
         copyOnWrite();
@@ -2489,16 +2489,16 @@ public final class JsProtoBuf {
     org.jetbrains.kotlin.metadata.js.JsProtoBuf.Library.Kind getKind();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> 
         getPackageFragmentList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment getPackageFragment(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     int getPackageFragmentCount();
 
@@ -2681,35 +2681,35 @@ public final class JsProtoBuf {
     public static final int PACKAGE_FRAGMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> packageFragment_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> getPackageFragmentList() {
       return packageFragment_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragmentOrBuilder> 
         getPackageFragmentOrBuilderList() {
       return packageFragment_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.Override
     public int getPackageFragmentCount() {
       return packageFragment_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment getPackageFragment(int index) {
       return packageFragment_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragmentOrBuilder getPackageFragmentOrBuilder(
         int index) {
@@ -2724,7 +2724,7 @@ public final class JsProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setPackageFragment(
@@ -2734,7 +2734,7 @@ public final class JsProtoBuf {
       packageFragment_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addPackageFragment(org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment value) {
@@ -2743,7 +2743,7 @@ public final class JsProtoBuf {
       packageFragment_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addPackageFragment(
@@ -2753,7 +2753,7 @@ public final class JsProtoBuf {
       packageFragment_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     private void addAllPackageFragment(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> values) {
@@ -2762,13 +2762,13 @@ public final class JsProtoBuf {
           values, packageFragment_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     private void clearPackageFragment() {
       packageFragment_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
      */
     private void removePackageFragment(int index) {
       ensurePackageFragmentIsMutable();
@@ -3003,7 +3003,7 @@ public final class JsProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> getPackageFragmentList() {
@@ -3011,20 +3011,20 @@ public final class JsProtoBuf {
             instance.getPackageFragmentList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       @java.lang.Override
       public int getPackageFragmentCount() {
         return instance.getPackageFragmentCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment getPackageFragment(int index) {
         return instance.getPackageFragment(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder setPackageFragment(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment value) {
@@ -3033,7 +3033,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder setPackageFragment(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment.Builder builderForValue) {
@@ -3043,7 +3043,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder addPackageFragment(org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment value) {
         copyOnWrite();
@@ -3051,7 +3051,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder addPackageFragment(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment value) {
@@ -3060,7 +3060,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder addPackageFragment(
           org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment.Builder builderForValue) {
@@ -3069,7 +3069,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder addPackageFragment(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment.Builder builderForValue) {
@@ -3079,7 +3079,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder addAllPackageFragment(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.PackageFragment> values) {
@@ -3088,7 +3088,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder clearPackageFragment() {
         copyOnWrite();
@@ -3096,7 +3096,7 @@ public final class JsProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.PackageFragment package_fragment = 2;</code>
        */
       public Builder removePackageFragment(int index) {
         copyOnWrite();

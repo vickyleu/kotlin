@@ -114,7 +114,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> 
         getAnnotationList();
@@ -123,7 +123,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index);
     /**
@@ -131,7 +131,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     int getAnnotationCount();
 
@@ -425,7 +425,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -436,7 +436,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder> 
         getAnnotationOrBuilderList() {
@@ -447,7 +447,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
@@ -458,7 +458,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -469,7 +469,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder getAnnotationOrBuilder(
         int index) {
@@ -488,7 +488,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAnnotation(
@@ -502,7 +502,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -515,7 +515,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(
@@ -529,7 +529,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -542,7 +542,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void clearAnnotation() {
       annotation_ = emptyProtobufList();
@@ -552,7 +552,7 @@ public final class KlibMetadataProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void removeAnnotation(int index) {
       ensureAnnotationIsMutable();
@@ -1153,7 +1153,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -1165,7 +1165,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public int getAnnotationCount() {
@@ -1175,7 +1175,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -1186,7 +1186,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1199,7 +1199,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1213,7 +1213,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
         copyOnWrite();
@@ -1225,7 +1225,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1238,7 +1238,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1251,7 +1251,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1265,7 +1265,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAllAnnotation(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -1278,7 +1278,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder clearAnnotation() {
         copyOnWrite();
@@ -1290,7 +1290,7 @@ public final class KlibMetadataProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder removeAnnotation(int index) {
         copyOnWrite();

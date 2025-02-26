@@ -760,16 +760,16 @@ public final class ProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> 
         getQualifiedNameList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName getQualifiedName(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     int getQualifiedNameCount();
   }
@@ -1359,35 +1359,35 @@ public final class ProtoBuf {
     public static final int QUALIFIED_NAME_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> qualifiedName_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> getQualifiedNameList() {
       return qualifiedName_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedNameOrBuilder> 
         getQualifiedNameOrBuilderList() {
       return qualifiedName_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.Override
     public int getQualifiedNameCount() {
       return qualifiedName_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName getQualifiedName(int index) {
       return qualifiedName_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedNameOrBuilder getQualifiedNameOrBuilder(
         int index) {
@@ -1402,7 +1402,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setQualifiedName(
@@ -1412,7 +1412,7 @@ public final class ProtoBuf {
       qualifiedName_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addQualifiedName(org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName value) {
@@ -1421,7 +1421,7 @@ public final class ProtoBuf {
       qualifiedName_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addQualifiedName(
@@ -1431,7 +1431,7 @@ public final class ProtoBuf {
       qualifiedName_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     private void addAllQualifiedName(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> values) {
@@ -1440,13 +1440,13 @@ public final class ProtoBuf {
           values, qualifiedName_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     private void clearQualifiedName() {
       qualifiedName_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
      */
     private void removeQualifiedName(int index) {
       ensureQualifiedNameIsMutable();
@@ -1551,7 +1551,7 @@ public final class ProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> getQualifiedNameList() {
@@ -1559,20 +1559,20 @@ public final class ProtoBuf {
             instance.getQualifiedNameList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       @java.lang.Override
       public int getQualifiedNameCount() {
         return instance.getQualifiedNameCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName getQualifiedName(int index) {
         return instance.getQualifiedName(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder setQualifiedName(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName value) {
@@ -1581,7 +1581,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder setQualifiedName(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName.Builder builderForValue) {
@@ -1591,7 +1591,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder addQualifiedName(org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName value) {
         copyOnWrite();
@@ -1599,7 +1599,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder addQualifiedName(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName value) {
@@ -1608,7 +1608,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder addQualifiedName(
           org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName.Builder builderForValue) {
@@ -1617,7 +1617,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder addQualifiedName(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName.Builder builderForValue) {
@@ -1627,7 +1627,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder addAllQualifiedName(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.QualifiedNameTable.QualifiedName> values) {
@@ -1636,7 +1636,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder clearQualifiedName() {
         copyOnWrite();
@@ -1644,7 +1644,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.QualifiedNameTable.QualifiedName qualified_name = 1;</code>
        */
       public Builder removeQualifiedName(int index) {
         copyOnWrite();
@@ -1745,16 +1745,16 @@ public final class ProtoBuf {
     int getId();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> 
         getArgumentList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument getArgument(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     int getArgumentCount();
   }
@@ -1918,16 +1918,16 @@ public final class ProtoBuf {
         org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation();
 
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> 
             getArrayElementList();
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value getArrayElement(int index);
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         int getArrayElementCount();
 
@@ -2511,35 +2511,35 @@ public final class ProtoBuf {
         public static final int ARRAY_ELEMENT_FIELD_NUMBER = 9;
         private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> arrayElement_;
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.Override
         public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> getArrayElementList() {
           return arrayElement_;
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.ValueOrBuilder> 
             getArrayElementOrBuilderList() {
           return arrayElement_;
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.Override
         public int getArrayElementCount() {
           return arrayElement_.size();
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.Override
         public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value getArrayElement(int index) {
           return arrayElement_.get(index);
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.ValueOrBuilder getArrayElementOrBuilder(
             int index) {
@@ -2554,7 +2554,7 @@ public final class ProtoBuf {
         }
 
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.SuppressWarnings("ReturnValueIgnored")
         private void setArrayElement(
@@ -2564,7 +2564,7 @@ public final class ProtoBuf {
           arrayElement_.set(index, value);
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.SuppressWarnings("ReturnValueIgnored")
         private void addArrayElement(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value value) {
@@ -2573,7 +2573,7 @@ public final class ProtoBuf {
           arrayElement_.add(value);
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         @java.lang.SuppressWarnings("ReturnValueIgnored")
         private void addArrayElement(
@@ -2583,7 +2583,7 @@ public final class ProtoBuf {
           arrayElement_.add(index, value);
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         private void addAllArrayElement(
             java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> values) {
@@ -2592,13 +2592,13 @@ public final class ProtoBuf {
               values, arrayElement_);
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         private void clearArrayElement() {
           arrayElement_ = emptyProtobufList();
         }
         /**
-         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+         * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
          */
         private void removeArrayElement(int index) {
           ensureArrayElementIsMutable();
@@ -3178,7 +3178,7 @@ public final class ProtoBuf {
           }
 
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           @java.lang.Override
           public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> getArrayElementList() {
@@ -3186,20 +3186,20 @@ public final class ProtoBuf {
                 instance.getArrayElementList());
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           @java.lang.Override
           public int getArrayElementCount() {
             return instance.getArrayElementCount();
           }/**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           @java.lang.Override
           public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value getArrayElement(int index) {
             return instance.getArrayElement(index);
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder setArrayElement(
               int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value value) {
@@ -3208,7 +3208,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder setArrayElement(
               int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value.Builder builderForValue) {
@@ -3218,7 +3218,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder addArrayElement(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value value) {
             copyOnWrite();
@@ -3226,7 +3226,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder addArrayElement(
               int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value value) {
@@ -3235,7 +3235,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder addArrayElement(
               org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value.Builder builderForValue) {
@@ -3244,7 +3244,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder addArrayElement(
               int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value.Builder builderForValue) {
@@ -3254,7 +3254,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder addAllArrayElement(
               java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Value> values) {
@@ -3263,7 +3263,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder clearArrayElement() {
             copyOnWrite();
@@ -3271,7 +3271,7 @@ public final class ProtoBuf {
             return this;
           }
           /**
-           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9 [features = { ... }</code>
+           * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument.Value array_element = 9;</code>
            */
           public Builder removeArrayElement(int index) {
             copyOnWrite();
@@ -3889,35 +3889,35 @@ public final class ProtoBuf {
     public static final int ARGUMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> argument_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> getArgumentList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.ArgumentOrBuilder> 
         getArgumentOrBuilderList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.Override
     public int getArgumentCount() {
       return argument_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument getArgument(int index) {
       return argument_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.ArgumentOrBuilder getArgumentOrBuilder(
         int index) {
@@ -3932,7 +3932,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setArgument(
@@ -3942,7 +3942,7 @@ public final class ProtoBuf {
       argument_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument value) {
@@ -3951,7 +3951,7 @@ public final class ProtoBuf {
       argument_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(
@@ -3961,7 +3961,7 @@ public final class ProtoBuf {
       argument_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     private void addAllArgument(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> values) {
@@ -3970,13 +3970,13 @@ public final class ProtoBuf {
           values, argument_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     private void clearArgument() {
       argument_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
      */
     private void removeArgument(int index) {
       ensureArgumentIsMutable();
@@ -4117,7 +4117,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> getArgumentList() {
@@ -4125,20 +4125,20 @@ public final class ProtoBuf {
             instance.getArgumentList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       @java.lang.Override
       public int getArgumentCount() {
         return instance.getArgumentCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument getArgument(int index) {
         return instance.getArgument(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument value) {
@@ -4147,7 +4147,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Builder builderForValue) {
@@ -4157,7 +4157,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder addArgument(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument value) {
         copyOnWrite();
@@ -4165,7 +4165,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument value) {
@@ -4174,7 +4174,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder addArgument(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Builder builderForValue) {
@@ -4183,7 +4183,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument.Builder builderForValue) {
@@ -4193,7 +4193,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder addAllArgument(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Argument> values) {
@@ -4202,7 +4202,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder clearArgument() {
         copyOnWrite();
@@ -4210,7 +4210,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation.Argument argument = 2;</code>
        */
       public Builder removeArgument(int index) {
         copyOnWrite();
@@ -4305,16 +4305,16 @@ public final class ProtoBuf {
                 Type, Type.Builder> {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> 
         getArgumentList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument getArgument(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     int getArgumentCount();
 
@@ -5148,35 +5148,35 @@ public final class ProtoBuf {
     public static final int ARGUMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> argument_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> getArgumentList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type.ArgumentOrBuilder> 
         getArgumentOrBuilderList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.Override
     public int getArgumentCount() {
       return argument_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument getArgument(int index) {
       return argument_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type.ArgumentOrBuilder getArgumentOrBuilder(
         int index) {
@@ -5191,7 +5191,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setArgument(
@@ -5201,7 +5201,7 @@ public final class ProtoBuf {
       argument_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument value) {
@@ -5210,7 +5210,7 @@ public final class ProtoBuf {
       argument_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(
@@ -5220,7 +5220,7 @@ public final class ProtoBuf {
       argument_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     private void addAllArgument(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> values) {
@@ -5229,13 +5229,13 @@ public final class ProtoBuf {
           values, argument_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     private void clearArgument() {
       argument_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
      */
     private void removeArgument(int index) {
       ensureArgumentIsMutable();
@@ -5937,7 +5937,7 @@ public final class ProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> getArgumentList() {
@@ -5945,20 +5945,20 @@ public final class ProtoBuf {
             instance.getArgumentList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       @java.lang.Override
       public int getArgumentCount() {
         return instance.getArgumentCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument getArgument(int index) {
         return instance.getArgument(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument value) {
@@ -5967,7 +5967,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument.Builder builderForValue) {
@@ -5977,7 +5977,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder addArgument(org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument value) {
         copyOnWrite();
@@ -5985,7 +5985,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument value) {
@@ -5994,7 +5994,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder addArgument(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument.Builder builderForValue) {
@@ -6003,7 +6003,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument.Builder builderForValue) {
@@ -6013,7 +6013,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder addAllArgument(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type.Argument> values) {
@@ -6022,7 +6022,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder clearArgument() {
         copyOnWrite();
@@ -6030,7 +6030,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type.Argument argument = 2;</code>
        */
       public Builder removeArgument(int index) {
         copyOnWrite();
@@ -6804,16 +6804,16 @@ public final class ProtoBuf {
     org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter.Variance getVariance();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> 
         getUpperBoundList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type getUpperBound(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     int getUpperBoundCount();
 
@@ -7081,35 +7081,35 @@ public final class ProtoBuf {
     public static final int UPPER_BOUND_FIELD_NUMBER = 5;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type> upperBound_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getUpperBoundList() {
       return upperBound_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder> 
         getUpperBoundOrBuilderList() {
       return upperBound_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.Override
     public int getUpperBoundCount() {
       return upperBound_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type getUpperBound(int index) {
       return upperBound_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder getUpperBoundOrBuilder(
         int index) {
@@ -7124,7 +7124,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setUpperBound(
@@ -7134,7 +7134,7 @@ public final class ProtoBuf {
       upperBound_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addUpperBound(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -7143,7 +7143,7 @@ public final class ProtoBuf {
       upperBound_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addUpperBound(
@@ -7153,7 +7153,7 @@ public final class ProtoBuf {
       upperBound_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     private void addAllUpperBound(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -7162,13 +7162,13 @@ public final class ProtoBuf {
           values, upperBound_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     private void clearUpperBound() {
       upperBound_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
      */
     private void removeUpperBound(int index) {
       ensureUpperBoundIsMutable();
@@ -7488,7 +7488,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getUpperBoundList() {
@@ -7496,20 +7496,20 @@ public final class ProtoBuf {
             instance.getUpperBoundList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       @java.lang.Override
       public int getUpperBoundCount() {
         return instance.getUpperBoundCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type getUpperBound(int index) {
         return instance.getUpperBound(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder setUpperBound(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -7518,7 +7518,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder setUpperBound(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -7528,7 +7528,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder addUpperBound(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
         copyOnWrite();
@@ -7536,7 +7536,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder addUpperBound(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -7545,7 +7545,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder addUpperBound(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -7554,7 +7554,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder addUpperBound(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -7564,7 +7564,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder addAllUpperBound(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -7573,7 +7573,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder clearUpperBound() {
         copyOnWrite();
@@ -7581,7 +7581,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type upper_bound = 5;</code>
        */
       public Builder removeUpperBound(int index) {
         copyOnWrite();
@@ -7813,30 +7813,30 @@ public final class ProtoBuf {
     int getCompanionObjectName();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> 
         getTypeParameterList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter getTypeParameter(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     int getTypeParameterCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> 
         getSupertypeList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type getSupertype(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     int getSupertypeCount();
 
@@ -7875,16 +7875,16 @@ public final class ProtoBuf {
     int getNestedClassName(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> 
         getContextReceiverTypeList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type getContextReceiverType(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     int getContextReceiverTypeCount();
 
@@ -7906,72 +7906,72 @@ public final class ProtoBuf {
     int getContextReceiverTypeId(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> 
         getConstructorList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Constructor getConstructor(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     int getConstructorCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> 
         getFunctionList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     int getFunctionCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> 
         getPropertyList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     int getPropertyCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> 
         getTypeAliasList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     int getTypeAliasCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> 
         getEnumEntryList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry getEnumEntry(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     int getEnumEntryCount();
 
@@ -8043,16 +8043,16 @@ public final class ProtoBuf {
     int getMultiFieldValueClassUnderlyingName(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> 
         getMultiFieldValueClassUnderlyingTypeList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type getMultiFieldValueClassUnderlyingType(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     int getMultiFieldValueClassUnderlyingTypeCount();
 
@@ -8074,16 +8074,16 @@ public final class ProtoBuf {
     int getMultiFieldValueClassUnderlyingTypeId(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> 
         getAnnotationList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     int getAnnotationCount();
 
@@ -8139,16 +8139,16 @@ public final class ProtoBuf {
     org.jetbrains.kotlin.metadata.ProtoBuf.VersionRequirementTable getVersionRequirementTable();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> 
         getCompilerPluginDataList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     int getCompilerPluginDataCount();
   }
@@ -8484,35 +8484,35 @@ public final class ProtoBuf {
     public static final int TYPE_PARAMETER_FIELD_NUMBER = 5;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> typeParameter_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> getTypeParameterList() {
       return typeParameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameterOrBuilder> 
         getTypeParameterOrBuilderList() {
       return typeParameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.Override
     public int getTypeParameterCount() {
       return typeParameter_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter getTypeParameter(int index) {
       return typeParameter_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameterOrBuilder getTypeParameterOrBuilder(
         int index) {
@@ -8527,7 +8527,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setTypeParameter(
@@ -8537,7 +8537,7 @@ public final class ProtoBuf {
       typeParameter_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeParameter(org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter value) {
@@ -8546,7 +8546,7 @@ public final class ProtoBuf {
       typeParameter_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeParameter(
@@ -8556,7 +8556,7 @@ public final class ProtoBuf {
       typeParameter_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     private void addAllTypeParameter(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> values) {
@@ -8565,13 +8565,13 @@ public final class ProtoBuf {
           values, typeParameter_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     private void clearTypeParameter() {
       typeParameter_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
      */
     private void removeTypeParameter(int index) {
       ensureTypeParameterIsMutable();
@@ -8581,35 +8581,35 @@ public final class ProtoBuf {
     public static final int SUPERTYPE_FIELD_NUMBER = 6;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type> supertype_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getSupertypeList() {
       return supertype_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder> 
         getSupertypeOrBuilderList() {
       return supertype_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.Override
     public int getSupertypeCount() {
       return supertype_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type getSupertype(int index) {
       return supertype_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder getSupertypeOrBuilder(
         int index) {
@@ -8624,7 +8624,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setSupertype(
@@ -8634,7 +8634,7 @@ public final class ProtoBuf {
       supertype_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addSupertype(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -8643,7 +8643,7 @@ public final class ProtoBuf {
       supertype_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addSupertype(
@@ -8653,7 +8653,7 @@ public final class ProtoBuf {
       supertype_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     private void addAllSupertype(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -8662,13 +8662,13 @@ public final class ProtoBuf {
           values, supertype_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     private void clearSupertype() {
       supertype_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
      */
     private void removeSupertype(int index) {
       ensureSupertypeIsMutable();
@@ -8820,35 +8820,35 @@ public final class ProtoBuf {
     public static final int CONTEXT_RECEIVER_TYPE_FIELD_NUMBER = 20;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type> contextReceiverType_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getContextReceiverTypeList() {
       return contextReceiverType_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder> 
         getContextReceiverTypeOrBuilderList() {
       return contextReceiverType_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.Override
     public int getContextReceiverTypeCount() {
       return contextReceiverType_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type getContextReceiverType(int index) {
       return contextReceiverType_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder getContextReceiverTypeOrBuilder(
         int index) {
@@ -8863,7 +8863,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setContextReceiverType(
@@ -8873,7 +8873,7 @@ public final class ProtoBuf {
       contextReceiverType_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addContextReceiverType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -8882,7 +8882,7 @@ public final class ProtoBuf {
       contextReceiverType_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addContextReceiverType(
@@ -8892,7 +8892,7 @@ public final class ProtoBuf {
       contextReceiverType_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     private void addAllContextReceiverType(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -8901,13 +8901,13 @@ public final class ProtoBuf {
           values, contextReceiverType_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     private void clearContextReceiverType() {
       contextReceiverType_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
      */
     private void removeContextReceiverType(int index) {
       ensureContextReceiverTypeIsMutable();
@@ -8988,35 +8988,35 @@ public final class ProtoBuf {
     public static final int CONSTRUCTOR_FIELD_NUMBER = 8;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> constructor_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> getConstructorList() {
       return constructor_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.ConstructorOrBuilder> 
         getConstructorOrBuilderList() {
       return constructor_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.Override
     public int getConstructorCount() {
       return constructor_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Constructor getConstructor(int index) {
       return constructor_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.ConstructorOrBuilder getConstructorOrBuilder(
         int index) {
@@ -9031,7 +9031,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setConstructor(
@@ -9041,7 +9041,7 @@ public final class ProtoBuf {
       constructor_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addConstructor(org.jetbrains.kotlin.metadata.ProtoBuf.Constructor value) {
@@ -9050,7 +9050,7 @@ public final class ProtoBuf {
       constructor_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addConstructor(
@@ -9060,7 +9060,7 @@ public final class ProtoBuf {
       constructor_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     private void addAllConstructor(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> values) {
@@ -9069,13 +9069,13 @@ public final class ProtoBuf {
           values, constructor_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     private void clearConstructor() {
       constructor_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
      */
     private void removeConstructor(int index) {
       ensureConstructorIsMutable();
@@ -9085,35 +9085,35 @@ public final class ProtoBuf {
     public static final int FUNCTION_FIELD_NUMBER = 9;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Function> function_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> getFunctionList() {
       return function_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.FunctionOrBuilder> 
         getFunctionOrBuilderList() {
       return function_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.Override
     public int getFunctionCount() {
       return function_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index) {
       return function_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.FunctionOrBuilder getFunctionOrBuilder(
         int index) {
@@ -9128,7 +9128,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setFunction(
@@ -9138,7 +9138,7 @@ public final class ProtoBuf {
       function_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFunction(org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -9147,7 +9147,7 @@ public final class ProtoBuf {
       function_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFunction(
@@ -9157,7 +9157,7 @@ public final class ProtoBuf {
       function_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     private void addAllFunction(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Function> values) {
@@ -9166,13 +9166,13 @@ public final class ProtoBuf {
           values, function_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     private void clearFunction() {
       function_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
      */
     private void removeFunction(int index) {
       ensureFunctionIsMutable();
@@ -9182,35 +9182,35 @@ public final class ProtoBuf {
     public static final int PROPERTY_FIELD_NUMBER = 10;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Property> property_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> getPropertyList() {
       return property_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.PropertyOrBuilder> 
         getPropertyOrBuilderList() {
       return property_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.Override
     public int getPropertyCount() {
       return property_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index) {
       return property_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.PropertyOrBuilder getPropertyOrBuilder(
         int index) {
@@ -9225,7 +9225,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setProperty(
@@ -9235,7 +9235,7 @@ public final class ProtoBuf {
       property_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addProperty(org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -9244,7 +9244,7 @@ public final class ProtoBuf {
       property_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addProperty(
@@ -9254,7 +9254,7 @@ public final class ProtoBuf {
       property_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     private void addAllProperty(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Property> values) {
@@ -9263,13 +9263,13 @@ public final class ProtoBuf {
           values, property_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     private void clearProperty() {
       property_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
      */
     private void removeProperty(int index) {
       ensurePropertyIsMutable();
@@ -9279,35 +9279,35 @@ public final class ProtoBuf {
     public static final int TYPE_ALIAS_FIELD_NUMBER = 11;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> typeAlias_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> getTypeAliasList() {
       return typeAlias_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAliasOrBuilder> 
         getTypeAliasOrBuilderList() {
       return typeAlias_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.Override
     public int getTypeAliasCount() {
       return typeAlias_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index) {
       return typeAlias_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAliasOrBuilder getTypeAliasOrBuilder(
         int index) {
@@ -9322,7 +9322,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setTypeAlias(
@@ -9332,7 +9332,7 @@ public final class ProtoBuf {
       typeAlias_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeAlias(org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -9341,7 +9341,7 @@ public final class ProtoBuf {
       typeAlias_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeAlias(
@@ -9351,7 +9351,7 @@ public final class ProtoBuf {
       typeAlias_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     private void addAllTypeAlias(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> values) {
@@ -9360,13 +9360,13 @@ public final class ProtoBuf {
           values, typeAlias_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     private void clearTypeAlias() {
       typeAlias_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
      */
     private void removeTypeAlias(int index) {
       ensureTypeAliasIsMutable();
@@ -9376,35 +9376,35 @@ public final class ProtoBuf {
     public static final int ENUM_ENTRY_FIELD_NUMBER = 13;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> enumEntry_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> getEnumEntryList() {
       return enumEntry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntryOrBuilder> 
         getEnumEntryOrBuilderList() {
       return enumEntry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.Override
     public int getEnumEntryCount() {
       return enumEntry_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry getEnumEntry(int index) {
       return enumEntry_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntryOrBuilder getEnumEntryOrBuilder(
         int index) {
@@ -9419,7 +9419,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setEnumEntry(
@@ -9429,7 +9429,7 @@ public final class ProtoBuf {
       enumEntry_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEnumEntry(org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry value) {
@@ -9438,7 +9438,7 @@ public final class ProtoBuf {
       enumEntry_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEnumEntry(
@@ -9448,7 +9448,7 @@ public final class ProtoBuf {
       enumEntry_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     private void addAllEnumEntry(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> values) {
@@ -9457,13 +9457,13 @@ public final class ProtoBuf {
           values, enumEntry_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     private void clearEnumEntry() {
       enumEntry_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
      */
     private void removeEnumEntry(int index) {
       ensureEnumEntryIsMutable();
@@ -9730,35 +9730,35 @@ public final class ProtoBuf {
     public static final int MULTI_FIELD_VALUE_CLASS_UNDERLYING_TYPE_FIELD_NUMBER = 23;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type> multiFieldValueClassUnderlyingType_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getMultiFieldValueClassUnderlyingTypeList() {
       return multiFieldValueClassUnderlyingType_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder> 
         getMultiFieldValueClassUnderlyingTypeOrBuilderList() {
       return multiFieldValueClassUnderlyingType_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.Override
     public int getMultiFieldValueClassUnderlyingTypeCount() {
       return multiFieldValueClassUnderlyingType_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type getMultiFieldValueClassUnderlyingType(int index) {
       return multiFieldValueClassUnderlyingType_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder getMultiFieldValueClassUnderlyingTypeOrBuilder(
         int index) {
@@ -9773,7 +9773,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setMultiFieldValueClassUnderlyingType(
@@ -9783,7 +9783,7 @@ public final class ProtoBuf {
       multiFieldValueClassUnderlyingType_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMultiFieldValueClassUnderlyingType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -9792,7 +9792,7 @@ public final class ProtoBuf {
       multiFieldValueClassUnderlyingType_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMultiFieldValueClassUnderlyingType(
@@ -9802,7 +9802,7 @@ public final class ProtoBuf {
       multiFieldValueClassUnderlyingType_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     private void addAllMultiFieldValueClassUnderlyingType(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -9811,13 +9811,13 @@ public final class ProtoBuf {
           values, multiFieldValueClassUnderlyingType_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     private void clearMultiFieldValueClassUnderlyingType() {
       multiFieldValueClassUnderlyingType_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
      */
     private void removeMultiFieldValueClassUnderlyingType(int index) {
       ensureMultiFieldValueClassUnderlyingTypeIsMutable();
@@ -9898,35 +9898,35 @@ public final class ProtoBuf {
     public static final int ANNOTATION_FIELD_NUMBER = 25;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> annotation_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
       return annotation_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder> 
         getAnnotationOrBuilderList() {
       return annotation_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
       return annotation_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
       return annotation_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder getAnnotationOrBuilder(
         int index) {
@@ -9941,7 +9941,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAnnotation(
@@ -9951,7 +9951,7 @@ public final class ProtoBuf {
       annotation_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -9960,7 +9960,7 @@ public final class ProtoBuf {
       annotation_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(
@@ -9970,7 +9970,7 @@ public final class ProtoBuf {
       annotation_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     private void addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -9979,13 +9979,13 @@ public final class ProtoBuf {
           values, annotation_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     private void clearAnnotation() {
       annotation_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
      */
     private void removeAnnotation(int index) {
       ensureAnnotationIsMutable();
@@ -10187,35 +10187,35 @@ public final class ProtoBuf {
     public static final int COMPILER_PLUGIN_DATA_FIELD_NUMBER = 33;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> compilerPluginData_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> getCompilerPluginDataList() {
       return compilerPluginData_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginDataOrBuilder> 
         getCompilerPluginDataOrBuilderList() {
       return compilerPluginData_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.Override
     public int getCompilerPluginDataCount() {
       return compilerPluginData_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index) {
       return compilerPluginData_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginDataOrBuilder getCompilerPluginDataOrBuilder(
         int index) {
@@ -10230,7 +10230,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setCompilerPluginData(
@@ -10240,7 +10240,7 @@ public final class ProtoBuf {
       compilerPluginData_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addCompilerPluginData(org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -10249,7 +10249,7 @@ public final class ProtoBuf {
       compilerPluginData_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addCompilerPluginData(
@@ -10259,7 +10259,7 @@ public final class ProtoBuf {
       compilerPluginData_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     private void addAllCompilerPluginData(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> values) {
@@ -10268,13 +10268,13 @@ public final class ProtoBuf {
           values, compilerPluginData_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     private void clearCompilerPluginData() {
       compilerPluginData_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
      */
     private void removeCompilerPluginData(int index) {
       ensureCompilerPluginDataIsMutable();
@@ -10547,7 +10547,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> getTypeParameterList() {
@@ -10555,20 +10555,20 @@ public final class ProtoBuf {
             instance.getTypeParameterList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       @java.lang.Override
       public int getTypeParameterCount() {
         return instance.getTypeParameterCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter getTypeParameter(int index) {
         return instance.getTypeParameter(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder setTypeParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter value) {
@@ -10577,7 +10577,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder setTypeParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter.Builder builderForValue) {
@@ -10587,7 +10587,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder addTypeParameter(org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter value) {
         copyOnWrite();
@@ -10595,7 +10595,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder addTypeParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter value) {
@@ -10604,7 +10604,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder addTypeParameter(
           org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter.Builder builderForValue) {
@@ -10613,7 +10613,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder addTypeParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter.Builder builderForValue) {
@@ -10623,7 +10623,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder addAllTypeParameter(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeParameter> values) {
@@ -10632,7 +10632,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder clearTypeParameter() {
         copyOnWrite();
@@ -10640,7 +10640,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeParameter type_parameter = 5;</code>
        */
       public Builder removeTypeParameter(int index) {
         copyOnWrite();
@@ -10649,7 +10649,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getSupertypeList() {
@@ -10657,20 +10657,20 @@ public final class ProtoBuf {
             instance.getSupertypeList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       @java.lang.Override
       public int getSupertypeCount() {
         return instance.getSupertypeCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type getSupertype(int index) {
         return instance.getSupertype(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder setSupertype(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -10679,7 +10679,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder setSupertype(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10689,7 +10689,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder addSupertype(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
         copyOnWrite();
@@ -10697,7 +10697,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder addSupertype(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -10706,7 +10706,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder addSupertype(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10715,7 +10715,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder addSupertype(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10725,7 +10725,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder addAllSupertype(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -10734,7 +10734,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder clearSupertype() {
         copyOnWrite();
@@ -10742,7 +10742,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type supertype = 6;</code>
        */
       public Builder removeSupertype(int index) {
         copyOnWrite();
@@ -10889,7 +10889,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getContextReceiverTypeList() {
@@ -10897,20 +10897,20 @@ public final class ProtoBuf {
             instance.getContextReceiverTypeList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       @java.lang.Override
       public int getContextReceiverTypeCount() {
         return instance.getContextReceiverTypeCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type getContextReceiverType(int index) {
         return instance.getContextReceiverType(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder setContextReceiverType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -10919,7 +10919,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder setContextReceiverType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10929,7 +10929,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder addContextReceiverType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
         copyOnWrite();
@@ -10937,7 +10937,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder addContextReceiverType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -10946,7 +10946,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder addContextReceiverType(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10955,7 +10955,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder addContextReceiverType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -10965,7 +10965,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder addAllContextReceiverType(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -10974,7 +10974,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder clearContextReceiverType() {
         copyOnWrite();
@@ -10982,7 +10982,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type context_receiver_type = 20;</code>
        */
       public Builder removeContextReceiverType(int index) {
         copyOnWrite();
@@ -11060,7 +11060,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> getConstructorList() {
@@ -11068,20 +11068,20 @@ public final class ProtoBuf {
             instance.getConstructorList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       @java.lang.Override
       public int getConstructorCount() {
         return instance.getConstructorCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Constructor getConstructor(int index) {
         return instance.getConstructor(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder setConstructor(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Constructor value) {
@@ -11090,7 +11090,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder setConstructor(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Constructor.Builder builderForValue) {
@@ -11100,7 +11100,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder addConstructor(org.jetbrains.kotlin.metadata.ProtoBuf.Constructor value) {
         copyOnWrite();
@@ -11108,7 +11108,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder addConstructor(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Constructor value) {
@@ -11117,7 +11117,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder addConstructor(
           org.jetbrains.kotlin.metadata.ProtoBuf.Constructor.Builder builderForValue) {
@@ -11126,7 +11126,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder addConstructor(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Constructor.Builder builderForValue) {
@@ -11136,7 +11136,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder addAllConstructor(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Constructor> values) {
@@ -11145,7 +11145,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder clearConstructor() {
         copyOnWrite();
@@ -11153,7 +11153,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Constructor constructor = 8;</code>
        */
       public Builder removeConstructor(int index) {
         copyOnWrite();
@@ -11162,7 +11162,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> getFunctionList() {
@@ -11170,20 +11170,20 @@ public final class ProtoBuf {
             instance.getFunctionList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       @java.lang.Override
       public int getFunctionCount() {
         return instance.getFunctionCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index) {
         return instance.getFunction(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder setFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -11192,7 +11192,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder setFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -11202,7 +11202,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder addFunction(org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
         copyOnWrite();
@@ -11210,7 +11210,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder addFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -11219,7 +11219,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder addFunction(
           org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -11228,7 +11228,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder addFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -11238,7 +11238,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder addAllFunction(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Function> values) {
@@ -11247,7 +11247,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder clearFunction() {
         copyOnWrite();
@@ -11255,7 +11255,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 9;</code>
        */
       public Builder removeFunction(int index) {
         copyOnWrite();
@@ -11264,7 +11264,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> getPropertyList() {
@@ -11272,20 +11272,20 @@ public final class ProtoBuf {
             instance.getPropertyList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       @java.lang.Override
       public int getPropertyCount() {
         return instance.getPropertyCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index) {
         return instance.getProperty(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder setProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -11294,7 +11294,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder setProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -11304,7 +11304,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder addProperty(org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
         copyOnWrite();
@@ -11312,7 +11312,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder addProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -11321,7 +11321,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder addProperty(
           org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -11330,7 +11330,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder addProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -11340,7 +11340,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder addAllProperty(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Property> values) {
@@ -11349,7 +11349,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder clearProperty() {
         copyOnWrite();
@@ -11357,7 +11357,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 10;</code>
        */
       public Builder removeProperty(int index) {
         copyOnWrite();
@@ -11366,7 +11366,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> getTypeAliasList() {
@@ -11374,20 +11374,20 @@ public final class ProtoBuf {
             instance.getTypeAliasList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       @java.lang.Override
       public int getTypeAliasCount() {
         return instance.getTypeAliasCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index) {
         return instance.getTypeAlias(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder setTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -11396,7 +11396,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder setTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -11406,7 +11406,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder addTypeAlias(org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
         copyOnWrite();
@@ -11414,7 +11414,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder addTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -11423,7 +11423,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder addTypeAlias(
           org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -11432,7 +11432,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder addTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -11442,7 +11442,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder addAllTypeAlias(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> values) {
@@ -11451,7 +11451,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder clearTypeAlias() {
         copyOnWrite();
@@ -11459,7 +11459,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 11;</code>
        */
       public Builder removeTypeAlias(int index) {
         copyOnWrite();
@@ -11468,7 +11468,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> getEnumEntryList() {
@@ -11476,20 +11476,20 @@ public final class ProtoBuf {
             instance.getEnumEntryList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       @java.lang.Override
       public int getEnumEntryCount() {
         return instance.getEnumEntryCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry getEnumEntry(int index) {
         return instance.getEnumEntry(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder setEnumEntry(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry value) {
@@ -11498,7 +11498,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder setEnumEntry(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry.Builder builderForValue) {
@@ -11508,7 +11508,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder addEnumEntry(org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry value) {
         copyOnWrite();
@@ -11516,7 +11516,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder addEnumEntry(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry value) {
@@ -11525,7 +11525,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder addEnumEntry(
           org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry.Builder builderForValue) {
@@ -11534,7 +11534,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder addEnumEntry(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry.Builder builderForValue) {
@@ -11544,7 +11544,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder addAllEnumEntry(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.EnumEntry> values) {
@@ -11553,7 +11553,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder clearEnumEntry() {
         copyOnWrite();
@@ -11561,7 +11561,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.EnumEntry enum_entry = 13;</code>
        */
       public Builder removeEnumEntry(int index) {
         copyOnWrite();
@@ -11827,7 +11827,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getMultiFieldValueClassUnderlyingTypeList() {
@@ -11835,20 +11835,20 @@ public final class ProtoBuf {
             instance.getMultiFieldValueClassUnderlyingTypeList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       @java.lang.Override
       public int getMultiFieldValueClassUnderlyingTypeCount() {
         return instance.getMultiFieldValueClassUnderlyingTypeCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type getMultiFieldValueClassUnderlyingType(int index) {
         return instance.getMultiFieldValueClassUnderlyingType(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder setMultiFieldValueClassUnderlyingType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -11857,7 +11857,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder setMultiFieldValueClassUnderlyingType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -11867,7 +11867,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder addMultiFieldValueClassUnderlyingType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
         copyOnWrite();
@@ -11875,7 +11875,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder addMultiFieldValueClassUnderlyingType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -11884,7 +11884,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder addMultiFieldValueClassUnderlyingType(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -11893,7 +11893,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder addMultiFieldValueClassUnderlyingType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -11903,7 +11903,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder addAllMultiFieldValueClassUnderlyingType(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -11912,7 +11912,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder clearMultiFieldValueClassUnderlyingType() {
         copyOnWrite();
@@ -11920,7 +11920,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type multi_field_value_class_underlying_type = 23;</code>
        */
       public Builder removeMultiFieldValueClassUnderlyingType(int index) {
         copyOnWrite();
@@ -11998,7 +11998,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -12006,20 +12006,20 @@ public final class ProtoBuf {
             instance.getAnnotationList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       @java.lang.Override
       public int getAnnotationCount() {
         return instance.getAnnotationCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
         return instance.getAnnotation(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -12028,7 +12028,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -12038,7 +12038,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
         copyOnWrite();
@@ -12046,7 +12046,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -12055,7 +12055,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder addAnnotation(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -12064,7 +12064,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -12074,7 +12074,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder addAllAnnotation(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -12083,7 +12083,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder clearAnnotation() {
         copyOnWrite();
@@ -12091,7 +12091,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 25;</code>
        */
       public Builder removeAnnotation(int index) {
         copyOnWrite();
@@ -12291,7 +12291,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> getCompilerPluginDataList() {
@@ -12299,20 +12299,20 @@ public final class ProtoBuf {
             instance.getCompilerPluginDataList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       @java.lang.Override
       public int getCompilerPluginDataCount() {
         return instance.getCompilerPluginDataCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index) {
         return instance.getCompilerPluginData(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder setCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -12321,7 +12321,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder setCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -12331,7 +12331,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder addCompilerPluginData(org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
         copyOnWrite();
@@ -12339,7 +12339,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder addCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -12348,7 +12348,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder addCompilerPluginData(
           org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -12357,7 +12357,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder addCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -12367,7 +12367,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder addAllCompilerPluginData(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> values) {
@@ -12376,7 +12376,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder clearCompilerPluginData() {
         copyOnWrite();
@@ -12384,7 +12384,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 33;</code>
        */
       public Builder removeCompilerPluginData(int index) {
         copyOnWrite();
@@ -12516,44 +12516,44 @@ public final class ProtoBuf {
                 Package, Package.Builder> {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> 
         getFunctionList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     int getFunctionCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> 
         getPropertyList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     int getPropertyCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> 
         getTypeAliasList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     int getTypeAliasCount();
 
@@ -12596,35 +12596,35 @@ public final class ProtoBuf {
     public static final int FUNCTION_FIELD_NUMBER = 3;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Function> function_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> getFunctionList() {
       return function_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.FunctionOrBuilder> 
         getFunctionOrBuilderList() {
       return function_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.Override
     public int getFunctionCount() {
       return function_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index) {
       return function_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.FunctionOrBuilder getFunctionOrBuilder(
         int index) {
@@ -12639,7 +12639,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setFunction(
@@ -12649,7 +12649,7 @@ public final class ProtoBuf {
       function_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFunction(org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -12658,7 +12658,7 @@ public final class ProtoBuf {
       function_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFunction(
@@ -12668,7 +12668,7 @@ public final class ProtoBuf {
       function_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     private void addAllFunction(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Function> values) {
@@ -12677,13 +12677,13 @@ public final class ProtoBuf {
           values, function_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     private void clearFunction() {
       function_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
      */
     private void removeFunction(int index) {
       ensureFunctionIsMutable();
@@ -12693,35 +12693,35 @@ public final class ProtoBuf {
     public static final int PROPERTY_FIELD_NUMBER = 4;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Property> property_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> getPropertyList() {
       return property_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.PropertyOrBuilder> 
         getPropertyOrBuilderList() {
       return property_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.Override
     public int getPropertyCount() {
       return property_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index) {
       return property_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.PropertyOrBuilder getPropertyOrBuilder(
         int index) {
@@ -12736,7 +12736,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setProperty(
@@ -12746,7 +12746,7 @@ public final class ProtoBuf {
       property_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addProperty(org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -12755,7 +12755,7 @@ public final class ProtoBuf {
       property_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addProperty(
@@ -12765,7 +12765,7 @@ public final class ProtoBuf {
       property_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     private void addAllProperty(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Property> values) {
@@ -12774,13 +12774,13 @@ public final class ProtoBuf {
           values, property_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     private void clearProperty() {
       property_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
      */
     private void removeProperty(int index) {
       ensurePropertyIsMutable();
@@ -12790,35 +12790,35 @@ public final class ProtoBuf {
     public static final int TYPE_ALIAS_FIELD_NUMBER = 5;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> typeAlias_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> getTypeAliasList() {
       return typeAlias_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAliasOrBuilder> 
         getTypeAliasOrBuilderList() {
       return typeAlias_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.Override
     public int getTypeAliasCount() {
       return typeAlias_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index) {
       return typeAlias_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAliasOrBuilder getTypeAliasOrBuilder(
         int index) {
@@ -12833,7 +12833,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setTypeAlias(
@@ -12843,7 +12843,7 @@ public final class ProtoBuf {
       typeAlias_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeAlias(org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -12852,7 +12852,7 @@ public final class ProtoBuf {
       typeAlias_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTypeAlias(
@@ -12862,7 +12862,7 @@ public final class ProtoBuf {
       typeAlias_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     private void addAllTypeAlias(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> values) {
@@ -12871,13 +12871,13 @@ public final class ProtoBuf {
           values, typeAlias_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     private void clearTypeAlias() {
       typeAlias_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
      */
     private void removeTypeAlias(int index) {
       ensureTypeAliasIsMutable();
@@ -13076,7 +13076,7 @@ public final class ProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Function> getFunctionList() {
@@ -13084,20 +13084,20 @@ public final class ProtoBuf {
             instance.getFunctionList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       @java.lang.Override
       public int getFunctionCount() {
         return instance.getFunctionCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Function getFunction(int index) {
         return instance.getFunction(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder setFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -13106,7 +13106,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder setFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -13116,7 +13116,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder addFunction(org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
         copyOnWrite();
@@ -13124,7 +13124,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder addFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function value) {
@@ -13133,7 +13133,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder addFunction(
           org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -13142,7 +13142,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder addFunction(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Function.Builder builderForValue) {
@@ -13152,7 +13152,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder addAllFunction(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Function> values) {
@@ -13161,7 +13161,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder clearFunction() {
         copyOnWrite();
@@ -13169,7 +13169,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Function function = 3;</code>
        */
       public Builder removeFunction(int index) {
         copyOnWrite();
@@ -13178,7 +13178,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Property> getPropertyList() {
@@ -13186,20 +13186,20 @@ public final class ProtoBuf {
             instance.getPropertyList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       @java.lang.Override
       public int getPropertyCount() {
         return instance.getPropertyCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Property getProperty(int index) {
         return instance.getProperty(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder setProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -13208,7 +13208,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder setProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -13218,7 +13218,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder addProperty(org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
         copyOnWrite();
@@ -13226,7 +13226,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder addProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property value) {
@@ -13235,7 +13235,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder addProperty(
           org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -13244,7 +13244,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder addProperty(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Property.Builder builderForValue) {
@@ -13254,7 +13254,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder addAllProperty(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Property> values) {
@@ -13263,7 +13263,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder clearProperty() {
         copyOnWrite();
@@ -13271,7 +13271,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Property property = 4;</code>
        */
       public Builder removeProperty(int index) {
         copyOnWrite();
@@ -13280,7 +13280,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> getTypeAliasList() {
@@ -13288,20 +13288,20 @@ public final class ProtoBuf {
             instance.getTypeAliasList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       @java.lang.Override
       public int getTypeAliasCount() {
         return instance.getTypeAliasCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias getTypeAlias(int index) {
         return instance.getTypeAlias(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder setTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -13310,7 +13310,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder setTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -13320,7 +13320,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder addTypeAlias(org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
         copyOnWrite();
@@ -13328,7 +13328,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder addTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias value) {
@@ -13337,7 +13337,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder addTypeAlias(
           org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -13346,7 +13346,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder addTypeAlias(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias.Builder builderForValue) {
@@ -13356,7 +13356,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder addAllTypeAlias(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeAlias> values) {
@@ -13365,7 +13365,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder clearTypeAlias() {
         copyOnWrite();
@@ -13373,7 +13373,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.TypeAlias type_alias = 5;</code>
        */
       public Builder removeTypeAlias(int index) {
         copyOnWrite();
@@ -13565,16 +13565,16 @@ public final class ProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> 
         getTypeList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Type getType(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     int getTypeCount();
 
@@ -13615,35 +13615,35 @@ public final class ProtoBuf {
     public static final int TYPE_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.Type> type_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getTypeList() {
       return type_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder> 
         getTypeOrBuilderList() {
       return type_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.Override
     public int getTypeCount() {
       return type_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Type getType(int index) {
       return type_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.TypeOrBuilder getTypeOrBuilder(
         int index) {
@@ -13658,7 +13658,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setType(
@@ -13668,7 +13668,7 @@ public final class ProtoBuf {
       type_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -13677,7 +13677,7 @@ public final class ProtoBuf {
       type_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addType(
@@ -13687,7 +13687,7 @@ public final class ProtoBuf {
       type_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     private void addAllType(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -13696,13 +13696,13 @@ public final class ProtoBuf {
           values, type_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     private void clearType() {
       type_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
      */
     private void removeType(int index) {
       ensureTypeIsMutable();
@@ -13861,7 +13861,7 @@ public final class ProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Type> getTypeList() {
@@ -13869,20 +13869,20 @@ public final class ProtoBuf {
             instance.getTypeList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       @java.lang.Override
       public int getTypeCount() {
         return instance.getTypeCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Type getType(int index) {
         return instance.getType(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder setType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -13891,7 +13891,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder setType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -13901,7 +13901,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder addType(org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
         copyOnWrite();
@@ -13909,7 +13909,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder addType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type value) {
@@ -13918,7 +13918,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder addType(
           org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -13927,7 +13927,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder addType(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Type.Builder builderForValue) {
@@ -13937,7 +13937,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder addAllType(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Type> values) {
@@ -13946,7 +13946,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder clearType() {
         copyOnWrite();
@@ -13954,7 +13954,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Type type = 1;</code>
        */
       public Builder removeType(int index) {
         copyOnWrite();
@@ -14132,16 +14132,16 @@ public final class ProtoBuf {
     int getFlags();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> 
         getValueParameterList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter getValueParameter(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     int getValueParameterCount();
 
@@ -14175,16 +14175,16 @@ public final class ProtoBuf {
     int getVersionRequirement(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> 
         getCompilerPluginDataList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     int getCompilerPluginDataCount();
 
@@ -14287,35 +14287,35 @@ public final class ProtoBuf {
     public static final int VALUE_PARAMETER_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> valueParameter_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> getValueParameterList() {
       return valueParameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameterOrBuilder> 
         getValueParameterOrBuilderList() {
       return valueParameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.Override
     public int getValueParameterCount() {
       return valueParameter_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter getValueParameter(int index) {
       return valueParameter_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameterOrBuilder getValueParameterOrBuilder(
         int index) {
@@ -14330,7 +14330,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setValueParameter(
@@ -14340,7 +14340,7 @@ public final class ProtoBuf {
       valueParameter_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addValueParameter(org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter value) {
@@ -14349,7 +14349,7 @@ public final class ProtoBuf {
       valueParameter_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addValueParameter(
@@ -14359,7 +14359,7 @@ public final class ProtoBuf {
       valueParameter_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     private void addAllValueParameter(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> values) {
@@ -14368,13 +14368,13 @@ public final class ProtoBuf {
           values, valueParameter_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     private void clearValueParameter() {
       valueParameter_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
      */
     private void removeValueParameter(int index) {
       ensureValueParameterIsMutable();
@@ -14482,35 +14482,35 @@ public final class ProtoBuf {
     public static final int COMPILER_PLUGIN_DATA_FIELD_NUMBER = 32;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> compilerPluginData_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> getCompilerPluginDataList() {
       return compilerPluginData_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginDataOrBuilder> 
         getCompilerPluginDataOrBuilderList() {
       return compilerPluginData_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.Override
     public int getCompilerPluginDataCount() {
       return compilerPluginData_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index) {
       return compilerPluginData_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginDataOrBuilder getCompilerPluginDataOrBuilder(
         int index) {
@@ -14525,7 +14525,7 @@ public final class ProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setCompilerPluginData(
@@ -14535,7 +14535,7 @@ public final class ProtoBuf {
       compilerPluginData_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addCompilerPluginData(org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -14544,7 +14544,7 @@ public final class ProtoBuf {
       compilerPluginData_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addCompilerPluginData(
@@ -14554,7 +14554,7 @@ public final class ProtoBuf {
       compilerPluginData_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     private void addAllCompilerPluginData(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> values) {
@@ -14563,13 +14563,13 @@ public final class ProtoBuf {
           values, compilerPluginData_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     private void clearCompilerPluginData() {
       compilerPluginData_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
      */
     private void removeCompilerPluginData(int index) {
       ensureCompilerPluginDataIsMutable();
@@ -14839,7 +14839,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> getValueParameterList() {
@@ -14847,20 +14847,20 @@ public final class ProtoBuf {
             instance.getValueParameterList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       @java.lang.Override
       public int getValueParameterCount() {
         return instance.getValueParameterCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter getValueParameter(int index) {
         return instance.getValueParameter(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder setValueParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter value) {
@@ -14869,7 +14869,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder setValueParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter.Builder builderForValue) {
@@ -14879,7 +14879,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder addValueParameter(org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter value) {
         copyOnWrite();
@@ -14887,7 +14887,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder addValueParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter value) {
@@ -14896,7 +14896,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder addValueParameter(
           org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter.Builder builderForValue) {
@@ -14905,7 +14905,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder addValueParameter(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter.Builder builderForValue) {
@@ -14915,7 +14915,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder addAllValueParameter(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.ValueParameter> values) {
@@ -14924,7 +14924,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder clearValueParameter() {
         copyOnWrite();
@@ -14932,7 +14932,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.ValueParameter value_parameter = 2;</code>
        */
       public Builder removeValueParameter(int index) {
         copyOnWrite();
@@ -15038,7 +15038,7 @@ public final class ProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> getCompilerPluginDataList() {
@@ -15046,20 +15046,20 @@ public final class ProtoBuf {
             instance.getCompilerPluginDataList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       @java.lang.Override
       public int getCompilerPluginDataCount() {
         return instance.getCompilerPluginDataCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData getCompilerPluginData(int index) {
         return instance.getCompilerPluginData(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder setCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -15068,7 +15068,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder setCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -15078,7 +15078,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder addCompilerPluginData(org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
         copyOnWrite();
@@ -15086,7 +15086,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder addCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData value) {
@@ -15095,7 +15095,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder addCompilerPluginData(
           org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -15104,7 +15104,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder addCompilerPluginData(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData.Builder builderForValue) {
@@ -15114,7 +15114,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder addAllCompilerPluginData(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.CompilerPluginData> values) {
@@ -15123,7 +15123,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder clearCompilerPluginData() {
         copyOnWrite();
@@ -15131,7 +15131,7 @@ public final class ProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.CompilerPluginData compiler_plugin_data = 32;</code>
        */
       public Builder removeCompilerPluginData(int index) {
         copyOnWrite();

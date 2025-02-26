@@ -20,35 +20,35 @@ public  final class IrBlock extends
   public static final int STATEMENT_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> statement_;
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.Override
   public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> getStatementList() {
     return statement_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrStatementOrBuilder> 
       getStatementOrBuilderList() {
     return statement_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.Override
   public int getStatementCount() {
     return statement_.size();
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.Override
   public org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement getStatement(int index) {
     return statement_.get(index);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   public org.jetbrains.kotlin.backend.common.serialization.proto.IrStatementOrBuilder getStatementOrBuilder(
       int index) {
@@ -63,7 +63,7 @@ public  final class IrBlock extends
   }
 
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void setStatement(
@@ -73,7 +73,7 @@ public  final class IrBlock extends
     statement_.set(index, value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addStatement(org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement value) {
@@ -82,7 +82,7 @@ public  final class IrBlock extends
     statement_.add(value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addStatement(
@@ -92,7 +92,7 @@ public  final class IrBlock extends
     statement_.add(index, value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   private void addAllStatement(
       java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> values) {
@@ -101,13 +101,13 @@ public  final class IrBlock extends
         values, statement_);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   private void clearStatement() {
     statement_ = emptyProtobufList();
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   private void removeStatement(int index) {
     ensureStatementIsMutable();
@@ -246,7 +246,7 @@ public  final class IrBlock extends
 
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> getStatementList() {
@@ -254,20 +254,20 @@ public  final class IrBlock extends
           instance.getStatementList());
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     @java.lang.Override
     public int getStatementCount() {
       return instance.getStatementCount();
     }/**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement getStatement(int index) {
       return instance.getStatement(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder setStatement(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement value) {
@@ -276,7 +276,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder setStatement(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement.Builder builderForValue) {
@@ -286,7 +286,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder addStatement(org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement value) {
       copyOnWrite();
@@ -294,7 +294,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder addStatement(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement value) {
@@ -303,7 +303,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder addStatement(
         org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement.Builder builderForValue) {
@@ -312,7 +312,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder addStatement(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement.Builder builderForValue) {
@@ -322,7 +322,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder addAllStatement(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> values) {
@@ -331,7 +331,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder clearStatement() {
       copyOnWrite();
@@ -339,7 +339,7 @@ public  final class IrBlock extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
      */
     public Builder removeStatement(int index) {
       copyOnWrite();

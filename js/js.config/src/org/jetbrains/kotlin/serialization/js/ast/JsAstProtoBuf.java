@@ -1233,30 +1233,30 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.JsImportedModule getLocalAlias();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> 
         getBeforeCommentsList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     int getBeforeCommentsCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> 
         getAfterCommentsList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     int getAfterCommentsCount();
 
@@ -1814,35 +1814,35 @@ public final class JsAstProtoBuf {
     public static final int BEFORE_COMMENTS_FIELD_NUMBER = 6;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> beforeComments_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getBeforeCommentsList() {
       return beforeComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder> 
         getBeforeCommentsOrBuilderList() {
       return beforeComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.Override
     public int getBeforeCommentsCount() {
       return beforeComments_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index) {
       return beforeComments_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder getBeforeCommentsOrBuilder(
         int index) {
@@ -1857,7 +1857,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setBeforeComments(
@@ -1867,7 +1867,7 @@ public final class JsAstProtoBuf {
       beforeComments_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBeforeComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -1876,7 +1876,7 @@ public final class JsAstProtoBuf {
       beforeComments_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBeforeComments(
@@ -1886,7 +1886,7 @@ public final class JsAstProtoBuf {
       beforeComments_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     private void addAllBeforeComments(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -1895,13 +1895,13 @@ public final class JsAstProtoBuf {
           values, beforeComments_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     private void clearBeforeComments() {
       beforeComments_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
      */
     private void removeBeforeComments(int index) {
       ensureBeforeCommentsIsMutable();
@@ -1911,35 +1911,35 @@ public final class JsAstProtoBuf {
     public static final int AFTER_COMMENTS_FIELD_NUMBER = 7;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> afterComments_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getAfterCommentsList() {
       return afterComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder> 
         getAfterCommentsOrBuilderList() {
       return afterComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.Override
     public int getAfterCommentsCount() {
       return afterComments_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index) {
       return afterComments_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder getAfterCommentsOrBuilder(
         int index) {
@@ -1954,7 +1954,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAfterComments(
@@ -1964,7 +1964,7 @@ public final class JsAstProtoBuf {
       afterComments_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAfterComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -1973,7 +1973,7 @@ public final class JsAstProtoBuf {
       afterComments_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAfterComments(
@@ -1983,7 +1983,7 @@ public final class JsAstProtoBuf {
       afterComments_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     private void addAllAfterComments(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -1992,13 +1992,13 @@ public final class JsAstProtoBuf {
           values, afterComments_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     private void clearAfterComments() {
       afterComments_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
      */
     private void removeAfterComments(int index) {
       ensureAfterCommentsIsMutable();
@@ -3457,7 +3457,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getBeforeCommentsList() {
@@ -3465,20 +3465,20 @@ public final class JsAstProtoBuf {
             instance.getBeforeCommentsList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       @java.lang.Override
       public int getBeforeCommentsCount() {
         return instance.getBeforeCommentsCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index) {
         return instance.getBeforeComments(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder setBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -3487,7 +3487,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder setBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3497,7 +3497,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder addBeforeComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
         copyOnWrite();
@@ -3505,7 +3505,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder addBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -3514,7 +3514,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder addBeforeComments(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3523,7 +3523,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder addBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3533,7 +3533,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder addAllBeforeComments(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -3542,7 +3542,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder clearBeforeComments() {
         copyOnWrite();
@@ -3550,7 +3550,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 6;</code>
        */
       public Builder removeBeforeComments(int index) {
         copyOnWrite();
@@ -3559,7 +3559,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getAfterCommentsList() {
@@ -3567,20 +3567,20 @@ public final class JsAstProtoBuf {
             instance.getAfterCommentsList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       @java.lang.Override
       public int getAfterCommentsCount() {
         return instance.getAfterCommentsCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index) {
         return instance.getAfterComments(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder setAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -3589,7 +3589,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder setAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3599,7 +3599,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder addAfterComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
         copyOnWrite();
@@ -3607,7 +3607,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder addAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -3616,7 +3616,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder addAfterComments(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3625,7 +3625,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder addAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -3635,7 +3635,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder addAllAfterComments(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -3644,7 +3644,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder clearAfterComments() {
         copyOnWrite();
@@ -3652,7 +3652,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 7;</code>
        */
       public Builder removeAfterComments(int index) {
         copyOnWrite();
@@ -6096,16 +6096,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> 
         getElementList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getElement(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     int getElementCount();
   }
@@ -6123,35 +6123,35 @@ public final class JsAstProtoBuf {
     public static final int ELEMENT_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> element_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getElementList() {
       return element_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder> 
         getElementOrBuilderList() {
       return element_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.Override
     public int getElementCount() {
       return element_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getElement(int index) {
       return element_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder getElementOrBuilder(
         int index) {
@@ -6166,7 +6166,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setElement(
@@ -6176,7 +6176,7 @@ public final class JsAstProtoBuf {
       element_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addElement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -6185,7 +6185,7 @@ public final class JsAstProtoBuf {
       element_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addElement(
@@ -6195,7 +6195,7 @@ public final class JsAstProtoBuf {
       element_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     private void addAllElement(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -6204,13 +6204,13 @@ public final class JsAstProtoBuf {
           values, element_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     private void clearElement() {
       element_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
      */
     private void removeElement(int index) {
       ensureElementIsMutable();
@@ -6315,7 +6315,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getElementList() {
@@ -6323,20 +6323,20 @@ public final class JsAstProtoBuf {
             instance.getElementList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       @java.lang.Override
       public int getElementCount() {
         return instance.getElementCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getElement(int index) {
         return instance.getElement(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder setElement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -6345,7 +6345,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder setElement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -6355,7 +6355,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder addElement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
         copyOnWrite();
@@ -6363,7 +6363,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder addElement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -6372,7 +6372,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder addElement(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -6381,7 +6381,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder addElement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -6391,7 +6391,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder addAllElement(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -6400,7 +6400,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder clearElement() {
         copyOnWrite();
@@ -6408,7 +6408,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression element = 1;</code>
        */
       public Builder removeElement(int index) {
         copyOnWrite();
@@ -6498,16 +6498,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> 
         getEntryList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry getEntry(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     int getEntryCount();
 
@@ -6538,35 +6538,35 @@ public final class JsAstProtoBuf {
     public static final int ENTRY_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> entry_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> getEntryList() {
       return entry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntryOrBuilder getEntryOrBuilder(
         int index) {
@@ -6581,7 +6581,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setEntry(
@@ -6591,7 +6591,7 @@ public final class JsAstProtoBuf {
       entry_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEntry(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry value) {
@@ -6600,7 +6600,7 @@ public final class JsAstProtoBuf {
       entry_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEntry(
@@ -6610,7 +6610,7 @@ public final class JsAstProtoBuf {
       entry_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     private void addAllEntry(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> values) {
@@ -6619,13 +6619,13 @@ public final class JsAstProtoBuf {
           values, entry_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     private void clearEntry() {
       entry_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
      */
     private void removeEntry(int index) {
       ensureEntryIsMutable();
@@ -6764,7 +6764,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> getEntryList() {
@@ -6772,20 +6772,20 @@ public final class JsAstProtoBuf {
             instance.getEntryList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       @java.lang.Override
       public int getEntryCount() {
         return instance.getEntryCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry getEntry(int index) {
         return instance.getEntry(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder setEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry value) {
@@ -6794,7 +6794,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder setEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry.Builder builderForValue) {
@@ -6804,7 +6804,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder addEntry(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry value) {
         copyOnWrite();
@@ -6812,7 +6812,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder addEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry value) {
@@ -6821,7 +6821,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder addEntry(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry.Builder builderForValue) {
@@ -6830,7 +6830,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder addEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry.Builder builderForValue) {
@@ -6840,7 +6840,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder addAllEntry(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ObjectLiteralEntry> values) {
@@ -6849,7 +6849,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder clearEntry() {
         copyOnWrite();
@@ -6857,7 +6857,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ObjectLiteralEntry entry = 1;</code>
        */
       public Builder removeEntry(int index) {
         copyOnWrite();
@@ -7387,16 +7387,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> 
         getParameterList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter getParameter(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     int getParameterCount();
 
@@ -7434,17 +7434,17 @@ public final class JsAstProtoBuf {
     boolean getLocal();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @return A list containing the modifier.
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Modifier> getModifierList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @return The count of modifier.
      */
     int getModifierCount();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @param index The index of the element to return.
      * @return The modifier at the given index.
      */
@@ -7579,35 +7579,35 @@ public final class JsAstProtoBuf {
     public static final int PARAMETER_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> parameter_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> getParameterList() {
       return parameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ParameterOrBuilder> 
         getParameterOrBuilderList() {
       return parameter_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.Override
     public int getParameterCount() {
       return parameter_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter getParameter(int index) {
       return parameter_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ParameterOrBuilder getParameterOrBuilder(
         int index) {
@@ -7622,7 +7622,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setParameter(
@@ -7632,7 +7632,7 @@ public final class JsAstProtoBuf {
       parameter_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addParameter(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter value) {
@@ -7641,7 +7641,7 @@ public final class JsAstProtoBuf {
       parameter_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addParameter(
@@ -7651,7 +7651,7 @@ public final class JsAstProtoBuf {
       parameter_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     private void addAllParameter(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> values) {
@@ -7660,13 +7660,13 @@ public final class JsAstProtoBuf {
           values, parameter_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     private void clearParameter() {
       parameter_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
      */
     private void removeParameter(int index) {
       ensureParameterIsMutable();
@@ -7801,7 +7801,7 @@ public final class JsAstProtoBuf {
               }
             };
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @return A list containing the modifier.
      */
     @java.lang.Override
@@ -7810,7 +7810,7 @@ public final class JsAstProtoBuf {
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Modifier>(modifier_, modifier_converter_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @return The count of modifier.
      */
     @java.lang.Override
@@ -7818,7 +7818,7 @@ public final class JsAstProtoBuf {
       return modifier_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @param index The index of the element to return.
      * @return The modifier at the given index.
      */
@@ -7827,6 +7827,7 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Modifier result = org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Modifier.forNumber(modifier_.getInt(index));
       return result == null ? org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Modifier.STATIC : result;
     }
+    private int modifierMemoizedSerializedSize;
     private void ensureModifierIsMutable() {
       org.jetbrains.kotlin.protobuf.Internal.IntList tmp = modifier_;
       if (!tmp.isModifiable()) {
@@ -7835,7 +7836,7 @@ public final class JsAstProtoBuf {
       }
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @param index The index to set the value at.
      * @param value The modifier to set.
      */
@@ -7847,7 +7848,7 @@ public final class JsAstProtoBuf {
       modifier_.setInt(index, value.getNumber());
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @param value The modifier to add.
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
@@ -7857,7 +7858,7 @@ public final class JsAstProtoBuf {
       modifier_.addInt(value.getNumber());
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      * @param values The modifier to add.
      */
     private void addAllModifier(
@@ -7868,7 +7869,7 @@ public final class JsAstProtoBuf {
       }
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
      */
     private void clearModifier() {
       modifier_ = emptyIntList();
@@ -8006,7 +8007,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> getParameterList() {
@@ -8014,20 +8015,20 @@ public final class JsAstProtoBuf {
             instance.getParameterList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       @java.lang.Override
       public int getParameterCount() {
         return instance.getParameterCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter getParameter(int index) {
         return instance.getParameter(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder setParameter(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter value) {
@@ -8036,7 +8037,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder setParameter(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter.Builder builderForValue) {
@@ -8046,7 +8047,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder addParameter(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter value) {
         copyOnWrite();
@@ -8054,7 +8055,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder addParameter(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter value) {
@@ -8063,7 +8064,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder addParameter(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter.Builder builderForValue) {
@@ -8072,7 +8073,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder addParameter(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter.Builder builderForValue) {
@@ -8082,7 +8083,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder addAllParameter(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Parameter> values) {
@@ -8091,7 +8092,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder clearParameter() {
         copyOnWrite();
@@ -8099,7 +8100,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Parameter parameter = 1;</code>
        */
       public Builder removeParameter(int index) {
         copyOnWrite();
@@ -8227,7 +8228,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @return A list containing the modifier.
        */
       @java.lang.Override
@@ -8235,7 +8236,7 @@ public final class JsAstProtoBuf {
         return instance.getModifierList();
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @return The count of modifier.
        */
       @java.lang.Override
@@ -8243,7 +8244,7 @@ public final class JsAstProtoBuf {
         return instance.getModifierCount();
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @param index The index of the element to return.
        * @return The modifier at the given index.
        */
@@ -8252,7 +8253,7 @@ public final class JsAstProtoBuf {
         return instance.getModifier(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @param index The index to set the value at.
        * @param value The modifier to set.
        * @return This builder for chaining.
@@ -8264,7 +8265,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @param value The modifier to add.
        * @return This builder for chaining.
        */
@@ -8274,7 +8275,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @param values The modifier to add.
        * @return This builder for chaining.
        */
@@ -8284,7 +8285,7 @@ public final class JsAstProtoBuf {
         instance.addAllModifier(values);  return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function.Modifier modifier = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearModifier() {
@@ -8358,7 +8359,7 @@ public final class JsAstProtoBuf {
             };
             java.lang.String info =
                 "\u0004\u0006\u0000\u0001\u0001\u0006\u0006\u0000\u0002\u0002\u0001\u041b\u0002\u1004" +
-                "\u0000\u0003\u1509\u0001\u0004\u1007\u0002\u0005\u081e\u0006\u1007\u0003";
+                "\u0000\u0003\u1509\u0001\u0004\u1007\u0002\u0005\u082c\u0006\u1007\u0003";
             return newMessageInfo(DEFAULT_INSTANCE, info, objects);
         }
         // fall through
@@ -8452,16 +8453,16 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function getConstructor();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> 
         getMemberList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function getMember(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     int getMemberCount();
   }
@@ -8608,35 +8609,35 @@ public final class JsAstProtoBuf {
     public static final int MEMBER_FIELD_NUMBER = 4;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> member_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> getMemberList() {
       return member_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.FunctionOrBuilder> 
         getMemberOrBuilderList() {
       return member_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.Override
     public int getMemberCount() {
       return member_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function getMember(int index) {
       return member_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.FunctionOrBuilder getMemberOrBuilder(
         int index) {
@@ -8651,7 +8652,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setMember(
@@ -8661,7 +8662,7 @@ public final class JsAstProtoBuf {
       member_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMember(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function value) {
@@ -8670,7 +8671,7 @@ public final class JsAstProtoBuf {
       member_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMember(
@@ -8680,7 +8681,7 @@ public final class JsAstProtoBuf {
       member_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     private void addAllMember(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> values) {
@@ -8689,13 +8690,13 @@ public final class JsAstProtoBuf {
           values, member_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     private void clearMember() {
       member_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
      */
     private void removeMember(int index) {
       ensureMemberIsMutable();
@@ -8930,7 +8931,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> getMemberList() {
@@ -8938,20 +8939,20 @@ public final class JsAstProtoBuf {
             instance.getMemberList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       @java.lang.Override
       public int getMemberCount() {
         return instance.getMemberCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function getMember(int index) {
         return instance.getMember(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder setMember(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function value) {
@@ -8960,7 +8961,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder setMember(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Builder builderForValue) {
@@ -8970,7 +8971,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder addMember(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function value) {
         copyOnWrite();
@@ -8978,7 +8979,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder addMember(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function value) {
@@ -8987,7 +8988,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder addMember(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Builder builderForValue) {
@@ -8996,7 +8997,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder addMember(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function.Builder builderForValue) {
@@ -9006,7 +9007,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder addAllMember(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Function> values) {
@@ -9015,7 +9016,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder clearMember() {
         copyOnWrite();
@@ -9023,7 +9024,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Function member = 4;</code>
        */
       public Builder removeMember(int index) {
         copyOnWrite();
@@ -9471,16 +9472,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> 
         getTagList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag getTag(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     int getTagCount();
   }
@@ -9498,35 +9499,35 @@ public final class JsAstProtoBuf {
     public static final int TAG_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> tag_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> getTagList() {
       return tag_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTagOrBuilder> 
         getTagOrBuilderList() {
       return tag_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.Override
     public int getTagCount() {
       return tag_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag getTag(int index) {
       return tag_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTagOrBuilder getTagOrBuilder(
         int index) {
@@ -9541,7 +9542,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setTag(
@@ -9551,7 +9552,7 @@ public final class JsAstProtoBuf {
       tag_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTag(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag value) {
@@ -9560,7 +9561,7 @@ public final class JsAstProtoBuf {
       tag_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addTag(
@@ -9570,7 +9571,7 @@ public final class JsAstProtoBuf {
       tag_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     private void addAllTag(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> values) {
@@ -9579,13 +9580,13 @@ public final class JsAstProtoBuf {
           values, tag_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     private void clearTag() {
       tag_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
      */
     private void removeTag(int index) {
       ensureTagIsMutable();
@@ -9690,7 +9691,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> getTagList() {
@@ -9698,20 +9699,20 @@ public final class JsAstProtoBuf {
             instance.getTagList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       @java.lang.Override
       public int getTagCount() {
         return instance.getTagCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag getTag(int index) {
         return instance.getTag(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder setTag(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag value) {
@@ -9720,7 +9721,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder setTag(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag.Builder builderForValue) {
@@ -9730,7 +9731,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder addTag(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag value) {
         copyOnWrite();
@@ -9738,7 +9739,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder addTag(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag value) {
@@ -9747,7 +9748,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder addTag(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag.Builder builderForValue) {
@@ -9756,7 +9757,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder addTag(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag.Builder builderForValue) {
@@ -9766,7 +9767,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder addAllTag(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.DocCommentTag> values) {
@@ -9775,7 +9776,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder clearTag() {
         copyOnWrite();
@@ -9783,7 +9784,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.DocCommentTag tag = 1;</code>
        */
       public Builder removeTag(int index) {
         copyOnWrite();
@@ -14130,16 +14131,16 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getQualifier();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> 
         getArgumentList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     int getArgumentCount();
 
@@ -14217,35 +14218,35 @@ public final class JsAstProtoBuf {
     public static final int ARGUMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> argument_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getArgumentList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder> 
         getArgumentOrBuilderList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public int getArgumentCount() {
       return argument_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index) {
       return argument_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder getArgumentOrBuilder(
         int index) {
@@ -14260,7 +14261,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setArgument(
@@ -14270,7 +14271,7 @@ public final class JsAstProtoBuf {
       argument_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -14279,7 +14280,7 @@ public final class JsAstProtoBuf {
       argument_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(
@@ -14289,7 +14290,7 @@ public final class JsAstProtoBuf {
       argument_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void addAllArgument(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -14298,13 +14299,13 @@ public final class JsAstProtoBuf {
           values, argument_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void clearArgument() {
       argument_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void removeArgument(int index) {
       ensureArgumentIsMutable();
@@ -14491,7 +14492,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getArgumentList() {
@@ -14499,20 +14500,20 @@ public final class JsAstProtoBuf {
             instance.getArgumentList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public int getArgumentCount() {
         return instance.getArgumentCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index) {
         return instance.getArgument(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -14521,7 +14522,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -14531,7 +14532,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
         copyOnWrite();
@@ -14539,7 +14540,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -14548,7 +14549,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -14557,7 +14558,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -14567,7 +14568,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addAllArgument(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -14576,7 +14577,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder clearArgument() {
         copyOnWrite();
@@ -14584,7 +14585,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder removeArgument(int index) {
         copyOnWrite();
@@ -14726,16 +14727,16 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getQualifier();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> 
         getArgumentList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     int getArgumentCount();
   }
@@ -14801,35 +14802,35 @@ public final class JsAstProtoBuf {
     public static final int ARGUMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> argument_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getArgumentList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder> 
         getArgumentOrBuilderList() {
       return argument_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public int getArgumentCount() {
       return argument_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index) {
       return argument_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ExpressionOrBuilder getArgumentOrBuilder(
         int index) {
@@ -14844,7 +14845,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setArgument(
@@ -14854,7 +14855,7 @@ public final class JsAstProtoBuf {
       argument_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -14863,7 +14864,7 @@ public final class JsAstProtoBuf {
       argument_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addArgument(
@@ -14873,7 +14874,7 @@ public final class JsAstProtoBuf {
       argument_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void addAllArgument(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -14882,13 +14883,13 @@ public final class JsAstProtoBuf {
           values, argument_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void clearArgument() {
       argument_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
      */
     private void removeArgument(int index) {
       ensureArgumentIsMutable();
@@ -15040,7 +15041,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> getArgumentList() {
@@ -15048,20 +15049,20 @@ public final class JsAstProtoBuf {
             instance.getArgumentList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public int getArgumentCount() {
         return instance.getArgumentCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getArgument(int index) {
         return instance.getArgument(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -15070,7 +15071,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder setArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -15080,7 +15081,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
         copyOnWrite();
@@ -15088,7 +15089,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression value) {
@@ -15097,7 +15098,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -15106,7 +15107,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addArgument(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression.Builder builderForValue) {
@@ -15116,7 +15117,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder addAllArgument(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression> values) {
@@ -15125,7 +15126,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder clearArgument() {
         copyOnWrite();
@@ -15133,7 +15134,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Expression argument = 2;</code>
        */
       public Builder removeArgument(int index) {
         copyOnWrite();
@@ -15259,30 +15260,30 @@ public final class JsAstProtoBuf {
     boolean getSynthetic();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> 
         getBeforeCommentsList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     int getBeforeCommentsCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> 
         getAfterCommentsList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     int getAfterCommentsCount();
 
@@ -15718,35 +15719,35 @@ public final class JsAstProtoBuf {
     public static final int BEFORE_COMMENTS_FIELD_NUMBER = 4;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> beforeComments_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getBeforeCommentsList() {
       return beforeComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder> 
         getBeforeCommentsOrBuilderList() {
       return beforeComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.Override
     public int getBeforeCommentsCount() {
       return beforeComments_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index) {
       return beforeComments_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder getBeforeCommentsOrBuilder(
         int index) {
@@ -15761,7 +15762,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setBeforeComments(
@@ -15771,7 +15772,7 @@ public final class JsAstProtoBuf {
       beforeComments_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBeforeComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -15780,7 +15781,7 @@ public final class JsAstProtoBuf {
       beforeComments_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBeforeComments(
@@ -15790,7 +15791,7 @@ public final class JsAstProtoBuf {
       beforeComments_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     private void addAllBeforeComments(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -15799,13 +15800,13 @@ public final class JsAstProtoBuf {
           values, beforeComments_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     private void clearBeforeComments() {
       beforeComments_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
      */
     private void removeBeforeComments(int index) {
       ensureBeforeCommentsIsMutable();
@@ -15815,35 +15816,35 @@ public final class JsAstProtoBuf {
     public static final int AFTER_COMMENTS_FIELD_NUMBER = 5;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> afterComments_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getAfterCommentsList() {
       return afterComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder> 
         getAfterCommentsOrBuilderList() {
       return afterComments_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.Override
     public int getAfterCommentsCount() {
       return afterComments_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index) {
       return afterComments_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.CommentOrBuilder getAfterCommentsOrBuilder(
         int index) {
@@ -15858,7 +15859,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAfterComments(
@@ -15868,7 +15869,7 @@ public final class JsAstProtoBuf {
       afterComments_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAfterComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -15877,7 +15878,7 @@ public final class JsAstProtoBuf {
       afterComments_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAfterComments(
@@ -15887,7 +15888,7 @@ public final class JsAstProtoBuf {
       afterComments_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     private void addAllAfterComments(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -15896,13 +15897,13 @@ public final class JsAstProtoBuf {
           values, afterComments_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     private void clearAfterComments() {
       afterComments_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
      */
     private void removeAfterComments(int index) {
       ensureAfterCommentsIsMutable();
@@ -17178,7 +17179,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getBeforeCommentsList() {
@@ -17186,20 +17187,20 @@ public final class JsAstProtoBuf {
             instance.getBeforeCommentsList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       @java.lang.Override
       public int getBeforeCommentsCount() {
         return instance.getBeforeCommentsCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getBeforeComments(int index) {
         return instance.getBeforeComments(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder setBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -17208,7 +17209,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder setBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17218,7 +17219,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder addBeforeComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
         copyOnWrite();
@@ -17226,7 +17227,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder addBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -17235,7 +17236,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder addBeforeComments(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17244,7 +17245,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder addBeforeComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17254,7 +17255,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder addAllBeforeComments(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -17263,7 +17264,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder clearBeforeComments() {
         copyOnWrite();
@@ -17271,7 +17272,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment before_comments = 4;</code>
        */
       public Builder removeBeforeComments(int index) {
         copyOnWrite();
@@ -17280,7 +17281,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> getAfterCommentsList() {
@@ -17288,20 +17289,20 @@ public final class JsAstProtoBuf {
             instance.getAfterCommentsList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       @java.lang.Override
       public int getAfterCommentsCount() {
         return instance.getAfterCommentsCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment getAfterComments(int index) {
         return instance.getAfterComments(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder setAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -17310,7 +17311,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder setAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17320,7 +17321,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder addAfterComments(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
         copyOnWrite();
@@ -17328,7 +17329,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder addAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment value) {
@@ -17337,7 +17338,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder addAfterComments(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17346,7 +17347,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder addAfterComments(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment.Builder builderForValue) {
@@ -17356,7 +17357,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder addAllAfterComments(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Comment> values) {
@@ -17365,7 +17366,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder clearAfterComments() {
         copyOnWrite();
@@ -17373,7 +17374,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Comment after_comments = 5;</code>
        */
       public Builder removeAfterComments(int index) {
         copyOnWrite();
@@ -20139,16 +20140,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> 
         getDeclarationList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration getDeclaration(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     int getDeclarationCount();
 
@@ -20189,35 +20190,35 @@ public final class JsAstProtoBuf {
     public static final int DECLARATION_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> declaration_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> getDeclarationList() {
       return declaration_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclarationOrBuilder> 
         getDeclarationOrBuilderList() {
       return declaration_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public int getDeclarationCount() {
       return declaration_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration getDeclaration(int index) {
       return declaration_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclarationOrBuilder getDeclarationOrBuilder(
         int index) {
@@ -20232,7 +20233,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setDeclaration(
@@ -20242,7 +20243,7 @@ public final class JsAstProtoBuf {
       declaration_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addDeclaration(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration value) {
@@ -20251,7 +20252,7 @@ public final class JsAstProtoBuf {
       declaration_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addDeclaration(
@@ -20261,7 +20262,7 @@ public final class JsAstProtoBuf {
       declaration_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     private void addAllDeclaration(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> values) {
@@ -20270,13 +20271,13 @@ public final class JsAstProtoBuf {
           values, declaration_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     private void clearDeclaration() {
       declaration_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
      */
     private void removeDeclaration(int index) {
       ensureDeclarationIsMutable();
@@ -20449,7 +20450,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> getDeclarationList() {
@@ -20457,20 +20458,20 @@ public final class JsAstProtoBuf {
             instance.getDeclarationList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public int getDeclarationCount() {
         return instance.getDeclarationCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration getDeclaration(int index) {
         return instance.getDeclaration(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder setDeclaration(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration value) {
@@ -20479,7 +20480,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder setDeclaration(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration.Builder builderForValue) {
@@ -20489,7 +20490,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration value) {
         copyOnWrite();
@@ -20497,7 +20498,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration value) {
@@ -20506,7 +20507,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration.Builder builderForValue) {
@@ -20515,7 +20516,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration.Builder builderForValue) {
@@ -20525,7 +20526,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder addAllDeclaration(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.VarDeclaration> values) {
@@ -20534,7 +20535,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder clearDeclaration() {
         copyOnWrite();
@@ -20542,7 +20543,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.VarDeclaration declaration = 1;</code>
        */
       public Builder removeDeclaration(int index) {
         copyOnWrite();
@@ -21273,16 +21274,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> 
         getStatementList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     int getStatementCount();
   }
@@ -21300,35 +21301,35 @@ public final class JsAstProtoBuf {
     public static final int STATEMENT_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> statement_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder> 
         getStatementOrBuilderList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public int getStatementCount() {
       return statement_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
       return statement_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder getStatementOrBuilder(
         int index) {
@@ -21343,7 +21344,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setStatement(
@@ -21353,7 +21354,7 @@ public final class JsAstProtoBuf {
       statement_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21362,7 +21363,7 @@ public final class JsAstProtoBuf {
       statement_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(
@@ -21372,7 +21373,7 @@ public final class JsAstProtoBuf {
       statement_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void addAllStatement(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -21381,13 +21382,13 @@ public final class JsAstProtoBuf {
           values, statement_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void clearStatement() {
       statement_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void removeStatement(int index) {
       ensureStatementIsMutable();
@@ -21492,7 +21493,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
@@ -21500,20 +21501,20 @@ public final class JsAstProtoBuf {
             instance.getStatementList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public int getStatementCount() {
         return instance.getStatementCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
         return instance.getStatement(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21522,7 +21523,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21532,7 +21533,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
         copyOnWrite();
@@ -21540,7 +21541,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21549,7 +21550,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21558,7 +21559,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21568,7 +21569,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addAllStatement(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -21577,7 +21578,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder clearStatement() {
         copyOnWrite();
@@ -21585,7 +21586,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder removeStatement(int index) {
         copyOnWrite();
@@ -21675,16 +21676,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> 
         getStatementList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     int getStatementCount();
   }
@@ -21702,35 +21703,35 @@ public final class JsAstProtoBuf {
     public static final int STATEMENT_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> statement_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder> 
         getStatementOrBuilderList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public int getStatementCount() {
       return statement_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
       return statement_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder getStatementOrBuilder(
         int index) {
@@ -21745,7 +21746,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setStatement(
@@ -21755,7 +21756,7 @@ public final class JsAstProtoBuf {
       statement_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21764,7 +21765,7 @@ public final class JsAstProtoBuf {
       statement_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(
@@ -21774,7 +21775,7 @@ public final class JsAstProtoBuf {
       statement_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void addAllStatement(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -21783,13 +21784,13 @@ public final class JsAstProtoBuf {
           values, statement_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void clearStatement() {
       statement_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
      */
     private void removeStatement(int index) {
       ensureStatementIsMutable();
@@ -21894,7 +21895,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
@@ -21902,20 +21903,20 @@ public final class JsAstProtoBuf {
             instance.getStatementList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public int getStatementCount() {
         return instance.getStatementCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
         return instance.getStatement(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21924,7 +21925,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21934,7 +21935,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
         copyOnWrite();
@@ -21942,7 +21943,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -21951,7 +21952,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21960,7 +21961,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -21970,7 +21971,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder addAllStatement(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -21979,7 +21980,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder clearStatement() {
         copyOnWrite();
@@ -21987,7 +21988,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 1;</code>
        */
       public Builder removeStatement(int index) {
         copyOnWrite();
@@ -22972,16 +22973,16 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getExpression();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> 
         getEntryList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry getEntry(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     int getEntryCount();
   }
@@ -23047,35 +23048,35 @@ public final class JsAstProtoBuf {
     public static final int ENTRY_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> entry_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> getEntryList() {
       return entry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntryOrBuilder getEntryOrBuilder(
         int index) {
@@ -23090,7 +23091,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setEntry(
@@ -23100,7 +23101,7 @@ public final class JsAstProtoBuf {
       entry_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEntry(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry value) {
@@ -23109,7 +23110,7 @@ public final class JsAstProtoBuf {
       entry_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addEntry(
@@ -23119,7 +23120,7 @@ public final class JsAstProtoBuf {
       entry_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     private void addAllEntry(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> values) {
@@ -23128,13 +23129,13 @@ public final class JsAstProtoBuf {
           values, entry_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     private void clearEntry() {
       entry_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
      */
     private void removeEntry(int index) {
       ensureEntryIsMutable();
@@ -23286,7 +23287,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> getEntryList() {
@@ -23294,20 +23295,20 @@ public final class JsAstProtoBuf {
             instance.getEntryList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       @java.lang.Override
       public int getEntryCount() {
         return instance.getEntryCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry getEntry(int index) {
         return instance.getEntry(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder setEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry value) {
@@ -23316,7 +23317,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder setEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry.Builder builderForValue) {
@@ -23326,7 +23327,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder addEntry(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry value) {
         copyOnWrite();
@@ -23334,7 +23335,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder addEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry value) {
@@ -23343,7 +23344,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder addEntry(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry.Builder builderForValue) {
@@ -23352,7 +23353,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder addEntry(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry.Builder builderForValue) {
@@ -23362,7 +23363,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder addAllEntry(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.SwitchEntry> values) {
@@ -23371,7 +23372,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder clearEntry() {
         copyOnWrite();
@@ -23379,7 +23380,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.SwitchEntry entry = 2;</code>
        */
       public Builder removeEntry(int index) {
         copyOnWrite();
@@ -23483,16 +23484,16 @@ public final class JsAstProtoBuf {
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Expression getLabel();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> 
         getStatementList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     int getStatementCount();
 
@@ -23580,35 +23581,35 @@ public final class JsAstProtoBuf {
     public static final int STATEMENT_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> statement_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder> 
         getStatementOrBuilderList() {
       return statement_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.Override
     public int getStatementCount() {
       return statement_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
       return statement_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.StatementOrBuilder getStatementOrBuilder(
         int index) {
@@ -23623,7 +23624,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setStatement(
@@ -23633,7 +23634,7 @@ public final class JsAstProtoBuf {
       statement_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -23642,7 +23643,7 @@ public final class JsAstProtoBuf {
       statement_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addStatement(
@@ -23652,7 +23653,7 @@ public final class JsAstProtoBuf {
       statement_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     private void addAllStatement(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -23661,13 +23662,13 @@ public final class JsAstProtoBuf {
           values, statement_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     private void clearStatement() {
       statement_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
      */
     private void removeStatement(int index) {
       ensureStatementIsMutable();
@@ -23900,7 +23901,7 @@ public final class JsAstProtoBuf {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> getStatementList() {
@@ -23908,20 +23909,20 @@ public final class JsAstProtoBuf {
             instance.getStatementList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       @java.lang.Override
       public int getStatementCount() {
         return instance.getStatementCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement getStatement(int index) {
         return instance.getStatement(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -23930,7 +23931,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder setStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -23940,7 +23941,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder addStatement(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
         copyOnWrite();
@@ -23948,7 +23949,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement value) {
@@ -23957,7 +23958,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder addStatement(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -23966,7 +23967,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder addStatement(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement.Builder builderForValue) {
@@ -23976,7 +23977,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder addAllStatement(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.Statement> values) {
@@ -23985,7 +23986,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder clearStatement() {
         copyOnWrite();
@@ -23993,7 +23994,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.Statement statement = 2;</code>
        */
       public Builder removeStatement(int index) {
         copyOnWrite();
@@ -28444,16 +28445,16 @@ public final class JsAstProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> 
         getImportedModuleList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule getImportedModule(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     int getImportedModuleCount();
 
@@ -28726,35 +28727,35 @@ public final class JsAstProtoBuf {
     public static final int IMPORTED_MODULE_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> importedModule_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> getImportedModuleList() {
       return importedModule_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModuleOrBuilder> 
         getImportedModuleOrBuilderList() {
       return importedModule_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.Override
     public int getImportedModuleCount() {
       return importedModule_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule getImportedModule(int index) {
       return importedModule_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModuleOrBuilder getImportedModuleOrBuilder(
         int index) {
@@ -28769,7 +28770,7 @@ public final class JsAstProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setImportedModule(
@@ -28779,7 +28780,7 @@ public final class JsAstProtoBuf {
       importedModule_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addImportedModule(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule value) {
@@ -28788,7 +28789,7 @@ public final class JsAstProtoBuf {
       importedModule_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addImportedModule(
@@ -28798,7 +28799,7 @@ public final class JsAstProtoBuf {
       importedModule_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     private void addAllImportedModule(
         java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> values) {
@@ -28807,13 +28808,13 @@ public final class JsAstProtoBuf {
           values, importedModule_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     private void clearImportedModule() {
       importedModule_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
      */
     private void removeImportedModule(int index) {
       ensureImportedModuleIsMutable();
@@ -30163,7 +30164,7 @@ public final class JsAstProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> getImportedModuleList() {
@@ -30171,20 +30172,20 @@ public final class JsAstProtoBuf {
             instance.getImportedModuleList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       @java.lang.Override
       public int getImportedModuleCount() {
         return instance.getImportedModuleCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule getImportedModule(int index) {
         return instance.getImportedModule(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder setImportedModule(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule value) {
@@ -30193,7 +30194,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder setImportedModule(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule.Builder builderForValue) {
@@ -30203,7 +30204,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder addImportedModule(org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule value) {
         copyOnWrite();
@@ -30211,7 +30212,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder addImportedModule(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule value) {
@@ -30220,7 +30221,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder addImportedModule(
           org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule.Builder builderForValue) {
@@ -30229,7 +30230,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder addImportedModule(
           int index, org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule.Builder builderForValue) {
@@ -30239,7 +30240,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder addAllImportedModule(
           java.lang.Iterable<? extends org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf.ImportedModule> values) {
@@ -30248,7 +30249,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder clearImportedModule() {
         copyOnWrite();
@@ -30256,7 +30257,7 @@ public final class JsAstProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.serialization.js.ast.ImportedModule imported_module = 1;</code>
        */
       public Builder removeImportedModule(int index) {
         copyOnWrite();

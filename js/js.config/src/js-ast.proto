@@ -50,8 +50,8 @@ message Expression {
     bool synthetic = 3 [default = false];
     SideEffects side_effects = 4 [default = AFFECTS_STATE];
     JsImportedModule local_alias = 5;
-    repeated Comment before_comments = 6 [features.repeated_field_encoding = EXPANDED];
-    repeated Comment after_comments = 7 [features.repeated_field_encoding = EXPANDED];
+    repeated Comment before_comments = 6;
+    repeated Comment after_comments = 7;
 
     oneof expression {
         int32 simple_name_reference = 22;
@@ -101,11 +101,11 @@ message RegExpLiteral {
 }
 
 message ArrayLiteral {
-    repeated Expression element = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Expression element = 1;
 }
 
 message ObjectLiteral {
-    repeated ObjectLiteralEntry entry = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated ObjectLiteralEntry entry = 1;
     bool multiline = 2 [default = true];
 }
 
@@ -115,11 +115,11 @@ message ObjectLiteralEntry {
 }
 
 message Function {
-    repeated Parameter parameter = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Parameter parameter = 1;
     int32 name_id = 2;
     Statement body = 3 [features.field_presence = LEGACY_REQUIRED];
     bool local = 4 [default = false];
-    repeated Modifier modifier = 5 [features.repeated_field_encoding = EXPANDED];
+    repeated Modifier modifier = 5;
     bool is_es6_arrow = 6 [default = false];
 
     enum Modifier {
@@ -135,7 +135,7 @@ message Class {
     int32 name_id = 1;
     Expression super_expression = 2;
     Function constructor = 3;
-    repeated Function member = 4 [features.repeated_field_encoding = EXPANDED];
+    repeated Function member = 4;
 }
 
 message Parameter {
@@ -144,7 +144,7 @@ message Parameter {
 }
 
 message DocComment {
-    repeated DocCommentTag tag = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated DocCommentTag tag = 1;
 }
 
 message DocCommentTag {
@@ -250,13 +250,13 @@ message PropertyReference {
 
 message Invocation {
     Expression qualifier = 1 [features.field_presence = LEGACY_REQUIRED];
-    repeated Expression argument = 2 [features.repeated_field_encoding = EXPANDED];
+    repeated Expression argument = 2;
     InlineStrategy inline_strategy = 3 [default=NOT_INLINE];
 }
 
 message Instantiation {
     Expression qualifier = 1 [features.field_presence = LEGACY_REQUIRED];
-    repeated Expression argument = 2 [features.repeated_field_encoding = EXPANDED];
+    repeated Expression argument = 2;
 }
 
 
@@ -267,8 +267,8 @@ message Statement {
     int32 fileId = 1;
     Location location = 2;
     bool synthetic = 3 [default = false];
-    repeated Comment before_comments = 4 [features.repeated_field_encoding = EXPANDED];
-    repeated Comment after_comments = 5 [features.repeated_field_encoding = EXPANDED];
+    repeated Comment before_comments = 4;
+    repeated Comment after_comments = 5;
 
     oneof statement {
         Return return_statement = 21;
@@ -319,7 +319,7 @@ message ExpressionStatement {
 }
 
 message Vars {
-    repeated VarDeclaration declaration = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated VarDeclaration declaration = 1;
     bool multiline = 2 [default = false];
     int32 exported_package_id = 3;
 }
@@ -332,11 +332,11 @@ message VarDeclaration {
 }
 
 message Block {
-    repeated Statement statement = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Statement statement = 1;
 }
 
 message CompositeBlock {
-    repeated Statement statement = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Statement statement = 1;
 }
 
 message Label {
@@ -352,12 +352,12 @@ message If {
 
 message Switch {
     Expression expression = 1 [features.field_presence = LEGACY_REQUIRED];
-    repeated SwitchEntry entry = 2 [features.repeated_field_encoding = EXPANDED];
+    repeated SwitchEntry entry = 2;
 }
 
 message SwitchEntry {
     Expression label = 1;
-    repeated Statement statement = 2 [features.repeated_field_encoding = EXPANDED];
+    repeated Statement statement = 2;
 
     int32 fileId = 3;
     Location location = 4;
@@ -429,7 +429,7 @@ enum InlineStrategy {
 // Fragment
 
 message Fragment {
-    repeated ImportedModule imported_module = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated ImportedModule imported_module = 1;
     repeated Import import_entry = 2 [features.repeated_field_encoding = EXPANDED];
     CompositeBlock declaration_block = 3;
     CompositeBlock export_block = 4;

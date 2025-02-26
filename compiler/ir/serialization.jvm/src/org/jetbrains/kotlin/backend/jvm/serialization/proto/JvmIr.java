@@ -485,44 +485,44 @@ public final class JvmIr {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> 
         getDeclarationList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration getDeclaration(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     int getDeclarationCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrType> 
         getTypeList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     org.jetbrains.kotlin.backend.common.serialization.proto.IrType getType(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     int getTypeCount();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> 
         getSignatureList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature getSignature(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     int getSignatureCount();
 
@@ -552,16 +552,16 @@ public final class JvmIr {
         getStringBytes(int index);
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     java.util.List<org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> 
         getBodyList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression getBody(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     int getBodyCount();
 
@@ -608,16 +608,16 @@ public final class JvmIr {
         getFileFacadeFqNameBytes();
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> 
         getFileEntryList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry getFileEntry(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     int getFileEntryCount();
   }
@@ -643,35 +643,35 @@ public final class JvmIr {
     public static final int DECLARATION_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> declaration_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> getDeclarationList() {
       return declaration_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclarationOrBuilder> 
         getDeclarationOrBuilderList() {
       return declaration_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public int getDeclarationCount() {
       return declaration_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration getDeclaration(int index) {
       return declaration_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclarationOrBuilder getDeclarationOrBuilder(
         int index) {
@@ -686,7 +686,7 @@ public final class JvmIr {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setDeclaration(
@@ -696,7 +696,7 @@ public final class JvmIr {
       declaration_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addDeclaration(org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration value) {
@@ -705,7 +705,7 @@ public final class JvmIr {
       declaration_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addDeclaration(
@@ -715,7 +715,7 @@ public final class JvmIr {
       declaration_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     private void addAllDeclaration(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> values) {
@@ -724,13 +724,13 @@ public final class JvmIr {
           values, declaration_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     private void clearDeclaration() {
       declaration_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
      */
     private void removeDeclaration(int index) {
       ensureDeclarationIsMutable();
@@ -740,35 +740,35 @@ public final class JvmIr {
     public static final int TYPE_FIELD_NUMBER = 2;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.IrType> type_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrType> getTypeList() {
       return type_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrTypeOrBuilder> 
         getTypeOrBuilderList() {
       return type_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.Override
     public int getTypeCount() {
       return type_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrType getType(int index) {
       return type_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrTypeOrBuilder getTypeOrBuilder(
         int index) {
@@ -783,7 +783,7 @@ public final class JvmIr {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setType(
@@ -793,7 +793,7 @@ public final class JvmIr {
       type_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addType(org.jetbrains.kotlin.backend.common.serialization.proto.IrType value) {
@@ -802,7 +802,7 @@ public final class JvmIr {
       type_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addType(
@@ -812,7 +812,7 @@ public final class JvmIr {
       type_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     private void addAllType(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrType> values) {
@@ -821,13 +821,13 @@ public final class JvmIr {
           values, type_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     private void clearType() {
       type_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
      */
     private void removeType(int index) {
       ensureTypeIsMutable();
@@ -837,35 +837,35 @@ public final class JvmIr {
     public static final int SIGNATURE_FIELD_NUMBER = 3;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> signature_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> getSignatureList() {
       return signature_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IdSignatureOrBuilder> 
         getSignatureOrBuilderList() {
       return signature_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.Override
     public int getSignatureCount() {
       return signature_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature getSignature(int index) {
       return signature_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     public org.jetbrains.kotlin.backend.common.serialization.proto.IdSignatureOrBuilder getSignatureOrBuilder(
         int index) {
@@ -880,7 +880,7 @@ public final class JvmIr {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setSignature(
@@ -890,7 +890,7 @@ public final class JvmIr {
       signature_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addSignature(org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature value) {
@@ -899,7 +899,7 @@ public final class JvmIr {
       signature_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addSignature(
@@ -909,7 +909,7 @@ public final class JvmIr {
       signature_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     private void addAllSignature(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> values) {
@@ -918,13 +918,13 @@ public final class JvmIr {
           values, signature_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     private void clearSignature() {
       signature_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
      */
     private void removeSignature(int index) {
       ensureSignatureIsMutable();
@@ -1028,35 +1028,35 @@ public final class JvmIr {
     public static final int BODY_FIELD_NUMBER = 5;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> body_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> getBodyList() {
       return body_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpressionOrBuilder> 
         getBodyOrBuilderList() {
       return body_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.Override
     public int getBodyCount() {
       return body_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression getBody(int index) {
       return body_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     public org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpressionOrBuilder getBodyOrBuilder(
         int index) {
@@ -1071,7 +1071,7 @@ public final class JvmIr {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setBody(
@@ -1081,7 +1081,7 @@ public final class JvmIr {
       body_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBody(org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression value) {
@@ -1090,7 +1090,7 @@ public final class JvmIr {
       body_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addBody(
@@ -1100,7 +1100,7 @@ public final class JvmIr {
       body_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     private void addAllBody(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> values) {
@@ -1109,13 +1109,13 @@ public final class JvmIr {
           values, body_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     private void clearBody() {
       body_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
      */
     private void removeBody(int index) {
       ensureBodyIsMutable();
@@ -1274,35 +1274,35 @@ public final class JvmIr {
     public static final int FILE_ENTRY_FIELD_NUMBER = 8;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> fileEntry_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> getFileEntryList() {
       return fileEntry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.FileEntryOrBuilder> 
         getFileEntryOrBuilderList() {
       return fileEntry_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.Override
     public int getFileEntryCount() {
       return fileEntry_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry getFileEntry(int index) {
       return fileEntry_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     public org.jetbrains.kotlin.backend.common.serialization.proto.FileEntryOrBuilder getFileEntryOrBuilder(
         int index) {
@@ -1317,7 +1317,7 @@ public final class JvmIr {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setFileEntry(
@@ -1327,7 +1327,7 @@ public final class JvmIr {
       fileEntry_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFileEntry(org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry value) {
@@ -1336,7 +1336,7 @@ public final class JvmIr {
       fileEntry_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addFileEntry(
@@ -1346,7 +1346,7 @@ public final class JvmIr {
       fileEntry_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     private void addAllFileEntry(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> values) {
@@ -1355,13 +1355,13 @@ public final class JvmIr {
           values, fileEntry_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     private void clearFileEntry() {
       fileEntry_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
      */
     private void removeFileEntry(int index) {
       ensureFileEntryIsMutable();
@@ -1466,7 +1466,7 @@ public final class JvmIr {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> getDeclarationList() {
@@ -1474,20 +1474,20 @@ public final class JvmIr {
             instance.getDeclarationList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public int getDeclarationCount() {
         return instance.getDeclarationCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration getDeclaration(int index) {
         return instance.getDeclaration(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder setDeclaration(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration value) {
@@ -1496,7 +1496,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder setDeclaration(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration.Builder builderForValue) {
@@ -1506,7 +1506,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration value) {
         copyOnWrite();
@@ -1514,7 +1514,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration value) {
@@ -1523,7 +1523,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration.Builder builderForValue) {
@@ -1532,7 +1532,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder addDeclaration(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration.Builder builderForValue) {
@@ -1542,7 +1542,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder addAllDeclaration(
           java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration> values) {
@@ -1551,7 +1551,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder clearDeclaration() {
         copyOnWrite();
@@ -1559,7 +1559,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration declaration = 1;</code>
        */
       public Builder removeDeclaration(int index) {
         copyOnWrite();
@@ -1568,7 +1568,7 @@ public final class JvmIr {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrType> getTypeList() {
@@ -1576,20 +1576,20 @@ public final class JvmIr {
             instance.getTypeList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       @java.lang.Override
       public int getTypeCount() {
         return instance.getTypeCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.backend.common.serialization.proto.IrType getType(int index) {
         return instance.getType(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder setType(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrType value) {
@@ -1598,7 +1598,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder setType(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrType.Builder builderForValue) {
@@ -1608,7 +1608,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder addType(org.jetbrains.kotlin.backend.common.serialization.proto.IrType value) {
         copyOnWrite();
@@ -1616,7 +1616,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder addType(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrType value) {
@@ -1625,7 +1625,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder addType(
           org.jetbrains.kotlin.backend.common.serialization.proto.IrType.Builder builderForValue) {
@@ -1634,7 +1634,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder addType(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrType.Builder builderForValue) {
@@ -1644,7 +1644,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder addAllType(
           java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrType> values) {
@@ -1653,7 +1653,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder clearType() {
         copyOnWrite();
@@ -1661,7 +1661,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrType type = 2;</code>
        */
       public Builder removeType(int index) {
         copyOnWrite();
@@ -1670,7 +1670,7 @@ public final class JvmIr {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> getSignatureList() {
@@ -1678,20 +1678,20 @@ public final class JvmIr {
             instance.getSignatureList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       @java.lang.Override
       public int getSignatureCount() {
         return instance.getSignatureCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature getSignature(int index) {
         return instance.getSignature(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder setSignature(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature value) {
@@ -1700,7 +1700,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder setSignature(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature.Builder builderForValue) {
@@ -1710,7 +1710,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder addSignature(org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature value) {
         copyOnWrite();
@@ -1718,7 +1718,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder addSignature(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature value) {
@@ -1727,7 +1727,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder addSignature(
           org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature.Builder builderForValue) {
@@ -1736,7 +1736,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder addSignature(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature.Builder builderForValue) {
@@ -1746,7 +1746,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder addAllSignature(
           java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature> values) {
@@ -1755,7 +1755,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder clearSignature() {
         copyOnWrite();
@@ -1763,7 +1763,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature signature = 3;</code>
        */
       public Builder removeSignature(int index) {
         copyOnWrite();
@@ -1864,7 +1864,7 @@ public final class JvmIr {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> getBodyList() {
@@ -1872,20 +1872,20 @@ public final class JvmIr {
             instance.getBodyList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       @java.lang.Override
       public int getBodyCount() {
         return instance.getBodyCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression getBody(int index) {
         return instance.getBody(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder setBody(
           int index, org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression value) {
@@ -1894,7 +1894,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder setBody(
           int index, org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression.Builder builderForValue) {
@@ -1904,7 +1904,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder addBody(org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression value) {
         copyOnWrite();
@@ -1912,7 +1912,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder addBody(
           int index, org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression value) {
@@ -1921,7 +1921,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder addBody(
           org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression.Builder builderForValue) {
@@ -1930,7 +1930,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder addBody(
           int index, org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression.Builder builderForValue) {
@@ -1940,7 +1940,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder addAllBody(
           java.lang.Iterable<? extends org.jetbrains.kotlin.backend.jvm.serialization.proto.JvmIr.XStatementOrExpression> values) {
@@ -1949,7 +1949,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder clearBody() {
         copyOnWrite();
@@ -1957,7 +1957,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.jvm.serialization.proto.XStatementOrExpression body = 5;</code>
        */
       public Builder removeBody(int index) {
         copyOnWrite();
@@ -2115,7 +2115,7 @@ public final class JvmIr {
       }
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> getFileEntryList() {
@@ -2123,20 +2123,20 @@ public final class JvmIr {
             instance.getFileEntryList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       @java.lang.Override
       public int getFileEntryCount() {
         return instance.getFileEntryCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry getFileEntry(int index) {
         return instance.getFileEntry(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder setFileEntry(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry value) {
@@ -2145,7 +2145,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder setFileEntry(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry.Builder builderForValue) {
@@ -2155,7 +2155,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder addFileEntry(org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry value) {
         copyOnWrite();
@@ -2163,7 +2163,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder addFileEntry(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry value) {
@@ -2172,7 +2172,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder addFileEntry(
           org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry.Builder builderForValue) {
@@ -2181,7 +2181,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder addFileEntry(
           int index, org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry.Builder builderForValue) {
@@ -2191,7 +2191,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder addAllFileEntry(
           java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry> values) {
@@ -2200,7 +2200,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder clearFileEntry() {
         copyOnWrite();
@@ -2208,7 +2208,7 @@ public final class JvmIr {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry file_entry = 8;</code>
        */
       public Builder removeFileEntry(int index) {
         copyOnWrite();

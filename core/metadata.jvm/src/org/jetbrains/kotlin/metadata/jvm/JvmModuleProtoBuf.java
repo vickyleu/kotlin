@@ -19,7 +19,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> 
         getPackagePartsList();
@@ -28,7 +28,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getPackageParts(int index);
     /**
@@ -36,7 +36,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     int getPackagePartsCount();
 
@@ -45,7 +45,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> 
         getMetadataPartsList();
@@ -54,7 +54,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getMetadataParts(int index);
     /**
@@ -62,7 +62,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     int getMetadataPartsCount();
 
@@ -138,7 +138,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> 
         getAnnotationList();
@@ -147,7 +147,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index);
     /**
@@ -155,7 +155,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     int getAnnotationCount();
 
@@ -167,7 +167,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Class> 
         getOptionalAnnotationClassList();
@@ -179,7 +179,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     org.jetbrains.kotlin.metadata.ProtoBuf.Class getOptionalAnnotationClass(int index);
     /**
@@ -190,7 +190,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     int getOptionalAnnotationClassCount();
   }
@@ -217,7 +217,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> getPackagePartsList() {
@@ -228,7 +228,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackagePartsOrBuilder> 
         getPackagePartsOrBuilderList() {
@@ -239,7 +239,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.Override
     public int getPackagePartsCount() {
@@ -250,7 +250,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getPackageParts(int index) {
@@ -261,7 +261,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackagePartsOrBuilder getPackagePartsOrBuilder(
         int index) {
@@ -280,7 +280,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setPackageParts(
@@ -294,7 +294,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addPackageParts(org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -307,7 +307,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addPackageParts(
@@ -321,7 +321,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     private void addAllPackageParts(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> values) {
@@ -334,7 +334,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     private void clearPackageParts() {
       packageParts_ = emptyProtobufList();
@@ -344,7 +344,7 @@ public final class JvmModuleProtoBuf {
      * Names of .class files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
      */
     private void removePackageParts(int index) {
       ensurePackagePartsIsMutable();
@@ -358,7 +358,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> getMetadataPartsList() {
@@ -369,7 +369,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackagePartsOrBuilder> 
         getMetadataPartsOrBuilderList() {
@@ -380,7 +380,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.Override
     public int getMetadataPartsCount() {
@@ -391,7 +391,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getMetadataParts(int index) {
@@ -402,7 +402,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackagePartsOrBuilder getMetadataPartsOrBuilder(
         int index) {
@@ -421,7 +421,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setMetadataParts(
@@ -435,7 +435,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMetadataParts(org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -448,7 +448,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addMetadataParts(
@@ -462,7 +462,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     private void addAllMetadataParts(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> values) {
@@ -475,7 +475,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     private void clearMetadataParts() {
       metadataParts_ = emptyProtobufList();
@@ -485,7 +485,7 @@ public final class JvmModuleProtoBuf {
      * Names of .kotlin_metadata files for each package
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
      */
     private void removeMetadataParts(int index) {
       ensureMetadataPartsIsMutable();
@@ -732,7 +732,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -743,7 +743,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder> 
         getAnnotationOrBuilderList() {
@@ -754,7 +754,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
@@ -765,7 +765,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -776,7 +776,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.AnnotationOrBuilder getAnnotationOrBuilder(
         int index) {
@@ -795,7 +795,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setAnnotation(
@@ -809,7 +809,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -822,7 +822,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addAnnotation(
@@ -836,7 +836,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -849,7 +849,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void clearAnnotation() {
       annotation_ = emptyProtobufList();
@@ -859,7 +859,7 @@ public final class JvmModuleProtoBuf {
      * Annotations on the whole module
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
      */
     private void removeAnnotation(int index) {
       ensureAnnotationIsMutable();
@@ -876,7 +876,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Class> getOptionalAnnotationClassList() {
@@ -890,7 +890,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.ProtoBuf.ClassOrBuilder> 
         getOptionalAnnotationClassOrBuilderList() {
@@ -904,7 +904,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.Override
     public int getOptionalAnnotationClassCount() {
@@ -918,7 +918,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.ProtoBuf.Class getOptionalAnnotationClass(int index) {
@@ -932,7 +932,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     public org.jetbrains.kotlin.metadata.ProtoBuf.ClassOrBuilder getOptionalAnnotationClassOrBuilder(
         int index) {
@@ -954,7 +954,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setOptionalAnnotationClass(
@@ -971,7 +971,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addOptionalAnnotationClass(org.jetbrains.kotlin.metadata.ProtoBuf.Class value) {
@@ -987,7 +987,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addOptionalAnnotationClass(
@@ -1004,7 +1004,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     private void addAllOptionalAnnotationClass(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Class> values) {
@@ -1020,7 +1020,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     private void clearOptionalAnnotationClass() {
       optionalAnnotationClass_ = emptyProtobufList();
@@ -1033,7 +1033,7 @@ public final class JvmModuleProtoBuf {
      * it to the corresponding class with the resolution capabilities of common modules.
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
      */
     private void removeOptionalAnnotationClass(int index) {
       ensureOptionalAnnotationClassIsMutable();
@@ -1142,7 +1142,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> getPackagePartsList() {
@@ -1154,7 +1154,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       @java.lang.Override
       public int getPackagePartsCount() {
@@ -1164,7 +1164,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getPackageParts(int index) {
@@ -1175,7 +1175,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder setPackageParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -1188,7 +1188,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder setPackageParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1202,7 +1202,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder addPackageParts(org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
         copyOnWrite();
@@ -1214,7 +1214,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder addPackageParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -1227,7 +1227,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder addPackageParts(
           org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1240,7 +1240,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder addPackageParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1254,7 +1254,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder addAllPackageParts(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> values) {
@@ -1267,7 +1267,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder clearPackageParts() {
         copyOnWrite();
@@ -1279,7 +1279,7 @@ public final class JvmModuleProtoBuf {
        * Names of .class files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts package_parts = 1;</code>
        */
       public Builder removePackageParts(int index) {
         copyOnWrite();
@@ -1292,7 +1292,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> getMetadataPartsList() {
@@ -1304,7 +1304,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       @java.lang.Override
       public int getMetadataPartsCount() {
@@ -1314,7 +1314,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts getMetadataParts(int index) {
@@ -1325,7 +1325,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder setMetadataParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -1338,7 +1338,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder setMetadataParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1352,7 +1352,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder addMetadataParts(org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
         copyOnWrite();
@@ -1364,7 +1364,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder addMetadataParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts value) {
@@ -1377,7 +1377,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder addMetadataParts(
           org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1390,7 +1390,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder addMetadataParts(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts.Builder builderForValue) {
@@ -1404,7 +1404,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder addAllMetadataParts(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf.PackageParts> values) {
@@ -1417,7 +1417,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder clearMetadataParts() {
         copyOnWrite();
@@ -1429,7 +1429,7 @@ public final class JvmModuleProtoBuf {
        * Names of .kotlin_metadata files for each package
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.PackageParts metadata_parts = 2;</code>
        */
       public Builder removeMetadataParts(int index) {
         copyOnWrite();
@@ -1673,7 +1673,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> getAnnotationList() {
@@ -1685,7 +1685,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public int getAnnotationCount() {
@@ -1695,7 +1695,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Annotation getAnnotation(int index) {
@@ -1706,7 +1706,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1719,7 +1719,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder setAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1733,7 +1733,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
         copyOnWrite();
@@ -1745,7 +1745,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation value) {
@@ -1758,7 +1758,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1771,7 +1771,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAnnotation(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Annotation.Builder builderForValue) {
@@ -1785,7 +1785,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder addAllAnnotation(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Annotation> values) {
@@ -1798,7 +1798,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder clearAnnotation() {
         copyOnWrite();
@@ -1810,7 +1810,7 @@ public final class JvmModuleProtoBuf {
        * Annotations on the whole module
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Annotation annotation = 6;</code>
        */
       public Builder removeAnnotation(int index) {
         copyOnWrite();
@@ -1826,7 +1826,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.ProtoBuf.Class> getOptionalAnnotationClassList() {
@@ -1841,7 +1841,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       @java.lang.Override
       public int getOptionalAnnotationClassCount() {
@@ -1854,7 +1854,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.ProtoBuf.Class getOptionalAnnotationClass(int index) {
@@ -1868,7 +1868,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder setOptionalAnnotationClass(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Class value) {
@@ -1884,7 +1884,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder setOptionalAnnotationClass(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Class.Builder builderForValue) {
@@ -1901,7 +1901,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder addOptionalAnnotationClass(org.jetbrains.kotlin.metadata.ProtoBuf.Class value) {
         copyOnWrite();
@@ -1916,7 +1916,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder addOptionalAnnotationClass(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Class value) {
@@ -1932,7 +1932,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder addOptionalAnnotationClass(
           org.jetbrains.kotlin.metadata.ProtoBuf.Class.Builder builderForValue) {
@@ -1948,7 +1948,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder addOptionalAnnotationClass(
           int index, org.jetbrains.kotlin.metadata.ProtoBuf.Class.Builder builderForValue) {
@@ -1965,7 +1965,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder addAllOptionalAnnotationClass(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.ProtoBuf.Class> values) {
@@ -1981,7 +1981,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder clearOptionalAnnotationClass() {
         copyOnWrite();
@@ -1996,7 +1996,7 @@ public final class JvmModuleProtoBuf {
        * it to the corresponding class with the resolution capabilities of common modules.
        * </pre>
        *
-       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.Class optional_annotation_class = 16;</code>
        */
       public Builder removeOptionalAnnotationClass(int index) {
         copyOnWrite();

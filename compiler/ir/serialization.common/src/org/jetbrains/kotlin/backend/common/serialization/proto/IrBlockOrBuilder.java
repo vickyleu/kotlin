@@ -10,16 +10,16 @@ public interface IrBlockOrBuilder extends
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement> 
       getStatementList();
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement getStatement(int index);
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement statement = 1;</code>
    */
   int getStatementCount();
 

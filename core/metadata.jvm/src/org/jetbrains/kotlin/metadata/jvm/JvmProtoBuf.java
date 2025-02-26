@@ -29,16 +29,16 @@ public final class JvmProtoBuf {
       org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> 
         getRecordList();
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record getRecord(int index);
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     int getRecordCount();
 
@@ -1451,35 +1451,35 @@ public final class JvmProtoBuf {
     public static final int RECORD_FIELD_NUMBER = 1;
     private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> record_;
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> getRecordList() {
       return record_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     public java.util.List<? extends org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.RecordOrBuilder> 
         getRecordOrBuilderList() {
       return record_;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.Override
     public int getRecordCount() {
       return record_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record getRecord(int index) {
       return record_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     public org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.RecordOrBuilder getRecordOrBuilder(
         int index) {
@@ -1494,7 +1494,7 @@ public final class JvmProtoBuf {
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void setRecord(
@@ -1504,7 +1504,7 @@ public final class JvmProtoBuf {
       record_.set(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addRecord(org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record value) {
@@ -1513,7 +1513,7 @@ public final class JvmProtoBuf {
       record_.add(value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     @java.lang.SuppressWarnings("ReturnValueIgnored")
     private void addRecord(
@@ -1523,7 +1523,7 @@ public final class JvmProtoBuf {
       record_.add(index, value);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     private void addAllRecord(
         java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> values) {
@@ -1532,13 +1532,13 @@ public final class JvmProtoBuf {
           values, record_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     private void clearRecord() {
       record_ = emptyProtobufList();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
      */
     private void removeRecord(int index) {
       ensureRecordIsMutable();
@@ -1742,7 +1742,7 @@ public final class JvmProtoBuf {
 
 
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       @java.lang.Override
       public java.util.List<org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> getRecordList() {
@@ -1750,20 +1750,20 @@ public final class JvmProtoBuf {
             instance.getRecordList());
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       @java.lang.Override
       public int getRecordCount() {
         return instance.getRecordCount();
       }/**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       @java.lang.Override
       public org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record getRecord(int index) {
         return instance.getRecord(index);
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder setRecord(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record value) {
@@ -1772,7 +1772,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder setRecord(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record.Builder builderForValue) {
@@ -1782,7 +1782,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder addRecord(org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record value) {
         copyOnWrite();
@@ -1790,7 +1790,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder addRecord(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record value) {
@@ -1799,7 +1799,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder addRecord(
           org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record.Builder builderForValue) {
@@ -1808,7 +1808,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder addRecord(
           int index, org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record.Builder builderForValue) {
@@ -1818,7 +1818,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder addAllRecord(
           java.lang.Iterable<? extends org.jetbrains.kotlin.metadata.jvm.JvmProtoBuf.StringTableTypes.Record> values) {
@@ -1827,7 +1827,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder clearRecord() {
         copyOnWrite();
@@ -1835,7 +1835,7 @@ public final class JvmProtoBuf {
         return this;
       }
       /**
-       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1 [features = { ... }</code>
+       * <code>repeated .org.jetbrains.kotlin.metadata.jvm.StringTableTypes.Record record = 1;</code>
        */
       public Builder removeRecord(int index) {
         copyOnWrite();

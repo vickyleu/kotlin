@@ -25,10 +25,10 @@ option features.utf8_validation = NONE;
 
 message Module {
   // Names of .class files for each package
-  repeated PackageParts package_parts = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated PackageParts package_parts = 1;
 
   // Names of .kotlin_metadata files for each package
-  repeated PackageParts metadata_parts = 2 [features.repeated_field_encoding = EXPANDED];
+  repeated PackageParts metadata_parts = 2;
 
   // Values of @JvmPackageName annotation used in this module; can be referenced in PackageParts#class_with_jvm_package_name_package_id.
   // The names here are dot-separated, e.g. "org.foo.bar"
@@ -39,13 +39,13 @@ message Module {
   QualifiedNameTable qualified_name_table = 5;
 
   // Annotations on the whole module
-  repeated Annotation annotation = 6 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 6;
 
   // @OptionalExpectation-annotated annotation classes in this module. This list is only used in the compiler frontend when compiling
   // a second-tier multiplatform module against a multiplatform module which uses optional annotations, not actualized on the JVM.
   // This is not needed in the IDE because optional annotations can only be used in common modules, where the IDE plugin resolves
   // it to the corresponding class with the resolution capabilities of common modules.
-  repeated Class optional_annotation_class = 16 [features.repeated_field_encoding = EXPANDED];
+  repeated Class optional_annotation_class = 16;
 }
 
 message PackageParts {

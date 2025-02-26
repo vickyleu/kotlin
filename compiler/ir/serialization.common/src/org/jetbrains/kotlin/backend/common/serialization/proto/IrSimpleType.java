@@ -22,35 +22,35 @@ public  final class IrSimpleType extends
   public static final int ANNOTATION_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.ProtobufList<org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall> annotation_;
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.Override
   public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall> getAnnotationList() {
     return annotation_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCallOrBuilder> 
       getAnnotationOrBuilderList() {
     return annotation_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.Override
   public int getAnnotationCount() {
     return annotation_.size();
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.Override
   public org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall getAnnotation(int index) {
     return annotation_.get(index);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   public org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCallOrBuilder getAnnotationOrBuilder(
       int index) {
@@ -65,7 +65,7 @@ public  final class IrSimpleType extends
   }
 
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void setAnnotation(
@@ -75,7 +75,7 @@ public  final class IrSimpleType extends
     annotation_.set(index, value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addAnnotation(org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall value) {
@@ -84,7 +84,7 @@ public  final class IrSimpleType extends
     annotation_.add(value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addAnnotation(
@@ -94,7 +94,7 @@ public  final class IrSimpleType extends
     annotation_.add(index, value);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   private void addAllAnnotation(
       java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall> values) {
@@ -103,13 +103,13 @@ public  final class IrSimpleType extends
         values, annotation_);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   private void clearAnnotation() {
     annotation_ = emptyProtobufList();
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
    */
   private void removeAnnotation(int index) {
     ensureAnnotationIsMutable();
@@ -429,7 +429,7 @@ public  final class IrSimpleType extends
 
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall> getAnnotationList() {
@@ -437,20 +437,20 @@ public  final class IrSimpleType extends
           instance.getAnnotationList());
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     @java.lang.Override
     public int getAnnotationCount() {
       return instance.getAnnotationCount();
     }/**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall getAnnotation(int index) {
       return instance.getAnnotation(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder setAnnotation(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall value) {
@@ -459,7 +459,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder setAnnotation(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall.Builder builderForValue) {
@@ -469,7 +469,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder addAnnotation(org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall value) {
       copyOnWrite();
@@ -477,7 +477,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder addAnnotation(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall value) {
@@ -486,7 +486,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder addAnnotation(
         org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall.Builder builderForValue) {
@@ -495,7 +495,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder addAnnotation(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall.Builder builderForValue) {
@@ -505,7 +505,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder addAllAnnotation(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall> values) {
@@ -514,7 +514,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder clearAnnotation() {
       copyOnWrite();
@@ -522,7 +522,7 @@ public  final class IrSimpleType extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.IrConstructorCall annotation = 1;</code>
      */
     public Builder removeAnnotation(int index) {
       copyOnWrite();

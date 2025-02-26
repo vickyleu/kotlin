@@ -26,7 +26,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.Override
   public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> getArgumentList() {
@@ -37,7 +37,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   public java.util.List<? extends org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpressionOrBuilder> 
       getArgumentOrBuilderList() {
@@ -48,7 +48,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.Override
   public int getArgumentCount() {
@@ -59,7 +59,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.Override
   public org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression getArgument(int index) {
@@ -70,7 +70,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   public org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpressionOrBuilder getArgumentOrBuilder(
       int index) {
@@ -89,7 +89,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void setArgument(
@@ -103,7 +103,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addArgument(org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression value) {
@@ -116,7 +116,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   @java.lang.SuppressWarnings("ReturnValueIgnored")
   private void addArgument(
@@ -130,7 +130,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   private void addAllArgument(
       java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> values) {
@@ -143,7 +143,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   private void clearArgument() {
     argument_ = emptyProtobufList();
@@ -153,7 +153,7 @@ public  final class MemberAccessCommon extends
    * Value argument serialization scheme after 2.2.0
    * </pre>
    *
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
    */
   private void removeArgument(int index) {
     ensureArgumentIsMutable();
@@ -544,7 +544,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     @java.lang.Override
     public java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> getArgumentList() {
@@ -556,7 +556,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     @java.lang.Override
     public int getArgumentCount() {
@@ -566,7 +566,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     @java.lang.Override
     public org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression getArgument(int index) {
@@ -577,7 +577,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder setArgument(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression value) {
@@ -590,7 +590,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder setArgument(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression.Builder builderForValue) {
@@ -604,7 +604,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder addArgument(org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression value) {
       copyOnWrite();
@@ -616,7 +616,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder addArgument(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression value) {
@@ -629,7 +629,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder addArgument(
         org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression.Builder builderForValue) {
@@ -642,7 +642,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder addArgument(
         int index, org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression.Builder builderForValue) {
@@ -656,7 +656,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder addAllArgument(
         java.lang.Iterable<? extends org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> values) {
@@ -669,7 +669,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder clearArgument() {
       copyOnWrite();
@@ -681,7 +681,7 @@ public  final class MemberAccessCommon extends
      * Value argument serialization scheme after 2.2.0
      * </pre>
      *
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6 [features = { ... }</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument = 6;</code>
      */
     public Builder removeArgument(int index) {
       copyOnWrite();

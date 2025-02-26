@@ -20,11 +20,11 @@ message IrFile {
   FileEntry file_entry = 2; // Required: either `file_entry` or `file_entry_id` is present.
   int32 file_entry_id = 7;  // Required: either `file_entry` or `file_entry_id` is present.
   repeated int32 fq_name = 3;
-  repeated IrConstructorCall annotation = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 4;
   repeated int64 explicitly_exported_to_compiler = 5;
 
   // WARNING: Don't occupy index 6 which was previously used for storing expect/actual table.
-  // repeated Actual actual = 6 [features.repeated_field_encoding = EXPANDED];
+  // repeated Actual actual = 6;
 }
 
 /* ------ IdSignature -------------------------------------------- */
@@ -82,7 +82,7 @@ message IdSignature {
 // If x...xxx00 -> *
 
 message IrSimpleTypeLegacy {
-  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 1;
   int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
   bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
   repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
@@ -97,7 +97,7 @@ enum IrSimpleTypeNullability {
 }
 
 message IrSimpleType {
-  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 1;
   int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
   IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
   repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
@@ -105,14 +105,14 @@ message IrSimpleType {
 }
 
 message IrTypeAbbreviation {
-  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 1;
   int64 type_alias = 2 [features.field_presence = LEGACY_REQUIRED];
   bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
   repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
 }
 
 message IrDynamicType {
-  repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 1;
 }
 
 message IrDefinitelyNotNullType {
@@ -141,7 +141,7 @@ message IrBreak {
 }
 
 message IrBlock {
-  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrStatement statement = 1;
   int32 origin_name = 2;
 }
 
@@ -161,7 +161,7 @@ message IrInlinedFunctionBlock {
 
 message MemberAccessCommon {
   // Value argument serialization scheme after 2.2.0
-  repeated NullableIrExpression argument = 6 [features.repeated_field_encoding = EXPANDED];
+  repeated NullableIrExpression argument = 6;
 
   // Value argument serialization scheme before 2.2.0
   IrExpression dispatch_receiver = 1;
