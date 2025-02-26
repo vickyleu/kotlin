@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.test.services.configuration
 
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
+import org.jetbrains.kotlin.cli.common.config.addKotlinSourceRoots
 import org.jetbrains.kotlin.cli.common.metadataDestinationDirectory
 import org.jetbrains.kotlin.cli.jvm.config.JvmClasspathRoot
 import org.jetbrains.kotlin.cli.jvm.config.K2MetadataConfigurationKeys
@@ -19,6 +20,7 @@ import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.jvm.compiledClassesManager
+import org.jetbrains.kotlin.test.services.sourceFileProvider
 
 class MetadataEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
     override fun configureCompilerConfiguration(
@@ -48,5 +50,8 @@ class MetadataEnvironmentConfigurator(testServices: TestServices) : EnvironmentC
         }
         configuration.putIfNotNull(K2MetadataConfigurationKeys.FRIEND_PATHS, friendDependencies)
         configuration.putIfNotNull(K2MetadataConfigurationKeys.REFINES_PATHS, refinesDependencies)
+        configuration.addKotlinSourceRoots(
+            module.kotlinFiles.map { testServices.sourceFileProvider.getOrCreateRealFileForSourceFile(it).canonicalPath }
+        )
     }
 }
