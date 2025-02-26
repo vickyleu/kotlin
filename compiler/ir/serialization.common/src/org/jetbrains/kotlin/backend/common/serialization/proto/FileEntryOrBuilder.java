@@ -27,17 +27,17 @@ public interface FileEntryOrBuilder extends
       getNameBytes();
 
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @return A list containing the lineStartOffset.
    */
   java.util.List<java.lang.Integer> getLineStartOffsetList();
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @return The count of lineStartOffset.
    */
   int getLineStartOffsetCount();
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @param index The index of the element to return.
    * @return The lineStartOffset at the given index.
    */

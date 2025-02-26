@@ -20,7 +20,7 @@ public  final class LocalSignature extends
   public static final int LOCAL_FQ_NAME_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.IntList localFqName_;
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @return A list containing the localFqName.
    */
   @java.lang.Override
@@ -29,7 +29,7 @@ public  final class LocalSignature extends
     return localFqName_;
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @return The count of localFqName.
    */
   @java.lang.Override
@@ -37,7 +37,7 @@ public  final class LocalSignature extends
     return localFqName_.size();
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @param index The index of the element to return.
    * @return The localFqName at the given index.
    */
@@ -54,7 +54,7 @@ public  final class LocalSignature extends
      }
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @param index The index to set the value at.
    * @param value The localFqName to set.
    */
@@ -64,7 +64,7 @@ public  final class LocalSignature extends
     localFqName_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @param value The localFqName to add.
    */
   private void addLocalFqName(int value) {
@@ -72,7 +72,7 @@ public  final class LocalSignature extends
     localFqName_.addInt(value);
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @param values The localFqName to add.
    */
   private void addAllLocalFqName(
@@ -82,7 +82,7 @@ public  final class LocalSignature extends
         values, localFqName_);
   }
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    */
   private void clearLocalFqName() {
     localFqName_ = emptyIntList();
@@ -254,7 +254,7 @@ public  final class LocalSignature extends
 
 
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @return A list containing the localFqName.
      */
     @java.lang.Override
@@ -264,7 +264,7 @@ public  final class LocalSignature extends
           instance.getLocalFqNameList());
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @return The count of localFqName.
      */
     @java.lang.Override
@@ -272,7 +272,7 @@ public  final class LocalSignature extends
       return instance.getLocalFqNameCount();
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @param index The index of the element to return.
      * @return The localFqName at the given index.
      */
@@ -281,7 +281,7 @@ public  final class LocalSignature extends
       return instance.getLocalFqName(index);
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @param value The localFqName to set.
      * @return This builder for chaining.
      */
@@ -292,7 +292,7 @@ public  final class LocalSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @param value The localFqName to add.
      * @return This builder for chaining.
      */
@@ -302,7 +302,7 @@ public  final class LocalSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @param values The localFqName to add.
      * @return This builder for chaining.
      */
@@ -313,7 +313,7 @@ public  final class LocalSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 local_fq_name = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearLocalFqName() {

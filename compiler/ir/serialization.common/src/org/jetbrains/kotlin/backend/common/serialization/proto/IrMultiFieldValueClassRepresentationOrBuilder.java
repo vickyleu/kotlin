@@ -10,34 +10,34 @@ public interface IrMultiFieldValueClassRepresentationOrBuilder extends
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @return A list containing the underlyingPropertyName.
    */
   java.util.List<java.lang.Integer> getUnderlyingPropertyNameList();
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @return The count of underlyingPropertyName.
    */
   int getUnderlyingPropertyNameCount();
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @param index The index of the element to return.
    * @return The underlyingPropertyName at the given index.
    */
   int getUnderlyingPropertyName(int index);
 
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @return A list containing the underlyingPropertyType.
    */
   java.util.List<java.lang.Integer> getUnderlyingPropertyTypeList();
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @return The count of underlyingPropertyType.
    */
   int getUnderlyingPropertyTypeCount();
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @param index The index of the element to return.
    * @return The underlyingPropertyType at the given index.
    */

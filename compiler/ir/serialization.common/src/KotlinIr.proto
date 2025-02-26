@@ -12,16 +12,16 @@ option features.utf8_validation = NONE;
 
 message FileEntry {
   string name = 1 [features.field_presence = LEGACY_REQUIRED];
-  repeated int32 line_start_offset = 2 [features.repeated_field_encoding = PACKED];
+  repeated int32 line_start_offset = 2;
 }
 
 message IrFile {
-  repeated int32 declaration_id = 1 [features.repeated_field_encoding = PACKED];
+  repeated int32 declaration_id = 1;
   FileEntry file_entry = 2; // Required: either `file_entry` or `file_entry_id` is present.
   int32 file_entry_id = 7;  // Required: either `file_entry` or `file_entry_id` is present.
-  repeated int32 fq_name = 3 [features.repeated_field_encoding = PACKED];
+  repeated int32 fq_name = 3;
   repeated IrConstructorCall annotation = 4 [features.repeated_field_encoding = EXPANDED];
-  repeated int64 explicitly_exported_to_compiler = 5 [features.repeated_field_encoding = PACKED];
+  repeated int64 explicitly_exported_to_compiler = 5;
 
   // WARNING: Don't occupy index 6 which was previously used for storing expect/actual table.
   // repeated Actual actual = 6 [features.repeated_field_encoding = EXPANDED];
@@ -30,8 +30,8 @@ message IrFile {
 /* ------ IdSignature -------------------------------------------- */
 
 message CommonIdSignature {
-  repeated int32 package_fq_name = 1 [features.repeated_field_encoding = PACKED];
-  repeated int32 declaration_fq_name = 2 [features.repeated_field_encoding = PACKED];
+  repeated int32 package_fq_name = 1;
+  repeated int32 declaration_fq_name = 2;
   int64 member_uniq_id = 3;
   int64 flags = 4 [default = 0];
   int32 debug_info = 5;
@@ -57,7 +57,7 @@ message CompositeSignature {
 }
 
 message LocalSignature {
-  repeated int32 local_fq_name = 1 [features.repeated_field_encoding = PACKED];
+  repeated int32 local_fq_name = 1;
   int64 local_hash = 2;
   int32 debug_info = 3;
 }
@@ -85,7 +85,7 @@ message IrSimpleTypeLegacy {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
   bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
-  repeated int64 argument = 4 [features.repeated_field_encoding = PACKED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
 }
 
@@ -100,7 +100,7 @@ message IrSimpleType {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   int64 classifier = 2 [features.field_presence = LEGACY_REQUIRED];
   IrSimpleTypeNullability nullability = 3 [default=NOT_SPECIFIED];
-  repeated int64 argument = 4 [features.repeated_field_encoding = PACKED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
   IrTypeAbbreviation abbreviation = 5;
 }
 
@@ -108,7 +108,7 @@ message IrTypeAbbreviation {
   repeated IrConstructorCall annotation = 1 [features.repeated_field_encoding = EXPANDED];
   int64 type_alias = 2 [features.field_presence = LEGACY_REQUIRED];
   bool has_question_mark = 3 [features.field_presence = LEGACY_REQUIRED];
-  repeated int64 argument = 4 [features.repeated_field_encoding = PACKED]; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
+  repeated int64 argument = 4; // 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
 }
 
 message IrDynamicType {
@@ -117,7 +117,7 @@ message IrDynamicType {
 
 message IrDefinitelyNotNullType {
   // In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
-  repeated int32 types = 1 [features.repeated_field_encoding = PACKED];
+  repeated int32 types = 1;
 }
 
 message IrType {
@@ -168,7 +168,7 @@ message MemberAccessCommon {
   IrExpression extension_receiver = 2;
   repeated NullableIrExpression regular_argument = 3 [features.repeated_field_encoding = EXPANDED];
 
-  repeated int32 type_argument = 4 [features.repeated_field_encoding = PACKED];
+  repeated int32 type_argument = 4;
 
   // Previously used fields:
   //repeated NullableIrExpression context_argument = 5 [features.repeated_field_encoding = EXPANDED];
@@ -538,7 +538,7 @@ message IrFunctionBase {
 
 message IrFunction {
   IrFunctionBase base = 1 [features.field_presence = LEGACY_REQUIRED];
-  repeated int64 overridden = 2 [features.repeated_field_encoding = PACKED]; // TODO: supposed to be deleted
+  repeated int64 overridden = 2; // TODO: supposed to be deleted
   //UniqId corresponding_property = 7;
 }
 
@@ -584,7 +584,7 @@ message IrValueParameter {
 message IrTypeParameter {
   IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
-  repeated int32 super_type = 3 [features.repeated_field_encoding = PACKED];
+  repeated int32 super_type = 3;
 }
 
 message IrClass {
@@ -593,10 +593,10 @@ message IrClass {
   IrValueParameter this_receiver = 3;
   repeated IrTypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
   repeated IrDeclaration declaration = 5 [features.repeated_field_encoding = EXPANDED];
-  repeated int32 super_type = 6 [features.repeated_field_encoding = PACKED];
+  repeated int32 super_type = 6;
   IrInlineClassRepresentation inline_class_representation = 7;
   IrMultiFieldValueClassRepresentation multi_field_value_class_representation = 9;
-  repeated int64 sealed_subclass = 8 [features.repeated_field_encoding = PACKED];
+  repeated int64 sealed_subclass = 8;
 }
 
 message IrTypeAlias {
@@ -686,6 +686,6 @@ message IrInlineClassRepresentation {
 }
 
 message IrMultiFieldValueClassRepresentation {
-  repeated int32 underlying_property_name = 1 [features.repeated_field_encoding = PACKED];
-  repeated int32 underlying_property_type = 2 [features.repeated_field_encoding = PACKED];
+  repeated int32 underlying_property_name = 1;
+  repeated int32 underlying_property_type = 2;
 }

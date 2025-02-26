@@ -10,17 +10,17 @@ public interface LocalSignatureOrBuilder extends
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @return A list containing the localFqName.
    */
   java.util.List<java.lang.Integer> getLocalFqNameList();
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @return The count of localFqName.
    */
   int getLocalFqNameCount();
   /**
-   * <code>repeated int32 local_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 local_fq_name = 1;</code>
    * @param index The index of the element to return.
    * @return The localFqName at the given index.
    */

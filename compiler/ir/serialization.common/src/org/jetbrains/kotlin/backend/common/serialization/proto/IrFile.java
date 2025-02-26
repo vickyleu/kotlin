@@ -23,7 +23,7 @@ public  final class IrFile extends
   public static final int DECLARATION_ID_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.IntList declarationId_;
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @return A list containing the declarationId.
    */
   @java.lang.Override
@@ -32,7 +32,7 @@ public  final class IrFile extends
     return declarationId_;
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @return The count of declarationId.
    */
   @java.lang.Override
@@ -40,7 +40,7 @@ public  final class IrFile extends
     return declarationId_.size();
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @param index The index of the element to return.
    * @return The declarationId at the given index.
    */
@@ -57,7 +57,7 @@ public  final class IrFile extends
      }
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @param index The index to set the value at.
    * @param value The declarationId to set.
    */
@@ -67,7 +67,7 @@ public  final class IrFile extends
     declarationId_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @param value The declarationId to add.
    */
   private void addDeclarationId(int value) {
@@ -75,7 +75,7 @@ public  final class IrFile extends
     declarationId_.addInt(value);
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @param values The declarationId to add.
    */
   private void addAllDeclarationId(
@@ -85,7 +85,7 @@ public  final class IrFile extends
         values, declarationId_);
   }
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    */
   private void clearDeclarationId() {
     declarationId_ = emptyIntList();
@@ -211,7 +211,7 @@ public  final class IrFile extends
   public static final int FQ_NAME_FIELD_NUMBER = 3;
   private org.jetbrains.kotlin.protobuf.Internal.IntList fqName_;
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @return A list containing the fqName.
    */
   @java.lang.Override
@@ -220,7 +220,7 @@ public  final class IrFile extends
     return fqName_;
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @return The count of fqName.
    */
   @java.lang.Override
@@ -228,7 +228,7 @@ public  final class IrFile extends
     return fqName_.size();
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @param index The index of the element to return.
    * @return The fqName at the given index.
    */
@@ -245,7 +245,7 @@ public  final class IrFile extends
      }
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @param index The index to set the value at.
    * @param value The fqName to set.
    */
@@ -255,7 +255,7 @@ public  final class IrFile extends
     fqName_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @param value The fqName to add.
    */
   private void addFqName(int value) {
@@ -263,7 +263,7 @@ public  final class IrFile extends
     fqName_.addInt(value);
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @param values The fqName to add.
    */
   private void addAllFqName(
@@ -273,7 +273,7 @@ public  final class IrFile extends
         values, fqName_);
   }
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    */
   private void clearFqName() {
     fqName_ = emptyIntList();
@@ -379,7 +379,7 @@ public  final class IrFile extends
   public static final int EXPLICITLY_EXPORTED_TO_COMPILER_FIELD_NUMBER = 5;
   private org.jetbrains.kotlin.protobuf.Internal.LongList explicitlyExportedToCompiler_;
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @return A list containing the explicitlyExportedToCompiler.
    */
   @java.lang.Override
@@ -388,7 +388,7 @@ public  final class IrFile extends
     return explicitlyExportedToCompiler_;
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @return The count of explicitlyExportedToCompiler.
    */
   @java.lang.Override
@@ -396,7 +396,7 @@ public  final class IrFile extends
     return explicitlyExportedToCompiler_.size();
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @param index The index of the element to return.
    * @return The explicitlyExportedToCompiler at the given index.
    */
@@ -413,7 +413,7 @@ public  final class IrFile extends
      }
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @param index The index to set the value at.
    * @param value The explicitlyExportedToCompiler to set.
    */
@@ -423,7 +423,7 @@ public  final class IrFile extends
     explicitlyExportedToCompiler_.setLong(index, value);
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @param value The explicitlyExportedToCompiler to add.
    */
   private void addExplicitlyExportedToCompiler(long value) {
@@ -431,7 +431,7 @@ public  final class IrFile extends
     explicitlyExportedToCompiler_.addLong(value);
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @param values The explicitlyExportedToCompiler to add.
    */
   private void addAllExplicitlyExportedToCompiler(
@@ -441,7 +441,7 @@ public  final class IrFile extends
         values, explicitlyExportedToCompiler_);
   }
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    */
   private void clearExplicitlyExportedToCompiler() {
     explicitlyExportedToCompiler_ = emptyLongList();
@@ -545,7 +545,7 @@ public  final class IrFile extends
 
 
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @return A list containing the declarationId.
      */
     @java.lang.Override
@@ -555,7 +555,7 @@ public  final class IrFile extends
           instance.getDeclarationIdList());
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @return The count of declarationId.
      */
     @java.lang.Override
@@ -563,7 +563,7 @@ public  final class IrFile extends
       return instance.getDeclarationIdCount();
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @param index The index of the element to return.
      * @return The declarationId at the given index.
      */
@@ -572,7 +572,7 @@ public  final class IrFile extends
       return instance.getDeclarationId(index);
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @param value The declarationId to set.
      * @return This builder for chaining.
      */
@@ -583,7 +583,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @param value The declarationId to add.
      * @return This builder for chaining.
      */
@@ -593,7 +593,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @param values The declarationId to add.
      * @return This builder for chaining.
      */
@@ -604,7 +604,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+     * <code>repeated int32 declaration_id = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearDeclarationId() {
@@ -737,7 +737,7 @@ public  final class IrFile extends
     }
 
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @return A list containing the fqName.
      */
     @java.lang.Override
@@ -747,7 +747,7 @@ public  final class IrFile extends
           instance.getFqNameList());
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @return The count of fqName.
      */
     @java.lang.Override
@@ -755,7 +755,7 @@ public  final class IrFile extends
       return instance.getFqNameCount();
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @param index The index of the element to return.
      * @return The fqName at the given index.
      */
@@ -764,7 +764,7 @@ public  final class IrFile extends
       return instance.getFqName(index);
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @param value The fqName to set.
      * @return This builder for chaining.
      */
@@ -775,7 +775,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @param value The fqName to add.
      * @return This builder for chaining.
      */
@@ -785,7 +785,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @param values The fqName to add.
      * @return This builder for chaining.
      */
@@ -796,7 +796,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+     * <code>repeated int32 fq_name = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearFqName() {
@@ -908,7 +908,7 @@ public  final class IrFile extends
     }
 
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @return A list containing the explicitlyExportedToCompiler.
      */
     @java.lang.Override
@@ -918,7 +918,7 @@ public  final class IrFile extends
           instance.getExplicitlyExportedToCompilerList());
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @return The count of explicitlyExportedToCompiler.
      */
     @java.lang.Override
@@ -926,7 +926,7 @@ public  final class IrFile extends
       return instance.getExplicitlyExportedToCompilerCount();
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @param index The index of the element to return.
      * @return The explicitlyExportedToCompiler at the given index.
      */
@@ -935,7 +935,7 @@ public  final class IrFile extends
       return instance.getExplicitlyExportedToCompiler(index);
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @param value The explicitlyExportedToCompiler to set.
      * @return This builder for chaining.
      */
@@ -946,7 +946,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @param value The explicitlyExportedToCompiler to add.
      * @return This builder for chaining.
      */
@@ -956,7 +956,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @param values The explicitlyExportedToCompiler to add.
      * @return This builder for chaining.
      */
@@ -967,7 +967,7 @@ public  final class IrFile extends
       return this;
     }
     /**
-     * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+     * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearExplicitlyExportedToCompiler() {

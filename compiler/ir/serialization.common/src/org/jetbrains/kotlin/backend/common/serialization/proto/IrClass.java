@@ -345,7 +345,7 @@ public  final class IrClass extends
   public static final int SUPER_TYPE_FIELD_NUMBER = 6;
   private org.jetbrains.kotlin.protobuf.Internal.IntList superType_;
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @return A list containing the superType.
    */
   @java.lang.Override
@@ -354,7 +354,7 @@ public  final class IrClass extends
     return superType_;
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @return The count of superType.
    */
   @java.lang.Override
@@ -362,7 +362,7 @@ public  final class IrClass extends
     return superType_.size();
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @param index The index of the element to return.
    * @return The superType at the given index.
    */
@@ -379,7 +379,7 @@ public  final class IrClass extends
      }
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @param index The index to set the value at.
    * @param value The superType to set.
    */
@@ -389,7 +389,7 @@ public  final class IrClass extends
     superType_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @param value The superType to add.
    */
   private void addSuperType(int value) {
@@ -397,7 +397,7 @@ public  final class IrClass extends
     superType_.addInt(value);
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @param values The superType to add.
    */
   private void addAllSuperType(
@@ -407,7 +407,7 @@ public  final class IrClass extends
         values, superType_);
   }
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    */
   private void clearSuperType() {
     superType_ = emptyIntList();
@@ -510,7 +510,7 @@ public  final class IrClass extends
   public static final int SEALED_SUBCLASS_FIELD_NUMBER = 8;
   private org.jetbrains.kotlin.protobuf.Internal.LongList sealedSubclass_;
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @return A list containing the sealedSubclass.
    */
   @java.lang.Override
@@ -519,7 +519,7 @@ public  final class IrClass extends
     return sealedSubclass_;
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @return The count of sealedSubclass.
    */
   @java.lang.Override
@@ -527,7 +527,7 @@ public  final class IrClass extends
     return sealedSubclass_.size();
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @param index The index of the element to return.
    * @return The sealedSubclass at the given index.
    */
@@ -544,7 +544,7 @@ public  final class IrClass extends
      }
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @param index The index to set the value at.
    * @param value The sealedSubclass to set.
    */
@@ -554,7 +554,7 @@ public  final class IrClass extends
     sealedSubclass_.setLong(index, value);
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @param value The sealedSubclass to add.
    */
   private void addSealedSubclass(long value) {
@@ -562,7 +562,7 @@ public  final class IrClass extends
     sealedSubclass_.addLong(value);
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @param values The sealedSubclass to add.
    */
   private void addAllSealedSubclass(
@@ -572,7 +572,7 @@ public  final class IrClass extends
         values, sealedSubclass_);
   }
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    */
   private void clearSealedSubclass() {
     sealedSubclass_ = emptyLongList();
@@ -1010,7 +1010,7 @@ public  final class IrClass extends
     }
 
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @return A list containing the superType.
      */
     @java.lang.Override
@@ -1020,7 +1020,7 @@ public  final class IrClass extends
           instance.getSuperTypeList());
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @return The count of superType.
      */
     @java.lang.Override
@@ -1028,7 +1028,7 @@ public  final class IrClass extends
       return instance.getSuperTypeCount();
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @param index The index of the element to return.
      * @return The superType at the given index.
      */
@@ -1037,7 +1037,7 @@ public  final class IrClass extends
       return instance.getSuperType(index);
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @param value The superType to set.
      * @return This builder for chaining.
      */
@@ -1048,7 +1048,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @param value The superType to add.
      * @return This builder for chaining.
      */
@@ -1058,7 +1058,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @param values The superType to add.
      * @return This builder for chaining.
      */
@@ -1069,7 +1069,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 6 [features = { ... }</code>
+     * <code>repeated int32 super_type = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearSuperType() {
@@ -1173,7 +1173,7 @@ public  final class IrClass extends
     }
 
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @return A list containing the sealedSubclass.
      */
     @java.lang.Override
@@ -1183,7 +1183,7 @@ public  final class IrClass extends
           instance.getSealedSubclassList());
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @return The count of sealedSubclass.
      */
     @java.lang.Override
@@ -1191,7 +1191,7 @@ public  final class IrClass extends
       return instance.getSealedSubclassCount();
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @param index The index of the element to return.
      * @return The sealedSubclass at the given index.
      */
@@ -1200,7 +1200,7 @@ public  final class IrClass extends
       return instance.getSealedSubclass(index);
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @param value The sealedSubclass to set.
      * @return This builder for chaining.
      */
@@ -1211,7 +1211,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @param value The sealedSubclass to add.
      * @return This builder for chaining.
      */
@@ -1221,7 +1221,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @param values The sealedSubclass to add.
      * @return This builder for chaining.
      */
@@ -1232,7 +1232,7 @@ public  final class IrClass extends
       return this;
     }
     /**
-     * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+     * <code>repeated int64 sealed_subclass = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearSealedSubclass() {

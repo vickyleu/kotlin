@@ -21,7 +21,7 @@ public  final class CommonIdSignature extends
   public static final int PACKAGE_FQ_NAME_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.IntList packageFqName_;
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @return A list containing the packageFqName.
    */
   @java.lang.Override
@@ -30,7 +30,7 @@ public  final class CommonIdSignature extends
     return packageFqName_;
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @return The count of packageFqName.
    */
   @java.lang.Override
@@ -38,7 +38,7 @@ public  final class CommonIdSignature extends
     return packageFqName_.size();
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @param index The index of the element to return.
    * @return The packageFqName at the given index.
    */
@@ -55,7 +55,7 @@ public  final class CommonIdSignature extends
      }
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @param index The index to set the value at.
    * @param value The packageFqName to set.
    */
@@ -65,7 +65,7 @@ public  final class CommonIdSignature extends
     packageFqName_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @param value The packageFqName to add.
    */
   private void addPackageFqName(int value) {
@@ -73,7 +73,7 @@ public  final class CommonIdSignature extends
     packageFqName_.addInt(value);
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @param values The packageFqName to add.
    */
   private void addAllPackageFqName(
@@ -83,7 +83,7 @@ public  final class CommonIdSignature extends
         values, packageFqName_);
   }
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    */
   private void clearPackageFqName() {
     packageFqName_ = emptyIntList();
@@ -92,7 +92,7 @@ public  final class CommonIdSignature extends
   public static final int DECLARATION_FQ_NAME_FIELD_NUMBER = 2;
   private org.jetbrains.kotlin.protobuf.Internal.IntList declarationFqName_;
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @return A list containing the declarationFqName.
    */
   @java.lang.Override
@@ -101,7 +101,7 @@ public  final class CommonIdSignature extends
     return declarationFqName_;
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @return The count of declarationFqName.
    */
   @java.lang.Override
@@ -109,7 +109,7 @@ public  final class CommonIdSignature extends
     return declarationFqName_.size();
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @param index The index of the element to return.
    * @return The declarationFqName at the given index.
    */
@@ -126,7 +126,7 @@ public  final class CommonIdSignature extends
      }
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @param index The index to set the value at.
    * @param value The declarationFqName to set.
    */
@@ -136,7 +136,7 @@ public  final class CommonIdSignature extends
     declarationFqName_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @param value The declarationFqName to add.
    */
   private void addDeclarationFqName(int value) {
@@ -144,7 +144,7 @@ public  final class CommonIdSignature extends
     declarationFqName_.addInt(value);
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @param values The declarationFqName to add.
    */
   private void addAllDeclarationFqName(
@@ -154,7 +154,7 @@ public  final class CommonIdSignature extends
         values, declarationFqName_);
   }
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    */
   private void clearDeclarationFqName() {
     declarationFqName_ = emptyIntList();
@@ -360,7 +360,7 @@ public  final class CommonIdSignature extends
 
 
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @return A list containing the packageFqName.
      */
     @java.lang.Override
@@ -370,7 +370,7 @@ public  final class CommonIdSignature extends
           instance.getPackageFqNameList());
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @return The count of packageFqName.
      */
     @java.lang.Override
@@ -378,7 +378,7 @@ public  final class CommonIdSignature extends
       return instance.getPackageFqNameCount();
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @param index The index of the element to return.
      * @return The packageFqName at the given index.
      */
@@ -387,7 +387,7 @@ public  final class CommonIdSignature extends
       return instance.getPackageFqName(index);
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @param value The packageFqName to set.
      * @return This builder for chaining.
      */
@@ -398,7 +398,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @param value The packageFqName to add.
      * @return This builder for chaining.
      */
@@ -408,7 +408,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @param values The packageFqName to add.
      * @return This builder for chaining.
      */
@@ -419,7 +419,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+     * <code>repeated int32 package_fq_name = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearPackageFqName() {
@@ -429,7 +429,7 @@ public  final class CommonIdSignature extends
     }
 
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @return A list containing the declarationFqName.
      */
     @java.lang.Override
@@ -439,7 +439,7 @@ public  final class CommonIdSignature extends
           instance.getDeclarationFqNameList());
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @return The count of declarationFqName.
      */
     @java.lang.Override
@@ -447,7 +447,7 @@ public  final class CommonIdSignature extends
       return instance.getDeclarationFqNameCount();
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @param index The index of the element to return.
      * @return The declarationFqName at the given index.
      */
@@ -456,7 +456,7 @@ public  final class CommonIdSignature extends
       return instance.getDeclarationFqName(index);
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @param value The declarationFqName to set.
      * @return This builder for chaining.
      */
@@ -467,7 +467,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @param value The declarationFqName to add.
      * @return This builder for chaining.
      */
@@ -477,7 +477,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @param values The declarationFqName to add.
      * @return This builder for chaining.
      */
@@ -488,7 +488,7 @@ public  final class CommonIdSignature extends
       return this;
     }
     /**
-     * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+     * <code>repeated int32 declaration_fq_name = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearDeclarationFqName() {

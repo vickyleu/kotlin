@@ -71,17 +71,17 @@ public interface IrClassOrBuilder extends
   int getDeclarationCount();
 
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @return A list containing the superType.
    */
   java.util.List<java.lang.Integer> getSuperTypeList();
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @return The count of superType.
    */
   int getSuperTypeCount();
   /**
-   * <code>repeated int32 super_type = 6 [features = { ... }</code>
+   * <code>repeated int32 super_type = 6;</code>
    * @param index The index of the element to return.
    * @return The superType at the given index.
    */
@@ -110,17 +110,17 @@ public interface IrClassOrBuilder extends
   org.jetbrains.kotlin.backend.common.serialization.proto.IrMultiFieldValueClassRepresentation getMultiFieldValueClassRepresentation();
 
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @return A list containing the sealedSubclass.
    */
   java.util.List<java.lang.Long> getSealedSubclassList();
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @return The count of sealedSubclass.
    */
   int getSealedSubclassCount();
   /**
-   * <code>repeated int64 sealed_subclass = 8 [features = { ... }</code>
+   * <code>repeated int64 sealed_subclass = 8;</code>
    * @param index The index of the element to return.
    * @return The sealedSubclass at the given index.
    */

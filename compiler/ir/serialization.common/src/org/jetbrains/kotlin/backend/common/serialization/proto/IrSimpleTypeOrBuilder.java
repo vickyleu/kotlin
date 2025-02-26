@@ -50,7 +50,7 @@ public interface IrSimpleTypeOrBuilder extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @return A list containing the argument.
    */
   java.util.List<java.lang.Long> getArgumentList();
@@ -59,7 +59,7 @@ public interface IrSimpleTypeOrBuilder extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @return The count of argument.
    */
   int getArgumentCount();
@@ -68,7 +68,7 @@ public interface IrSimpleTypeOrBuilder extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @param index The index of the element to return.
    * @return The argument at the given index.
    */

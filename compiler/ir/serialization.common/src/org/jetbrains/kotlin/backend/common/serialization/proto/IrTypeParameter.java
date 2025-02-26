@@ -101,7 +101,7 @@ public  final class IrTypeParameter extends
   public static final int SUPER_TYPE_FIELD_NUMBER = 3;
   private org.jetbrains.kotlin.protobuf.Internal.IntList superType_;
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @return A list containing the superType.
    */
   @java.lang.Override
@@ -110,7 +110,7 @@ public  final class IrTypeParameter extends
     return superType_;
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @return The count of superType.
    */
   @java.lang.Override
@@ -118,7 +118,7 @@ public  final class IrTypeParameter extends
     return superType_.size();
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @param index The index of the element to return.
    * @return The superType at the given index.
    */
@@ -135,7 +135,7 @@ public  final class IrTypeParameter extends
      }
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @param index The index to set the value at.
    * @param value The superType to set.
    */
@@ -145,7 +145,7 @@ public  final class IrTypeParameter extends
     superType_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @param value The superType to add.
    */
   private void addSuperType(int value) {
@@ -153,7 +153,7 @@ public  final class IrTypeParameter extends
     superType_.addInt(value);
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @param values The superType to add.
    */
   private void addAllSuperType(
@@ -163,7 +163,7 @@ public  final class IrTypeParameter extends
         values, superType_);
   }
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    */
   private void clearSuperType() {
     superType_ = emptyIntList();
@@ -350,7 +350,7 @@ public  final class IrTypeParameter extends
     }
 
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @return A list containing the superType.
      */
     @java.lang.Override
@@ -360,7 +360,7 @@ public  final class IrTypeParameter extends
           instance.getSuperTypeList());
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @return The count of superType.
      */
     @java.lang.Override
@@ -368,7 +368,7 @@ public  final class IrTypeParameter extends
       return instance.getSuperTypeCount();
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @param index The index of the element to return.
      * @return The superType at the given index.
      */
@@ -377,7 +377,7 @@ public  final class IrTypeParameter extends
       return instance.getSuperType(index);
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @param value The superType to set.
      * @return This builder for chaining.
      */
@@ -388,7 +388,7 @@ public  final class IrTypeParameter extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @param value The superType to add.
      * @return This builder for chaining.
      */
@@ -398,7 +398,7 @@ public  final class IrTypeParameter extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @param values The superType to add.
      * @return This builder for chaining.
      */
@@ -409,7 +409,7 @@ public  final class IrTypeParameter extends
       return this;
     }
     /**
-     * <code>repeated int32 super_type = 3 [features = { ... }</code>
+     * <code>repeated int32 super_type = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearSuperType() {

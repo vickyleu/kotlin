@@ -10,17 +10,17 @@ public interface IrFileOrBuilder extends
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @return A list containing the declarationId.
    */
   java.util.List<java.lang.Integer> getDeclarationIdList();
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @return The count of declarationId.
    */
   int getDeclarationIdCount();
   /**
-   * <code>repeated int32 declaration_id = 1 [features = { ... }</code>
+   * <code>repeated int32 declaration_id = 1;</code>
    * @param index The index of the element to return.
    * @return The declarationId at the given index.
    */
@@ -65,17 +65,17 @@ public interface IrFileOrBuilder extends
   int getFileEntryId();
 
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @return A list containing the fqName.
    */
   java.util.List<java.lang.Integer> getFqNameList();
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @return The count of fqName.
    */
   int getFqNameCount();
   /**
-   * <code>repeated int32 fq_name = 3 [features = { ... }</code>
+   * <code>repeated int32 fq_name = 3;</code>
    * @param index The index of the element to return.
    * @return The fqName at the given index.
    */
@@ -96,17 +96,17 @@ public interface IrFileOrBuilder extends
   int getAnnotationCount();
 
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @return A list containing the explicitlyExportedToCompiler.
    */
   java.util.List<java.lang.Long> getExplicitlyExportedToCompilerList();
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @return The count of explicitlyExportedToCompiler.
    */
   int getExplicitlyExportedToCompilerCount();
   /**
-   * <code>repeated int64 explicitly_exported_to_compiler = 5 [features = { ... }</code>
+   * <code>repeated int64 explicitly_exported_to_compiler = 5;</code>
    * @param index The index of the element to return.
    * @return The explicitlyExportedToCompiler at the given index.
    */

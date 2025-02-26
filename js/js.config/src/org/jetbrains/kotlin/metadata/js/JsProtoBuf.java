@@ -2071,7 +2071,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @return A list containing the className.
      */
     java.util.List<java.lang.Integer> getClassNameList();
@@ -2080,7 +2080,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @return The count of className.
      */
     int getClassNameCount();
@@ -2089,7 +2089,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @param index The index of the element to return.
      * @return The className at the given index.
      */
@@ -2113,7 +2113,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @return A list containing the className.
      */
     @java.lang.Override
@@ -2126,7 +2126,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @return The count of className.
      */
     @java.lang.Override
@@ -2138,7 +2138,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @param index The index of the element to return.
      * @return The className at the given index.
      */
@@ -2159,7 +2159,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @param index The index to set the value at.
      * @param value The className to set.
      */
@@ -2173,7 +2173,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @param value The className to add.
      */
     private void addClassName(int value) {
@@ -2185,7 +2185,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      * @param values The className to add.
      */
     private void addAllClassName(
@@ -2199,7 +2199,7 @@ public final class JsProtoBuf {
      * id in StringTable
      * </pre>
      *
-     * <code>repeated int32 class_name = 1 [features = { ... }</code>
+     * <code>repeated int32 class_name = 1;</code>
      */
     private void clearClassName() {
       className_ = emptyIntList();
@@ -2307,7 +2307,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @return A list containing the className.
        */
       @java.lang.Override
@@ -2321,7 +2321,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @return The count of className.
        */
       @java.lang.Override
@@ -2333,7 +2333,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @param index The index of the element to return.
        * @return The className at the given index.
        */
@@ -2346,7 +2346,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @param value The className to set.
        * @return This builder for chaining.
        */
@@ -2361,7 +2361,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @param value The className to add.
        * @return This builder for chaining.
        */
@@ -2375,7 +2375,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @param values The className to add.
        * @return This builder for chaining.
        */
@@ -2390,7 +2390,7 @@ public final class JsProtoBuf {
        * id in StringTable
        * </pre>
        *
-       * <code>repeated int32 class_name = 1 [features = { ... }</code>
+       * <code>repeated int32 class_name = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearClassName() {

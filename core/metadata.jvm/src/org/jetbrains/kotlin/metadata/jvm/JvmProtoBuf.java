@@ -47,7 +47,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @return A list containing the localName.
      */
     java.util.List<java.lang.Integer> getLocalNameList();
@@ -56,7 +56,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @return The count of localName.
      */
     int getLocalNameCount();
@@ -65,7 +65,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @param index The index of the element to return.
      * @return The localName at the given index.
      */
@@ -180,7 +180,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @return A list containing the substringIndex.
        */
       java.util.List<java.lang.Integer> getSubstringIndexList();
@@ -191,7 +191,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @return The count of substringIndex.
        */
       int getSubstringIndexCount();
@@ -202,7 +202,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @param index The index of the element to return.
        * @return The substringIndex at the given index.
        */
@@ -214,7 +214,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @return A list containing the replaceChar.
        */
       java.util.List<java.lang.Integer> getReplaceCharList();
@@ -224,7 +224,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @return The count of replaceChar.
        */
       int getReplaceCharCount();
@@ -234,7 +234,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @param index The index of the element to return.
        * @return The replaceChar at the given index.
        */
@@ -607,7 +607,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @return A list containing the substringIndex.
        */
       @java.lang.Override
@@ -622,7 +622,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @return The count of substringIndex.
        */
       @java.lang.Override
@@ -636,7 +636,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @param index The index of the element to return.
        * @return The substringIndex at the given index.
        */
@@ -659,7 +659,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @param index The index to set the value at.
        * @param value The substringIndex to set.
        */
@@ -675,7 +675,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @param value The substringIndex to add.
        */
       private void addSubstringIndex(int value) {
@@ -689,7 +689,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        * @param values The substringIndex to add.
        */
       private void addAllSubstringIndex(
@@ -705,7 +705,7 @@ public final class JvmProtoBuf {
        * If an operation is not NONE, it's applied _after_ this substring operation
        * </pre>
        *
-       * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+       * <code>repeated int32 substring_index = 4;</code>
        */
       private void clearSubstringIndex() {
         substringIndex_ = emptyIntList();
@@ -719,7 +719,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @return A list containing the replaceChar.
        */
       @java.lang.Override
@@ -733,7 +733,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @return The count of replaceChar.
        */
       @java.lang.Override
@@ -746,7 +746,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @param index The index of the element to return.
        * @return The replaceChar at the given index.
        */
@@ -768,7 +768,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @param index The index to set the value at.
        * @param value The replaceChar to set.
        */
@@ -783,7 +783,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @param value The replaceChar to add.
        */
       private void addReplaceChar(int value) {
@@ -796,7 +796,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        * @param values The replaceChar to add.
        */
       private void addAllReplaceChar(
@@ -811,7 +811,7 @@ public final class JvmProtoBuf {
        * of the character to replace, and the second element as the code point of the replacement character
        * </pre>
        *
-       * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+       * <code>repeated int32 replace_char = 5;</code>
        */
       private void clearReplaceChar() {
         replaceChar_ = emptyIntList();
@@ -1158,7 +1158,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @return A list containing the substringIndex.
          */
         @java.lang.Override
@@ -1174,7 +1174,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @return The count of substringIndex.
          */
         @java.lang.Override
@@ -1188,7 +1188,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @param index The index of the element to return.
          * @return The substringIndex at the given index.
          */
@@ -1203,7 +1203,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @param value The substringIndex to set.
          * @return This builder for chaining.
          */
@@ -1220,7 +1220,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @param value The substringIndex to add.
          * @return This builder for chaining.
          */
@@ -1236,7 +1236,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @param values The substringIndex to add.
          * @return This builder for chaining.
          */
@@ -1253,7 +1253,7 @@ public final class JvmProtoBuf {
          * If an operation is not NONE, it's applied _after_ this substring operation
          * </pre>
          *
-         * <code>repeated int32 substring_index = 4 [features = { ... }</code>
+         * <code>repeated int32 substring_index = 4;</code>
          * @return This builder for chaining.
          */
         public Builder clearSubstringIndex() {
@@ -1268,7 +1268,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @return A list containing the replaceChar.
          */
         @java.lang.Override
@@ -1283,7 +1283,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @return The count of replaceChar.
          */
         @java.lang.Override
@@ -1296,7 +1296,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @param index The index of the element to return.
          * @return The replaceChar at the given index.
          */
@@ -1310,7 +1310,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @param value The replaceChar to set.
          * @return This builder for chaining.
          */
@@ -1326,7 +1326,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @param value The replaceChar to add.
          * @return This builder for chaining.
          */
@@ -1341,7 +1341,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @param values The replaceChar to add.
          * @return This builder for chaining.
          */
@@ -1357,7 +1357,7 @@ public final class JvmProtoBuf {
          * of the character to replace, and the second element as the code point of the replacement character
          * </pre>
          *
-         * <code>repeated int32 replace_char = 5 [features = { ... }</code>
+         * <code>repeated int32 replace_char = 5;</code>
          * @return This builder for chaining.
          */
         public Builder clearReplaceChar() {
@@ -1552,7 +1552,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @return A list containing the localName.
      */
     @java.lang.Override
@@ -1565,7 +1565,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @return The count of localName.
      */
     @java.lang.Override
@@ -1577,7 +1577,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @param index The index of the element to return.
      * @return The localName at the given index.
      */
@@ -1598,7 +1598,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @param index The index to set the value at.
      * @param value The localName to set.
      */
@@ -1612,7 +1612,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @param value The localName to add.
      */
     private void addLocalName(int value) {
@@ -1624,7 +1624,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      * @param values The localName to add.
      */
     private void addAllLocalName(
@@ -1638,7 +1638,7 @@ public final class JvmProtoBuf {
      * Indices of strings which are names of local classes or anonymous objects
      * </pre>
      *
-     * <code>repeated int32 local_name = 5 [features = { ... }</code>
+     * <code>repeated int32 local_name = 5;</code>
      */
     private void clearLocalName() {
       localName_ = emptyIntList();
@@ -1848,7 +1848,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @return A list containing the localName.
        */
       @java.lang.Override
@@ -1862,7 +1862,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @return The count of localName.
        */
       @java.lang.Override
@@ -1874,7 +1874,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @param index The index of the element to return.
        * @return The localName at the given index.
        */
@@ -1887,7 +1887,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @param value The localName to set.
        * @return This builder for chaining.
        */
@@ -1902,7 +1902,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @param value The localName to add.
        * @return This builder for chaining.
        */
@@ -1916,7 +1916,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @param values The localName to add.
        * @return This builder for chaining.
        */
@@ -1931,7 +1931,7 @@ public final class JvmProtoBuf {
        * Indices of strings which are names of local classes or anonymous objects
        * </pre>
        *
-       * <code>repeated int32 local_name = 5 [features = { ... }</code>
+       * <code>repeated int32 local_name = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearLocalName() {

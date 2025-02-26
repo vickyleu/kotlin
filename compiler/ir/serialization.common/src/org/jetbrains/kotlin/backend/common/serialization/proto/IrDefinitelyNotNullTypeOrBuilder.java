@@ -14,7 +14,7 @@ public interface IrDefinitelyNotNullTypeOrBuilder extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @return A list containing the types.
    */
   java.util.List<java.lang.Integer> getTypesList();
@@ -23,7 +23,7 @@ public interface IrDefinitelyNotNullTypeOrBuilder extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @return The count of types.
    */
   int getTypesCount();
@@ -32,7 +32,7 @@ public interface IrDefinitelyNotNullTypeOrBuilder extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @param index The index of the element to return.
    * @return The types at the given index.
    */

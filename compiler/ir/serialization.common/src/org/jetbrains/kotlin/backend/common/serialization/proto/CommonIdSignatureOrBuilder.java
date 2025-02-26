@@ -10,34 +10,34 @@ public interface CommonIdSignatureOrBuilder extends
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @return A list containing the packageFqName.
    */
   java.util.List<java.lang.Integer> getPackageFqNameList();
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @return The count of packageFqName.
    */
   int getPackageFqNameCount();
   /**
-   * <code>repeated int32 package_fq_name = 1 [features = { ... }</code>
+   * <code>repeated int32 package_fq_name = 1;</code>
    * @param index The index of the element to return.
    * @return The packageFqName at the given index.
    */
   int getPackageFqName(int index);
 
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @return A list containing the declarationFqName.
    */
   java.util.List<java.lang.Integer> getDeclarationFqNameList();
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @return The count of declarationFqName.
    */
   int getDeclarationFqNameCount();
   /**
-   * <code>repeated int32 declaration_fq_name = 2 [features = { ... }</code>
+   * <code>repeated int32 declaration_fq_name = 2;</code>
    * @param index The index of the element to return.
    * @return The declarationFqName at the given index.
    */

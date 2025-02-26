@@ -76,7 +76,7 @@ public  final class FileEntry extends
   public static final int LINE_START_OFFSET_FIELD_NUMBER = 2;
   private org.jetbrains.kotlin.protobuf.Internal.IntList lineStartOffset_;
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @return A list containing the lineStartOffset.
    */
   @java.lang.Override
@@ -85,7 +85,7 @@ public  final class FileEntry extends
     return lineStartOffset_;
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @return The count of lineStartOffset.
    */
   @java.lang.Override
@@ -93,7 +93,7 @@ public  final class FileEntry extends
     return lineStartOffset_.size();
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @param index The index of the element to return.
    * @return The lineStartOffset at the given index.
    */
@@ -110,7 +110,7 @@ public  final class FileEntry extends
      }
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @param index The index to set the value at.
    * @param value The lineStartOffset to set.
    */
@@ -120,7 +120,7 @@ public  final class FileEntry extends
     lineStartOffset_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @param value The lineStartOffset to add.
    */
   private void addLineStartOffset(int value) {
@@ -128,7 +128,7 @@ public  final class FileEntry extends
     lineStartOffset_.addInt(value);
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    * @param values The lineStartOffset to add.
    */
   private void addAllLineStartOffset(
@@ -138,7 +138,7 @@ public  final class FileEntry extends
         values, lineStartOffset_);
   }
   /**
-   * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+   * <code>repeated int32 line_start_offset = 2;</code>
    */
   private void clearLineStartOffset() {
     lineStartOffset_ = emptyIntList();
@@ -299,7 +299,7 @@ public  final class FileEntry extends
     }
 
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @return A list containing the lineStartOffset.
      */
     @java.lang.Override
@@ -309,7 +309,7 @@ public  final class FileEntry extends
           instance.getLineStartOffsetList());
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @return The count of lineStartOffset.
      */
     @java.lang.Override
@@ -317,7 +317,7 @@ public  final class FileEntry extends
       return instance.getLineStartOffsetCount();
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @param index The index of the element to return.
      * @return The lineStartOffset at the given index.
      */
@@ -326,7 +326,7 @@ public  final class FileEntry extends
       return instance.getLineStartOffset(index);
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @param value The lineStartOffset to set.
      * @return This builder for chaining.
      */
@@ -337,7 +337,7 @@ public  final class FileEntry extends
       return this;
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @param value The lineStartOffset to add.
      * @return This builder for chaining.
      */
@@ -347,7 +347,7 @@ public  final class FileEntry extends
       return this;
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @param values The lineStartOffset to add.
      * @return This builder for chaining.
      */
@@ -358,7 +358,7 @@ public  final class FileEntry extends
       return this;
     }
     /**
-     * <code>repeated int32 line_start_offset = 2 [features = { ... }</code>
+     * <code>repeated int32 line_start_offset = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearLineStartOffset() {

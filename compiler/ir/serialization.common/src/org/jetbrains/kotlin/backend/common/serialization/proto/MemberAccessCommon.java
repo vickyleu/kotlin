@@ -374,7 +374,7 @@ public  final class MemberAccessCommon extends
   public static final int TYPE_ARGUMENT_FIELD_NUMBER = 4;
   private org.jetbrains.kotlin.protobuf.Internal.IntList typeArgument_;
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @return A list containing the typeArgument.
    */
   @java.lang.Override
@@ -383,7 +383,7 @@ public  final class MemberAccessCommon extends
     return typeArgument_;
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @return The count of typeArgument.
    */
   @java.lang.Override
@@ -391,7 +391,7 @@ public  final class MemberAccessCommon extends
     return typeArgument_.size();
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @param index The index of the element to return.
    * @return The typeArgument at the given index.
    */
@@ -408,7 +408,7 @@ public  final class MemberAccessCommon extends
      }
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @param index The index to set the value at.
    * @param value The typeArgument to set.
    */
@@ -418,7 +418,7 @@ public  final class MemberAccessCommon extends
     typeArgument_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @param value The typeArgument to add.
    */
   private void addTypeArgument(int value) {
@@ -426,7 +426,7 @@ public  final class MemberAccessCommon extends
     typeArgument_.addInt(value);
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @param values The typeArgument to add.
    */
   private void addAllTypeArgument(
@@ -436,7 +436,7 @@ public  final class MemberAccessCommon extends
         values, typeArgument_);
   }
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    */
   private void clearTypeArgument() {
     typeArgument_ = emptyIntList();
@@ -910,7 +910,7 @@ public  final class MemberAccessCommon extends
     }
 
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @return A list containing the typeArgument.
      */
     @java.lang.Override
@@ -920,7 +920,7 @@ public  final class MemberAccessCommon extends
           instance.getTypeArgumentList());
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @return The count of typeArgument.
      */
     @java.lang.Override
@@ -928,7 +928,7 @@ public  final class MemberAccessCommon extends
       return instance.getTypeArgumentCount();
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @param index The index of the element to return.
      * @return The typeArgument at the given index.
      */
@@ -937,7 +937,7 @@ public  final class MemberAccessCommon extends
       return instance.getTypeArgument(index);
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @param value The typeArgument to set.
      * @return This builder for chaining.
      */
@@ -948,7 +948,7 @@ public  final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @param value The typeArgument to add.
      * @return This builder for chaining.
      */
@@ -958,7 +958,7 @@ public  final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @param values The typeArgument to add.
      * @return This builder for chaining.
      */
@@ -969,7 +969,7 @@ public  final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+     * <code>repeated int32 type_argument = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearTypeArgument() {

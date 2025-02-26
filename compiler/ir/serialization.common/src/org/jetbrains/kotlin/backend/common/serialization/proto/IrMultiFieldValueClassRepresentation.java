@@ -20,7 +20,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
   public static final int UNDERLYING_PROPERTY_NAME_FIELD_NUMBER = 1;
   private org.jetbrains.kotlin.protobuf.Internal.IntList underlyingPropertyName_;
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @return A list containing the underlyingPropertyName.
    */
   @java.lang.Override
@@ -29,7 +29,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     return underlyingPropertyName_;
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @return The count of underlyingPropertyName.
    */
   @java.lang.Override
@@ -37,7 +37,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     return underlyingPropertyName_.size();
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @param index The index of the element to return.
    * @return The underlyingPropertyName at the given index.
    */
@@ -54,7 +54,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
      }
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @param index The index to set the value at.
    * @param value The underlyingPropertyName to set.
    */
@@ -64,7 +64,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     underlyingPropertyName_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @param value The underlyingPropertyName to add.
    */
   private void addUnderlyingPropertyName(int value) {
@@ -72,7 +72,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     underlyingPropertyName_.addInt(value);
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    * @param values The underlyingPropertyName to add.
    */
   private void addAllUnderlyingPropertyName(
@@ -82,7 +82,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
         values, underlyingPropertyName_);
   }
   /**
-   * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_name = 1;</code>
    */
   private void clearUnderlyingPropertyName() {
     underlyingPropertyName_ = emptyIntList();
@@ -91,7 +91,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
   public static final int UNDERLYING_PROPERTY_TYPE_FIELD_NUMBER = 2;
   private org.jetbrains.kotlin.protobuf.Internal.IntList underlyingPropertyType_;
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @return A list containing the underlyingPropertyType.
    */
   @java.lang.Override
@@ -100,7 +100,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     return underlyingPropertyType_;
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @return The count of underlyingPropertyType.
    */
   @java.lang.Override
@@ -108,7 +108,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     return underlyingPropertyType_.size();
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @param index The index of the element to return.
    * @return The underlyingPropertyType at the given index.
    */
@@ -125,7 +125,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
      }
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @param index The index to set the value at.
    * @param value The underlyingPropertyType to set.
    */
@@ -135,7 +135,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     underlyingPropertyType_.setInt(index, value);
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @param value The underlyingPropertyType to add.
    */
   private void addUnderlyingPropertyType(int value) {
@@ -143,7 +143,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     underlyingPropertyType_.addInt(value);
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    * @param values The underlyingPropertyType to add.
    */
   private void addAllUnderlyingPropertyType(
@@ -153,7 +153,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
         values, underlyingPropertyType_);
   }
   /**
-   * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+   * <code>repeated int32 underlying_property_type = 2;</code>
    */
   private void clearUnderlyingPropertyType() {
     underlyingPropertyType_ = emptyIntList();
@@ -257,7 +257,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
 
 
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @return A list containing the underlyingPropertyName.
      */
     @java.lang.Override
@@ -267,7 +267,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
           instance.getUnderlyingPropertyNameList());
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @return The count of underlyingPropertyName.
      */
     @java.lang.Override
@@ -275,7 +275,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return instance.getUnderlyingPropertyNameCount();
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @param index The index of the element to return.
      * @return The underlyingPropertyName at the given index.
      */
@@ -284,7 +284,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return instance.getUnderlyingPropertyName(index);
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @param value The underlyingPropertyName to set.
      * @return This builder for chaining.
      */
@@ -295,7 +295,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @param value The underlyingPropertyName to add.
      * @return This builder for chaining.
      */
@@ -305,7 +305,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @param values The underlyingPropertyName to add.
      * @return This builder for chaining.
      */
@@ -316,7 +316,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_name = 1 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_name = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearUnderlyingPropertyName() {
@@ -326,7 +326,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
     }
 
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @return A list containing the underlyingPropertyType.
      */
     @java.lang.Override
@@ -336,7 +336,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
           instance.getUnderlyingPropertyTypeList());
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @return The count of underlyingPropertyType.
      */
     @java.lang.Override
@@ -344,7 +344,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return instance.getUnderlyingPropertyTypeCount();
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @param index The index of the element to return.
      * @return The underlyingPropertyType at the given index.
      */
@@ -353,7 +353,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return instance.getUnderlyingPropertyType(index);
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @param value The underlyingPropertyType to set.
      * @return This builder for chaining.
      */
@@ -364,7 +364,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @param value The underlyingPropertyType to add.
      * @return This builder for chaining.
      */
@@ -374,7 +374,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @param values The underlyingPropertyType to add.
      * @return This builder for chaining.
      */
@@ -385,7 +385,7 @@ public  final class IrMultiFieldValueClassRepresentation extends
       return this;
     }
     /**
-     * <code>repeated int32 underlying_property_type = 2 [features = { ... }</code>
+     * <code>repeated int32 underlying_property_type = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearUnderlyingPropertyType() {

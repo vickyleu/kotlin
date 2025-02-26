@@ -25,7 +25,7 @@ public interface IrFunctionOrBuilder extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @return A list containing the overridden.
    */
   java.util.List<java.lang.Long> getOverriddenList();
@@ -34,7 +34,7 @@ public interface IrFunctionOrBuilder extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @return The count of overridden.
    */
   int getOverriddenCount();
@@ -43,7 +43,7 @@ public interface IrFunctionOrBuilder extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @param index The index of the element to return.
    * @return The overridden at the given index.
    */

@@ -32,17 +32,17 @@ public interface IrTypeParameterOrBuilder extends
   int getName();
 
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @return A list containing the superType.
    */
   java.util.List<java.lang.Integer> getSuperTypeList();
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @return The count of superType.
    */
   int getSuperTypeCount();
   /**
-   * <code>repeated int32 super_type = 3 [features = { ... }</code>
+   * <code>repeated int32 super_type = 3;</code>
    * @param index The index of the element to return.
    * @return The superType at the given index.
    */

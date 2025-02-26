@@ -71,7 +71,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @return A list containing the overridden.
    */
   @java.lang.Override
@@ -84,7 +84,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @return The count of overridden.
    */
   @java.lang.Override
@@ -96,7 +96,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @param index The index of the element to return.
    * @return The overridden at the given index.
    */
@@ -117,7 +117,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @param index The index to set the value at.
    * @param value The overridden to set.
    */
@@ -131,7 +131,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @param value The overridden to add.
    */
   private void addOverridden(long value) {
@@ -143,7 +143,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    * @param values The overridden to add.
    */
   private void addAllOverridden(
@@ -157,7 +157,7 @@ public  final class IrFunction extends
    * TODO: supposed to be deleted
    * </pre>
    *
-   * <code>repeated int64 overridden = 2 [features = { ... }</code>
+   * <code>repeated int64 overridden = 2;</code>
    */
   private void clearOverridden() {
     overridden_ = emptyLongList();
@@ -312,7 +312,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @return A list containing the overridden.
      */
     @java.lang.Override
@@ -326,7 +326,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @return The count of overridden.
      */
     @java.lang.Override
@@ -338,7 +338,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @param index The index of the element to return.
      * @return The overridden at the given index.
      */
@@ -351,7 +351,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @param value The overridden to set.
      * @return This builder for chaining.
      */
@@ -366,7 +366,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @param value The overridden to add.
      * @return This builder for chaining.
      */
@@ -380,7 +380,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @param values The overridden to add.
      * @return This builder for chaining.
      */
@@ -395,7 +395,7 @@ public  final class IrFunction extends
      * TODO: supposed to be deleted
      * </pre>
      *
-     * <code>repeated int64 overridden = 2 [features = { ... }</code>
+     * <code>repeated int64 overridden = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearOverridden() {

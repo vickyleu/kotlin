@@ -2185,7 +2185,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @return A list containing the multifileFacadeShortNameId.
      */
     java.util.List<java.lang.Integer> getMultifileFacadeShortNameIdList();
@@ -2196,7 +2196,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @return The count of multifileFacadeShortNameId.
      */
     int getMultifileFacadeShortNameIdCount();
@@ -2207,7 +2207,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @param index The index of the element to return.
      * @return The multifileFacadeShortNameId at the given index.
      */
@@ -2325,7 +2325,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @return A list containing the classWithJvmPackageNameMultifileFacadeShortNameId.
      */
     java.util.List<java.lang.Integer> getClassWithJvmPackageNameMultifileFacadeShortNameIdList();
@@ -2339,7 +2339,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @return The count of classWithJvmPackageNameMultifileFacadeShortNameId.
      */
     int getClassWithJvmPackageNameMultifileFacadeShortNameIdCount();
@@ -2353,7 +2353,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @param index The index of the element to return.
      * @return The classWithJvmPackageNameMultifileFacadeShortNameId at the given index.
      */
@@ -2369,7 +2369,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @return A list containing the classWithJvmPackageNamePackageId.
      */
     java.util.List<java.lang.Integer> getClassWithJvmPackageNamePackageIdList();
@@ -2383,7 +2383,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @return The count of classWithJvmPackageNamePackageId.
      */
     int getClassWithJvmPackageNamePackageIdCount();
@@ -2397,7 +2397,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @param index The index of the element to return.
      * @return The classWithJvmPackageNamePackageId at the given index.
      */
@@ -2666,7 +2666,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @return A list containing the multifileFacadeShortNameId.
      */
     @java.lang.Override
@@ -2681,7 +2681,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @return The count of multifileFacadeShortNameId.
      */
     @java.lang.Override
@@ -2695,7 +2695,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @param index The index of the element to return.
      * @return The multifileFacadeShortNameId at the given index.
      */
@@ -2718,7 +2718,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @param index The index to set the value at.
      * @param value The multifileFacadeShortNameId to set.
      */
@@ -2734,7 +2734,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @param value The multifileFacadeShortNameId to add.
      */
     private void addMultifileFacadeShortNameId(int value) {
@@ -2748,7 +2748,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      * @param values The multifileFacadeShortNameId to add.
      */
     private void addAllMultifileFacadeShortNameId(
@@ -2764,7 +2764,7 @@ public final class JvmModuleProtoBuf {
      * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
      * </pre>
      *
-     * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+     * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
      */
     private void clearMultifileFacadeShortNameId() {
       multifileFacadeShortNameId_ = emptyIntList();
@@ -3087,7 +3087,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @return A list containing the classWithJvmPackageNameMultifileFacadeShortNameId.
      */
     @java.lang.Override
@@ -3105,7 +3105,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @return The count of classWithJvmPackageNameMultifileFacadeShortNameId.
      */
     @java.lang.Override
@@ -3122,7 +3122,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @param index The index of the element to return.
      * @return The classWithJvmPackageNameMultifileFacadeShortNameId at the given index.
      */
@@ -3148,7 +3148,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @param index The index to set the value at.
      * @param value The classWithJvmPackageNameMultifileFacadeShortNameId to set.
      */
@@ -3167,7 +3167,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @param value The classWithJvmPackageNameMultifileFacadeShortNameId to add.
      */
     private void addClassWithJvmPackageNameMultifileFacadeShortNameId(int value) {
@@ -3184,7 +3184,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      * @param values The classWithJvmPackageNameMultifileFacadeShortNameId to add.
      */
     private void addAllClassWithJvmPackageNameMultifileFacadeShortNameId(
@@ -3203,7 +3203,7 @@ public final class JvmModuleProtoBuf {
      * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
      */
     private void clearClassWithJvmPackageNameMultifileFacadeShortNameId() {
       classWithJvmPackageNameMultifileFacadeShortNameId_ = emptyIntList();
@@ -3221,7 +3221,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @return A list containing the classWithJvmPackageNamePackageId.
      */
     @java.lang.Override
@@ -3239,7 +3239,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @return The count of classWithJvmPackageNamePackageId.
      */
     @java.lang.Override
@@ -3256,7 +3256,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @param index The index of the element to return.
      * @return The classWithJvmPackageNamePackageId at the given index.
      */
@@ -3282,7 +3282,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @param index The index to set the value at.
      * @param value The classWithJvmPackageNamePackageId to set.
      */
@@ -3301,7 +3301,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @param value The classWithJvmPackageNamePackageId to add.
      */
     private void addClassWithJvmPackageNamePackageId(int value) {
@@ -3318,7 +3318,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      * @param values The classWithJvmPackageNamePackageId to add.
      */
     private void addAllClassWithJvmPackageNamePackageId(
@@ -3337,7 +3337,7 @@ public final class JvmModuleProtoBuf {
      * when a bunch of files from the same Kotlin package have the same JVM package name.
      * </pre>
      *
-     * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+     * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
      */
     private void clearClassWithJvmPackageNamePackageId() {
       classWithJvmPackageNamePackageId_ = emptyIntList();
@@ -3683,7 +3683,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @return A list containing the multifileFacadeShortNameId.
        */
       @java.lang.Override
@@ -3699,7 +3699,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @return The count of multifileFacadeShortNameId.
        */
       @java.lang.Override
@@ -3713,7 +3713,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @param index The index of the element to return.
        * @return The multifileFacadeShortNameId at the given index.
        */
@@ -3728,7 +3728,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @param value The multifileFacadeShortNameId to set.
        * @return This builder for chaining.
        */
@@ -3745,7 +3745,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @param value The multifileFacadeShortNameId to add.
        * @return This builder for chaining.
        */
@@ -3761,7 +3761,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @param values The multifileFacadeShortNameId to add.
        * @return This builder for chaining.
        */
@@ -3778,7 +3778,7 @@ public final class JvmModuleProtoBuf {
        * (e.g. if there are no multi-file classes in the module, this list is not going to exist at all)
        * </pre>
        *
-       * <code>repeated int32 multifile_facade_short_name_id = 3 [features = { ... }</code>
+       * <code>repeated int32 multifile_facade_short_name_id = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearMultifileFacadeShortNameId() {
@@ -4098,7 +4098,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @return A list containing the classWithJvmPackageNameMultifileFacadeShortNameId.
        */
       @java.lang.Override
@@ -4117,7 +4117,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @return The count of classWithJvmPackageNameMultifileFacadeShortNameId.
        */
       @java.lang.Override
@@ -4134,7 +4134,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @param index The index of the element to return.
        * @return The classWithJvmPackageNameMultifileFacadeShortNameId at the given index.
        */
@@ -4152,7 +4152,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @param value The classWithJvmPackageNameMultifileFacadeShortNameId to set.
        * @return This builder for chaining.
        */
@@ -4172,7 +4172,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @param value The classWithJvmPackageNameMultifileFacadeShortNameId to add.
        * @return This builder for chaining.
        */
@@ -4191,7 +4191,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @param values The classWithJvmPackageNameMultifileFacadeShortNameId to add.
        * @return This builder for chaining.
        */
@@ -4211,7 +4211,7 @@ public final class JvmModuleProtoBuf {
        * multifile_facade_short_name + 1, or 0 if the class is not a multi-file part.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_multifile_facade_short_name_id = 7;</code>
        * @return This builder for chaining.
        */
       public Builder clearClassWithJvmPackageNameMultifileFacadeShortNameId() {
@@ -4230,7 +4230,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @return A list containing the classWithJvmPackageNamePackageId.
        */
       @java.lang.Override
@@ -4249,7 +4249,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @return The count of classWithJvmPackageNamePackageId.
        */
       @java.lang.Override
@@ -4266,7 +4266,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @param index The index of the element to return.
        * @return The classWithJvmPackageNamePackageId at the given index.
        */
@@ -4284,7 +4284,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @param value The classWithJvmPackageNamePackageId to set.
        * @return This builder for chaining.
        */
@@ -4304,7 +4304,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @param value The classWithJvmPackageNamePackageId to add.
        * @return This builder for chaining.
        */
@@ -4323,7 +4323,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @param values The classWithJvmPackageNamePackageId to add.
        * @return This builder for chaining.
        */
@@ -4343,7 +4343,7 @@ public final class JvmModuleProtoBuf {
        * when a bunch of files from the same Kotlin package have the same JVM package name.
        * </pre>
        *
-       * <code>repeated int32 class_with_jvm_package_name_package_id = 6 [features = { ... }</code>
+       * <code>repeated int32 class_with_jvm_package_name_package_id = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearClassWithJvmPackageNamePackageId() {

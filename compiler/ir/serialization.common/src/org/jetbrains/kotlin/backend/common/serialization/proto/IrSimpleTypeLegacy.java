@@ -190,7 +190,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @return A list containing the argument.
    */
   @java.lang.Override
@@ -203,7 +203,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @return The count of argument.
    */
   @java.lang.Override
@@ -215,7 +215,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @param index The index of the element to return.
    * @return The argument at the given index.
    */
@@ -236,7 +236,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @param index The index to set the value at.
    * @param value The argument to set.
    */
@@ -250,7 +250,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @param value The argument to add.
    */
   private void addArgument(long value) {
@@ -262,7 +262,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    * @param values The argument to add.
    */
   private void addAllArgument(
@@ -276,7 +276,7 @@ public  final class IrSimpleTypeLegacy extends
    * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
    * </pre>
    *
-   * <code>repeated int64 argument = 4 [features = { ... }</code>
+   * <code>repeated int64 argument = 4;</code>
    */
   private void clearArgument() {
     argument_ = emptyLongList();
@@ -605,7 +605,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @return A list containing the argument.
      */
     @java.lang.Override
@@ -619,7 +619,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @return The count of argument.
      */
     @java.lang.Override
@@ -631,7 +631,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @param index The index of the element to return.
      * @return The argument at the given index.
      */
@@ -644,7 +644,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @param value The argument to set.
      * @return This builder for chaining.
      */
@@ -659,7 +659,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @param value The argument to add.
      * @return This builder for chaining.
      */
@@ -673,7 +673,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @param values The argument to add.
      * @return This builder for chaining.
      */
@@ -688,7 +688,7 @@ public  final class IrSimpleTypeLegacy extends
      * 0 - STAR, otherwise [63..2 - IrType index | 1..0 - Variance]
      * </pre>
      *
-     * <code>repeated int64 argument = 4 [features = { ... }</code>
+     * <code>repeated int64 argument = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearArgument() {

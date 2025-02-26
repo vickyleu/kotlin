@@ -23,7 +23,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @return A list containing the types.
    */
   @java.lang.Override
@@ -36,7 +36,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @return The count of types.
    */
   @java.lang.Override
@@ -48,7 +48,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @param index The index of the element to return.
    * @return The types at the given index.
    */
@@ -69,7 +69,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @param index The index to set the value at.
    * @param value The types to set.
    */
@@ -83,7 +83,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @param value The types to add.
    */
   private void addTypes(int value) {
@@ -95,7 +95,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    * @param values The types to add.
    */
   private void addAllTypes(
@@ -109,7 +109,7 @@ public  final class IrDefinitelyNotNullType extends
    * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
    * </pre>
    *
-   * <code>repeated int32 types = 1 [features = { ... }</code>
+   * <code>repeated int32 types = 1;</code>
    */
   private void clearTypes() {
     types_ = emptyIntList();
@@ -217,7 +217,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @return A list containing the types.
      */
     @java.lang.Override
@@ -231,7 +231,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @return The count of types.
      */
     @java.lang.Override
@@ -243,7 +243,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @param index The index of the element to return.
      * @return The types at the given index.
      */
@@ -256,7 +256,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @param value The types to set.
      * @return This builder for chaining.
      */
@@ -271,7 +271,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @param value The types to add.
      * @return This builder for chaining.
      */
@@ -285,7 +285,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @param values The types to add.
      * @return This builder for chaining.
      */
@@ -300,7 +300,7 @@ public  final class IrDefinitelyNotNullType extends
      * In fact that is an `IntersectionType` so let represent it as it. In future it could be easy to support general case
      * </pre>
      *
-     * <code>repeated int32 types = 1 [features = { ... }</code>
+     * <code>repeated int32 types = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearTypes() {

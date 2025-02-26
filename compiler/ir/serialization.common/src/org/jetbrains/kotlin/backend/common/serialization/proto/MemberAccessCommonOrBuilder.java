@@ -80,17 +80,17 @@ public interface MemberAccessCommonOrBuilder extends
   int getRegularArgumentCount();
 
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @return A list containing the typeArgument.
    */
   java.util.List<java.lang.Integer> getTypeArgumentList();
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @return The count of typeArgument.
    */
   int getTypeArgumentCount();
   /**
-   * <code>repeated int32 type_argument = 4 [features = { ... }</code>
+   * <code>repeated int32 type_argument = 4;</code>
    * @param index The index of the element to return.
    * @return The typeArgument at the given index.
    */
