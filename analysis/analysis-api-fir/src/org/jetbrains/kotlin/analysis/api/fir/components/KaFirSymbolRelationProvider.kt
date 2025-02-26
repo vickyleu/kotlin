@@ -30,6 +30,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.compile.isForeignValue
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.llFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.getContainingFile
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.originalDeclaration
+import org.jetbrains.kotlin.analysis.utils.isNonLocalDanglingModifierList
 import org.jetbrains.kotlin.analysis.utils.printer.parentOfType
 import org.jetbrains.kotlin.fir.FirElementWithResolveState
 import org.jetbrains.kotlin.fir.FirSession
@@ -245,6 +246,12 @@ internal class KaFirSymbolRelationProvider(
                 val containingFile = psi.containingFile
                 if (containingFile is KtCodeFragment) {
                     // All content inside a code fragment is implicitly local, but there is no non-local parent
+                    return null
+                }
+
+                if (psi.parentOfType<KtModifierList>()?.isNonLocalDanglingModifierList() == true) {
+                    // Invalid code: the declaration does not have a non-local container (at least on the top level),
+                    // because it is considered to be an argument of an unclosed (dangling) annotation
                     return null
                 }
 

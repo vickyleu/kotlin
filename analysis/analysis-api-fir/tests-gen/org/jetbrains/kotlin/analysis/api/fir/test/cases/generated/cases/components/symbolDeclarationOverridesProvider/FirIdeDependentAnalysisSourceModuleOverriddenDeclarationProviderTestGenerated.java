@@ -58,6 +58,30 @@ public class FirIdeDependentAnalysisSourceModuleOverriddenDeclarationProviderTes
   }
 
   @Test
+  @TestMetadata("danglingAnnotationOnMemberAnonymousFunction.kt")
+  public void testDanglingAnnotationOnMemberAnonymousFunction() {
+    runTest("analysis/analysis-api/testData/components/symbolDeclarationOverridesProvider/overriddenSymbols/danglingAnnotationOnMemberAnonymousFunction.kt");
+  }
+
+  @Test
+  @TestMetadata("danglingAnnotationOnMemberFunction.kt")
+  public void testDanglingAnnotationOnMemberFunction() {
+    runTest("analysis/analysis-api/testData/components/symbolDeclarationOverridesProvider/overriddenSymbols/danglingAnnotationOnMemberFunction.kt");
+  }
+
+  @Test
+  @TestMetadata("danglingAnnotationOnTopLevelAnonymousFunction.kt")
+  public void testDanglingAnnotationOnTopLevelAnonymousFunction() {
+    runTest("analysis/analysis-api/testData/components/symbolDeclarationOverridesProvider/overriddenSymbols/danglingAnnotationOnTopLevelAnonymousFunction.kt");
+  }
+
+  @Test
+  @TestMetadata("danglingAnnotationOnTopLevelFunction.kt")
+  public void testDanglingAnnotationOnTopLevelFunction() {
+    runTest("analysis/analysis-api/testData/components/symbolDeclarationOverridesProvider/overriddenSymbols/danglingAnnotationOnTopLevelFunction.kt");
+  }
+
+  @Test
   @TestMetadata("delegateOverrideWithImplicitTypeInsideAnonymousObject.kt")
   public void testDelegateOverrideWithImplicitTypeInsideAnonymousObject() {
     runTest("analysis/analysis-api/testData/components/symbolDeclarationOverridesProvider/overriddenSymbols/delegateOverrideWithImplicitTypeInsideAnonymousObject.kt");
