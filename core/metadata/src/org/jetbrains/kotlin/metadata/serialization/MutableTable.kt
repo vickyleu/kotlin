@@ -38,7 +38,7 @@ abstract class MutableTable<Element, Table, TableBuilder>
             for (obj in interner.allInternedObjects) {
                 addElement(this, obj.builder)
             }
-        }.build() as Table
+        }.build()
 }
 
 class MutableTypeTable : MutableTable<ProtoBuf.Type.Builder, ProtoBuf.TypeTable, ProtoBuf.TypeTable.Builder>() {
