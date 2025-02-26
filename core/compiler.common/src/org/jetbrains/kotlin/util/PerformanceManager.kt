@@ -25,7 +25,11 @@ abstract class PerformanceManager(val targetPlatform: TargetPlatform, val presen
     // The lock object is located not in a companion object because every module has its own instance of the performance manager
     private val counterMeasurementsLock = Any()
 
-    private val thread: Thread = Thread.currentThread()
+    private lateinit var thread: Thread
+
+    init {
+        initializeCurrentThread()
+    }
 
     private fun currentTime(): Long = System.nanoTime()
 
@@ -63,6 +67,10 @@ abstract class PerformanceManager(val targetPlatform: TargetPlatform, val presen
 
     fun getTargetInfo(): String =
         "$targetDescription, $files files ($lines lines)"
+
+    fun initializeCurrentThread() {
+        thread = Thread.currentThread()
+    }
 
     fun getLoweringAndBackendTimeMs(): Long = (measurements.filterIsInstance<IrLoweringMeasurement>().sumOf { it.milliseconds }) +
             (measurements.filterIsInstance<BackendMeasurement>().sumOf { it.milliseconds })
