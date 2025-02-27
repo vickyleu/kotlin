@@ -1,4 +1,5 @@
 // RUN_PIPELINE_TILL: BACKEND
+// SKIP_FIR_DUMP
 // ISSUE: KT-75444
 // LANGUAGE: -ForkIsNotSuccessfulWhenNoBranchIsSuccessful
 
