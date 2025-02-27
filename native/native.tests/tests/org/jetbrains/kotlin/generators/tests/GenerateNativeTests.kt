@@ -27,6 +27,8 @@ fun main() {
     val k1BoxTestDir = listOf("multiplatform/k1")
     val k2BoxTestDir = listOf("multiplatform/k2")
     val excludeBackward19CompatibilityTestDir = listOf("controlStructures/breakContinueInExpressions/inlinedBreakContinue")
+    val excludeBackward20CompatibilityTestDir = listOf("contextParameters")
+    val excludeBackward21CompatibilityTestDir = listOf("contextParameters")
 
     generateSources()
 
@@ -192,7 +194,7 @@ fun main() {
                     provider<UseExtTestCaseGroupProvider>()
                 )
             ) {
-                model("box", targetBackend = TargetBackend.NATIVE, excludeDirs = k1BoxTestDir)
+                model("box", targetBackend = TargetBackend.NATIVE, excludeDirs = k1BoxTestDir + excludeBackward20CompatibilityTestDir)
                 model("boxInline", targetBackend = TargetBackend.NATIVE)
             }
         }
@@ -205,7 +207,7 @@ fun main() {
                     provider<UseExtTestCaseGroupProvider>()
                 )
             ) {
-                model("box", targetBackend = TargetBackend.NATIVE, excludeDirs = k1BoxTestDir)
+                model("box", targetBackend = TargetBackend.NATIVE, excludeDirs = k1BoxTestDir + excludeBackward21CompatibilityTestDir)
                 model("boxInline", targetBackend = TargetBackend.NATIVE)
             }
         }
