@@ -99,15 +99,6 @@ object FirJvmFieldApplicabilityChecker : FirPropertyChecker(MppCheckerKind.Commo
         reporter.reportOn(annotation.source, factory, problem.errorMessage, context)
     }
 
-    private fun FirTypeRef.isInlineClassThatRequiresMangling(session: FirSession): Boolean {
-        val symbol = this.coneType.toRegularClassSymbol(session) ?: return false
-        return symbol.isInlineOrValue && !symbol.isDontMangleClass()
-    }
-
-    private fun FirRegularClassSymbol.isDontMangleClass(): Boolean {
-        return this.classId == StandardClassIds.Result
-    }
-
     private fun FirProperty.isOverridable(containingClass: FirRegularClassSymbol?): Boolean {
         return visibility != Visibilities.Private && modality != Modality.FINAL &&
                 containingClass?.isFinal != true
@@ -152,4 +143,13 @@ object FirJvmFieldApplicabilityChecker : FirPropertyChecker(MppCheckerKind.Commo
             it.annotationTypeRef.coneType.classId == JVM_MULTIFILE_CLASS_ID
         } == true
     }
+}
+
+fun FirTypeRef.isInlineClassThatRequiresMangling(session: FirSession): Boolean {
+    val symbol = this.coneType.toRegularClassSymbol(session) ?: return false
+    return symbol.isInlineOrValue && !symbol.isDontMangleClass()
+}
+
+private fun FirRegularClassSymbol.isDontMangleClass(): Boolean {
+    return this.classId == StandardClassIds.Result
 }
