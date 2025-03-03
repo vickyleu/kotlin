@@ -542,6 +542,16 @@ problems with parentheses in identifiers on certain platforms."""
         }
 
     @Argument(
+        value = "-Xjvm-expose-boxed",
+        description = "Expose inline classes as is instead of underlying type to be called from Java."
+    )
+    var jvmExposeBoxed = false
+        set(value) {
+            checkFrozen()
+            field = value
+        }
+
+    @Argument(
         value = "-Xstring-concat",
         valueDescription = "{indy-with-constants|indy|inline}",
         description = """Select the code generation scheme for string concatenation:
@@ -859,6 +869,7 @@ If API Level >= 2.2 -- no-op."""
         result[JvmAnalysisFlags.inheritMultifileParts] = inheritMultifileParts
         result[JvmAnalysisFlags.sanitizeParentheses] = sanitizeParentheses
         result[JvmAnalysisFlags.suppressMissingBuiltinsError] = suppressMissingBuiltinsError
+        result[JvmAnalysisFlags.jvmExposeBoxed] = jvmExposeBoxed
         result[JvmAnalysisFlags.enableJvmPreview] = enableJvmPreview
         result[AnalysisFlags.allowUnstableDependencies] = allowUnstableDependencies
         result[JvmAnalysisFlags.outputBuiltinsMetadata] = outputBuiltinsMetadata
