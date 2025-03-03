@@ -1,0 +1,6 @@
+KtNameReferenceExpression(86,89): 'bar'
+  KtSimpleNameReference:
+    (in <local>: call) val bar: Bar
+
+  SyntheticPropertyAccessorReference:
+    Nothing (Unresolved reference)
