@@ -190,7 +190,7 @@ open class FirDeclarationsResolveTransformer(
                 context.forPropertyInitializer {
                     if (!initializerIsAlreadyResolved) {
                         val resolutionMode = withExpectedType(returnTypeRefBeforeResolve)
-                        property.transformReturnTypeRef(transformer, resolutionMode)
+                        property
                             .transformInitializer(transformer, resolutionMode)
                             .replaceBodyResolveState(FirPropertyBodyResolveState.INITIALIZER_RESOLVED)
                     }
