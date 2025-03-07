@@ -102,6 +102,7 @@ object CommonDeclarationCheckers : DeclarationCheckers() {
 
     override val classCheckers: Set<FirClassChecker>
         get() = setOf(
+            FirSuperclassVisibilityChecker,
             FirOverrideChecker.Regular,
             FirOverrideChecker.ForExpectClass,
             FirNotImplementedOverrideChecker,
