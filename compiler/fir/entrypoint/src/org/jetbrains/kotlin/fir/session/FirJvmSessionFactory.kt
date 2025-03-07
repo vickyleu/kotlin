@@ -149,6 +149,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory<FirJvmSessionFactory.Lib
         configuration: CompilerConfiguration,
         predefinedJavaComponents: FirSharableJavaComponents?,
         needRegisterJavaElementFinder: Boolean,
+        isForLeafHmppModule: Boolean,
         init: FirSessionConfigurator.() -> Unit,
     ): FirSession {
         val jvmTarget = configuration.jvmTarget ?: JvmTarget.DEFAULT
@@ -159,6 +160,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory<FirJvmSessionFactory.Lib
             sessionProvider,
             extensionRegistrars,
             configuration,
+            isForLeafHmppModule,
             init,
             createProviders = { session, kotlinScopeProvider, symbolProvider, generatedSymbolsProvider ->
                 val javaSymbolProvider =
