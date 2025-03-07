@@ -64,11 +64,9 @@ constructor(
 
         val files = generatedDts.map { it.absolutePath }
 
-        if (files.isEmpty()) return
-
         val progressLogger = objects.newBuildOpLogger()
         val result = execWithProgress(progressLogger, "typescript", execOps) {
-            npmProject.useTool(it, "typescript/bin/tsc", listOf(), listOf("--noEmit"))
+            npmProject.useTool(it, "typescript/bin/tsc", listOf(), listOf("--noEmit") + files)
         }
 
         if (result.exitValue == 0) return
