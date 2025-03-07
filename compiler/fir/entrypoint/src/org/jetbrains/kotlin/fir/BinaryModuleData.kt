@@ -19,7 +19,7 @@ class BinaryModuleData(
             platform: TargetPlatform,
             capabilities: FirModuleCapabilities = FirModuleCapabilities.Empty
         ): FirModuleData {
-            return FirBinaryDependencyModuleData(name, capabilities)
+            return FirBinaryDependenciesModuleData(name, capabilities)
         }
 
         fun initialize(
