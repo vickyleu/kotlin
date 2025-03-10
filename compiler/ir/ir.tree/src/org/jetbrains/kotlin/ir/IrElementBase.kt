@@ -21,6 +21,9 @@ import org.jetbrains.kotlin.ir.visitors.IrVisitor
 import java.util.IdentityHashMap
 
 abstract class IrElementBase : IrElement {
+    internal var structuralParent: IrElementBase? = null
+        private set
+
     /**
      * The array stores dense pairs of keys and values, followed by remaining nulls.
      * This is, the layout may look like this: `[key, value, key, value, null, null, null, ...]`
@@ -40,6 +43,31 @@ abstract class IrElementBase : IrElement {
         // No children by default
     }
 
+
+    protected fun childInitialized(new: IrElement?) = childReplaced(null, new)
+
+    protected fun childrenListInitialized(new: List<IrElement>): Unit = TODO()
+
+    internal fun childReplaced(old: IrElement?, new: IrElement?) {
+        old as IrElementBase?
+        new as IrElementBase?
+
+        if (old != null) {
+            old.structuralParent = null
+            structuralParentUpdated()
+        }
+        if (new != null) {
+            new.structuralParent = this
+            structuralParentUpdated()
+        }
+    }
+
+    protected fun childrenListReplaced(old: List<IrElement?>, new: List<IrElement?>) {
+        old.forEach { childReplaced(it, null) }
+        new.forEach { childReplaced(null, it) }
+    }
+
+    protected open fun structuralParentUpdated() {}
 
     /**
      * Returns a snapshot of all attributes held by this element.
