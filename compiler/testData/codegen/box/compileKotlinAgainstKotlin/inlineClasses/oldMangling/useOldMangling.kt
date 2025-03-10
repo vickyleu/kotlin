@@ -1,6 +1,9 @@
 // LANGUAGE: +InlineClasses
 // WITH_STDLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // MODULE: lib
 // USE_OLD_INLINE_CLASSES_MANGLING_SCHEME
 // FILE: 1.kt

@@ -1,4 +1,8 @@
 // KT-45286
+
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // MODULE: lib
 // WITH_STDLIB
 // FILE: A.kt
