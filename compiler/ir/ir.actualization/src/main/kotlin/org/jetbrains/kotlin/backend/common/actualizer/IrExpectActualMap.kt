@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.ir.symbols.IrSymbol
 import org.jetbrains.kotlin.ir.util.classId
 import org.jetbrains.kotlin.ir.util.parentsWithSelf
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
+import kotlin.collections.plus
 
 class IrExpectActualMap() {
     val expectToActual: Map<IrSymbol, IrSymbol> get() = _expectToActual
@@ -38,5 +39,10 @@ class IrExpectActualMap() {
             actual.parentsWithSelf.firstIsInstanceOrNull<IrClass>()?.classId
         ) _actualToDirectExpect.put(actualSymbol, expectSymbol)
         return registeredActual
+    }
+
+    fun addMappingFromPreFiller(expectActualMapPreFiller: IrExpectActualMapPreFiller) {
+        _expectToActual += expectActualMapPreFiller.collectClassesMap().classMapping
+        _expectToActual += expectActualMapPreFiller.collectTopLevelCallablesMap()
     }
 }
