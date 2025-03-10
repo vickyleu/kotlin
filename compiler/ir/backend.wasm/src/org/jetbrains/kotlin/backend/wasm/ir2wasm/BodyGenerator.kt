@@ -770,7 +770,7 @@ class BodyGenerator(
                     body.buildStructGet(anyClassReference, WasmSymbol(1), location)
                     generateExpression(call.dispatchReceiver!!)
                     body.buildConstI64(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
-                    body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
+                    body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlotStrict), location)
                     body.buildInstr(
                         WasmOp.ARRAY_GET,
                         location,
@@ -881,7 +881,7 @@ class BodyGenerator(
                 body.buildGetGlobal(wasmFileCodegenContext.referenceRttiGlobal(klass.symbol), location)
             }
 
-            wasmSymbols.wasmGetRttiSupportedInterfaces -> {
+            wasmSymbols.wasmGetRttiSupportedInterfaces, wasmSymbols.wasmGetRttiSupportedInterfacesNotNull -> {
                 body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
                 body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(0), location)
             }
