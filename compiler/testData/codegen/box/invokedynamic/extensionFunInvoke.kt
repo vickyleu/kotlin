@@ -1,5 +1,7 @@
 // ISSUE: KT-37592, KT-70310
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 class A {
     fun test1(): Boolean {
         val foo: String.() -> Boolean = {false} // (1)

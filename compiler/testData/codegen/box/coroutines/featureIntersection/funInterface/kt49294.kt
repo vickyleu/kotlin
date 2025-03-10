@@ -1,6 +1,9 @@
 // WITH_STDLIB
-// FILE: 1.kt
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
+// FILE: 1.kt
 @file:OptIn(ExperimentalTypeInference::class)
 
 import kotlin.experimental.*

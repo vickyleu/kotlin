@@ -1,5 +1,7 @@
 // WITH_STDLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 fun bar1(): String {
     val l: List<String> = listOf("O")
     val s = l[0].plus("K")

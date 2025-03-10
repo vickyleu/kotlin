@@ -3,6 +3,8 @@
 // IGNORE_IR_DESERIALIZATION_TEST: NATIVE
 // ^^^ KT-74942: non-deterministic value param names resolution in fake overrides
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import kotlin.coroutines.*
 
 var failure: String? = "FAIL ILLEGAL STATE"

@@ -1,3 +1,5 @@
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 class Outer {
     val a = 1
     inner class Inner1 {

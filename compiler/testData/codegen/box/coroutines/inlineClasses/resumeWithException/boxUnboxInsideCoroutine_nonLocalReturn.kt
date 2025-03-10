@@ -1,5 +1,8 @@
 // WITH_STDLIB
 // WITH_COROUTINES
+
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import helpers.*
 import kotlin.coroutines.*
 import kotlin.coroutines.intrinsics.*

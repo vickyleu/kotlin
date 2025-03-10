@@ -1,6 +1,8 @@
 // WITH_STDLIB
 // WITH_COROUTINES
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import kotlin.coroutines.*
 
 public inline fun <reified T> myEmptyArray(): Array<T> = arrayOfNulls<T>(0) as Array<T>

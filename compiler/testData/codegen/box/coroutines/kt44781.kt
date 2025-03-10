@@ -1,5 +1,7 @@
 // WITH_STDLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import kotlin.coroutines.*
 
 inline suspend fun foo(crossinline block: () -> String): String {

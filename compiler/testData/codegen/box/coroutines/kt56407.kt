@@ -2,6 +2,8 @@
 // CHECK_BYTECODE_LISTING___ // Temporary turn off the directive, revert after the next bootstrapt advance
 // IGNORE_INLINER___: IR // Temporary turn off the directive, revert after the next bootstrapt advance
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import kotlin.coroutines.*
 
 interface ServerBase

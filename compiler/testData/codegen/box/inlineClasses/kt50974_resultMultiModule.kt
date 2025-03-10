@@ -1,7 +1,10 @@
 // WITH_STDLIB
+
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // MODULE: lib
 // FILE: lib.kt
-
 public class WhateverUseCase : UseCaseWithParameter<Result<Int>, Int> {
     override operator fun invoke(param: Result<Int>): Result<Int> {
         return param.onFailure {

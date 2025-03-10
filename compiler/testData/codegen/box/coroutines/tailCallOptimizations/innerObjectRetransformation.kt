@@ -5,6 +5,9 @@
 // FIR_IDENTICAL
 // JVM_ABI_K1_K2_DIFF: KT-62464
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // In this test the following transformation are occuring:
 //   flow$1 -> flowWith$$inlined$flow$1
 //   flow$1 -> check$$inlined$flow$1

@@ -1,5 +1,8 @@
 // IGNORE_BACKEND_K1: ANY
 // LANGUAGE: +ContextParameters
+
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 open class A {
     fun foo(a: String): String { return a }
 }

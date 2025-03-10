@@ -1,6 +1,8 @@
 // IGNORE_BACKEND_K1: ANY
 // ISSUE: KT-63709
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 operator fun String.invoke(unused: String): String = "String.invoke(String)"
 operator fun String.invoke(unused: Any): String = "String.invoke(Any)"
 operator fun Any.invoke(unused: String): String = "Any.invoke(String)"

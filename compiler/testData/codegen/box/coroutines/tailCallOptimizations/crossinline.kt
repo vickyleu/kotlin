@@ -3,6 +3,9 @@
 // WITH_COROUTINES
 // CHECK_BYTECODE_LISTING
 // FIR_IDENTICAL
+
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import helpers.*
 import kotlin.coroutines.*
 import kotlin.coroutines.intrinsics.*

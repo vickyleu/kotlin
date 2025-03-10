@@ -1,3 +1,5 @@
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 var longCompareToInvocations = 0
 var doubleCompareToInvocations = 0
 

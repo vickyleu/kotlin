@@ -1,3 +1,5 @@
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 
 open class Foo(val args: String){
     constructor(arg: Any = 1) : this(arg.toString()) {

@@ -1,6 +1,8 @@
 // ISSUE: KT-44932
 // WITH_STDLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 abstract class PsiElement {
     abstract val parent: PsiElement
 }

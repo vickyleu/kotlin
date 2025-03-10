@@ -1,3 +1,5 @@
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 interface Base {
     fun Int.foo(): String
     val Int.a : String

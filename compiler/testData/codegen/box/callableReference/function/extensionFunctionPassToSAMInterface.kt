@@ -1,3 +1,5 @@
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 fun interface SamInterface {
     fun accept(a: Int, i: String): String
 

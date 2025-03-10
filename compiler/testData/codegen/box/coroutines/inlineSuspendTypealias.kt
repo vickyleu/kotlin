@@ -1,6 +1,8 @@
 // JVM_ABI_K1_K2_DIFF: KT-68087
 // WITH_STDLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 import kotlin.coroutines.*
 
 typealias Handler = suspend (String) -> Unit

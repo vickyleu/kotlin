@@ -2,6 +2,8 @@
 // WORKS_WHEN_VALUE_CLASS
 // LANGUAGE: +ValueClasses
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 @Target(AnnotationTarget.PROPERTY)
 annotation class Anno
 

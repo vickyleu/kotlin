@@ -1,6 +1,8 @@
 // LANGUAGE: +ContextReceivers
 // SKIP_NODE_JS
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 open class A {
     fun instance() = true
     val instanceProp = true

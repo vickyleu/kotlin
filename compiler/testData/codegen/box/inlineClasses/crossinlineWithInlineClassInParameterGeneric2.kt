@@ -2,6 +2,8 @@
 // WORKS_WHEN_VALUE_CLASS
 // LANGUAGE: +ValueClasses, +GenericInlineClassParameter
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 OPTIONAL_JVM_INLINE_ANNOTATION
 value class Result<T: Any>(val a: T?) {
     fun getOrThrow(): T? = a

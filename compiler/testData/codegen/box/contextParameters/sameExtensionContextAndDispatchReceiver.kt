@@ -2,6 +2,8 @@
 // ISSUE: KT-73779
 // LANGUAGE: +ContextParameters
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 fun <A, R> context(context: A, block: context(A) () -> R): R = block(context)
 
 class A(val a: String = "d ") {

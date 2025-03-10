@@ -1,6 +1,9 @@
 // WITH_STDLIB
-// FILE: kt45377.kt
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
+// FILE: kt45377.kt
 import kotlin.coroutines.*
 
 fun runs(f: suspend () -> String): String {

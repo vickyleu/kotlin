@@ -1,6 +1,8 @@
 // KT-61929
 // WITH_SDTLIB
 
+// Enable IR inliner on the first stage after KT-72296 is fixed
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 package foo
 
 fun doSomething(lambda: () -> Unit) { lambda() }
