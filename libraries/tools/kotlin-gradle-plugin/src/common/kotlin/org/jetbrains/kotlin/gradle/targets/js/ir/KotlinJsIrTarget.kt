@@ -338,7 +338,6 @@ constructor(
                     .all { binary ->
                         val tsValidationTask = registerTypeScriptCheckTask(binary)
 
-                        binary.generateTs = true
                         binary.linkTask.configure { linkTask ->
                             linkTask.compilerOptions.freeCompilerArgs.add(GENERATE_D_TS)
                             linkTask.finalizedBy(tsValidationTask)
