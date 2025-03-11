@@ -1,0 +1,3 @@
+KtNameReferenceExpression(135,138): 'bar'
+  KtSimpleNameReference:
+    (in <local>: call) val bar: Bar
