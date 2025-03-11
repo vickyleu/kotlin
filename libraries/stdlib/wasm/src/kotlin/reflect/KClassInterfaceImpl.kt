@@ -13,7 +13,8 @@ internal class KClassInterfaceImpl<T : Any> @WasmPrimitiveConstructor constructo
 
     override fun isInstance(value: Any?): Boolean {
         if (value !is Any) return false
-        return getInterfaceSlot(value, typeData.typeId) != -1
+        val interfaceArray = wasmGetRttiSupportedInterfaces(value) ?: return false
+        return getInterfaceSlot(interfaceArray, typeData.typeId) != -1
     }
 
     override fun equals(other: Any?): Boolean =

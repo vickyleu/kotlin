@@ -762,8 +762,9 @@ class BodyGenerator(
                     body.commentGroupStart { "Interface call: ${function.fqNameWhenAvailable}" }
                     body.buildStructGet(anyClassReference, WasmSymbol(1), location)
                     generateExpression(call.dispatchReceiver!!)
+                    generateGetSupportedInterfaceArray(location)
                     body.buildConstI64(wasmFileCodegenContext.referenceTypeId(klassSymbol), location)
-                    body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlotStrict), location)
+                    body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
                     body.buildInstr(
                         WasmOp.ARRAY_GET,
                         location,
@@ -849,6 +850,11 @@ class BodyGenerator(
         body.buildStructGet(wasmFileCodegenContext.referenceVTableGcType(irBuiltIns.anyClass), vTableToSpecialITableId, location)
     }
 
+    private fun generateGetSupportedInterfaceArray(location: SourceLocation) {
+        body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
+        body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(0), location)
+    }
+
     // Return true if generated.
     // Assumes call arguments are already on the stack
     private fun tryToGenerateIntrinsicCall(
@@ -874,9 +880,8 @@ class BodyGenerator(
                 body.buildGetGlobal(wasmFileCodegenContext.referenceRttiGlobal(klass.symbol), location)
             }
 
-            wasmSymbols.wasmGetRttiSupportedInterfaces, wasmSymbols.wasmGetRttiSupportedInterfacesNotNull -> {
-                body.buildStructGet(wasmFileCodegenContext.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
-                body.buildStructGet(wasmFileCodegenContext.rttiType, WasmSymbol(0), location)
+            wasmSymbols.wasmGetRttiSupportedInterfaces -> {
+                generateGetSupportedInterfaceArray(location)
             }
 
             wasmSymbols.wasmGetRttiSuperClass -> {
@@ -956,8 +961,16 @@ class BodyGenerator(
                         }
                     } else {
                         body.commentGroupStart { "Check interface supported" }
-                        body.buildConstI64(wasmFileCodegenContext.referenceTypeId(irInterface.symbol), location)
-                        body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
+                        body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                        body.buildBlock("checkIsIFaceSupported", WasmI32) { result ->
+                            body.buildConstI32(-1, location)
+                            body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                            generateGetSupportedInterfaceArray(location)
+                            body.buildBrInstr(WasmOp.BR_ON_NULL, result, location)
+                            body.buildConstI64(wasmFileCodegenContext.referenceTypeId(irInterface.symbol), location)
+                            body.buildCall(wasmFileCodegenContext.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
+                            body.buildBr(result, location)
+                        }
                         body.buildConstI32(-1, location)
                         body.buildInstr(WasmOp.I32_NE, location)
                     }
