@@ -24,7 +24,8 @@ fun main(args: Array<String>) {
                     extension = null,
                     recursive = false,
                     targetBackend = targetBackend,
-                    excludedPattern = excludePattern
+                    excludedPattern = excludePattern,
+                    testClassName = "PureKotlin${testKClass.simpleName}"
                 )
                 model(
                     "incremental/classHierarchyAffected",
@@ -52,7 +53,8 @@ fun main(args: Array<String>) {
                     extension = null,
                     recursive = false,
                     targetBackend = TargetBackend.JVM_IR,
-                    excludedPattern = ".*SinceK2"
+                    excludedPattern = ".*SinceK2",
+                    testClassName = "PureKotlin${testKClass.simpleName}"
                 )
                 model("incremental/withJava", extension = null, excludeParentDirs = true, targetBackend = TargetBackend.JVM_IR)
                 model("incremental/inlineFunCallSite", extension = null, excludeParentDirs = true, targetBackend = TargetBackend.JVM_IR)

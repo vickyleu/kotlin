@@ -33,7 +33,8 @@ class IncrementalTestsGeneratorUtil {
                 extension = null,
                 recursive = false,
                 targetBackend = targetBackend,
-                excludedPattern = buildExcludePattern(listOfNotNull(folderToExcludePatternMap?.get(PURE_KOTLIN), excludeForAllTestData))
+                excludedPattern = buildExcludePattern(listOfNotNull(folderToExcludePatternMap?.get(PURE_KOTLIN), excludeForAllTestData)),
+                testClassName = "PureKotlin${testKClass.simpleName}"
             )
             model(
                 "incremental/${CLASS_HIERARCHY_AFFECTED.folderName}",

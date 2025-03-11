@@ -100,7 +100,8 @@ fun main(args: Array<String>) {
 
             testClass<AbstractIncrementalK1JsKlibCompilerRunnerTest> {
                 // IC of sealed interfaces are not supported in JS
-                model("incremental/pureKotlin", extension = null, recursive = false, excludedPattern = "(^sealed.*)|(.*SinceK2)")
+                model("incremental/pureKotlin", extension = null, recursive = false, excludedPattern = "(^sealed.*)|(.*SinceK2)",
+                    testClassName = "PureKotlin${testKClass.simpleName}")
                 model("incremental/classHierarchyAffected", extension = null, recursive = false)
                 model("incremental/js", extension = null, excludeParentDirs = true)
             }
@@ -115,7 +116,8 @@ fun main(args: Array<String>) {
 
             testClass<AbstractIncrementalK1JsKlibCompilerWithScopeExpansionRunnerTest> {
                 // IC of sealed interfaces are not supported in JS
-                model("incremental/pureKotlin", extension = null, recursive = false, excludedPattern = "(^sealed.*)|(.*SinceK2)")
+                model("incremental/pureKotlin", extension = null, recursive = false, excludedPattern = "(^sealed.*)|(.*SinceK2)",
+                      testClassName = "PureKotlin${testKClass.simpleName}")
                 model("incremental/classHierarchyAffected", extension = null, recursive = false)
                 model("incremental/js", extension = null, excludeParentDirs = true)
                 model("incremental/scopeExpansion", extension = null, excludeParentDirs = true)
@@ -127,7 +129,8 @@ fun main(args: Array<String>) {
                 model(
                     "incremental/pureKotlin", extension = null, recursive = false,
                     // TODO: 'fileWithConstantRemoved' should be fixed in https://youtrack.jetbrains.com/issue/KT-58824
-                    excludedPattern = "^(sealed.*|fileWithConstantRemoved|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)"
+                    excludedPattern = "^(sealed.*|fileWithConstantRemoved|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)",
+                    testClassName = "PureKotlin${testKClass.simpleName}"
                 )
                 model(
                     "incremental/classHierarchyAffected", extension = null, recursive = false,
