@@ -2,6 +2,9 @@
 // SKIP_UNBOUND_IR_SERIALIZATION
 // ^^^ Muted until KT-72296 is fixed.
 
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75930
+
 // MODULE: lib
 // FILE: lib.kt
 package lib
