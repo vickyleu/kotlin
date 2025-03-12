@@ -246,6 +246,8 @@ private class Fir2IrPipeline(
 
     private fun Fir2IrConversionResult.createIrActualizer(): IrActualizer? {
         return runIf(dependentIrFragments.isNotEmpty()) {
+            referenceAllCommonDependencies(outputs)
+
             IrActualizer(
                 KtDiagnosticReporterWithImplicitIrBasedContext(
                     fir2IrConfiguration.diagnosticReporter,
@@ -256,9 +258,13 @@ private class Fir2IrPipeline(
                 mainIrFragment,
                 dependentIrFragments,
                 this@Fir2IrPipeline.extraActualDeclarationExtractorsInitializer(componentsStorage),
+                IrCommonToPlatformDependencyExpectActualMapPreFiller.create(
+                    outputs.last().session,
+                    componentsStorage.classifierStorage,
+                    componentsStorage.declarationStorage
+                )
             )
         }
-
     }
 
     private fun Fir2IrConversionResult.generateSyntheticBodiesOfDataValueMembers() {
