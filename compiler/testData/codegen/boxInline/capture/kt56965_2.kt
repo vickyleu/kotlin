@@ -1,3 +1,4 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
 // NO_CHECK_LAMBDA_INLINING
 // FILE: 1.kt
 inline fun foo(block: () -> String) = block()
