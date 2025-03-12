@@ -14,11 +14,17 @@
 @file:kotlin.native.internal.objc.BindClassToObjCName(repeating_conformances.Parent3::class, "22ExportedKotlinPackages22repeating_conformancesO4mainE7Parent3C")
 @file:kotlin.native.internal.objc.BindClassToObjCName(repeating_conformances.Parent4::class, "22ExportedKotlinPackages22repeating_conformancesO4mainE7Parent4C")
 @file:kotlin.native.internal.objc.BindClassToObjCName(repeating_conformances.Parent5::class, "22ExportedKotlinPackages22repeating_conformancesO4mainE7Parent5C")
+@file:kotlin.native.internal.objc.BindClassToObjCName(repeating_conformances.Barable::class, "_Barable")
+@file:kotlin.native.internal.objc.BindClassToObjCName(repeating_conformances.Foeble::class, "_Foeble")
 @file:kotlin.native.internal.objc.BindClassToObjCName(Bar::class, "4main3BarC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(ENUM_WITH_INTERFACE_INHERITANCE::class, "4main31ENUM_WITH_INTERFACE_INHERITANCEC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(Foo::class, "4main3FooC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(MyObject::class, "4main8MyObjectC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(OBJECT_WITH_INTERFACE_INHERITANCE::class, "4main33OBJECT_WITH_INTERFACE_INHERITANCEC")
+@file:kotlin.native.internal.objc.BindClassToObjCName(Barable::class, "_Barable")
+@file:kotlin.native.internal.objc.BindClassToObjCName(Bazzable::class, "_Bazzable")
+@file:kotlin.native.internal.objc.BindClassToObjCName(Foeble::class, "_Foeble")
+@file:kotlin.native.internal.objc.BindClassToObjCName(OUTSIDE_PROTO::class, "_OUTSIDE_PROTO")
 
 import kotlin.native.internal.ExportedBridge
 import kotlinx.cinterop.*

@@ -10,4 +10,5 @@ public struct KotlinError: Error {
 
 public protocol _KotlinBridged: KotlinBase {}
 
-
+public class _KotlinExistential<Wrapped: NSObject>: KotlinBase & _KotlinBridged {
+}

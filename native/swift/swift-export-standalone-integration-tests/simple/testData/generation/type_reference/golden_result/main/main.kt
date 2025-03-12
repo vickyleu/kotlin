@@ -19,6 +19,7 @@
 @file:kotlin.native.internal.objc.BindClassToObjCName(Object_without_package::class, "4main22Object_without_packageC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(Object_without_package.INNER_CLASS::class, "4main22Object_without_packageC11INNER_CLASSC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(Object_without_package.INNER_OBJECT::class, "4main22Object_without_packageC12INNER_OBJECTC")
+@file:kotlin.native.internal.objc.BindClassToObjCName(INTERFACE::class, "_INTERFACE")
 
 import kotlin.native.internal.ExportedBridge
 import kotlinx.cinterop.*
@@ -671,4 +672,3 @@ public fun namespace_deeper_Object_with_package_get(): kotlin.native.internal.Na
     val _result = namespace.deeper.Object_with_package
     return kotlin.native.internal.ref.createRetainedExternalRCRef(_result)
 }
-
