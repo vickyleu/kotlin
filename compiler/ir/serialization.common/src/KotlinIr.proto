@@ -166,12 +166,12 @@ message MemberAccessCommon {
   // Value argument serialization scheme before 2.2.0
   IrExpression dispatch_receiver = 1;
   IrExpression extension_receiver = 2;
-  repeated NullableIrExpression regular_argument = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated NullableIrExpression regular_argument = 3;
 
   repeated int32 type_argument = 4;
 
   // Previously used fields:
-  //repeated NullableIrExpression context_argument = 5 [features.repeated_field_encoding = EXPANDED];
+  //repeated NullableIrExpression context_argument = 5;
 }
 
 message IrCall {
@@ -213,7 +213,7 @@ message IrPropertyReference {
 }
 
 message IrRichFunctionReference {
-  repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrExpression bound_values = 1;
   int64 reflection_target_symbol = 2;
   int64 overridden_function_symbol = 3 [features.field_presence = LEGACY_REQUIRED];
   IrFunction invoke_function = 4 [features.field_presence = LEGACY_REQUIRED];
@@ -222,7 +222,7 @@ message IrRichFunctionReference {
 }
 
 message IrRichPropertyReference {
-  repeated IrExpression bound_values = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrExpression bound_values = 1;
   int64 reflection_target_symbol = 2;
   IrFunction getter_function = 3 [features.field_presence = LEGACY_REQUIRED];
   IrFunction setter_function = 4;
@@ -230,7 +230,7 @@ message IrRichPropertyReference {
 }
 
 message IrComposite {
-  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrStatement statement = 1;
   int32 origin_name = 2;
 }
 
@@ -336,7 +336,7 @@ message IrSpreadElement {
 }
 
 message IrStringConcat {
-  repeated IrExpression argument = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrExpression argument = 1;
 }
 
 message IrThrow {
@@ -345,7 +345,7 @@ message IrThrow {
 
 message IrTry {
   IrExpression result = 1 [features.field_presence = LEGACY_REQUIRED];
-  repeated IrStatement catch = 2 [features.repeated_field_encoding = EXPANDED];
+  repeated IrStatement catch = 2;
   IrExpression finally = 3;
 }
 
@@ -357,7 +357,7 @@ message IrTypeOp {
 
 message IrVararg {
   int32 element_type = 1 [features.field_presence = LEGACY_REQUIRED];
-  repeated IrVarargElement element = 2 [features.repeated_field_encoding = EXPANDED];
+  repeated IrVarargElement element = 2;
 }
 
 message IrVarargElement {
@@ -368,7 +368,7 @@ message IrVarargElement {
 }
 
 message IrWhen {
-  repeated IrStatement branch = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrStatement branch = 1;
   int32 origin_name = 2;
 }
 
@@ -388,7 +388,7 @@ message IrErrorExpression {
 message IrErrorCallExpression {
   int32 description = 1 [features.field_presence = LEGACY_REQUIRED];
   IrExpression receiver = 2;
-  repeated IrExpression value_argument = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated IrExpression value_argument = 3;
 }
 
 /* ------ Dynamic expression --------------------------------------------- */
@@ -437,7 +437,7 @@ message IrDynamicOperatorExpression {
   }
   IrDynamicOperator operator = 1 [features.field_presence = LEGACY_REQUIRED];
   IrExpression receiver = 2 [features.field_presence = LEGACY_REQUIRED];
-  repeated IrExpression argument = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated IrExpression argument = 3;
 }
 
 // TODO: we need an extension mechanism to accomodate new
@@ -521,17 +521,17 @@ message IrDeclarationBase {
   int32 origin_name = 2 [features.field_presence = LEGACY_REQUIRED];
   int64 coordinates = 3 [features.field_presence = LEGACY_REQUIRED];
   int64 flags = 4 [default = 0];
-  repeated IrConstructorCall annotation = 5 [features.repeated_field_encoding = EXPANDED];
+  repeated IrConstructorCall annotation = 5;
 }
 
 message IrFunctionBase {
   IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
   int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
-  repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated IrTypeParameter type_parameter = 3;
   IrValueParameter dispatch_receiver = 4;
-  repeated IrValueParameter context_parameter = 9 [features.repeated_field_encoding = EXPANDED];
+  repeated IrValueParameter context_parameter = 9;
   IrValueParameter extension_receiver = 5;
-  repeated IrValueParameter regular_parameter = 6 [features.repeated_field_encoding = EXPANDED];
+  repeated IrValueParameter regular_parameter = 6;
   int32 body = 7;
   //int32 context_receiver_parameters_count = 8;
 }
@@ -591,8 +591,8 @@ message IrClass {
   IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
   int32 name = 2 [features.field_presence = LEGACY_REQUIRED];
   IrValueParameter this_receiver = 3;
-  repeated IrTypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
-  repeated IrDeclaration declaration = 5 [features.repeated_field_encoding = EXPANDED];
+  repeated IrTypeParameter type_parameter = 4;
+  repeated IrDeclaration declaration = 5;
   repeated int32 super_type = 6;
   IrInlineClassRepresentation inline_class_representation = 7;
   IrMultiFieldValueClassRepresentation multi_field_value_class_representation = 9;
@@ -602,7 +602,7 @@ message IrClass {
 message IrTypeAlias {
   IrDeclarationBase base = 1 [features.field_presence = LEGACY_REQUIRED];
   int64 name_type = 2 [features.field_presence = LEGACY_REQUIRED];
-  repeated IrTypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated IrTypeParameter type_parameter = 3;
 }
 
 message IrEnumEntry {
@@ -648,7 +648,7 @@ message IrBranch {
 }
 
 message IrBlockBody {
-  repeated IrStatement statement = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated IrStatement statement = 1;
 }
 
 message IrCatch {

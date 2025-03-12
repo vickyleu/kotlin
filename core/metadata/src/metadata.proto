@@ -307,7 +307,7 @@ message Constructor {
   repeated int32 version_requirement = 31 [features.repeated_field_encoding = EXPANDED];
   repeated CompilerPluginData compiler_plugin_data = 32;
 
-  repeated Annotation annotation = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 3;
 
   extensions 100 to 18999;
 }
@@ -335,17 +335,17 @@ message Function {
   Type return_type = 3;
   int32 return_type_id = 7 [(type_id_in_table) = true];
 
-  repeated TypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated TypeParameter type_parameter = 4;
 
   Type receiver_type = 5;
   int32 receiver_type_id = 8 [(type_id_in_table) = true];
 
-  repeated Type context_receiver_type = 10 [features.repeated_field_encoding = EXPANDED];
+  repeated Type context_receiver_type = 10;
   repeated int32 context_receiver_type_id = 11 [(type_id_in_table) = true, features.repeated_field_encoding = PACKED];
 
-  repeated ValueParameter context_parameter = 13 [features.repeated_field_encoding = EXPANDED];
+  repeated ValueParameter context_parameter = 13;
 
-  repeated ValueParameter value_parameter = 6 [features.repeated_field_encoding = EXPANDED];
+  repeated ValueParameter value_parameter = 6;
 
   TypeTable type_table = 30;
 
@@ -353,10 +353,10 @@ message Function {
   repeated int32 version_requirement = 31 [features.repeated_field_encoding = EXPANDED];
 
   Contract contract = 32;
-  repeated CompilerPluginData compiler_plugin_data = 33 [features.repeated_field_encoding = EXPANDED];
+  repeated CompilerPluginData compiler_plugin_data = 33;
 
-  repeated Annotation annotation = 12 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation extension_receiver_annotation = 34 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 12;
+  repeated Annotation extension_receiver_annotation = 34;
 
   extensions 100 to 18999;
 }
@@ -385,15 +385,15 @@ message Property {
   Type return_type = 3;
   int32 return_type_id = 9 [(type_id_in_table) = true];
 
-  repeated TypeParameter type_parameter = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated TypeParameter type_parameter = 4;
 
   Type receiver_type = 5;
   int32 receiver_type_id = 10 [(type_id_in_table) = true];
 
-  repeated Type context_receiver_type = 12 [features.repeated_field_encoding = EXPANDED];
+  repeated Type context_receiver_type = 12;
   repeated int32 context_receiver_type_id = 13 [(type_id_in_table) = true, features.repeated_field_encoding = PACKED];
 
-  repeated ValueParameter context_parameter = 17 [features.repeated_field_encoding = EXPANDED];
+  repeated ValueParameter context_parameter = 17;
 
   ValueParameter setter_value_parameter = 6;
 
@@ -414,14 +414,14 @@ message Property {
 
   // Index into the VersionRequirementTable
   repeated int32 version_requirement = 31 [features.repeated_field_encoding = EXPANDED];
-  repeated CompilerPluginData compiler_plugin_data = 32 [features.repeated_field_encoding = EXPANDED];
+  repeated CompilerPluginData compiler_plugin_data = 32;
 
-  repeated Annotation annotation = 14 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation getter_annotation = 15 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation setter_annotation = 16 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation extension_receiver_annotation = 33 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation backing_field_annotation = 34 [features.repeated_field_encoding = EXPANDED];
-  repeated Annotation delegate_field_annotation = 35 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 14;
+  repeated Annotation getter_annotation = 15;
+  repeated Annotation setter_annotation = 16;
+  repeated Annotation extension_receiver_annotation = 33;
+  repeated Annotation backing_field_annotation = 34;
+  repeated Annotation delegate_field_annotation = 35;
 
   extensions 100 to 18999;
 }
@@ -443,7 +443,7 @@ message ValueParameter {
   Type vararg_element_type = 4;
   int32 vararg_element_type_id = 6 [(type_id_in_table) = true];
 
-  repeated Annotation annotation = 7 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 7;
 
   extensions 100 to 199;
 }
@@ -457,7 +457,7 @@ message TypeAlias {
 
   int32 name = 2 [(name_id_in_table) = true, features.field_presence = LEGACY_REQUIRED];
 
-  repeated TypeParameter type_parameter = 3 [features.repeated_field_encoding = EXPANDED];
+  repeated TypeParameter type_parameter = 3;
 
   Type underlying_type = 4;
   int32 underlying_type_id = 5 [(type_id_in_table) = true];
@@ -465,11 +465,11 @@ message TypeAlias {
   Type expanded_type = 6;
   int32 expanded_type_id = 7 [(type_id_in_table) = true];
 
-  repeated Annotation annotation = 8 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 8;
 
   // Index into the VersionRequirementTable
   repeated int32 version_requirement = 31 [features.repeated_field_encoding = EXPANDED];
-  repeated CompilerPluginData compiler_plugin_data = 32 [features.repeated_field_encoding = EXPANDED];
+  repeated CompilerPluginData compiler_plugin_data = 32;
 
   extensions 100 to 199;
 }
@@ -477,7 +477,7 @@ message TypeAlias {
 message EnumEntry {
   int32 name = 1 [(name_id_in_table) = true];
 
-  repeated Annotation annotation = 2 [features.repeated_field_encoding = EXPANDED];
+  repeated Annotation annotation = 2;
 
   extensions 100 to 199;
 }
@@ -550,7 +550,7 @@ message VersionRequirement {
 }
 
 message VersionRequirementTable {
-  repeated VersionRequirement requirement = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated VersionRequirement requirement = 1;
 }
 
 // A part of the package, which is used to serialize .kjsm/.meta.js, .kotlin_builtins and .kotlin_metadata files.
@@ -561,7 +561,7 @@ message PackageFragment {
 
   Package package = 3;
 
-  repeated Class class = 4 [features.repeated_field_encoding = EXPANDED];
+  repeated Class class = 4;
 
   extensions 100 to 199;
 }
@@ -569,7 +569,7 @@ message PackageFragment {
 
 
 message Contract {
-  repeated Effect effect = 1 [features.repeated_field_encoding = EXPANDED];
+  repeated Effect effect = 1;
 }
 
 message Effect {
@@ -592,7 +592,7 @@ message Effect {
   }
   EffectType effect_type = 1;
 
-  repeated Expression effect_constructor_argument = 2 [features.repeated_field_encoding = EXPANDED];
+  repeated Expression effect_constructor_argument = 2;
 
   // If present, then whole message is clause of form 'Effect -> Expression', where 'Effect'
   // is given by other fields in this message, and 'Expression' is stored in this field.
@@ -636,12 +636,12 @@ message Expression {
   // non-empty => this expression is boolean formula of form 'andArguments[0] && andArguments[1] && ...'
   // Additionally, if first argument of formula is primitive expression (i.e. predicate or value),
   // it is optimized and embedded straight into this message
-  repeated Expression and_argument = 6 [features.repeated_field_encoding = EXPANDED];
+  repeated Expression and_argument = 6;
 
   // non-empty => this expression is boolean formula of form 'orArguments[0] || andArguments[1] || ...'
   // Additionally, if first argument of formula is primitive expression (i.e. predicate or value),
   // it is optimized and embedded straight into this message.
-  repeated Expression or_argument = 7 [features.repeated_field_encoding = EXPANDED];
+  repeated Expression or_argument = 7;
 }
 
 message CompilerPluginData {

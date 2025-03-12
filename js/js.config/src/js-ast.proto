@@ -430,19 +430,19 @@ enum InlineStrategy {
 
 message Fragment {
     repeated ImportedModule imported_module = 1;
-    repeated Import import_entry = 2 [features.repeated_field_encoding = EXPANDED];
+    repeated Import import_entry = 2;
     CompositeBlock declaration_block = 3;
     CompositeBlock export_block = 4;
     CompositeBlock initializer_block = 5;
-    repeated NameBinding name_binding = 6 [features.repeated_field_encoding = EXPANDED];
-    repeated ClassModel class_model = 7 [features.repeated_field_encoding = EXPANDED];
-    repeated Expression module_expression = 8 [features.repeated_field_encoding = EXPANDED];
-    repeated InlineModule inline_module = 9 [features.repeated_field_encoding = EXPANDED];
+    repeated NameBinding name_binding = 6;
+    repeated ClassModel class_model = 7;
+    repeated Expression module_expression = 8;
+    repeated InlineModule inline_module = 9;
     string package_fqn = 10;
     Statement tests_invocation = 11;
     Statement main_invocation = 12;
-    repeated InlinedLocalDeclarations inlined_local_declarations = 13 [features.repeated_field_encoding = EXPANDED];
-    repeated IrClassModel ir_class_model = 14 [features.repeated_field_encoding = EXPANDED];
+    repeated InlinedLocalDeclarations inlined_local_declarations = 13;
+    repeated IrClassModel ir_class_model = 14;
     string dts = 15;
     int32 suite_function = 16;
     repeated int32 definitions = 17 [features.repeated_field_encoding = EXPANDED];
@@ -498,7 +498,7 @@ message StringTable {
 }
 
 message NameTable {
-    repeated Name entry = 1 [features.repeated_field_encoding = EXPANDED];
+    repeated Name entry = 1;
 }
 
 message Name {
