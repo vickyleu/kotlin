@@ -41,6 +41,8 @@ enum class JvmTarget(
     JVM_22("22", Opcodes.V16 + 6),
     JVM_23("23", Opcodes.V16 + 7),
     JVM_24("24", Opcodes.V16 + 8),
+    // Don't forget to update the -Xjdk-release compiler argument description when adding the new supported target'
+    // See `compiler/arguments/src/main/kotlin/org/jetbrains/kotlin/arguments/description/JvmCompilerArguments.kt`
     ;
 
     override fun toString() = description
