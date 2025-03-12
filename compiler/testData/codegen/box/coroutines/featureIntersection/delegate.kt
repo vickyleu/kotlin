@@ -1,5 +1,9 @@
 // WITH_STDLIB
 // WITH_COROUTINES
+
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75834
+
 import helpers.*
 import kotlin.coroutines.*
 import kotlin.properties.Delegates

@@ -4,6 +4,9 @@
  */
 // WITH_STDLIB
 
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75834
+
 import kotlin.test.*
 
 import kotlin.properties.Delegates
