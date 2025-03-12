@@ -1,3 +1,6 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75932
+
 // WITH_COROUTINES
 // WITH_STDLIB
 // FILE: test.kt

@@ -1,3 +1,6 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75932
+
 // WITH_COROUTINES
 // NO_CHECK_LAMBDA_INLINING
 // WITH_STDLIB
