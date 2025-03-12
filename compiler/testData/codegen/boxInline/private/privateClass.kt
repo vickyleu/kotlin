@@ -1,6 +1,9 @@
 // DISABLE_IR_VISIBILITY_CHECKS: ANY
 // ^ Suppressed errors
 
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75931
+
 // FILE: 1.kt
 
 package test

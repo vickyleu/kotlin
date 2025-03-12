@@ -1,3 +1,6 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75931
+
 // FILE: 1.kt
 
 package test
