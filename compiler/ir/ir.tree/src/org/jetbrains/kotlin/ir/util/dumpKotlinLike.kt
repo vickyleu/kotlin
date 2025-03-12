@@ -1160,10 +1160,10 @@ private class KotlinLikeDumper(val p: Printer, val options: KotlinLikeDumpOption
             // TODO which super? smart mode?
             p.printWithNoIndent("super<${superQualifierSymbol.safeName}>")
         } else {
-            dispatchReceiver?.accept(this@KotlinLikeDumper, data)
+            arguments.firstOrNull()?.accept(this@KotlinLikeDumper, data)
         }
 
-        if (!omitAccessOperatorIfNoReceivers || (dispatchReceiver != null || superQualifierSymbol != null)) {
+        if (!omitAccessOperatorIfNoReceivers || (arguments.firstOrNull() != null || superQualifierSymbol != null)) {
             p.printWithNoIndent(accessOperator)
         }
 

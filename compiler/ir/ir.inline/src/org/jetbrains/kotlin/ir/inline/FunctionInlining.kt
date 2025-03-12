@@ -265,7 +265,7 @@ private class CallInlining(
             if (!isLambdaCall(expression))
                 return super.visitCall(expression)
 
-            val dispatchReceiver = expression.dispatchReceiver?.unwrapAdditionalImplicitCastsIfNeeded() as IrGetValue
+            val dispatchReceiver = expression.arguments.first()?.unwrapAdditionalImplicitCastsIfNeeded() as IrGetValue
             val functionArgument = substituteMap[dispatchReceiver.symbol.owner] ?: return super.visitCall(expression)
             if ((dispatchReceiver.symbol.owner as? IrValueParameter)?.isNoinline == true) return super.visitCall(expression)
 
@@ -471,7 +471,7 @@ private class CallInlining(
         return signature.packageFqName == StandardNames.BUILT_INS_PACKAGE_NAME.asString() && signature.declarationFqName.endsWith(".invoke") &&
                 (signature.declarationFqName.startsWith("Function") || signature.declarationFqName.startsWith("SuspendFunction")
                         || signature.declarationFqName.startsWith("KFunction") || signature.declarationFqName.startsWith("KSuspendFunction"))
-                && irCall.dispatchReceiver?.unwrapAdditionalImplicitCastsIfNeeded() is IrGetValue
+                && irCall.arguments.first()?.unwrapAdditionalImplicitCastsIfNeeded() is IrGetValue
     }
 
     private inner class ParameterToArgument(
