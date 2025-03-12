@@ -23,7 +23,7 @@ public class IncrementalK2FirICLightTreeJvmJpsTestGenerated extends AbstractIncr
   @TestMetadata("jps/jps-plugin/testData/incremental/pureKotlin")
   @TestDataPath("$PROJECT_ROOT")
   @RunWith(JUnit3RunnerWithInners.class)
-  public static class PureKotlin extends AbstractIncrementalK2FirICLightTreeJvmJpsTest {
+  public static class PureKotlinAbstractIncrementalK2FirICLightTreeJvmJpsTest extends AbstractIncrementalK2FirICLightTreeJvmJpsTest {
     private void runTest(String testDataFilePath) {
       KotlinTestUtils.runTest(this::doTest, TargetBackend.JVM_IR, testDataFilePath);
     }
@@ -58,7 +58,7 @@ public class IncrementalK2FirICLightTreeJvmJpsTestGenerated extends AbstractIncr
       runTest("jps/jps-plugin/testData/incremental/pureKotlin/addTopLevelTypeAlias/");
     }
 
-    public void testAllFilesPresentInPureKotlin() {
+    public void testAllFilesPresentInPureKotlinAbstractIncrementalK2FirICLightTreeJvmJpsTest() {
       KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("jps/jps-plugin/testData/incremental/pureKotlin"), Pattern.compile("^([^\\.]+)$"), Pattern.compile("(^.*Expect.*)|(^companionConstantChanged)"), TargetBackend.JVM_IR, false);
     }
 

@@ -23,7 +23,7 @@ public class IncrementalK2FirICJvmCompilerRunnerTestGenerated extends AbstractIn
   @TestMetadata("jps/jps-plugin/testData/incremental/pureKotlin")
   @TestDataPath("$PROJECT_ROOT")
   @RunWith(JUnit3RunnerWithInners.class)
-  public static class PureKotlin extends AbstractIncrementalK2FirICJvmCompilerRunnerTest {
+  public static class PureKotlinAbstractIncrementalK2FirICJvmCompilerRunnerTest extends AbstractIncrementalK2FirICJvmCompilerRunnerTest {
     private void runTest(String testDataFilePath) {
       KotlinTestUtils.runTest(this::doTest, TargetBackend.JVM_IR, testDataFilePath);
     }
@@ -53,7 +53,7 @@ public class IncrementalK2FirICJvmCompilerRunnerTestGenerated extends AbstractIn
       runTest("jps/jps-plugin/testData/incremental/pureKotlin/addTopLevelTypeAlias/");
     }
 
-    public void testAllFilesPresentInPureKotlin() {
+    public void testAllFilesPresentInPureKotlinAbstractIncrementalK2FirICJvmCompilerRunnerTest() {
       KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("jps/jps-plugin/testData/incremental/pureKotlin"), Pattern.compile("^([^\\.]+)$"), Pattern.compile("((^.*Expect.*)|(^removeMemberTypeAlias)|(^addMemberTypeAlias))"), TargetBackend.JVM_IR, false);
     }
 
