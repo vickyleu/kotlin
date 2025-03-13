@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.fir.caches.FirCache
 import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
+import org.jetbrains.kotlin.fir.declarations.FirScript
 import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.FirCompositeCachedSymbolNamesProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolNamesProvider
@@ -151,7 +152,7 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     override fun getTopLevelCallableSymbolsTo(
         destination: MutableList<FirCallableSymbol<*>>,
         callableId: CallableId,
-        callables: Collection<KtCallableDeclaration>
+        callables: Collection<KtCallableDeclaration>,
     ) {
         destination += getTopLevelCallableSymbols(callableId, callables.mapTo(mutableSetOf()) { it.containingKtFile })
     }
@@ -180,7 +181,7 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     override fun getTopLevelFunctionSymbolsTo(
         destination: MutableList<FirNamedFunctionSymbol>,
         callableId: CallableId,
-        functions: Collection<KtNamedFunction>
+        functions: Collection<KtNamedFunction>,
     ) {
         destination += getTopLevelFunctionSymbols(callableId, functions.mapTo(mutableSetOf()) { it.containingKtFile })
     }
@@ -209,7 +210,7 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     override fun getTopLevelPropertySymbolsTo(
         destination: MutableList<FirPropertySymbol>,
         callableId: CallableId,
-        properties: Collection<KtProperty>
+        properties: Collection<KtProperty>,
     ) {
         destination += getTopLevelPropertySymbols(callableId, properties.mapTo(mutableSetOf()) { it.containingKtFile })
     }
@@ -258,10 +259,16 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     }
 
     private inline fun <reified TYPE : FirCallableSymbol<*>> FirFile.collectCallableSymbolsOfTypeTo(list: MutableList<TYPE>, name: Name) {
-        declarations.mapNotNullTo(list) { declaration ->
-            if (declaration is FirCallableDeclaration && declaration.symbol.callableId.callableName == name) {
-                declaration.symbol as? TYPE
-            } else null
+        declarations.flatMapTo(list) { declaration ->
+            when (declaration) {
+                is FirCallableDeclaration if declaration.symbol.callableId.callableName == name ->
+                    listOfNotNull(declaration.symbol as? TYPE)
+
+                is FirScript -> declaration.declarations.filter { it is FirCallableDeclaration && it.symbol.name == name }
+                    .mapNotNull { it.symbol as? TYPE }
+
+                else -> emptyList()
+            }
         }
     }
 

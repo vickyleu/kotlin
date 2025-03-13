@@ -15,6 +15,8 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionCache
 import org.jetbrains.kotlin.analysis.low.level.api.fir.state.*
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.errorWithFirSpecificEntries
+import org.jetbrains.kotlin.analysis.utils.errors.unexpectedElementError
+import org.jetbrains.kotlin.psi.KtScript
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
 
 @LLFirInternals
@@ -99,7 +101,7 @@ private class LLBinaryModuleResolutionStrategyProvider(private val useSiteModule
 private class LLScriptModuleResolutionStrategyProvider(private val useSiteModule: KaModule) : LLModuleResolutionStrategyProvider {
     override fun getKind(module: KaModule): LLModuleResolutionStrategy {
         return when (module) {
-            useSiteModule, is KaSourceModule, is KaLibrarySourceModule -> LLModuleResolutionStrategy.LAZY
+            useSiteModule, is KaScriptModule, is KaSourceModule, is KaLibrarySourceModule -> LLModuleResolutionStrategy.LAZY
             is KaBuiltinsModule, is KaLibraryModule -> LLModuleResolutionStrategy.STATIC
             else -> cannotProvideResolutionStrategy(module, useSiteModule)
         }
