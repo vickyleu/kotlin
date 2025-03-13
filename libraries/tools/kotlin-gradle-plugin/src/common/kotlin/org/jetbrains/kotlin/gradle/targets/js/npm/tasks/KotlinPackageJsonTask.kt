@@ -15,15 +15,14 @@ import org.gradle.api.tasks.*
 import org.gradle.work.DisableCachingByDefault
 import org.gradle.work.NormalizeLineEndings
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
-import org.jetbrains.kotlin.gradle.targets.web.nodejs.BaseNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin.Companion.kotlinNpmResolutionManager
 import org.jetbrains.kotlin.gradle.targets.js.npm.*
-import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.*
+import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.KotlinCompilationNpmResolver
+import org.jetbrains.kotlin.gradle.targets.js.npm.resolver.PackageJsonProducerInputs
 import org.jetbrains.kotlin.gradle.targets.js.webTargetVariant
+import org.jetbrains.kotlin.gradle.targets.web.nodejs.BaseNodeJsRootExtension
 import org.jetbrains.kotlin.gradle.tasks.registerTask
-import org.jetbrains.kotlin.gradle.utils.CompositeProjectComponentArtifactMetadata
-import org.jetbrains.kotlin.gradle.utils.`is`
 import org.jetbrains.kotlin.gradle.utils.mapToFile
 import java.io.File
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootPlugin.Companion.kotlinNpmResolutionManager as wasmKotlinNpmResolutionManager
@@ -51,11 +50,17 @@ abstract class KotlinPackageJsonTask :
     @get:Input
     internal abstract val toolsNpmDependencies: ListProperty<String>
 
+    /**
+     * Contains `package.json` files from Kotlin/JS projects (not external dependencies) that the current project depends on.
+     *
+     * Required for up-to-date checks:
+     * If the npm dependencies of any dependency change, this task should re-run.
+     */
     @get:IgnoreEmptyDirectories
     @get:NormalizeLineEndings
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    internal abstract val compositeFiles: ConfigurableFileCollection
+    internal abstract val packageJsonFilesFromProjectDependencies: ConfigurableFileCollection
 
     @get:Nested
     internal abstract val producerInputs: Property<PackageJsonProducerInputs>
@@ -126,7 +131,7 @@ abstract class KotlinPackageJsonTask :
                     }
                 ).disallowChanges()
 
-                task.compositeFiles.from(
+                task.packageJsonFilesFromProjectDependencies.from(
                     project.provider {
                         getCompilationResolver(
                             nodeJsRoot,
@@ -140,11 +145,7 @@ abstract class KotlinPackageJsonTask :
                                 }
                             }
                             .artifacts
-                            .filter {
-                                it.id `is` CompositeProjectComponentArtifactMetadata
-                            }
-                            .map { it.file }
-                            .toSet()
+                            .artifactFiles
                     }
                 ).disallowChanges()
 
@@ -163,19 +164,6 @@ abstract class KotlinPackageJsonTask :
                     it.npmResolutionManager.get().isConfiguringState()
                 }
 
-                task.dependsOn(
-                    target.project.provider {
-                        findDependentTasks(
-                            nodeJsRoot.resolver,
-                            getCompilationResolver(
-                                nodeJsRoot,
-                                projectPath,
-                                compilationDisambiguatedName
-                            ).compilationNpmResolution
-                        )
-                    }
-                )
-
                 task.dependsOn(nodeJsRoot.npmCachesSetupTaskProvider)
             }
 
@@ -190,17 +178,6 @@ abstract class KotlinPackageJsonTask :
 
             return packageJsonTask
         }
-
-        private fun findDependentTasks(
-            rootResolver: KotlinRootNpmResolver,
-            compilationNpmResolution: KotlinCompilationNpmResolution,
-        ): Collection<Any> =
-            compilationNpmResolution.internalDependencies.map { dependency ->
-                rootResolver[dependency.projectPath][dependency.compilationName].npmProject.packageJsonTaskPath
-            } + compilationNpmResolution.internalCompositeDependencies.map { dependency ->
-                dependency.includedBuild?.task(":$PACKAGE_JSON_UMBRELLA_TASK_NAME") ?: error("includedBuild instance is not available")
-                dependency.includedBuild.task(":${RootPackageJsonTask.NAME}")
-            }
 
         private fun getCompilationResolver(
             nodeJsRoot: BaseNodeJsRootExtension,
