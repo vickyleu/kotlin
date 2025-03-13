@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75975
 // WITH_STDLIB
 // WITH_COROUTINES
 import helpers.*

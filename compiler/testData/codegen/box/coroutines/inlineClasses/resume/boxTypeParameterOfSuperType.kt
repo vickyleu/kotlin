@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// ^^^ KT-75975
 // WITH_STDLIB
 
 // Enable IR inliner on the first stage after KT-72296 is fixed
