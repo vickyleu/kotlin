@@ -134,6 +134,7 @@ kotlin {
                         freeCompilerArgs.set(
                             listOfNotNull(
                                 "-Xjdk-release=6",
+                                "-jvm-default=disable",
                                 "-Xallow-kotlin-package",
                                 "-Xexpect-actual-classes",
                                 "-Xmultifile-parts-inherit",
@@ -162,6 +163,7 @@ kotlin {
                         freeCompilerArgs.set(
                             listOfNotNull(
                                 "-Xjdk-release=7",
+                                "-jvm-default=disable",
                                 "-Xallow-kotlin-package",
                                 "-Xexpect-actual-classes",
                                 "-Xmultifile-parts-inherit",
@@ -183,6 +185,7 @@ kotlin {
                         freeCompilerArgs.set(
                             listOfNotNull(
                                 "-Xallow-kotlin-package",
+                                "-jvm-default=disable",
                                 "-Xmultifile-parts-inherit",
                                 "-Xno-new-java-annotation-targets",
                                 "-Xexplicit-api=strict",
