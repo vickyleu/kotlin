@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.analysis.low.level.api.fir.symbolProviders
 
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.util.containers.addIfNotNull
 import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinCompositeDeclarationProvider
 import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProvider
 import org.jetbrains.kotlin.analysis.api.platform.packages.KotlinCompositePackageProvider
@@ -20,6 +21,7 @@ import org.jetbrains.kotlin.config.AnalysisFlags
 import org.jetbrains.kotlin.fir.caches.FirCache
 import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
+import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.declarations.FirScript
 import org.jetbrains.kotlin.fir.languageVersionSettings
@@ -239,14 +241,10 @@ internal class LLKotlinSourceSymbolProvider private constructor(
     ): List<TYPE> {
         require(context == null || context.all { it.isPhysical })
 
-        val files = if (context != null) {
-            context
-        } else {
-            // we want to use `getTopLevelCallableFiles` instead of
-            // `getTopLevelFunctions/Properties`, because it is highly optimized
-            // to retrieve the files in the IDE mode
-            declarationProvider.getTopLevelCallableFiles(callableId)
-        }
+        // we want to use `getTopLevelCallableFiles` instead of
+        // `getTopLevelFunctions/Properties`, because it is highly optimized
+        // to retrieve the files in the IDE mode
+        val files = context ?: declarationProvider.getTopLevelCallableFiles(callableId)
 
         if (files.isEmpty()) return emptyList()
 
@@ -258,17 +256,13 @@ internal class LLKotlinSourceSymbolProvider private constructor(
         }
     }
 
-    private inline fun <reified TYPE : FirCallableSymbol<*>> FirFile.collectCallableSymbolsOfTypeTo(list: MutableList<TYPE>, name: Name) {
-        declarations.flatMapTo(list) { declaration ->
-            when (declaration) {
-                is FirCallableDeclaration if declaration.symbol.callableId.callableName == name ->
-                    listOfNotNull(declaration.symbol as? TYPE)
-
-                is FirScript -> declaration.declarations.filter { it is FirCallableDeclaration && it.symbol.name == name }
-                    .mapNotNull { it.symbol as? TYPE }
-
-                else -> emptyList()
-            }
+    private inline fun <reified TYPE : FirCallableSymbol<*>> FirFile.collectCallableSymbolsOfTypeTo(result: MutableList<TYPE>, name: Name) {
+        declarations.flatMap {
+            if (it is FirScript) it.declarations else listOf(it)
+        }.mapNotNullTo(result) { declaration ->
+            if (declaration is FirCallableDeclaration && declaration.symbol.callableId.callableName == name) {
+                declaration.symbol as? TYPE
+            } else null
         }
     }
 
