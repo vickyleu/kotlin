@@ -4434,6 +4434,12 @@ internal class NonLocalReturnNotAllowedImpl(
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.NonLocalReturnNotAllowed
 
+internal class InvalidVisibilityFromInlineImpl(
+    override val message: String,
+    firDiagnostic: KtPsiDiagnostic,
+    token: KaLifetimeToken,
+) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.InvalidVisibilityFromInline
+
 internal class NotYetSupportedInInlineImpl(
     override val message: String,
     firDiagnostic: KtPsiDiagnostic,

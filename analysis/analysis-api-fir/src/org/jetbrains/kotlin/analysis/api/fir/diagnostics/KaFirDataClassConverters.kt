@@ -5288,6 +5288,13 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
             token,
         )
     }
+    add(FirErrors.INVALID_VISIBILITY_FROM_INLINE) { firDiagnostic ->
+        InvalidVisibilityFromInlineImpl(
+            firDiagnostic.a,
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
     add(FirErrors.NOT_YET_SUPPORTED_IN_INLINE) { firDiagnostic ->
         NotYetSupportedInInlineImpl(
             firDiagnostic.a,
