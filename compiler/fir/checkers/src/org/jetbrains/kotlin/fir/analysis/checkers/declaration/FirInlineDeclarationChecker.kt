@@ -24,6 +24,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.analysis.checkers.getDirectOverriddenSymbols
 import org.jetbrains.kotlin.fir.analysis.checkers.inlineCheckerExtension
 import org.jetbrains.kotlin.fir.analysis.checkers.isInlineOnly
+import org.jetbrains.kotlin.fir.analysis.checkers.toClassLikeSymbol
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.primaryConstructorIfAny
@@ -36,6 +37,7 @@ import org.jetbrains.kotlin.fir.resolve.toClassSymbol
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.resolve.transformers.publishedApiEffectiveVisibility
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
+import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitor
@@ -99,6 +101,143 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     declarationVisibility !== Visibilities.Local
         }
 
+        enum class AccessorPossibility {
+            YES_SAME_CLASS,
+            YES_INLINE_IN_NESTED_CLASS,
+            Q_LESS_VISIBLE_INLINE,
+            NO_INVISIBLE_CALLABLE_REF,
+            NO_ANONYMOUS_TYPE,
+            NO_PRIVATE_IN_SIGNATURE,
+            NO_HAVE_COMMON_PARENT,
+            NO_CLASS,
+            NO_UNEXPECTED,
+            NO_OTHER,
+        }
+
+        @OptIn(SymbolInternals::class)
+        private fun getAccessorPossibility(
+            accessExpression: FirStatement,
+            accessedSymbol: FirBasedSymbol<*>,
+            context: CheckerContext,
+        ): AccessorPossibility {
+            if (accessedSymbol is FirClassLikeSymbol) {
+                return AccessorPossibility.NO_CLASS
+            }
+
+            val returnTypeRef = when (accessedSymbol) {
+                is FirFunctionSymbol -> {
+                    accessedSymbol.fir.returnTypeRef
+                }
+                is FirPropertySymbol -> {
+                    accessedSymbol.fir.returnTypeRef
+                }
+                else -> return AccessorPossibility.NO_UNEXPECTED
+            }
+
+            if (accessExpression is FirCallableReferenceAccess) {
+                val rel = accessedSymbol.effectiveVisibility.relation(
+                    inlineFunEffectiveVisibility,
+                    context.session.typeContext
+                )
+                when (rel) {
+                    EffectiveVisibility.Permissiveness.LESS, EffectiveVisibility.Permissiveness.UNKNOWN -> return AccessorPossibility.NO_INVISIBLE_CALLABLE_REF
+                    EffectiveVisibility.Permissiveness.MORE, EffectiveVisibility.Permissiveness.SAME -> {}
+                }
+            }
+
+            if (returnTypeRef.toClassLikeSymbol(context.session)?.fir is FirAnonymousObject) {
+                return AccessorPossibility.NO_ANONYMOUS_TYPE
+            }
+
+            val signatureTypes = when (accessedSymbol) {
+                is FirFunctionSymbol -> {
+                    val fir = accessedSymbol.fir
+                    buildList<FirTypeRef> {
+                        add(fir.returnTypeRef)
+                        fir.valueParameters.forEach { add(it.returnTypeRef) }
+                        fir.dispatchReceiverType?.toFirResolvedTypeRef()?.let { add(it) }
+                        fir.receiverParameter?.typeRef?.let { add(it) }
+                        fir.typeParameters.forEach { it.symbol.fir.bounds.forEach { bound -> add(bound) } }
+                    }
+                }
+                is FirPropertySymbol -> {
+                    val fir = accessedSymbol.fir
+                    buildList<FirTypeRef> {
+                        add(fir.returnTypeRef)
+                        fir.dispatchReceiverType?.toFirResolvedTypeRef()?.let { add(it) }
+                        fir.receiverParameter?.typeRef?.let { add(it) }
+                        fir.typeParameters.forEach { it.symbol.fir.bounds.forEach { bound -> add(bound) } }
+                    }
+                }
+                else -> return AccessorPossibility.NO_UNEXPECTED
+            }
+
+            signatureTypes.forEach { type ->
+                type.coneType.forEachType {
+                    val rel = it.toClassLikeSymbol(context.session)?.effectiveVisibility?.relation(
+                        inlineFunEffectiveVisibility,
+                        context.session.typeContext
+                    )
+                    when (rel) {
+                        EffectiveVisibility.Permissiveness.LESS, EffectiveVisibility.Permissiveness.UNKNOWN -> return AccessorPossibility.NO_PRIVATE_IN_SIGNATURE
+                        null, EffectiveVisibility.Permissiveness.MORE, EffectiveVisibility.Permissiveness.SAME -> {}
+                    }
+                }
+            }
+
+            when (accessedSymbol) {
+                is FirFunctionSymbol -> {
+                    if (accessedSymbol.isInline) {
+                        when (accessedSymbol.effectiveVisibility.relation(inlineFunEffectiveVisibility, context.session.typeContext)) {
+                            EffectiveVisibility.Permissiveness.LESS, EffectiveVisibility.Permissiveness.UNKNOWN -> return AccessorPossibility.Q_LESS_VISIBLE_INLINE
+                            EffectiveVisibility.Permissiveness.MORE, EffectiveVisibility.Permissiveness.SAME -> {}
+                        }
+                    }
+                }
+                is FirPropertySymbol -> {
+                    if (accessedSymbol.isInline) {
+                        when (accessedSymbol.effectiveVisibility.relation(inlineFunEffectiveVisibility, context.session.typeContext)) {
+                            EffectiveVisibility.Permissiveness.LESS, EffectiveVisibility.Permissiveness.UNKNOWN -> return AccessorPossibility.Q_LESS_VISIBLE_INLINE
+                            EffectiveVisibility.Permissiveness.MORE, EffectiveVisibility.Permissiveness.SAME -> {}
+                        }
+                    }
+                }
+                else -> return AccessorPossibility.NO_UNEXPECTED
+            }
+
+            val callerContainingClass = inlineFunction.getContainingClassSymbol() ?: return AccessorPossibility.NO_UNEXPECTED
+            val calleeContainingClass = accessedSymbol.getContainingClassSymbol() ?: return AccessorPossibility.NO_UNEXPECTED
+
+            if (callerContainingClass.classId == calleeContainingClass.classId) {
+                return AccessorPossibility.YES_SAME_CLASS
+            }
+
+            val callerContainingClassStack = buildList {
+                var currentClass: FirClassLikeSymbol<*>? = callerContainingClass
+                while (currentClass != null) {
+                    add(currentClass)
+                    currentClass = currentClass.getContainingClassSymbol()
+                }
+            }
+            val calleeContainingClassStack = buildList {
+                var currentClass: FirClassLikeSymbol<*>? = calleeContainingClass
+                while (currentClass != null) {
+                    add(currentClass)
+                    currentClass = currentClass.getContainingClassSymbol()
+                }
+            }
+
+            if (callerContainingClassStack.any { it.classId == calleeContainingClass.classId }) {
+                return AccessorPossibility.YES_INLINE_IN_NESTED_CLASS
+            }
+
+            if (callerContainingClassStack.last().classId == calleeContainingClassStack.last().classId) {
+                return AccessorPossibility.NO_HAVE_COMMON_PARENT
+            }
+
+            return AccessorPossibility.NO_OTHER
+        }
+
         internal fun strictCheckAccessedDeclaration(
             accessExpression: FirStatement,
             accessedSymbol: FirBasedSymbol<*>?,
@@ -113,12 +252,14 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
 
             val containingFunction = inlineFunction.symbol.callableId.toString()
 
+            val accessorPossibility = getAccessorPossibility(accessExpression, accessedSymbol, context)
+
             val calleeEffectiveVisibility = accessedDeclarationEffectiveVisibility(accessExpression, accessedSymbol, context)
 
             fun calleeKind(): String = when (accessedSymbol) {
                 is FirPropertyAccessorSymbol -> "property-accessor"
                 is FirPropertySymbol -> "property"
-                is FirClassSymbol -> "class"
+                is FirClassLikeSymbol -> "class"
                 is FirNamedFunctionSymbol -> "function"
                 is FirConstructorSymbol -> "constructor"
                 is FirEnumEntrySymbol -> "enum-entry"
@@ -158,6 +299,7 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     append("CONTAINING_DECLARATION: $containingDeclaration; ")
                     append("HAS_REIFIED_PARAMETER: $hasReifiedParameter; ")
                     append("CONTAINING_FUNCTION: $containingFunction; ")
+                    append("ACCESSOR_POSSIBILITY: $accessorPossibility; ")
                 }
                 reporter.reportOn(
                     source, FirErrors.INVALID_VISIBILITY_FROM_INLINE, "ROMANV; ${str}ROMANV;", context
