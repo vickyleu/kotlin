@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.isDataClassCopy
 import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
+import org.jetbrains.kotlin.fir.analysis.checkers.getContainingSymbol
 import org.jetbrains.kotlin.fir.analysis.checkers.getDirectOverriddenSymbols
 import org.jetbrains.kotlin.fir.analysis.checkers.inlineCheckerExtension
 import org.jetbrains.kotlin.fir.analysis.checkers.isInlineOnly
@@ -104,6 +105,8 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
         enum class AccessorPossibility {
             YES_SAME_CLASS,
             YES_INLINE_IN_NESTED_CLASS,
+            YES_TOP_LEVEL_SAME_FILE,
+            YES_TOP_LEVEL,
             Q_LESS_VISIBLE_INLINE,
             NO_INVISIBLE_CALLABLE_REF,
             NO_ANONYMOUS_TYPE,
@@ -203,6 +206,21 @@ object FirInlineDeclarationChecker : FirFunctionChecker(MppCheckerKind.Common) {
                     }
                 }
                 else -> return AccessorPossibility.NO_UNEXPECTED
+            }
+
+            if (accessedSymbol.getContainingClassSymbol() == null) {
+                val file = accessedSymbol.getContainingSymbol(context.session) as? FirFileSymbol ?: return AccessorPossibility.NO_UNEXPECTED
+                var callerFile = inlineFunction.symbol.getContainingSymbol(context.session) ?: return AccessorPossibility.NO_UNEXPECTED
+                while (true) {
+                    val parent = callerFile.getContainingClassSymbol()
+                    if (parent == null) break
+                    callerFile = parent
+                }
+                if (file.toString() == callerFile.toString()) {
+                    return AccessorPossibility.YES_TOP_LEVEL_SAME_FILE
+                } else {
+                    return AccessorPossibility.YES_TOP_LEVEL
+                }
             }
 
             val callerContainingClass = inlineFunction.getContainingClassSymbol() ?: return AccessorPossibility.NO_UNEXPECTED
