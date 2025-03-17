@@ -463,7 +463,7 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
             parameter<String>("useSiteDescription")
         }
         val ANNOTATIONS_ON_BLOCK_LEVEL_EXPRESSION_ON_THE_SAME_LINE by warning<PsiElement>()
-        
+
         val IGNORABILITY_ANNOTATIONS_WITH_CHECKER_DISABLED by error<KtAnnotationEntry>()
     }
 
@@ -1388,6 +1388,7 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
         ) {
             parameter<FirTypeParameterSymbol>("usedTypeParameter")
         }
+
         // Type parameter is KtNamedDeclaration because PSI of FirProperty can be KtParameter in for loop
         val INITIALIZER_TYPE_MISMATCH by error<KtNamedDeclaration>(PositioningStrategy.PROPERTY_INITIALIZER) {
             parameter<ConeKotlinType>("expectedType")
@@ -1549,7 +1550,10 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
         val VAL_REASSIGNMENT by error<KtExpression>(PositioningStrategy.SELECTOR_BY_QUALIFIED) {
             parameter<FirVariableSymbol<*>>("variable")
         }
-        val VAL_REASSIGNMENT_VIA_BACKING_FIELD by deprecationError<KtExpression>(LanguageFeature.RestrictionOfValReassignmentViaBackingField, PositioningStrategy.SELECTOR_BY_QUALIFIED) {
+        val VAL_REASSIGNMENT_VIA_BACKING_FIELD by deprecationError<KtExpression>(
+            LanguageFeature.RestrictionOfValReassignmentViaBackingField,
+            PositioningStrategy.SELECTOR_BY_QUALIFIED
+        ) {
             parameter<FirBackingFieldSymbol>("property")
         }
         val CAPTURED_VAL_INITIALIZATION by error<KtExpression> {
@@ -1830,6 +1834,10 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
     }
 
     val INLINE by object : DiagnosticGroup("Inline") {
+        val ANONYMOUS_RETURN_TYPE by warning<KtElement>() {
+            parameter<String>("tag")
+        }
+
         val USAGE_IS_NOT_INLINABLE by error<KtElement>(PositioningStrategy.REFERENCE_BY_QUALIFIED) {
             parameter<Symbol>("parameter")
         }
@@ -2032,20 +2040,20 @@ private val exposedVisibilityDiagnosticInit: DiagnosticBuilder.() -> Unit = {
 }
 
 private inline fun <reified P : PsiElement> AbstractDiagnosticGroup.exposedVisibilityError(
-    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT
+    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT,
 ): PropertyDelegateProvider<Any?, ReadOnlyProperty<AbstractDiagnosticGroup, RegularDiagnosticData>> {
     return error<P>(positioningStrategy, exposedVisibilityDiagnosticInit)
 }
 
 private inline fun <reified P : PsiElement> AbstractDiagnosticGroup.exposedVisibilityWarning(
-    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT
+    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT,
 ): PropertyDelegateProvider<Any?, ReadOnlyProperty<AbstractDiagnosticGroup, RegularDiagnosticData>> {
     return warning<P>(positioningStrategy, exposedVisibilityDiagnosticInit)
 }
 
 private inline fun <reified P : PsiElement> AbstractDiagnosticGroup.exposedVisibilityDeprecationError(
     languageFeature: LanguageFeature,
-    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT
+    positioningStrategy: PositioningStrategy = PositioningStrategy.DEFAULT,
 ): PropertyDelegateProvider<Any?, ReadOnlyProperty<AbstractDiagnosticGroup, DeprecationDiagnosticData>> {
     return deprecationError<P>(languageFeature, positioningStrategy, exposedVisibilityDiagnosticInit)
 }

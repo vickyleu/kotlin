@@ -3672,6 +3672,10 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         override val diagnosticClass get() = AnonymousInitializerInInterface::class
     }
 
+    interface AnonymousReturnType : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = AnonymousReturnType::class
+    }
+
     interface UsageIsNotInlinable : KaFirDiagnostic<KtElement> {
         override val diagnosticClass get() = UsageIsNotInlinable::class
         val parameter: KaSymbol

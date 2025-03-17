@@ -4422,6 +4422,11 @@ internal class AnonymousInitializerInInterfaceImpl(
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<KtAnonymousInitializer>(firDiagnostic, token), KaFirDiagnostic.AnonymousInitializerInInterface
 
+internal class AnonymousReturnTypeImpl(
+    firDiagnostic: KtPsiDiagnostic,
+    token: KaLifetimeToken,
+) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.AnonymousReturnType
+
 internal class UsageIsNotInlinableImpl(
     override val parameter: KaSymbol,
     firDiagnostic: KtPsiDiagnostic,

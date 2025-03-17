@@ -917,6 +917,7 @@ object FirErrors {
     val ANONYMOUS_INITIALIZER_IN_INTERFACE: KtDiagnosticFactory0 = KtDiagnosticFactory0("ANONYMOUS_INITIALIZER_IN_INTERFACE", ERROR, SourceElementPositioningStrategies.DECLARATION_SIGNATURE, KtAnonymousInitializer::class)
 
     // Inline
+    val ANONYMOUS_RETURN_TYPE: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("ANONYMOUS_RETURN_TYPE", WARNING, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
     val USAGE_IS_NOT_INLINABLE: KtDiagnosticFactory1<FirBasedSymbol<*>> = KtDiagnosticFactory1("USAGE_IS_NOT_INLINABLE", ERROR, SourceElementPositioningStrategies.REFERENCE_BY_QUALIFIED, KtElement::class)
     val NON_LOCAL_RETURN_NOT_ALLOWED: KtDiagnosticFactory1<FirBasedSymbol<*>> = KtDiagnosticFactory1("NON_LOCAL_RETURN_NOT_ALLOWED", ERROR, SourceElementPositioningStrategies.REFERENCE_BY_QUALIFIED, KtElement::class)
     val NOT_YET_SUPPORTED_IN_INLINE: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("NOT_YET_SUPPORTED_IN_INLINE", ERROR, SourceElementPositioningStrategies.NOT_SUPPORTED_IN_INLINE_MOST_RELEVANT, KtDeclaration::class)
