@@ -3674,6 +3674,7 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
 
     interface AnonymousReturnType : KaFirDiagnostic<KtElement> {
         override val diagnosticClass get() = AnonymousReturnType::class
+        val tag: String
     }
 
     interface UsageIsNotInlinable : KaFirDiagnostic<KtElement> {

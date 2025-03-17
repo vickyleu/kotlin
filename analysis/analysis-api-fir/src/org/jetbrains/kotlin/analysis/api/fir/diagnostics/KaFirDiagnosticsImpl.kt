@@ -4423,6 +4423,7 @@ internal class AnonymousInitializerInInterfaceImpl(
 ) : KaAbstractFirDiagnostic<KtAnonymousInitializer>(firDiagnostic, token), KaFirDiagnostic.AnonymousInitializerInInterface
 
 internal class AnonymousReturnTypeImpl(
+    override val tag: String,
     firDiagnostic: KtPsiDiagnostic,
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.AnonymousReturnType

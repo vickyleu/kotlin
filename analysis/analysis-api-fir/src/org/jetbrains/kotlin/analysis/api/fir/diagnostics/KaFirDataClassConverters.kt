@@ -5276,6 +5276,7 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
     }
     add(FirErrors.ANONYMOUS_RETURN_TYPE) { firDiagnostic ->
         AnonymousReturnTypeImpl(
+            firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
             token,
         )
