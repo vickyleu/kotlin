@@ -55,7 +55,7 @@ object FirSupertypesChecker : FirClassChecker(MppCheckerKind.Platform) {
             val expandedSupertype = superTypeRef.coneType.fullyExpandedType(context.session)
             val originalSupertype = expandedSupertype.abbreviatedTypeOrSelf
             val supertypeIsDynamic = originalSupertype is ConeDynamicType
-            if (originalSupertype.isMarkedNullable) {
+            if (originalSupertype.isMarkedNullable || expandedSupertype.isMarkedNullable) {
                 reporter.reportOn(superTypeRef.source, FirErrors.NULLABLE_SUPERTYPE, context)
             }
             if (!extensionFunctionSupertypeReported && originalSupertype.isExtensionFunctionType &&
