@@ -108,11 +108,12 @@ internal class FirElementBuilder(private val moduleComponents: LLFirModuleResolv
         }
 
         val nonLocalContainer = element.getNonLocalContainingOrThisElement()
+        val nonLocalDeclaration = nonLocalContainer as? KtDeclaration
 
         // Optimizations for specific cases
-        if (nonLocalContainer is KtDeclaration) {
-            getFirForElementInsideAnnotations(element, nonLocalContainer)?.let { return it }
-            getFirForElementInsideTypes(element, nonLocalContainer)?.let { return it }
+        getFirForElementInsideAnnotations(element, nonLocalDeclaration)?.let { return it }
+        if (nonLocalDeclaration != null) {
+            getFirForElementInsideTypes(element, nonLocalDeclaration)?.let { return it }
         } else {
             getFirForElementInsideFileHeader(element)?.let { return it }
         }
@@ -167,7 +168,7 @@ internal class FirElementBuilder(private val moduleComponents: LLFirModuleResolv
 
     private fun getFirForElementInsideAnnotations(
         element: KtElement,
-        nonLocalDeclaration: KtDeclaration,
+        nonLocalDeclaration: KtDeclaration?, // `null` means it is a file annotation
     ): FirElement? = getFirForNonBodyElement(
         element = element,
         nonLocalDeclaration = nonLocalDeclaration,
