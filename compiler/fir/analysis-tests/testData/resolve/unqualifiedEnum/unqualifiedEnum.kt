@@ -1,5 +1,5 @@
 // RUN_PIPELINE_TILL: FRONTEND
-// LANGUAGE: +ContextSensitiveEnumResolutionInWhen
+// LANGUAGE: +ContextSensitiveResolutionUsingExpectedType
 package test
 
 enum class Sample {
@@ -36,4 +36,3 @@ class Container {
         }
     }
 }
-
