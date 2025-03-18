@@ -17787,6 +17787,12 @@ public class NativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTest 
         }
 
         @Test
+        @TestMetadata("basicExampleWithEnumAndWhens.kt")
+        public void testBasicExampleWithEnumAndWhens() {
+          runTest("compiler/testData/codegen/box/fir/contextSensitiveResolution/basicExampleWithEnumAndWhens.kt");
+        }
+
+        @Test
         @TestMetadata("eitherInTypePosition.kt")
         public void testEitherInTypePosition() {
           runTest("compiler/testData/codegen/box/fir/contextSensitiveResolution/eitherInTypePosition.kt");
