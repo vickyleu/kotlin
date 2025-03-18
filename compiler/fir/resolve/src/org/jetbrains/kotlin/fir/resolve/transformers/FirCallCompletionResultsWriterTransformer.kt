@@ -392,7 +392,7 @@ class FirCallCompletionResultsWriterTransformer(
         }
         val expectedArgumentsTypeMapping = subCandidate.createArgumentsMapping(forErrorReference = calleeReference.isError)
 
-        result.transformArgumentList(expectedArgumentsTypeMapping, subCandidate)
+        result.transformArgumentList(expectedArgumentsTypeMapping)
 
         result.replaceConeTypeOrNull(resultType)
         session.lookupTracker?.recordTypeResolveAsLookup(resultType, functionCall.source, context.file.source)
@@ -480,7 +480,6 @@ class FirCallCompletionResultsWriterTransformer(
 
     private fun FirCall.transformArgumentList(
         expectedArgumentsTypeMapping: ExpectedArgumentType.ArgumentsMap?,
-        candidate: Candidate? = null,
     ) {
         val mapping = (argumentList as? FirResolvedArgumentList)?.mapping
 
@@ -496,7 +495,7 @@ class FirCallCompletionResultsWriterTransformer(
                 // Once we encounter the first "real" expression, we delegate to the outer transformer.
                 val transformed =
                     element.transformSingle(this@FirCallCompletionResultsWriterTransformer, expectedArgumentsTypeMapping).let {
-                        candidate?.getUpdatedArgumentFromContextSensitiveResolution(it) ?: it
+                        expectedArgumentsTypeMapping?.contextSensitiveResolutionReplacements?.get(it) ?: it
                     }
 
                 if (transformed is FirExpression) {
