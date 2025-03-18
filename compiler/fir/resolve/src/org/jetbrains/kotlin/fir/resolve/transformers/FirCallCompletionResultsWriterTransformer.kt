@@ -31,6 +31,7 @@ import org.jetbrains.kotlin.fir.resolve.calls.candidate.FirErrorReferenceWithCan
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.FirNamedReferenceWithCandidate
 import org.jetbrains.kotlin.fir.resolve.calls.stages.TypeArgumentMapping
 import org.jetbrains.kotlin.fir.resolve.dfa.FirDataFlowAnalyzer
+import org.jetbrains.kotlin.fir.resolve.dfa.cfg.FirAnonymousFunctionReturnExpressionInfo
 import org.jetbrains.kotlin.fir.resolve.diagnostics.*
 import org.jetbrains.kotlin.fir.resolve.inference.FirTypeVariablesAfterPCLATransformer
 import org.jetbrains.kotlin.fir.resolve.substitution.ChainedSubstitutor
@@ -55,6 +56,7 @@ import org.jetbrains.kotlin.fir.types.builder.buildTypeProjectionWithVariance
 import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
 import org.jetbrains.kotlin.fir.visitors.FirDefaultTransformer
 import org.jetbrains.kotlin.fir.visitors.FirTransformer
+import org.jetbrains.kotlin.fir.visitors.TransformData
 import org.jetbrains.kotlin.fir.visitors.transformSingle
 import org.jetbrains.kotlin.resolve.calls.inference.model.ConeNoInferSubtyping
 import org.jetbrains.kotlin.resolve.calls.inference.model.InferredEmptyIntersection
@@ -803,13 +805,16 @@ class FirCallCompletionResultsWriterTransformer(
             }
         }.toMap()
 
-        if (lambdasReturnType.isEmpty() && arguments.isEmpty()) return null
+        val contextSensitiveResolutionReplacements = this@createArgumentsMapping.contextSensitiveResolutionReplacements
+
+        if (lambdasReturnType.isEmpty() && arguments.isEmpty() && contextSensitiveResolutionReplacements.isNullOrEmpty()) return null
         return ExpectedArgumentType.ArgumentsMap(
             map = arguments,
             lambdasReturnTypes = lambdasReturnType,
             samConversions = samConversions ?: emptyMap(),
             argumentsWithFunctionKindConversion = argumentsWithFunctionKindConversion ?: emptySet(),
-            forErrorReference = forErrorReference
+            forErrorReference = forErrorReference,
+            contextSensitiveResolutionReplacements,
         )
     }
 
@@ -948,8 +953,11 @@ class FirCallCompletionResultsWriterTransformer(
         // The case where we can't find any return expressions not common, and happens when there are anonymous function arguments
         // that aren't mapped to any parameter in the call. So, we don't run body resolve transformation for them, thus there's
         // no control flow info either. Example: second lambda in the call like list.filter({}, {})
-        val returnExpressions = dataFlowAnalyzer.returnExpressionsOfAnonymousFunctionOrNull(anonymousFunction)
-            ?: return transformImplicitTypeRefInAnonymousFunction(anonymousFunction)
+        val returnExpressions =
+            dataFlowAnalyzer
+                .returnExpressionsOfAnonymousFunctionOrNull(anonymousFunction)
+                .replacePostponedAtomsInReturnExpressions(data)
+                ?: return transformImplicitTypeRefInAnonymousFunction(anonymousFunction)
 
         /*
          * If the resolved call contains some errors, we want to consider expected type only for calculation of
@@ -1031,6 +1039,61 @@ class FirCallCompletionResultsWriterTransformer(
         // Have to delay this until the type is written to avoid adding a return if the type is Unit.
         result.addReturnToLastStatementIfNeeded(session)
         return result
+    }
+
+    /**
+     * Some postponed atoms when may require replacing one FIR nodes with another one.
+     * For example, after context-sensitive resolution, FirPropertyAccessExpression may turn into FirResolvedQualifier.
+     *
+     * So, we need to replace them both inside FirAnonymousFunctionReturnExpressionInfo, but also transform
+     * the parent node (return-expression or block for last statement in lambda).
+     */
+    private fun Collection<FirAnonymousFunctionReturnExpressionInfo>?.replacePostponedAtomsInReturnExpressions(
+        data: ExpectedArgumentType?,
+    ): Collection<FirAnonymousFunctionReturnExpressionInfo>? {
+        if (this == null) return null
+
+        val replacements = (data as? ExpectedArgumentType.ArgumentsMap)?.contextSensitiveResolutionReplacements ?: return this
+
+        return map { returnInfo ->
+            val replacement = replacements[returnInfo.expression] ?: return@map returnInfo
+
+            class ReturnExpressionReplacer : FirTransformer<Nothing?>() {
+                override fun <E : FirElement> transformElement(element: E, data: Nothing?): E {
+                    @Suppress("UNCHECKED_CAST")
+                    return when {
+                        element === returnInfo.expression -> replacement as E
+                        else -> element
+                    }
+                }
+
+                override fun transformReturnExpression(
+                    returnExpression: FirReturnExpression,
+                    data: Nothing?,
+                ): FirStatement {
+                    return returnExpression.transformResult(this, data)
+                }
+
+                override fun transformBlock(
+                    block: FirBlock,
+                    data: Nothing?,
+                ): FirStatement {
+                    return block.transformStatementsIndexed(this) { index ->
+                        // Transform only the last statement
+                        if (index == block.statements.lastIndex)
+                            TransformData.Data(null)
+                        else
+                            TransformData.Nothing
+                    }
+                }
+            }
+
+            returnInfo.copy(
+                expression = replacement,
+                containingStatement =
+                    returnInfo.containingStatement.transformSingle(ReturnExpressionReplacer(), null),
+            )
+        }
     }
 
     private fun ConeKotlinType.functionTypeKindForDeserializedConeType(): FunctionTypeKind? {
@@ -1291,7 +1354,8 @@ sealed class ExpectedArgumentType {
         val lambdasReturnTypes: Map<FirAnonymousFunction, ConeKotlinType>,
         val samConversions: Map<FirElement, FirSamResolver.SamConversionInfo>,
         val argumentsWithFunctionKindConversion: Set<FirExpression>,
-        val forErrorReference: Boolean
+        val forErrorReference: Boolean,
+        val contextSensitiveResolutionReplacements: Map<FirElement, FirExpression>?,
     ) : ExpectedArgumentType()
 
     class ExpectedType(val type: ConeKotlinType) : ExpectedArgumentType()
