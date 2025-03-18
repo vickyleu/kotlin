@@ -26,8 +26,6 @@ interface LLKnownClassDeclarationSymbolProvider<E : PsiElement> {
      * only used for optimization. This is in line with the contracts of [FirSymbolProvider.getClassLikeSymbolByClassId], which only
      * considers the [ClassId] itself and operates on a first-come, first-serve basis. The first [KtClassLikeDeclaration] passed to this
      * function or fetched by the symbol provider itself becomes the basis of the class-like symbol for that class ID.
-     *
-     * To get a symbol for an exact class-like declaration, [LLPsiAwareSymbolProvider.getClassLikeSymbolByPsi] should be used instead.
      */
     fun getClassLikeSymbolByClassId(classId: ClassId, classLikeDeclaration: E): FirClassLikeSymbol<*>?
 }
