@@ -382,6 +382,7 @@ enum class LanguageFeature(
     WhenGuards(KOTLIN_2_2, kind = OTHER), // KT-13626
     MultiDollarInterpolation(KOTLIN_2_2, kind = OTHER), // KT-2425
     JvmDefaultEnableByDefault(KOTLIN_2_2, kind = OTHER), // KT-71768
+    ContextSensitiveResolutionUsingExpectedType(sinceVersion = KOTLIN_2_2, kind = OTHER), // KT-16768
 
     // 2.3
 
@@ -472,7 +473,7 @@ enum class LanguageFeature(
     NestedTypeAliases(sinceVersion = null, kind = UNSTABLE_FEATURE), // KT-45285
     ForbidUsingSupertypesWithInaccessibleContentInTypeArguments(sinceVersion = null, kind = BUG_FIX), // KT-66691, KT-66742
     UnnamedLocalVariables(sinceVersion = null, kind = UNSTABLE_FEATURE), // KT-74809
-    ContextSensitiveResolutionUsingExpectedType(sinceVersion = null, kind = OTHER), // KT-16768
+
     AnnotationsInMetadata(sinceVersion = null, kind = OTHER), // KT-57919
     ;
 
