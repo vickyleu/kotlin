@@ -401,7 +401,7 @@ class FirCallCompletionResultsWriterTransformer(
 
     private fun FirNamedReferenceWithCandidate.computeAllArguments(
         originalArgumentList: FirArgumentList,
-        predefinedMapping: LinkedHashMap<FirExpression, FirValueParameter>? = null
+        predefinedMapping: LinkedHashMap<FirExpression, FirValueParameter>? = null,
     ): List<FirExpression> {
         return when {
             this.isError -> originalArgumentList.arguments
@@ -591,7 +591,7 @@ class FirCallCompletionResultsWriterTransformer(
 
     private data class ResultingArgumentsMapping(
         val regularMapping: LinkedHashMap<FirExpression, FirValueParameter>,
-        val allArgsMapping: LinkedHashMap<FirExpression, FirValueParameter?>
+        val allArgsMapping: LinkedHashMap<FirExpression, FirValueParameter?>,
     )
 
     /**
@@ -604,7 +604,7 @@ class FirCallCompletionResultsWriterTransformer(
      */
     private fun Candidate.handleVarargsAndReturnResultingArgumentsMapping(
         argumentList: List<FirExpression>,
-        precomputedArgumentMapping: LinkedHashMap<FirExpression, FirValueParameter>? = null
+        precomputedArgumentMapping: LinkedHashMap<FirExpression, FirValueParameter>? = null,
     ): ResultingArgumentsMapping {
         val argumentMapping = precomputedArgumentMapping ?: this.argumentMapping.unwrapAtoms()
         val varargParameter = argumentMapping.values.firstOrNull { it.isVararg }
@@ -857,7 +857,10 @@ class FirCallCompletionResultsWriterTransformer(
                         val typeRef = argument.typeRef as FirResolvedTypeRef
                         buildTypeProjectionWithVariance {
                             source = sourceForTypeArgument
-                            this.typeRef = if (typeRef.coneType.fullyExpandedType(session) is ConeErrorType) typeRef else typeRef.withReplacedConeType(type)
+                            this.typeRef =
+                                if (typeRef.coneType.fullyExpandedType(session) is ConeErrorType) typeRef else typeRef.withReplacedConeType(
+                                    type
+                                )
                             variance = argument.variance
                         }
                     }
