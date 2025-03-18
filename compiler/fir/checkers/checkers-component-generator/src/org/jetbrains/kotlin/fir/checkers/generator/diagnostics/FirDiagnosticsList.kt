@@ -1800,6 +1800,10 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
     }
 
     val EXTRA_CHECKERS by object : DiagnosticGroup("Extra checkers") {
+        val RESULT_AS_TYPE_PARAMETER by warning<KtElement>() {
+            parameter<String>("message")
+        }
+
         val REDUNDANT_VISIBILITY_MODIFIER by warning<KtModifierListOwner>(PositioningStrategy.VISIBILITY_MODIFIER)
         val REDUNDANT_MODALITY_MODIFIER by warning<KtModifierListOwner>(PositioningStrategy.MODALITY_MODIFIER)
         val REDUNDANT_RETURN_UNIT_TYPE by warning<KtElement>()

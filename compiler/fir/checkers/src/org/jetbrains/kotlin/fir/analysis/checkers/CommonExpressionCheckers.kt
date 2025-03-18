@@ -25,6 +25,7 @@ object CommonExpressionCheckers : ExpressionCheckers() {
             FirPrefixAndSuffixSyntaxChecker,
             FirAnnotatedBinaryExpressionChecker,
             FirExpressionWithErrorTypeChecker,
+            FirResultAsTypeArgumentChecker,
         )
 
     override val throwExpressionCheckers: Set<FirThrowExpressionChecker>

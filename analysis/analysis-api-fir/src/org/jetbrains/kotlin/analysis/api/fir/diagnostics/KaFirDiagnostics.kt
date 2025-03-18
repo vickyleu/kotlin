@@ -3576,6 +3576,11 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         val outerTypeParameters: List<KaTypeParameterSymbol>
     }
 
+    interface ResultAsTypeParameter : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = ResultAsTypeParameter::class
+        val message: String
+    }
+
     interface RedundantVisibilityModifier : KaFirDiagnostic<KtModifierListOwner> {
         override val diagnosticClass get() = RedundantVisibilityModifier::class
     }

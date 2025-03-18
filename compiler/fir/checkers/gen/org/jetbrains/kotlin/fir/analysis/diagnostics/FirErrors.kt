@@ -889,6 +889,7 @@ object FirErrors {
     val TYPEALIAS_EXPANSION_CAPTURES_OUTER_TYPE_PARAMETERS: KtDiagnosticFactory1<Set<FirTypeParameterSymbol>> = KtDiagnosticFactory1("TYPEALIAS_EXPANSION_CAPTURES_OUTER_TYPE_PARAMETERS", ERROR, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
 
     // Extra checkers
+    val RESULT_AS_TYPE_PARAMETER: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("RESULT_AS_TYPE_PARAMETER", WARNING, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
     val REDUNDANT_VISIBILITY_MODIFIER: KtDiagnosticFactory0 = KtDiagnosticFactory0("REDUNDANT_VISIBILITY_MODIFIER", WARNING, SourceElementPositioningStrategies.VISIBILITY_MODIFIER, KtModifierListOwner::class)
     val REDUNDANT_MODALITY_MODIFIER: KtDiagnosticFactory0 = KtDiagnosticFactory0("REDUNDANT_MODALITY_MODIFIER", WARNING, SourceElementPositioningStrategies.MODALITY_MODIFIER, KtModifierListOwner::class)
     val REDUNDANT_RETURN_UNIT_TYPE: KtDiagnosticFactory0 = KtDiagnosticFactory0("REDUNDANT_RETURN_UNIT_TYPE", WARNING, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
