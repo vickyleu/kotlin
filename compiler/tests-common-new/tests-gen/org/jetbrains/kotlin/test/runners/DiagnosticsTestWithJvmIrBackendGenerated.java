@@ -290,6 +290,18 @@ public class DiagnosticsTestWithJvmIrBackendGenerated extends AbstractDiagnostic
       }
 
       @Test
+      @TestMetadata("bridgeAndInherited.kt")
+      public void testBridgeAndInherited() {
+        runTest("compiler/testData/diagnostics/testsWithJvmBackend/duplicateJvmSignature/bridges/bridgeAndInherited.kt");
+      }
+
+      @Test
+      @TestMetadata("bridgeSpecialAndInherited.kt")
+      public void testBridgeSpecialAndInherited() {
+        runTest("compiler/testData/diagnostics/testsWithJvmBackend/duplicateJvmSignature/bridges/bridgeSpecialAndInherited.kt");
+      }
+
+      @Test
       @TestMetadata("class.kt")
       public void testClass() {
         runTest("compiler/testData/diagnostics/testsWithJvmBackend/duplicateJvmSignature/bridges/class.kt");
