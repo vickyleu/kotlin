@@ -54,21 +54,19 @@ private fun getString(typeInfoPtr: Int, lengthOffset: Int, idOffset: Int, ptrOff
 internal fun getSuperTypeId(typeInfoPtr: Int): Int =
     wasm_i32_load(typeInfoPtr + TYPE_INFO_SUPER_TYPE_OFFSET)
 
-internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
+internal fun isInterfaceById(obj: Any, interfaceId: Int): Boolean {
     val interfaceListSize = wasm_i32_load(obj.typeInfo + TYPE_INFO_ITABLE_SIZE_OFFSET)
     val interfaceListPtr = obj.typeInfo + TYPE_INFO_ITABLE_OFFSET
 
     var interfaceSlot = 0
-    var currentPtr = interfaceListPtr
     while (interfaceSlot < interfaceListSize) {
-        val supportedInterface = wasm_i32_load(currentPtr)
+        val supportedInterface = wasm_i32_load(interfaceListPtr + interfaceSlot * TYPE_INFO_ELEMENT_SIZE)
         if (supportedInterface == interfaceId) {
-            return interfaceSlot
+            return true
         }
         interfaceSlot++
-        currentPtr += TYPE_INFO_ELEMENT_SIZE
     }
-    return -1
+    return false
 }
 
 @Suppress("UNUSED_PARAMETER")
