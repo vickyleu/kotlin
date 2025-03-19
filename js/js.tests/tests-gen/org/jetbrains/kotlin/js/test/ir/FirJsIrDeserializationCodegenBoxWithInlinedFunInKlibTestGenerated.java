@@ -4870,12 +4870,6 @@ public class FirJsIrDeserializationCodegenBoxWithInlinedFunInKlibTestGenerated e
       }
 
       @Test
-      @TestMetadata("parallelHierarchy.kt")
-      public void testParallelHierarchy() {
-        runTest("compiler/testData/codegen/box/casts/parallelHierarchy.kt");
-      }
-
-      @Test
       @TestMetadata("unitAsAny.kt")
       public void testUnitAsAny() {
         runTest("compiler/testData/codegen/box/casts/unitAsAny.kt");
