@@ -1090,15 +1090,14 @@ abstract class FirDataFlowAnalyzer(
             for (conditionalReturn in conditionalReturns) {
                 val effect = conditionalReturn.returnsCondition as? ConeReturnsEffectDeclaration ?: continue
                 if (effect.value != ConeContractConstantValues.NOT_NULL) continue
+                val functionCallVariable = flow.getOrCreateVariable(qualifiedAccess) ?: continue
                 val statements =
-                    logicSystem.approveContractStatement(conditionalReturn.argumentsCondition, allArgumentVariables, substitutor) {
-                        logicSystem.approveOperationStatement(flow, it, removeApprovedOrImpossible = false)
-                    } ?: continue
+                        logicSystem.approveOperationStatement(flow, OperationStatement(allArgumentVariables[1]!!, Operation.NotEqNull), removeApprovedOrImpossible = false)
                 for (variable in statements.keys) {
-                    val functionCallVariable = flow.getOrCreateVariable(qualifiedAccess)
-                    if (functionCallVariable != null) {
+//                    val functionCallVariable = flow.getOrCreateVariable(qualifiedAccess)
+//                    if (functionCallVariable != null) {
                         flow.addAllConditionally(OperationStatement(variable, Operation.NotEqNull), OperationStatement(functionCallVariable, Operation.NotEqNull))
-                    }
+//                    }
                 }
             }
         }

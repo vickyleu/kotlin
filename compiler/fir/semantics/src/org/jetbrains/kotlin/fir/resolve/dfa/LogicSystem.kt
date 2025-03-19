@@ -81,7 +81,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
             // statements about a part of the expression, then we never will, as we're already exiting the entire expression.
             else -> effect.variable is SyntheticVariable && effect.variable !in flow.implications
         }
-        if (redundant) return
+//        if (redundant) return
         val variable = implication.condition.variable
         flow.implications[variable] = flow.implications[variable]?.add(implication) ?: persistentListOf(implication)
     }
