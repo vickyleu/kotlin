@@ -13184,6 +13184,12 @@ public class LLReversedDiagnosticsFe10TestGenerated extends AbstractLLReversedDi
         }
 
         @Test
+        @TestMetadata("constructorCallFromOutside.kt")
+        public void testConstructorCallFromOutside() {
+          runTest("compiler/testData/diagnostics/tests/enum/inner/constructorCallFromOutside.kt");
+        }
+
+        @Test
         @TestMetadata("existingClassObject.kt")
         public void testExistingClassObject() {
           runTest("compiler/testData/diagnostics/tests/enum/inner/existingClassObject.kt");
