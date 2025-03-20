@@ -249,6 +249,7 @@ abstract class AbstractIncrementalCache<ClassName>(
     override fun updateComplementaryFiles(dirtyFiles: Collection<File>, expectActualTracker: ExpectActualTrackerImpl) {
         dirtyFiles.forEach {
             complementaryFilesMap.remove(it)
+            expectOfLenientStubs.remove(it)
         }
 
         val actualToExpect = hashMapOf<File, MutableSet<File>>()

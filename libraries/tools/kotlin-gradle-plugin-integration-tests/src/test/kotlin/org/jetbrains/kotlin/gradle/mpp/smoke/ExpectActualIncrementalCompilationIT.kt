@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.gradle.testbase.*
 import org.jetbrains.kotlin.gradle.util.replaceWithVersion
 import org.jetbrains.kotlin.test.TestMetadata
 import org.junit.jupiter.api.DisplayName
+import kotlin.io.path.writeText
 
 /**
  * Touch file with expect fun, target IC adds actual to the build set
@@ -94,6 +95,43 @@ open class ExpectActualIncrementalCompilationIT : KGPBaseTest() {
                         kotlinSourcesDir("jvmMain").resolve("ActualClassBar.kt"),
                         kotlinSourcesDir("jsMain").resolve("ActualClassBar.kt"),
                         kotlinSourcesDir("commonMain").resolve("ExpectClassBar.kt")
+                    ).relativizeTo(projectPath)
+                )
+            }
+        }
+    }
+
+    @DisplayName("Incremental compilation with lenient mode")
+    @GradleTest
+    fun testLenientModeIncrementalCompilation(gradleVersion: GradleVersion) {
+        project("lenientMode", gradleVersion) {
+            build("compileKotlinJvm")
+
+            kotlinSourcesDir("jvmMain").resolve("jvm.kt").writeText(
+                """
+                actual fun foo() {}
+            """.trimIndent()
+            )
+
+            build("compileKotlinJvm") {
+                assertIncrementalCompilation(
+                    listOf(
+                        kotlinSourcesDir("commonMain").resolve("common.kt"),
+                        kotlinSourcesDir("jvmMain").resolve("jvm.kt")
+                    ).relativizeTo(projectPath)
+                )
+            }
+
+            kotlinSourcesDir("jvmMain").resolve("jvm2.kt").writeText(
+                """
+                fun bar() {}
+            """.trimIndent()
+            )
+
+            build("compileKotlinJvm") {
+                assertIncrementalCompilation(
+                    listOf(
+                        kotlinSourcesDir("jvmMain").resolve("jvm2.kt")
                     ).relativizeTo(projectPath)
                 )
             }
