@@ -510,8 +510,8 @@ class FusStatisticsIT : KGPBaseTest() {
                 |
                 |kotlin {
                 |    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile>().configureEach {
-                |        kotlinOptions {
-                |            freeCompilerArgs += listOf("-Xbinary=gc=noop")
+                |        compilerOptions {
+                |            freeCompilerArgs.add("-Xbinary=gc=noop")
                 |        }
                 |    }
                 |}

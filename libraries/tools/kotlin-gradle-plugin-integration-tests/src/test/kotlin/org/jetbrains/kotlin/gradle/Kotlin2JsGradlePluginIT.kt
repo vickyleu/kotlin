@@ -270,16 +270,16 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |
                 |tasks.named<org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrLink>("compileProductionExecutableKotlinJs").configure {
-                |    kotlinOptions {
-                |        freeCompilerArgs += "-Xir-dce=false"
-                |        freeCompilerArgs += "-Xir-minimized-member-names=false"
+                |    compilerOptions {
+                |        freeCompilerArgs.add("-Xir-dce=false")
+                |        freeCompilerArgs.add("-Xir-minimized-member-names=false")
                 |    }
                 |    
                 |    doLast {
-                |        kotlinOptions {
-                |            if (freeCompilerArgs.single { it.startsWith("-Xir-dce") } != "-Xir-dce=false") throw GradleException("fail1")
+                |        compilerOptions {
+                |            if (freeCompilerArgs.get().single { it.startsWith("-Xir-dce") } != "-Xir-dce=false") throw GradleException("fail1")
                 |            if (
-                |            freeCompilerArgs
+                |            freeCompilerArgs.get()
                 |                .single { it.startsWith("-Xir-minimized-member-names") } != "-Xir-minimized-member-names=false"
                 |            ) throw GradleException("fail2")
                 |        }
@@ -342,7 +342,9 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |allprojects {
                 |   tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMapNamesPolicy = "fully-qualified-names"
+                |        compilerOptions.sourceMapNamesPolicy.set(
+                |            org.jetbrains.kotlin.gradle.dsl.JsSourceMapNamesPolicy.SOURCE_MAP_NAMES_POLICY_FQ_NAMES
+                |        )
                 |   }
                 |}
                 |
@@ -366,7 +368,9 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |allprojects {
                 |   tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMapNamesPolicy = "simple-names"
+                |        compilerOptions.sourceMapNamesPolicy.set(
+                |            org.jetbrains.kotlin.gradle.dsl.JsSourceMapNamesPolicy.SOURCE_MAP_NAMES_POLICY_SIMPLE_NAMES
+                |        )
                 |   }
                 |}
                 |
@@ -389,7 +393,9 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |allprojects {
                 |   tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMapNamesPolicy = "no"
+                |        compilerOptions.sourceMapNamesPolicy.set(
+                |            org.jetbrains.kotlin.gradle.dsl.JsSourceMapNamesPolicy.SOURCE_MAP_NAMES_POLICY_NO
+                |        )
                 |   }
                 |}
                 |
@@ -464,7 +470,7 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                     rootProject.subprojects.forEach {
                         it.tasks.withType<org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile> {
-                            kotlinOptions.languageVersion = "2.0"
+                            compilerOptions.languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
                         }
                     }
                 """.trimIndent()
@@ -563,14 +569,14 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                         """
                         |
                         |tasks.named<org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrLink>("compileDevelopmentExecutableKotlinJs") {
-                        |   kotlinOptions {
-                        |       moduleKind = "es"
+                        |   compilerOptions {
+                        |       moduleKind.set(org.jetbrains.kotlin.gradle.dsl.JsModuleKind.MODULE_ES)
                         |   }
                         |}
                         |
                         |tasks.named<org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrLink>("compileProductionExecutableKotlinJs") {
-                        |   kotlinOptions {
-                        |       moduleKind = "es"
+                        |   compilerOptions {
+                        |       moduleKind.set(org.jetbrains.kotlin.gradle.dsl.JsModuleKind.MODULE_ES)
                         |   }
                         |}
                         |
@@ -791,7 +797,7 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 |project("app") {
                 |   tasks.$taskSelector {
                 |       destinationDirectory.set(file("${'$'}{buildDir}/kotlin2js"))
-                |       kotlinOptions.moduleName = "app"
+                |       compilerOptions.moduleName.set("app")
                 |   }
                 |}
                 |
@@ -815,7 +821,7 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |allprojects {
                 |   tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMap = false
+                |        compilerOptions.sourceMap.set(false)
                 |   }
                 |}
                 |
@@ -837,15 +843,17 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |project("lib") {
                 |   tasks.withType<KotlinJsCompile>() {
-                |        kotlinOptions {
-                |            sourceMap = true
-                |            sourceMapEmbedSources = "always"
+                |        compilerOptions {
+                |            sourceMap.set(true)
+                |            sourceMapEmbedSources.set(org.jetbrains.kotlin.gradle.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_ALWAYS)
                 |        }
                 |    }
                 |}
                 |project("app") {
                 |    tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMapEmbedSources = "always"
+                |        compilerOptions.sourceMapEmbedSources.set(
+                |            org.jetbrains.kotlin.gradle.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_ALWAYS
+                |        )
                 |    }
                 |}
                 |
@@ -870,15 +878,19 @@ class Kotlin2JsIrGradlePluginIT : KGPBaseTest() {
                 """
                 |project("lib") {
                 |   tasks.withType<KotlinJsCompile>() {
-                |        kotlinOptions {
-                |            sourceMap = true
-                |            sourceMapEmbedSources = "always"
+                |        compilerOptions {
+                |            sourceMap.set(true)
+                |            sourceMapEmbedSources.set(
+                |                 org.jetbrains.kotlin.gradle.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_ALWAYS
+                |            )
                 |        }
                 |    }
                 |}
                 |project("app") {
                 |    tasks.withType<KotlinJsCompile> {
-                |        kotlinOptions.sourceMapEmbedSources = "inlining"
+                |        compilerOptions.sourceMapEmbedSources.set(
+                |            org.jetbrains.kotlin.gradle.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_INLINING
+                |        )
                 |    }
                 |}
                 |
