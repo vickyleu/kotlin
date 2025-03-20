@@ -333,7 +333,7 @@ fun <T> List<T>.smartPlus(other: List<T>): List<T> = when {
 }
 
 // Source element may be missing if the class came from a library
-fun FirVariable.isEnumEntries(containingClass: FirClass) = isStatic && name == StandardNames.ENUM_ENTRIES && containingClass.isEnumClass
+fun FirVariable.isEnumEntries(containingClass: FirClass): Boolean = isStatic && name == StandardNames.ENUM_ENTRIES && containingClass.isEnumClass
 fun FirVariable.isEnumEntries(containingClassSymbol: FirClassSymbol<*>): Boolean {
     return isStatic && name == StandardNames.ENUM_ENTRIES && containingClassSymbol.isEnumClass
 }
@@ -363,7 +363,7 @@ fun FirBasedSymbol<*>.packageFqName(): FqName {
     }
 }
 
-fun FirOperation.toAugmentedAssignSourceKind() = when (this) {
+fun FirOperation.toAugmentedAssignSourceKind(): KtFakeSourceElementKind.DesugaredAugmentedAssign = when (this) {
     FirOperation.PLUS_ASSIGN -> KtFakeSourceElementKind.DesugaredPlusAssign
     FirOperation.MINUS_ASSIGN -> KtFakeSourceElementKind.DesugaredMinusAssign
     FirOperation.TIMES_ASSIGN -> KtFakeSourceElementKind.DesugaredTimesAssign

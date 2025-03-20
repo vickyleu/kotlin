@@ -2300,7 +2300,7 @@ open class PsiRawFirBuilder(
             }
         }
 
-        protected fun KtDeclarationWithInitializer.toInitializerExpression() =
+        protected fun KtDeclarationWithInitializer.toInitializerExpression(): FirExpression? =
             runIf(hasInitializer()) {
                 this@PsiRawFirBuilder.context.calleeNamesForLambda += null
 
