@@ -398,13 +398,13 @@ open class IncrementalCompilationK2JvmMultiProjectIT : IncrementalCompilationJvm
     @GradleTest
     fun testLenientModeIncrementalCompilation(gradleVersion: GradleVersion) {
         project("lenientMode", gradleVersion) {
-            build("compileKotlinJvm", kotlinDaemonDebugPort = 5007)
+            build("compileKotlinJvm")
 
             kotlinSourcesDir("jvmMain").resolve("jvm.kt").writeText("""
                 actual fun foo() {}
             """.trimIndent())
 
-            build("compileKotlinJvm", kotlinDaemonDebugPort = 5007)
+            build("compileKotlinJvm")
         }
     }
 }
