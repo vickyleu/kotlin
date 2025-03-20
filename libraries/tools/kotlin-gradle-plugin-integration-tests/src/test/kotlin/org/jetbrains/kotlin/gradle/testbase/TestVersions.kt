@@ -30,7 +30,7 @@ interface TestVersions {
         const val G_8_10 = "8.10.2"
         const val G_8_11 = "8.11.1"
         const val G_8_12 = "8.12.1"
-        const val G_8_13 = "8.13-rc-2"
+        const val G_8_13 = "8.13"
 
         /**
          * Check [org.jetbrains.kotlin.gradle.GradleCompatibilityIT.testIncompatibleGradleVersion]
