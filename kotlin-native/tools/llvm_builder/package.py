@@ -196,6 +196,8 @@ def construct_cmake_flags(
         cmake_args.append('-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded')
         # We don't support PDB, so no need fir DIA.
         cmake_args.append('-DLLVM_ENABLE_DIA_SDK=OFF')
+        # TODO
+        cmake_args.append('-DCMAKE_MT=mt')
 
     # Make distribution much smaller by linking to dynamic library
     # instead of static linkage.
