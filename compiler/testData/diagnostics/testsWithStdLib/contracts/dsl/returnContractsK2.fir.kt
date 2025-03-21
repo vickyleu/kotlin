@@ -1,6 +1,5 @@
 // RUN_PIPELINE_TILL: BACKEND
 // OPT_IN: kotlin.contracts.ExperimentalContracts
-// DUMP_CFG
 
 import kotlin.contracts.*
 
