@@ -81,7 +81,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
             // statements about a part of the expression, then we never will, as we're already exiting the entire expression.
             else -> effect.variable is SyntheticVariable && effect.variable !in flow.implications
         }
-//        if (redundant) return
+        if (redundant) return
         val variable = implication.condition.variable
         flow.implications[variable] = flow.implications[variable]?.add(implication) ?: persistentListOf(implication)
     }
@@ -266,10 +266,9 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
 
             val operation = next.operation
             val variable = next.variable
-            if (variable.isReal()) {
-                val impliedType = if (operation == Operation.EqNull) nullableNothingType else anyType
-                result.getOrPut(variable) { MutableTypeStatement(variable) }.exactType.add(impliedType)
-            }
+
+            val impliedType = if (operation == Operation.EqNull) nullableNothingType else anyType
+            result.getOrPut(variable) { MutableTypeStatement(variable) }.exactType.add(impliedType)
 
             val statements = logicStatements[variable] ?: continue
             val stillUnknown = statements.removeAll {

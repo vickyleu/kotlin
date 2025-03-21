@@ -172,9 +172,12 @@ abstract class FirDataFlowAnalyzer(
     open fun getTypeUsingSmartcastInfo(expression: FirExpression): Pair<SmartcastStability, Set<ConeKotlinType>>? {
         val flow = currentSmartCastPosition ?: return null
         // Can have an unstable alias to a stable variable, so don't resolve aliases here.
-        val variable = flow.getRealVariableWithoutUnwrappingAlias(expression) ?: return null
-        val types = flow.getTypeStatement(variable)?.exactType?.ifEmpty { null } ?: return null
-        return variable.getStability(flow, types) to types
+        val dataFlowVariable = flow.getVariableWithoutUnwrappingAlias(expression, createReal = false) ?: return null
+        val types = flow.getTypeStatement(dataFlowVariable)?.exactType?.ifEmpty { null } ?: return null
+        return when (dataFlowVariable) {
+            is RealVariable -> dataFlowVariable.getStability(flow, types)
+            is SyntheticVariable -> SmartcastStability.STABLE_VALUE
+        } to types
     }
 
     fun returnExpressionsOfAnonymousFunction(function: FirAnonymousFunction): Collection<FirAnonymousFunctionReturnExpressionInfo> =
@@ -1093,12 +1096,13 @@ abstract class FirDataFlowAnalyzer(
                 if (effect.value != ConeContractConstantValues.NOT_NULL) continue
                 val functionCallVariable = flow.getOrCreateVariable(qualifiedAccess) ?: continue
                 val statements =
-                        logicSystem.approveOperationStatement(flow, OperationStatement(allArgumentVariables[1]!!, Operation.NotEqNull), removeApprovedOrImpossible = false)
+                    logicSystem.approveOperationStatement(
+                        flow, OperationStatement(allArgumentVariables[1]!!, Operation.NotEqNull), removeApprovedOrImpossible = false
+                    )
                 for (variable in statements.keys) {
-//                    val functionCallVariable = flow.getOrCreateVariable(qualifiedAccess)
-//                    if (functionCallVariable != null) {
-                        flow.addAllConditionally(OperationStatement(variable, Operation.NotEqNull), OperationStatement(functionCallVariable, Operation.NotEqNull))
-//                    }
+                    val cond = OperationStatement(functionCallVariable, Operation.NotEqNull)
+                    flow.addAllConditionally(OperationStatement(variable, Operation.NotEqNull), cond)
+                    flow.addAllStatements(logicSystem.approveOperationStatement(flow, cond, removeApprovedOrImpossible = false))
                 }
             }
         }
