@@ -545,6 +545,7 @@ problems with parentheses in identifiers on certain platforms."""
         value = "-Xjvm-expose-boxed",
         description = "Expose inline classes and functions, accepting and returning them, to Java."
     )
+    @Enables(LanguageFeature.ImplicitJvmExposeBoxed)
     var jvmExposeBoxed = false
         set(value) {
             checkFrozen()
@@ -869,7 +870,6 @@ If API Level >= 2.2 -- no-op."""
         result[JvmAnalysisFlags.inheritMultifileParts] = inheritMultifileParts
         result[JvmAnalysisFlags.sanitizeParentheses] = sanitizeParentheses
         result[JvmAnalysisFlags.suppressMissingBuiltinsError] = suppressMissingBuiltinsError
-        result[JvmAnalysisFlags.jvmExposeBoxed] = jvmExposeBoxed
         result[JvmAnalysisFlags.enableJvmPreview] = enableJvmPreview
         result[AnalysisFlags.allowUnstableDependencies] = allowUnstableDependencies
         result[JvmAnalysisFlags.outputBuiltinsMetadata] = outputBuiltinsMetadata

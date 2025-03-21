@@ -484,6 +484,7 @@ enum class LanguageFeature(
     UnnamedLocalVariables(sinceVersion = null, kind = UNSTABLE_FEATURE), // KT-74809
     ContextSensitiveResolutionUsingExpectedType(sinceVersion = null, kind = OTHER), // KT-16768
     AnnotationsInMetadata(sinceVersion = null, kind = OTHER), // KT-57919
+    ImplicitJvmExposeBoxed(sinceVersion = null, kind = OTHER), // KT-73466
     ;
 
     init {
