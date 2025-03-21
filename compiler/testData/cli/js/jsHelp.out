@@ -23,6 +23,7 @@ where possible options include:
                              Code written in progressive mode is backward compatible; however, code written without
                              progressive mode enabled may cause compilation errors in progressive mode.
   -script                    Evaluate the given Kotlin script (*.kts) file.
+  -repl                      Run Kotlin REPL (deprecated)
   -opt-in <fq.name>          Enable API usages that require opt-in with an opt-in requirement marker with the given fully qualified name.
   -P plugin:<pluginId>:<optionName>=<value>
                              Pass an option to a plugin.

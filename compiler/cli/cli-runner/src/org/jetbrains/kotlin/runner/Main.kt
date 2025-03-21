@@ -109,6 +109,12 @@ object Main {
                     restAsArguments()
                     break
                 }
+                "-repl" == arg -> {
+                    setRunner(ReplRunner())
+                    arguments.add(arg)
+                    restAsArguments()
+                    break
+                }
                 "-no-stdlib" == arg -> {
                     noStdLib = true
                     compilerArguments.add(arg)
