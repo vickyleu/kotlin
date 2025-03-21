@@ -26904,7 +26904,6 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
       @Nested
       @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed")
       @TestDataPath("$PROJECT_ROOT")
-      @FirPipeline()
       @UseExtTestCaseGroupProvider()
       public class JvmExposeBoxed {
         @Test
@@ -26915,7 +26914,6 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
         @Nested
         @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/directive")
         @TestDataPath("$PROJECT_ROOT")
-        @FirPipeline()
         @UseExtTestCaseGroupProvider()
         public class Directive {
           @Test
@@ -26927,7 +26925,6 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
         @Nested
         @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/featureInteraction")
         @TestDataPath("$PROJECT_ROOT")
-        @FirPipeline()
         @UseExtTestCaseGroupProvider()
         public class FeatureInteraction {
           @Test
@@ -26939,7 +26936,6 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
         @Nested
         @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/inherit")
         @TestDataPath("$PROJECT_ROOT")
-        @FirPipeline()
         @UseExtTestCaseGroupProvider()
         public class Inherit {
           @Test
@@ -26950,24 +26946,11 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
           @Nested
           @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/inherit/child")
           @TestDataPath("$PROJECT_ROOT")
-          @FirPipeline()
           @UseExtTestCaseGroupProvider()
           public class Child {
             @Test
             public void testAllFilesPresentInChild() {
               KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/inherit/child"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.NATIVE, true);
-            }
-          }
-
-          @Nested
-          @TestMetadata("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/inherit/parent")
-          @TestDataPath("$PROJECT_ROOT")
-          @FirPipeline()
-          @UseExtTestCaseGroupProvider()
-          public class Parent {
-            @Test
-            public void testAllFilesPresentInParent() {
-              KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/inlineClasses/jvmExposeBoxed/inherit/parent"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.NATIVE, true);
             }
           }
         }
