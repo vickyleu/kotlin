@@ -120,6 +120,13 @@ class SerializedIrDumpHandler(
             printParameterNamesInOverriddenSymbols = false,
 
             /**
+             * During deserialization, fake override builder builds much more entities than it was after FIR2IR.
+             * This mismatch fails deserialization tests. To make IR dumps the same before and after the serialization,
+             * it worth not to dump these entities at all.
+             */
+            printFakeOverridesInAnonymousClasses = false,
+
+            /**
              * Names of type and value parameters are not a part of ABI (except for the single existing case in Kotlin/Native related to
              * names of value parameters, which should be covered with a separate bunch of tests).
              *
