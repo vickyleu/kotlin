@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.ir.visitors.IrVisitor
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.name.SpecialNames.IMPLICIT_SET_PARAMETER
 import org.jetbrains.kotlin.utils.Printer
 import org.jetbrains.kotlin.utils.addToStdlib.applyIf
@@ -98,6 +99,7 @@ data class DumpIrTreeOptions(
     val printAnnotationsInFakeOverrides: Boolean = true,
     val printDispatchReceiverTypeInFakeOverrides: Boolean = true,
     val printParameterNamesInOverriddenSymbols: Boolean = true,
+    val printFakeOverridesInAnonymousClasses: Boolean = true,
     val printMemberAccessExpressionArgumentNames: Boolean = true,
     val printSealedSubclasses: Boolean = true,
     val replaceImplicitSetterParameterNameWith: Name? = null,
@@ -257,6 +259,11 @@ class DumpIrTreeVisitor(
     override fun visitSimpleFunction(declaration: IrSimpleFunction, data: String) {
         if (declaration.isHidden()) return
         if (declaration.isExpect && !options.printExpectDeclarations) return
+        if (!options.printFakeOverridesInAnonymousClasses &&
+            declaration.parent.let { it is IrClass && it.name == SpecialNames.NO_NAME_PROVIDED } &&
+            declaration.origin == IrDeclarationOrigin.FAKE_OVERRIDE
+        ) return
+
         declaration.dumpLabeledElementWith(data) {
             declaration.typeParameters.dumpElements()
             declaration.parameters.dumpElements()
@@ -291,7 +298,10 @@ class DumpIrTreeVisitor(
             if (options.printAnnotationsInFakeOverrides || !declaration.isFakeOverride) {
                 dumpAnnotations(declaration)
             }
-            declaration.overriddenSymbols.dumpFakeOverrideSymbols()
+            if (options.printFakeOverridesInAnonymousClasses ||
+                !declaration.parent.let { it is IrClass && it.name == SpecialNames.NO_NAME_PROVIDED }
+            ) declaration.overriddenSymbols.dumpFakeOverrideSymbols()
+
             declaration.backingField?.accept(this, "")
             declaration.getter?.accept(this, "")
             declaration.setter?.accept(this, "")
