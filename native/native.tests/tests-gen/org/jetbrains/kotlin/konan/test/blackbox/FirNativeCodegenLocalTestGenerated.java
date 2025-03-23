@@ -1133,6 +1133,12 @@ public class FirNativeCodegenLocalTestGenerated extends AbstractNativeCodegenBox
     }
 
     @Test
+    @TestMetadata("noLocalClassesInInlineFunctionExtractionWithIrInliner.kt")
+    public void testNoLocalClassesInInlineFunctionExtractionWithIrInliner() {
+      runTest("native/native.tests/testData/codegen/fileCheck/noLocalClassesInInlineFunctionExtractionWithIrInliner.kt");
+    }
+
+    @Test
     @TestMetadata("no_frame_on_constant_object_access.kt")
     public void testNo_frame_on_constant_object_access() {
       runTest("native/native.tests/testData/codegen/fileCheck/no_frame_on_constant_object_access.kt");
@@ -1686,6 +1692,12 @@ public class FirNativeCodegenLocalTestGenerated extends AbstractNativeCodegenBox
     @TestMetadata("anonymousObjectInInlineFunction.kt")
     public void testAnonymousObjectInInlineFunction() {
       runTest("native/native.tests/testData/codegen/kclass/anonymousObjectInInlineFunction.kt");
+    }
+
+    @Test
+    @TestMetadata("anonymousObjectInInlineFunctionWithIrInliner.kt")
+    public void testAnonymousObjectInInlineFunctionWithIrInliner() {
+      runTest("native/native.tests/testData/codegen/kclass/anonymousObjectInInlineFunctionWithIrInliner.kt");
     }
 
     @Test

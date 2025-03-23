@@ -3,6 +3,8 @@
  * Use
  * of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+// TODO: After KT-76224 is fixed, try removing `-IrInlinerBeforeKlibSerialization`
 // TARGET_BACKEND: NATIVE
 // FILECHECK_STAGE: CStubs
 // MODULE: cinterop
