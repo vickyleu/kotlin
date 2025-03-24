@@ -37,7 +37,7 @@ import kotlin.test.assertEquals
 //            ::BlackBoxCodegenSuppressor.bind(KlibIrInlinerTestDirectives.IGNORE_KLIB_SYNTHETIC_ACCESSORS_CHECKS)
 //        )
 @ExtendWith(KlibSyntheticAccessorTestSupport::class)
-abstract class AbstractNativeKlibSyntheticAccessorTest() : ExternalSourceTransformersProvider {
+open class AbstractFirNativeKlibSyntheticAccessorTest() : ExternalSourceTransformersProvider {
     lateinit var testRunSettings: TestRunSettings
     lateinit var testRunProvider: TestRunProvider
 
@@ -100,5 +100,3 @@ abstract class AbstractNativeKlibSyntheticAccessorTest() : ExternalSourceTransfo
 
     final override fun getSourceTransformers(testDataFile: File): ExternalSourceTransformers? = null
 }
-
-open class AbstractNativeKlibSyntheticAccessorInPhase1Test : AbstractNativeKlibSyntheticAccessorTest()

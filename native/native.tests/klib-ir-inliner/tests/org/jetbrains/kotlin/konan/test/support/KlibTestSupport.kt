@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.konan.test.blackbox.support.TestDirectives
 import org.jetbrains.kotlin.konan.test.blackbox.support.settings.CacheMode
 import org.jetbrains.kotlin.konan.test.blackbox.support.settings.NativeTestInstances
 import org.jetbrains.kotlin.konan.test.blackbox.support.settings.ThreadStateChecker
-import org.jetbrains.kotlin.konan.test.syntheticAccessors.AbstractNativeKlibSyntheticAccessorTest
+import org.jetbrains.kotlin.konan.test.syntheticAccessors.AbstractFirNativeKlibSyntheticAccessorTest
 import org.jetbrains.kotlin.test.builders.RegisteredDirectivesBuilder
 import org.jetbrains.kotlin.test.directives.KlibBasedCompilerTestDirectives
 import org.junit.jupiter.api.Assumptions.assumeTrue
@@ -53,6 +53,6 @@ class KlibSyntheticAccessorTestSupport : BeforeEachCallback {
     }
 }
 
-internal fun ExtensionContext.computeKlibSyntheticAccessorTestInstances(): NativeTestInstances<AbstractNativeKlibSyntheticAccessorTest> =
+internal fun ExtensionContext.computeKlibSyntheticAccessorTestInstances(): NativeTestInstances<AbstractFirNativeKlibSyntheticAccessorTest> =
     NativeTestInstances(requiredTestInstances.allInstances)
 

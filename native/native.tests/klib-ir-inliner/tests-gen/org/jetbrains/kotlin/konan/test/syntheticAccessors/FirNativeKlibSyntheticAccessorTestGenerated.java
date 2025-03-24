@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @EnforcedProperty(property = ClassLevelProperty.TEST_KIND, propertyValue = "STANDALONE")
 @EnforcedProperty(property = ClassLevelProperty.CACHE_MODE, propertyValue = "NO")
 @UseExtTestCaseGroupProvider()
-public class NativeKlibSyntheticAccessorInPhase1TestGenerated extends AbstractNativeKlibSyntheticAccessorInPhase1Test {
+public class FirNativeKlibSyntheticAccessorTestGenerated extends AbstractFirNativeKlibSyntheticAccessorTest {
   @Test
   public void testAllFilesPresentInSyntheticAccessors() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/klib/syntheticAccessors"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.NATIVE, true);
