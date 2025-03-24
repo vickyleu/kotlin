@@ -36,9 +36,6 @@ class KlibSyntheticAccessorTestSupport : BeforeEachCallback {
                 TestDirectives.FREE_COMPILER_ARGS with listOfNotNull(
                     // Don't run LLVM, stop after the last IR lowering.
                     "-Xdisable-phases=LinkBitcodeDependencies,WriteBitcodeFile,ObjectFiles,Linker",
-
-                    // Enable narrowing of visibility for synthetic accessors.
-                    "-Xsynthetic-accessors-with-narrowed-visibility"
                 )
 
                 build()

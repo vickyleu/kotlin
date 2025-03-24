@@ -245,7 +245,6 @@ abstract class AbstractFirJsKlibSyntheticAccessorTest(
         with(builder) {
             defaultDirectives {
                 +KlibBasedCompilerTestDirectives.DUMP_KLIB_SYNTHETIC_ACCESSORS
-                +KlibBasedCompilerTestDirectives.KLIB_SYNTHETIC_ACCESSORS_WITH_NARROWED_VISIBILITY
             }
         }
     }
