@@ -71,52 +71,14 @@ abstract class SyntheticAccessorsDumpHandler<A : ResultingArtifact.Binary<A>>(
                 }
             }
 
-            val normalDumpFile = dumpFile(testDataFile, false)
-            val narrowedDumpFile = dumpFile(testDataFile, true)
-            val expectedDumpFile = checkDumpFilesAndChooseOne(testDataFile, normalDumpFile, narrowedDumpFile)
+            val expectedDumpFile = dumpFile(testDataFile)
 
             assertEqualsToFile(expectedDumpFile, actualDump)
         }
 
-        private fun dumpFile(testDataFile: File, withNarrowedVisibility: Boolean): File {
-            val dumpFileName = buildString {
-                append(testDataFile.nameWithoutExtension)
-                append(".accessors")
-                if (withNarrowedVisibility) append("-narrowed")
-                append(".txt")
-            }
-
+        private fun dumpFile(testDataFile: File): File {
+            val dumpFileName = testDataFile.nameWithoutExtension + ".accessors-narrowed.txt"
             return testDataFile.resolveSibling(dumpFileName)
-        }
-
-        private fun Assertions.checkDumpFilesAndChooseOne(testDataFile: File, normalDumpFile: File, narrowedDumpFile: File): File {
-            val shouldBeIdenticalDumps = isDirectiveDefined(loadFile(testDataFile), "IDENTICAL_KLIB_SYNTHETIC_ACCESSOR_DUMPS")
-
-            if (normalDumpFile.exists() && narrowedDumpFile.exists()) {
-                val identicalDumps = normalDumpFile.readText().trimEnd() == narrowedDumpFile.readText().trimEnd()
-
-                fun fail(problem: String, actions: String): Nothing = fail { "$problem\n$actions\n" }
-
-                if (identicalDumps) {
-                    if (shouldBeIdenticalDumps)
-                        fail(
-                            "The synthetic accessor dumps are identical.",
-                            "Please remove the .accessors-narrowed.txt file."
-                        )
-                    else
-                        fail(
-                            "The synthetic accessor dumps are identical.",
-                            "Please remove the .accessors-narrowed.txt file and add the IDENTICAL_KLIB_SYNTHETIC_ACCESSOR_DUMPS directive to the test data file."
-                        )
-                } else if (shouldBeIdenticalDumps) {
-                    fail(
-                        "The synthetic accessor dumps differ.",
-                        "Please remove the IDENTICAL_KLIB_SYNTHETIC_ACCESSOR_DUMPS directive from the test data file."
-                    )
-                }
-            }
-
-            return if (shouldBeIdenticalDumps) normalDumpFile else narrowedDumpFile
         }
     }
 }

@@ -6,7 +6,7 @@ public class A
     private var privateVar: Int
         /* TARGET declaration */ private fun <get-privateVar>(): Int
         /* TARGET declaration */ private fun <set-privateVar>(<set-?>: Int)
-    internal inline fun internalInlineFunction(): KMutableProperty0<Int>
+    public inline fun publicInlineFunction(): KMutableProperty0<Int>
         /* RICH PROPERTY REFERENCE */
             /* LOCAL declaration @0 */ local fun <get-privateVar>(<this>: A): Int
                 /* ACCESSOR use-site */ access$<get-privateVar>($this = <this>)
