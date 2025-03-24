@@ -62,7 +62,8 @@ class Generator(
                 val typeParameters =
                     if (kClass.typeParameters.isEmpty()) ""
                     else kClass.typeParameters.joinToString(separator = ",", prefix = "<", postfix = ">") { "*" }
-                println("typealias ${alias.component1()} = $abstractCheckerName<${kClass.simpleName}$typeParameters>")
+                println("typealias ${alias.first} = $abstractCheckerName<${kClass.simpleName}$typeParameters>")
+                println("typealias ${alias.first}Contextual = ${abstractCheckerName}Contextual<${kClass.simpleName}$typeParameters>")
             }
         }
     }

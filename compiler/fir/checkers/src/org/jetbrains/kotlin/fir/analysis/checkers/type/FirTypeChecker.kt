@@ -22,3 +22,16 @@ abstract class FirTypeChecker<in T : FirTypeRef>(final override val mppKind: Mpp
      */
     abstract fun check(typeRef: T, context: CheckerContext, reporter: DiagnosticReporter)
 }
+
+abstract class FirTypeCheckerContextual<in T : FirTypeRef>(mppKind: MppCheckerKind) : FirTypeChecker<T>(mppKind) {
+    context(context: CheckerContext, reporter: DiagnosticReporter)
+    abstract fun check(typeRef: T)
+
+    final override fun check(typeRef: T, context: CheckerContext, reporter: DiagnosticReporter) {
+        with(context) {
+            with(reporter) {
+                check(typeRef)
+            }
+        }
+    }
+}

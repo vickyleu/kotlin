@@ -14,3 +14,17 @@ import org.jetbrains.kotlin.fir.expressions.FirStatement
 abstract class FirExpressionChecker<in E : FirStatement>(final override val mppKind: MppCheckerKind) : FirCheckerWithMppKind {
     abstract fun check(expression: E, context: CheckerContext, reporter: DiagnosticReporter)
 }
+
+abstract class FirExpressionCheckerContextual<in E : FirStatement>(mppKind: MppCheckerKind) : FirExpressionChecker<E>(mppKind) {
+    context(context: CheckerContext, reporter: DiagnosticReporter)
+    abstract fun check(expression: E)
+
+    final override fun check(expression: E, context: CheckerContext, reporter: DiagnosticReporter) {
+        with(context) {
+            with(reporter) {
+                check(expression)
+            }
+        }
+    }
+}
+
