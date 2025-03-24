@@ -77,7 +77,7 @@ abstract class SyntheticAccessorsDumpHandler<A : ResultingArtifact.Binary<A>>(
         }
 
         private fun dumpFile(testDataFile: File): File {
-            val dumpFileName = testDataFile.nameWithoutExtension + ".accessors-narrowed.txt"
+            val dumpFileName = testDataFile.nameWithoutExtension + ".accessors.txt"
             return testDataFile.resolveSibling(dumpFileName)
         }
     }
