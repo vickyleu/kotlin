@@ -228,11 +228,9 @@ open class AbstractFirJsCodegenWasmJsInteropTest : AbstractFirJsTest(
 )
 
 // TODO(KT-64570): Don't inherit from AbstractFirJsTest after we move the common prefix of lowerings before serialization.
-abstract class AbstractFirJsKlibSyntheticAccessorTest(
-    testGroupOutputDirPrefix: String
-) : AbstractFirJsTest(
+open class AbstractFirJsKlibSyntheticAccessorTest : AbstractFirJsTest(
     pathToTestDir = "compiler/testData/klib/syntheticAccessors/",
-    testGroupOutputDirPrefix,
+    testGroupOutputDirPrefix = "klib/syntheticAccessors-k2/phase1",
 ) {
     override val customIgnoreDirective: ValueDirective<TargetBackend>?
         get() = IGNORE_KLIB_SYNTHETIC_ACCESSORS_CHECKS
@@ -249,7 +247,3 @@ abstract class AbstractFirJsKlibSyntheticAccessorTest(
         }
     }
 }
-
-open class AbstractFirJsKlibSyntheticAccessorInPhase1Test : AbstractFirJsKlibSyntheticAccessorTest(
-    testGroupOutputDirPrefix = "klib/syntheticAccessors-k2/phase1",
-)
