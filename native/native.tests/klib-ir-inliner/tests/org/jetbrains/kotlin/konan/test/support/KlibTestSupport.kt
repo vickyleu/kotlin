@@ -38,7 +38,7 @@ class KlibSyntheticAccessorTestSupport : BeforeEachCallback {
                     "-Xdisable-phases=LinkBitcodeDependencies,WriteBitcodeFile,ObjectFiles,Linker",
 
                     // Enable narrowing of visibility for synthetic accessors.
-                    "-Xsynthetic-accessors-with-narrowed-visibility".takeIf { nativeTestInstances.enclosingTestInstance.narrowedAccessorVisibility }
+                    "-Xsynthetic-accessors-with-narrowed-visibility"
                 )
 
                 build()

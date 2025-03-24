@@ -48,7 +48,6 @@ abstract class SyntheticAccessorsDumpHandler<A : ResultingArtifact.Binary<A>>(
             dumpDir = dumpDir,
             moduleNames = uniqueIrModuleNames,
             testDataFile = testServices.moduleStructure.originalTestDataFiles.first(),
-            withNarrowedVisibility
         )
     }
 
@@ -57,7 +56,6 @@ abstract class SyntheticAccessorsDumpHandler<A : ResultingArtifact.Binary<A>>(
             dumpDir: File,
             moduleNames: Set<Name>,
             testDataFile: File,
-            withNarrowedVisibility: Boolean
         ) {
             val irModuleDumps = moduleNames.mapNotNull { moduleName ->
                 val moduleDumpFile = DumpSyntheticAccessors.getDumpFileForModule(dumpDir, moduleName)
@@ -77,14 +75,9 @@ abstract class SyntheticAccessorsDumpHandler<A : ResultingArtifact.Binary<A>>(
                 }
             }
 
-            val expectedDumpFile = if (withNarrowedVisibility) {
-                val normalDumpFile = dumpFile(testDataFile, false)
-                val narrowedDumpFile = dumpFile(testDataFile, true)
-
-                checkDumpFilesAndChooseOne(testDataFile, normalDumpFile, narrowedDumpFile)
-            } else {
-                dumpFile(testDataFile, false)
-            }
+            val normalDumpFile = dumpFile(testDataFile, false)
+            val narrowedDumpFile = dumpFile(testDataFile, true)
+            val expectedDumpFile = checkDumpFilesAndChooseOne(testDataFile, normalDumpFile, narrowedDumpFile)
 
             assertEqualsToFile(expectedDumpFile, actualDump)
         }
