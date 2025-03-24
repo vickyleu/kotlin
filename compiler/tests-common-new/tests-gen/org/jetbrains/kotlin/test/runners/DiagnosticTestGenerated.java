@@ -9581,6 +9581,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
       public void testNestedClasses() {
         runTest("compiler/testData/diagnostics/tests/crvFull/nestedClasses.kt");
       }
+
+      @Test
+      @TestMetadata("nonCompilerAnnotations.kt")
+      public void testNonCompilerAnnotations() {
+        runTest("compiler/testData/diagnostics/tests/crvFull/nonCompilerAnnotations.kt");
+      }
     }
 
     @Nested

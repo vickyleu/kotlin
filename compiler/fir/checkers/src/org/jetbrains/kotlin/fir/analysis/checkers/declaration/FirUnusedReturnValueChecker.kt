@@ -184,6 +184,7 @@ private inline fun CallableId.ifMappedTypeCollection(nonIgnorableCollectionMetho
             "addAll",
             "remove",
             "removeAt",
+            "removeAll",
             "set",
             "put",
             "retainAll",
