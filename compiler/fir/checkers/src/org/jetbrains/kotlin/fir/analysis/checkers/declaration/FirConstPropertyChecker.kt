@@ -23,43 +23,44 @@ import org.jetbrains.kotlin.fir.types.ConeErrorType
 import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.lexer.KtTokens
 
-object FirConstPropertyChecker : FirPropertyChecker(MppCheckerKind.Common) {
-    override fun check(declaration: FirProperty, context: CheckerContext, reporter: DiagnosticReporter) {
+object FirConstPropertyChecker : FirPropertyCheckerContextual(MppCheckerKind.Common) {
+    context(context: CheckerContext, reporter: DiagnosticReporter)
+    override fun check(declaration: FirProperty) {
         if (!declaration.isConst) return
 
         if (declaration.isVar) {
             val constModifier = declaration.getModifier(KtTokens.CONST_KEYWORD)
             constModifier?.let {
-                reporter.reportOn(it.source, FirErrors.WRONG_MODIFIER_TARGET, it.token, "vars", context)
+                reporter.reportOn(it.source, FirErrors.WRONG_MODIFIER_TARGET, it.token, "vars")
             }
         }
 
         val classKind = (context.containingDeclarations.lastOrNull() as? FirRegularClass)?.classKind
         if (classKind != ClassKind.OBJECT && context.containingDeclarations.size > 1) {
-            reporter.reportOn(declaration.source, FirErrors.CONST_VAL_NOT_TOP_LEVEL_OR_OBJECT, context)
+            reporter.reportOn(declaration.source, FirErrors.CONST_VAL_NOT_TOP_LEVEL_OR_OBJECT)
             return
         }
 
         val source = declaration.getter?.source
         if (source != null && source.kind !is KtFakeSourceElementKind) {
-            reporter.reportOn(source, FirErrors.CONST_VAL_WITH_GETTER, context)
+            reporter.reportOn(source, FirErrors.CONST_VAL_WITH_GETTER)
             return
         }
 
         if (declaration.delegate != null) {
-            reporter.reportOn(declaration.delegate?.source, FirErrors.CONST_VAL_WITH_DELEGATE, context)
+            reporter.reportOn(declaration.delegate?.source, FirErrors.CONST_VAL_WITH_DELEGATE)
             return
         }
 
         val initializer = declaration.initializer
         if (initializer == null) {
-            reporter.reportOn(declaration.source, FirErrors.CONST_VAL_WITHOUT_INITIALIZER, context)
+            reporter.reportOn(declaration.source, FirErrors.CONST_VAL_WITHOUT_INITIALIZER)
             return
         }
 
         val type = declaration.returnTypeRef.coneType.fullyExpandedType(context.session)
         if ((type !is ConeErrorType) && !type.canBeUsedForConstVal()) {
-            reporter.reportOn(declaration.source, FirErrors.TYPE_CANT_BE_USED_FOR_CONST_VAL, declaration.returnTypeRef.coneType, context)
+            reporter.reportOn(declaration.source, FirErrors.TYPE_CANT_BE_USED_FOR_CONST_VAL, declaration.returnTypeRef.coneType)
             return
         }
 
@@ -68,6 +69,6 @@ object FirConstPropertyChecker : FirPropertyChecker(MppCheckerKind.Common) {
             ConstantArgumentKind.NOT_CONST_VAL_IN_CONST_EXPRESSION -> FirErrors.NON_CONST_VAL_USED_IN_CONSTANT_EXPRESSION
             else -> FirErrors.CONST_VAL_WITH_NON_CONST_INITIALIZER
         }
-        reporter.reportOn(initializer.source, errorKind, context)
+        reporter.reportOn(initializer.source, errorKind)
     }
 }
