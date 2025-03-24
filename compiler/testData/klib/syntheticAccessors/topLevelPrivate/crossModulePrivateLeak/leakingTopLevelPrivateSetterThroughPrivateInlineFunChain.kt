@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // KT-72862: No function found for symbol
 // IGNORE_NATIVE: cacheMode=STATIC_USE_HEADERS_EVERYWHERE
 // JVM_ABI_K1_K2_DIFF

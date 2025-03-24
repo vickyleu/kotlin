@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // FILE: A.kt
 class A {
     internal inline var inlineVar: Int

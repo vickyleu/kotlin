@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // FILE: a.kt
 private fun privateFun() = "OK"
 private inline fun privateInlineFun1() = privateFun()

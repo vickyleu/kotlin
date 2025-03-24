@@ -1,3 +1,5 @@
+// LANGUAGE: -IrInlinerBeforeKlibSerialization
+
 // FILE: a.kt
 private var privateVar = 12
 
