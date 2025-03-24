@@ -58,7 +58,3 @@ sourcesJar()
 javadocJar()
 
 testsJar()
-
-tasks.withType<KotlinJvmCompile> {
-    compilerOptions.freeCompilerArgs.add("-Xcontext-parameters")
-}
