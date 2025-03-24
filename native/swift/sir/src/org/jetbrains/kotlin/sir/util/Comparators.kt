@@ -38,7 +38,7 @@ object Comparators {
 
     private val SirType.swift
         get(): String = when (this) {
-            is SirExistentialType -> error("Existential types are not supported yet")
+            is SirExistentialType -> "Any" + protocols.count() + this.protocols.joinToString(separator = "_") { it.name }
             is SirNominalType -> typeDeclaration.name
             is SirErrorType -> "SirErrorType"
             is SirUnsupportedType -> "SirUnsupportedType"

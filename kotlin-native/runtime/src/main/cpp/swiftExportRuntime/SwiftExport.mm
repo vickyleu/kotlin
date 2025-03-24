@@ -4,6 +4,8 @@
  */
 
 #include "SwiftExport.hpp"
+#include "Types.h"
+#include "ObjCExport.h"
 
 #if KONAN_OBJC_INTEROP
 
@@ -39,7 +41,13 @@ Class computeBestFittingClass(const TypeInfo* typeInfo) noexcept {
     if (bestFitting == nil) {
         auto* superTypeInfo = typeInfo->superType_;
         RuntimeAssert(superTypeInfo != nullptr, "Type %p has no super type", typeInfo);
-        bestFitting = computeBestFittingClass(superTypeInfo);
+
+        if (superTypeInfo == theAnyTypeInfo) { // If this is a root class, we default to existential
+            Class marker = Kotlin_ObjCExport_GetOrCreateClass(typeInfo);
+            bestFitting = kotlin_wrap_into_existential(marker); // provided by KotlinRuntimeSupport.swift
+        } else { // Otherwise, we default to a parent's wrapper
+            bestFitting = computeBestFittingClass(superTypeInfo);
+        }
     }
     RuntimeAssert(bestFitting != nil, "No type in %p hierarchy has best-fitting ObjC class", typeInfo);
 

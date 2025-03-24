@@ -1065,6 +1065,10 @@ static Class getOrCreateClass(const TypeInfo* typeInfo) {
   return result;
 }
 
+extern "C" Class Kotlin_ObjCExport_GetOrCreateClass(const TypeInfo *typeInfo) {
+    return getOrCreateClass(typeInfo);
+}
+
 extern "C" void Kotlin_ObjCExport_AbstractMethodCalled(id self, SEL selector) {
   [NSException raise:NSGenericException
         format:@"[%s %s] is abstract",

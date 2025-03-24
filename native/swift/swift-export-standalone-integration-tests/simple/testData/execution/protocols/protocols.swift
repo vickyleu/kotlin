@@ -73,3 +73,12 @@ func testInterfaceMembersOfExistential() throws {
     try #require(propertyResult === expected)
     try #require(propertyResult !== instance)
 }
+
+@Test
+func testShouldWrapPrivateTypesIntoKotlinExistentials() throws {
+    let expected = value
+
+    let actualFunctionResult = identity(baz: expected)
+
+    try #require(actualFunctionResult === expected)
+}

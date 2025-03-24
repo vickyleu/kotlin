@@ -71,7 +71,7 @@ abstract class AbstractSwiftExportTest {
         val modulesToExport = rootModules + modulesMarkedForExport
 
         val config = SwiftExportConfig(
-            outputPath = tmpdir.toPath().resolve(testDir),
+            outputPath = buildDir(testPathFull.name).resolve(testDir).toPath(),
             stableDeclarationsOrder = true,
             distribution = Distribution(KonanHome.konanHomePath),
             konanTarget = targets.testTarget,
