@@ -973,7 +973,7 @@ static void addVirtualAdapters(Class clazz, const ObjCTypeAdapter* typeAdapter) 
 
 static Class createClass(const TypeInfo* typeInfo, Class superClass) {
   RuntimeAssert(typeInfo->superType_ != nullptr, "");
-  RuntimeAssert(!compiler::swiftExport(), "Not available with Swift Export");
+//   RuntimeAssert(!compiler::swiftExport(), "Not available with Swift Export");
 
   kotlin::NativeOrUnregisteredThreadGuard threadStateGuard(/* reentrant = */ true);
 
@@ -1042,7 +1042,7 @@ static Class getOrCreateClass(const TypeInfo* typeInfo) {
     return result;
   }
 
-  RuntimeAssert(!compiler::swiftExport(), "Not available with Swift Export");
+//   RuntimeAssert(!compiler::swiftExport(), "Not available with Swift Export");
 
   const ObjCTypeAdapter* typeAdapter = getTypeAdapter(typeInfo);
   if (typeAdapter != nullptr) {

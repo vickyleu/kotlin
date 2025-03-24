@@ -5,6 +5,7 @@
 
 #import "Types.h"
 #import "Memory.h"
+#import <iostream>
 
 #if KONAN_OBJC_INTEROP
 
@@ -177,12 +178,19 @@ using RegularRef = kotlin::mm::ObjCBackRef;
 }
 
 - (instancetype)initWithExternalRCRef:(uintptr_t)ref {
+    std::cerr << "START0" << std::endl;
     RuntimeAssert(kotlin::compiler::swiftExport(), "Must be used in Swift Export only");
     kotlin::AssertThreadState(kotlin::ThreadState::kNative);
 
     auto externalRCRef = reinterpret_cast<kotlin::mm::RawExternalRCRef*>(ref);
+
+    std::cerr << "START1" << std::endl;
+
     Class bestFittingClass =
             kotlin::swiftExportRuntime::bestFittingObjCClassFor(kotlin::mm::typeOfExternalRCRef(externalRCRef));
+
+    std::cerr << "END " << class_getName(bestFittingClass) << std::endl;
+
     if ([self class] != bestFittingClass) {
         if ([[self class] isSubclassOfClass:bestFittingClass]) {
             konan::consoleErrorf(
@@ -258,10 +266,11 @@ using RegularRef = kotlin::mm::ObjCBackRef;
 }
 
 - (NSString *)description {
-    kotlin::ThreadStateGuard guard(kotlin::ThreadState::kRunnable);
-    ObjHolder h1;
-    ObjHolder h2;
-    return Kotlin_Interop_CreateNSStringFromKString(Kotlin_toString([self toKotlin:h1.slot()], h2.slot()));
+//     kotlin::ThreadStateGuard guard(kotlin::ThreadState::kRunnable);
+//     ObjHolder h1;
+//     ObjHolder h2;
+//     return Kotlin_Interop_CreateNSStringFromKString(Kotlin_toString([self toKotlin:h1.slot()], h2.slot()));
+    return @"";
 }
 
 - (NSUInteger)hash {
