@@ -206,8 +206,6 @@ class JsEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigu
             )
         }
 
-        configuration.syntheticAccessorsWithNarrowedVisibility = true
-
         configuration.klibRelativePathBases = registeredDirectives[KLIB_RELATIVE_PATH_BASES].applyIf(testServices.cliBasedFacadesEnabled) {
             val modulePath = testServices.sourceFileProvider.getKotlinSourceDirectoryForModule(module).canonicalPath
             map { "$modulePath/$it" }
