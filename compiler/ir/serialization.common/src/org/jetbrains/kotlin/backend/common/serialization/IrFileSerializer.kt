@@ -305,8 +305,8 @@ open class IrFileSerializer(
                     // Compute the signature:
                     when {
                         symbolOwner is IrDeclaration -> declarationTable.signatureByDeclaration(
-                            symbolOwner,
-                            settings.compatibilityMode.legacySignaturesForPrivateAndLocalDeclarations,
+                            declaration = symbolOwner,
+                            compatibleMode = false,
                             recordInSignatureClashDetector = isDeclared
                         )
 
@@ -1520,8 +1520,8 @@ open class IrFileSerializer(
 
             val byteArray = serializeDeclaration(it).toByteArray()
             val idSig = declarationTable.signatureByDeclaration(
-                it,
-                settings.compatibilityMode.legacySignaturesForPrivateAndLocalDeclarations,
+                declaration = it,
+                compatibleMode = false,
                 recordInSignatureClashDetector = false
             )
             require(idSig == idSig.topLevelSignature()) { "IdSig: $idSig\ntopLevel: ${idSig.topLevelSignature()}" }
