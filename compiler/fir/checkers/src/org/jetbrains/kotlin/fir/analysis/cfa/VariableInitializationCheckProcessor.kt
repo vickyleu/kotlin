@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.fir.analysis.cfa
 
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import org.jetbrains.kotlin.KtRealSourceElementKind
 import org.jetbrains.kotlin.contracts.description.canBeRevisited
 import org.jetbrains.kotlin.contracts.description.isDefinitelyVisited
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
@@ -189,6 +190,7 @@ abstract class VariableInitializationCheckProcessor {
         if (node.fir.resolvedType.hasDiagnosticKind(DiagnosticKind.RecursionInImplicitTypes)) return
         val symbol = node.fir.calleeReference.toResolvedVariableSymbol() ?: return
         if (doNotReportConstantUninitialized && symbol.isConst) return
+        if (symbol.source?.kind != KtRealSourceElementKind) return
         if (
             !symbol.isLateInit &&
             !symbol.isExternal &&
