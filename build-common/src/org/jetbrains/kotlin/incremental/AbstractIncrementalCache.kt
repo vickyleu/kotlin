@@ -212,8 +212,9 @@ abstract class AbstractIncrementalCache<ClassName>(
     )
 
     override fun getComplementaryFilesRecursive(dirtyFiles: Collection<File>): Collection<File> {
-        val complementaryFiles = HashSet(expectOfLenientStubs.keys)
+        val complementaryFiles = HashSet<File>()
         val filesQueue = ArrayDeque(dirtyFiles)
+        filesQueue.addAll(expectOfLenientStubs.keys)
 
         val processedClasses = HashSet<FqName>()
         val processedFiles = HashSet<File>()

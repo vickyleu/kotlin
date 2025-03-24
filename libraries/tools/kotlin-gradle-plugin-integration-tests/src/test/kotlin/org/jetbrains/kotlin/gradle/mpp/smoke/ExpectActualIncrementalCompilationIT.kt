@@ -137,6 +137,43 @@ open class ExpectActualIncrementalCompilationIT : KGPBaseTest() {
             }
         }
     }
+
+    @DisplayName("Incremental compilation with lenient mode 2")
+    @GradleTest
+    fun testLenientModeIncrementalCompilation2(gradleVersion: GradleVersion) {
+        project("lenientMode", gradleVersion) {
+            kotlinSourcesDir("commonMain").resolve("common.kt").writeText(
+                """
+                expect fun foo()
+                expect fun bar()
+            """.trimIndent()
+            )
+
+            kotlinSourcesDir("jvmMain").resolve("jvm.kt").writeText(
+                """
+                actual fun foo() {}
+            """.trimIndent()
+            )
+
+            build("compileKotlinJvm")
+
+            kotlinSourcesDir("commonMain").resolve("common2.kt").writeText(
+                """
+                fun baz() {}
+            """.trimIndent()
+            )
+
+            build("compileKotlinJvm") {
+                assertIncrementalCompilation(
+                    listOf(
+                        kotlinSourcesDir("commonMain").resolve("common.kt"),
+                        kotlinSourcesDir("commonMain").resolve("common2.kt"),
+                        kotlinSourcesDir("jvmMain").resolve("jvm.kt"),
+                    ).relativizeTo(projectPath)
+                )
+            }
+        }
+    }
 }
 
 @DisplayName("Incremental scenarios with expect/actual - K1")
