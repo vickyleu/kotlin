@@ -390,6 +390,7 @@ enum class LanguageFeature(
     WhenGuards(KOTLIN_2_2, kind = OTHER), // KT-13626
     MultiDollarInterpolation(KOTLIN_2_2, kind = OTHER), // KT-2425
     JvmDefaultEnableByDefault(KOTLIN_2_2, kind = OTHER), // KT-71768
+    ResolveTopLevelLambdasAsSyntheticCallArgument(KOTLIN_2_2, kind = OTHER), // KT-67869
 
     // 2.3
 
@@ -401,7 +402,6 @@ enum class LanguageFeature(
     EnableDfaWarningsInK2(KOTLIN_2_3, kind = OTHER), // KT-50965
     AllowEagerSupertypeAccessibilityChecks(KOTLIN_2_3, kind = OTHER), // KT-73611
     DontMakeExplicitJavaTypeArgumentsFlexible(KOTLIN_2_3, kind = OTHER), // KT-71718
-    ResolveTopLevelLambdasAsSyntheticCallArgument(KOTLIN_2_3, kind = OTHER), // KT-67869
     UnstableSmartcastOnDelegatedProperties(KOTLIN_2_3, kind = BUG_FIX), // KTLC-273
     ForbidAnnotationsWithUseSiteTargetOnExpressions(KOTLIN_2_3, kind = BUG_FIX), // KT-75242
     ProhibitNullableTypeThroughTypealias(KOTLIN_2_3, kind = BUG_FIX), // KTLC-279
