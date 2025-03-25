@@ -335,6 +335,7 @@ internal val KtElement.isAutonomousElement: Boolean
         else -> true
     }
 
+// TODO change predicate (KT-76271)
 internal fun PsiElement.getNonLocalContainingOrThisDeclaration(predicate: (KtDeclaration) -> Boolean = { true }): KtDeclaration? {
     return getNonLocalContainingOrThisElement { it is KtDeclaration && predicate(it) } as? KtDeclaration
 }
