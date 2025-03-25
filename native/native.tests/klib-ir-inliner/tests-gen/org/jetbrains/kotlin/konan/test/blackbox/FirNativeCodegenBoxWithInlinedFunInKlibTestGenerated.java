@@ -20328,6 +20328,12 @@ public class FirNativeCodegenBoxWithInlinedFunInKlibTestGenerated extends Abstra
           public void testKt74819e() {
             runTest("compiler/testData/codegen/box/inference/pcla/issues/kt74819e.kt");
           }
+
+          @Test
+          @TestMetadata("kt76058.kt")
+          public void testKt76058() {
+            runTest("compiler/testData/codegen/box/inference/pcla/issues/kt76058.kt");
+          }
         }
 
         @Nested
