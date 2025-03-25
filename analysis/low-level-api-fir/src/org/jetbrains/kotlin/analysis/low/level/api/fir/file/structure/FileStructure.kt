@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.api.DiagnosticCheckerFilt
 import org.jetbrains.kotlin.analysis.low.level.api.fir.diagnostics.LLFirDiagnosticVisitor
 import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.getNonLocalContainingOrThisElement
 import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.isAutonomousDeclaration
+import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.elementCanBeLazilyResolved
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.*
 import org.jetbrains.kotlin.diagnostics.KtPsiDiagnostic
 import org.jetbrains.kotlin.fir.declarations.FirDanglingModifierList
@@ -180,7 +181,7 @@ internal class FileStructure private constructor(
             }
 
             override fun visitModifierList(list: KtModifierList) {
-                if (list.isNonLocalDanglingModifierList()) {
+                if (elementCanBeLazilyResolved(list)) {
                     addStructureElementForTo(list, structureElements)
                 }
             }
@@ -224,7 +225,7 @@ internal class FileStructure private constructor(
         }
 
         container is KtDeclaration -> createDeclarationStructure(container)
-        container is KtModifierList && container.isNonLocalDanglingModifierList() -> {
+        container is KtModifierList && elementCanBeLazilyResolved(container) -> {
             createDanglingModifierListStructure(container)
         }
         else -> errorWithAttachment("Invalid container ${container::class}") {
