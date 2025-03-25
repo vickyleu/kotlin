@@ -8,6 +8,7 @@
 
 package kotlin
 
+import kotlin.experimental.*
 import kotlin.jvm.*
 
 @SinceKotlin("1.5")
