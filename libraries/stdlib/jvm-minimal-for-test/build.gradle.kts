@@ -49,6 +49,7 @@ val copyCommonSources by task<Sync> {
             "kotlin/annotations/WasExperimental.kt",
             "kotlin/internal/Annotations.kt",
             "kotlin/internal/AnnotationsBuiltin.kt",
+            "kotlin/internal/Ref.kt",
             "kotlin/contracts/ContractBuilder.kt",
             "kotlin/contracts/Effect.kt",
         )
