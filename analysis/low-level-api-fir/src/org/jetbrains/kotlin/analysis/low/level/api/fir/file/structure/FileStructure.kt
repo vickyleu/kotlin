@@ -225,9 +225,8 @@ internal class FileStructure private constructor(
         }
 
         container is KtDeclaration -> createDeclarationStructure(container)
-        container is KtModifierList && elementCanBeLazilyResolved(container, codeFragmentAware = false) -> {
-            createDanglingModifierListStructure(container)
-        }
+        container is KtModifierList -> createDanglingModifierListStructure(container)
+
         else -> errorWithAttachment("Invalid container ${container::class}") {
             withPsiEntry("container", container)
         }
