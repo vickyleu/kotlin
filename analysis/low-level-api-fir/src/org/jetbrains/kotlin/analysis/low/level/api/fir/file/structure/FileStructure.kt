@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.LLFirModuleResolveCompone
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.DiagnosticCheckerFilter
 import org.jetbrains.kotlin.analysis.low.level.api.fir.diagnostics.LLFirDiagnosticVisitor
 import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.getNonLocalContainingOrThisElement
-import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.isAutonomousDeclaration
+import org.jetbrains.kotlin.analysis.low.level.api.fir.element.builder.isAutonomousElement
 import org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve.elementCanBeLazilyResolved
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.*
 import org.jetbrains.kotlin.diagnostics.KtPsiDiagnostic
@@ -66,7 +66,7 @@ internal class FileStructure private constructor(
          * @see getNonLocalContainingOrThisElement
          */
         private fun findNonLocalContainer(element: KtElement): KtElement? {
-            return element.getNonLocalContainingOrThisElement { it.isAutonomousDeclaration }
+            return element.getNonLocalContainingOrThisElement { it.isAutonomousElement }
         }
     }
 
@@ -110,7 +110,7 @@ internal class FileStructure private constructor(
     }
 
     private fun getStructureKtElement(element: KtElement, nonLocalContainer: KtElement?): KtElement? {
-        val container = if (nonLocalContainer?.isAutonomousDeclaration == true)
+        val container = if (nonLocalContainer?.isAutonomousElement == true)
             nonLocalContainer
         else {
             nonLocalContainer?.let(::findNonLocalContainer)
