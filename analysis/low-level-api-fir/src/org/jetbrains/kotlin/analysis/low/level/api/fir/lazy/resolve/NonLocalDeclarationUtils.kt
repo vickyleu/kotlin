@@ -5,11 +5,8 @@
 
 package org.jetbrains.kotlin.analysis.low.level.api.fir.lazy.resolve
 
-import com.intellij.psi.PsiErrorElement
 import org.jetbrains.kotlin.analysis.utils.printer.parentOfType
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.anyDescendantOfType
-import org.jetbrains.kotlin.psi.psiUtil.getNextSiblingIgnoringWhitespaceAndComments
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
 import org.jetbrains.kotlin.utils.exceptions.withPsiEntry
 
@@ -35,7 +32,7 @@ internal fun elementCanBeLazilyResolved(element: KtElement?, codeFragmentAware: 
     is KtPropertyAccessor -> elementCanBeLazilyResolved(element.property, codeFragmentAware)
     is KtClassOrObject -> element.isTopLevel() || element.getClassId() != null
     is KtTypeAlias -> element.isTopLevel() || element.getClassId() != null
-    is KtModifierList -> element.isNonLocalDanglingModifierList()
+    is KtModifierList -> element.isNonLocalDanglingModifierList(codeFragmentAware)
     !is KtNamedDeclaration -> false
     else -> errorWithAttachment("Unexpected ${element::class}") {
         withPsiEntry("declaration", element)
@@ -62,31 +59,14 @@ internal fun elementCanBeLazilyResolved(element: KtElement?, codeFragmentAware: 
  * fun foo() {}
  * ```
  * @see org.jetbrains.kotlin.fir.declarations.FirDanglingModifierList
+ * @see org.jetbrains.kotlin.fir.builder.PsiRawFirBuilder.Visitor.buildErrorTopLevelDeclarationForDanglingModifierList
  */
-private fun KtModifierList.isNonLocalDanglingModifierList(): Boolean {
-    val parent = parent
-
-    if (parent !is KtFile && parent !is KtClassBody) {
-        // We recognize only malformed PSI, where the modifier list is not attached
-        // to some annotated declaration (it is not a child of this declaration).
-        //
-        // Here is an example of a well-formed PSI, where the modifier list is a child of the interface,
-        // even though the PSI contains error elements (inside brackets).
-        // This is not considered a dangling modifier list:
-        //
-        // @file:[]
-        // interface I
-        return false
+private fun KtModifierList.isNonLocalDanglingModifierList(codeFragmentAware: Boolean): Boolean {
+    val parentToCheck = when (val parent = parent) {
+        is KtFile -> parent
+        is KtClassBody -> (parent.parent as? KtClassOrObject).takeUnless { it is KtEnumEntry }
+        else -> null
     }
 
-    if (parent is KtClassBody && (parent.parent as? KtClassOrObject)?.isLocal() == true) {
-        // We ignore local modifier lists for LL file structure purposes
-        return false
-    }
-
-    // A dangling modifier list is, by definition, syntactically invalid.
-    // Given the variety of invalid code patterns, we rely on a simple best-effort check:
-    // a modifier list is considered dangling if it's followed by a syntax error
-    // or contains any syntax errors within its descendants recursively.
-    return getNextSiblingIgnoringWhitespaceAndComments() is PsiErrorElement || anyDescendantOfType<PsiErrorElement>()
+    return elementCanBeLazilyResolved(parentToCheck, codeFragmentAware)
 }
