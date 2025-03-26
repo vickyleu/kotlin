@@ -114,6 +114,12 @@ public class OutOfContentRootFileStructureTestGenerated extends AbstractOutOfCon
   }
 
   @Test
+  @TestMetadata("danglingAnnotationEnumEntry.kt")
+  public void testDanglingAnnotationEnumEntry() {
+    runTest("analysis/low-level-api-fir/testData/fileStructure/danglingAnnotationEnumEntry.kt");
+  }
+
+  @Test
   @TestMetadata("danglingAnnotationInMiddle.kt")
   public void testDanglingAnnotationInMiddle() {
     runTest("analysis/low-level-api-fir/testData/fileStructure/danglingAnnotationInMiddle.kt");
