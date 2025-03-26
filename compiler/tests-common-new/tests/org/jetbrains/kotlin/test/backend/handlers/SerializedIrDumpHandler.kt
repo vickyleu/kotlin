@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.test.backend.handlers
 
 import org.jetbrains.kotlin.backend.common.serialization.signature.PublicIdSignatureComputer
 import org.jetbrains.kotlin.builtins.StandardNames.DEFAULT_VALUE_PARAMETER
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin.Companion.IR_EXTERNAL_DECLARATION_STUB
 import org.jetbrains.kotlin.ir.expressions.IrDeclarationReference
@@ -17,6 +18,7 @@ import org.jetbrains.kotlin.ir.util.DumpIrTreeOptions.ReferenceRenderingStrategy
 import org.jetbrains.kotlin.ir.util.dumpTreesFromLineNumber
 import org.jetbrains.kotlin.ir.util.render
 import org.jetbrains.kotlin.ir.util.resolveFakeOverride
+import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.test.backend.ir.IrBackendInput
 import org.jetbrains.kotlin.test.directives.KlibBasedCompilerTestDirectives
 import org.jetbrains.kotlin.test.directives.KlibBasedCompilerTestDirectives.SKIP_IR_DESERIALIZATION_CHECKS
@@ -124,11 +126,17 @@ class SerializedIrDumpHandler(
             printParameterNamesInOverriddenSymbols = false,
 
             /**
-             * During deserialization, fake override builder builds much more entities than it was after FIR2IR.
-             * This mismatch fails deserialization tests. To make IR dumps the same before and after the serialization,
-             * it worth not to dump these entities at all.
+             * During deserialization, fake override builder puts `fake overrides symbol` links. They were not created after FIR2IR and IR Inliner.
+             * This mismatch fails deserialization tests with IR Inliner in, for ex.:
+             * - `compiler/testData/codegen/box/coroutines/infiniteLoopInNextMeaningful.kt`
+             * - `compiler/testData/codegen/box/coroutines/bridges/mapSuspendClear.kt`
+             * - `compiler/testData/codegen/box/operatorConventions/suspendOperators.kt`
+             * To make IR dumps the same before and after the serialization, it worth ideally not to dump such links after deserialization,
+             * should they appear within IrInlinedFunctionBlock.
+             * In practice, it's tricky to track their declaration context, so let's simply not dump them at all in presence of IR Inliner.
              */
-            printFakeOverridesInAnonymousClasses = false,
+            printFakeOverrideSymbolsInPropertiesOfAnonymousClasses = !testServices.moduleStructure.modules.first().languageVersionSettings
+                .supportsFeature(LanguageFeature.IrInlinerBeforeKlibSerialization),
 
             /**
              * Names of type and value parameters are not a part of ABI (except for the single existing case in Kotlin/Native related to
@@ -189,7 +197,8 @@ class SerializedIrDumpHandler(
                 if (IrTextDumpHandler.isHiddenDeclaration(declaration, info.irPluginContext.irBuiltIns)) {
                     /** Reuse the existing rules for filtering declarations as in IR text tests. */
                     true
-                } else if (isAfterDeserialization &&
+                } else if (
+                    isAfterDeserialization &&
                     declaration is IrSimpleFunction &&
                     declaration.isFakeOverride &&
                     declaration.resolveFakeOverride()?.origin == IrDeclarationOrigin.SYNTHETIC_ACCESSOR
@@ -197,6 +206,18 @@ class SerializedIrDumpHandler(
                     /**
                      * Ignore fake overrides for synthetic accessors generated in the deserialized IR.
                      * There were no fake overrides for synthetic accessors in IR built by Fir2Ir.
+                     */
+                    true
+                } else if (declaration is IrSimpleFunction &&
+                    declaration.parent.let { it is IrClass && it.name == SpecialNames.NO_NAME_PROVIDED } &&
+                    declaration.origin == IrDeclarationOrigin.FAKE_OVERRIDE &&
+                    testServices.moduleStructure.modules.first().languageVersionSettings.supportsFeature(LanguageFeature.IrInlinerBeforeKlibSerialization)
+                ) {
+                    /** KT-76186: Ignore fake overrides in anonymous local classes declared within IrInlinedFunctionBlock.
+                     * There are no such declarations after IR Inliner, but they appear after deserialization.
+                     * To make dumps identical, such declarations should not be dumped after deserialization.
+                     * However, it would be tricky here to detect whether a local class is declared within IrInlinedFunctionBlock.
+                     * As a much simpler approach, fake overrides in anonymous local classes are not dumped both before and after serialization.
                      */
                     true
                 } else {

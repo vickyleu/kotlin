@@ -99,7 +99,7 @@ data class DumpIrTreeOptions(
     val printAnnotationsInFakeOverrides: Boolean = true,
     val printDispatchReceiverTypeInFakeOverrides: Boolean = true,
     val printParameterNamesInOverriddenSymbols: Boolean = true,
-    val printFakeOverridesInAnonymousClasses: Boolean = true,
+    val printFakeOverrideSymbolsInPropertiesOfAnonymousClasses: Boolean = true,
     val printMemberAccessExpressionArgumentNames: Boolean = true,
     val printSealedSubclasses: Boolean = true,
     val replaceImplicitSetterParameterNameWith: Name? = null,
@@ -259,10 +259,6 @@ class DumpIrTreeVisitor(
     override fun visitSimpleFunction(declaration: IrSimpleFunction, data: String) {
         if (declaration.isHidden()) return
         if (declaration.isExpect && !options.printExpectDeclarations) return
-        if (!options.printFakeOverridesInAnonymousClasses &&
-            declaration.parent.let { it is IrClass && it.name == SpecialNames.NO_NAME_PROVIDED } &&
-            declaration.origin == IrDeclarationOrigin.FAKE_OVERRIDE
-        ) return
 
         declaration.dumpLabeledElementWith(data) {
             declaration.typeParameters.dumpElements()
@@ -298,7 +294,7 @@ class DumpIrTreeVisitor(
             if (options.printAnnotationsInFakeOverrides || !declaration.isFakeOverride) {
                 dumpAnnotations(declaration)
             }
-            if (options.printFakeOverridesInAnonymousClasses ||
+            if (options.printFakeOverrideSymbolsInPropertiesOfAnonymousClasses ||
                 !declaration.parent.let { it is IrClass && it.name == SpecialNames.NO_NAME_PROVIDED }
             ) declaration.overriddenSymbols.dumpFakeOverrideSymbols()
 
