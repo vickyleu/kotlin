@@ -236,6 +236,12 @@ private val inlineAllFunctionsPhase = makeIrModulePhase(
     prerequisite = setOf(outerThisSpecialAccessorInInlineFunctionsPhase)
 )
 
+private val inlineFunctionSerializationPreProcessing = makeIrModulePhase(
+    lowering = ::InlineFunctionSerializationPreProcessing,
+    name = "InlineFunctionSerializationPreProcessing",
+    prerequisite = setOf(inlineAllFunctionsPhase),
+)
+
 private val copyInlineFunctionBodyLoweringPhase = makeIrModulePhase(
     ::CopyInlineFunctionBodyLowering,
     name = "CopyInlineFunctionBody",
@@ -763,6 +769,7 @@ fun getJsLowerings(
     // just because it goes so in Native.
     validateIrAfterInliningOnlyPrivateFunctions,
     inlineAllFunctionsPhase,
+    inlineFunctionSerializationPreProcessing,
     dumpSyntheticAccessorsPhase.takeIf { configuration[KlibConfigurationKeys.SYNTHETIC_ACCESSORS_DUMP_DIR] != null },
     validateIrAfterInliningAllFunctions,
     // END: Common Native/JS/Wasm prefix.
