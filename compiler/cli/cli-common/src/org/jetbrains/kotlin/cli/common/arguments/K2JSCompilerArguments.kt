@@ -19,6 +19,28 @@ class K2JSCompilerArguments : K2WasmCompilerArguments() {
         @JvmStatic private val serialVersionUID = 0L
     }
 
+    // This option should have been removed in Kotlin 2.2, but it was left here because removing it breaks importing some ancient
+    // Gradle projects in IDEA.
+    // IDEA uses this class to parse the arguments passed by KGP to build its project model.
+    // If it encounters unknown arguments, it just ignores them, which is fine,
+    // but this one is special: it expects a value as the next argument.
+    // So, even though IDEA ignores it, its value is not ignored and is treated as a free positional argument,
+    // which is wrong.
+    // For the import of old Kotlin/JS projects to continue working (and ignore this flag _correctly_),
+    // we have to keep this option around, even though its formal deprecation cycle allows use to drop it completely right now.
+    @Deprecated("It is senseless to use with IR compiler. Only for compatibility.")
+    @Argument(
+        value = "-output",
+        valueDescription = "<filepath>",
+        description = "",
+        isObsolete = true,
+    )
+    var outputFile: String? = null
+        set(value) {
+            checkFrozen()
+            field = if (value.isNullOrEmpty()) null else value
+        }
+
     @Argument(value = "-ir-output-dir", valueDescription = "<directory>", description = "Destination for generated files.")
     var outputDir: String? = null
         set(value) {
