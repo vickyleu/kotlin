@@ -382,9 +382,10 @@ tasks.withType<Test>().configureEach {
     val noTestProperty = project.providers.gradleProperty("noTest")
     onlyIf { !noTestProperty.isPresent }
 
-    // Trigger task timeout earlier than TC timeout, so we could collect more info what went wrong with IT tests
-    // The longest one are on MacOS/X64 agents in release configurations
-    timeout.set(Duration.ofHours(7))
+    // Trigger task timeout earlier than TC timeout, so we could collect more info what went wrong with IT
+    kotlinBuildProperties.getOrNull("kotlin.gradle.testRunTimeoutInMinutes")?.toString()?.toLong()?.let {
+        timeout.set(Duration.ofMinutes(it))
+    }
 
     /**
      * Gradle needs these opens to serialize CC and adds them implicitly:
