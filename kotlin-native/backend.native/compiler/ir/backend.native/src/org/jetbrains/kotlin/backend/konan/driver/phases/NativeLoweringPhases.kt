@@ -365,6 +365,14 @@ internal val inlineAllFunctionsPhase = createFileLoweringPhase(
         name = "InlineAllFunctions",
 )
 
+internal val inlineFunctionSerializationPreProcessing = createFileLoweringPhase(
+        lowering = { generationState: NativeGenerationState ->
+            InlineFunctionSerializationPreProcessing(generationState.context)
+        },
+        name = "InlineFunctionSerializationPreProcessing",
+        prerequisite = setOf(inlineAllFunctionsPhase),
+)
+
 private val interopPhase = createFileLoweringPhase(
         lowering = ::InteropLowering,
         name = "Interop",

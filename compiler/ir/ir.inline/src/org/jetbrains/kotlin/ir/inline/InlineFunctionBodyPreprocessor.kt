@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.ir.inline
 
 import org.jetbrains.kotlin.backend.common.ir.Symbols
-import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationParent
 import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.declarations.IrTypeParametersContainer
@@ -29,11 +28,10 @@ private enum class NonReifiedTypeParameterRemappingMode {
     LEAVE_AS_IS, SUBSTITUTE, ERASE
 }
 
-
 internal class InlineFunctionBodyPreprocessor(
     val typeArguments: Map<IrTypeParameterSymbol, IrType?>?,
     val parent: IrDeclarationParent?,
-    val strategy: CallInlinerStrategy,
+    val strategy: CallInlinerStrategy = CallInlinerStrategy.DEFAULT,
 ) {
 
     fun preprocess(irElement: IrFunction): IrFunction {
