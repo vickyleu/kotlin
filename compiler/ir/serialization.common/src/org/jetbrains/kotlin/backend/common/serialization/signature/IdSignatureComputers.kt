@@ -251,8 +251,6 @@ class FileLocalIdSignatureComputer(
      * This is necessary to be able to match the signature at the fake override call site
      * with the fake override declaration constructed by the fake override builder component
      * (which does not know anything about indices in the IR file).
-     *
-     * TODO: Consider using specialized signatures for local fake overrides, KT-72296
      */
     private fun IrOverridableDeclaration<*>.stableIndexForFakeOverride(compatibleMode: Boolean): Long =
         mangler.run { this@stableIndexForFakeOverride.signatureMangle(compatibleMode) }
