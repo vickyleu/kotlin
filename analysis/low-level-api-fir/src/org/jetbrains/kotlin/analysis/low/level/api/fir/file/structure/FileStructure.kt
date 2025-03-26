@@ -66,7 +66,7 @@ internal class FileStructure private constructor(
          * @see getNonLocalContainingOrThisElement
          */
         private fun findNonLocalContainer(element: KtElement): KtElement? {
-            return element.getNonLocalContainingOrThisElement { it.isAutonomousElement }
+            return element.getNonLocalContainingOrThisElement(predicate = KtElement::isAutonomousElement)
         }
     }
 
