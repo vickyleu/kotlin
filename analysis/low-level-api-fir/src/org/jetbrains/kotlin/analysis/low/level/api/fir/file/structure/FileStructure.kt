@@ -181,7 +181,7 @@ internal class FileStructure private constructor(
             }
 
             override fun visitModifierList(list: KtModifierList) {
-                if (elementCanBeLazilyResolved(list)) {
+                if (elementCanBeLazilyResolved(list, codeFragmentAware = false)) {
                     addStructureElementForTo(list, structureElements)
                 }
             }
@@ -225,7 +225,7 @@ internal class FileStructure private constructor(
         }
 
         container is KtDeclaration -> createDeclarationStructure(container)
-        container is KtModifierList && elementCanBeLazilyResolved(container) -> {
+        container is KtModifierList && elementCanBeLazilyResolved(container, codeFragmentAware = false) -> {
             createDanglingModifierListStructure(container)
         }
         else -> errorWithAttachment("Invalid container ${container::class}") {
