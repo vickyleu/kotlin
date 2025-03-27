@@ -90,6 +90,9 @@ class VariableFixationFinder(
         READY_FOR_FIXATION_REIFIED,
     }
 
+    private val fixationEnhancementsIn22: Boolean
+        get() = languageVersionSettings.supportsFeature(LanguageFeature.FixationEnhancementsIn22)
+
     private fun Context.getTypeVariableReadiness(
         variable: TypeConstructorMarker,
         dependencyProvider: TypeVariableDependencyInformationProvider,
@@ -98,10 +101,15 @@ class VariableFixationFinder(
                 variableHasUnprocessedConstraintsInForks(variable) ->
             TypeVariableFixationReadiness.FORBIDDEN
 
-        // Might be fixed, but this condition should come earlier than the next one,
+        // Pre-2.2: might be fixed, but this condition should come earlier than the next one,
         // because self-type-based cases do not have proper constraints, though they assumed to be fixed
-        areAllProperConstraintsSelfTypeBased(variable) ->
+        // 2.2+: self-type-based upper bounds are considered normal upper bounds (affects e.g. KT-74999)
+        // For reified variables we keep old behavior, as captured types aren't usable for their substitutions (see KT-49838, KT-51040)
+        areAllProperConstraintsSelfTypeBased(variable) -> if (!fixationEnhancementsIn22 || isReified(variable)) {
             TypeVariableFixationReadiness.READY_FOR_FIXATION_DECLARED_UPPER_BOUND_WITH_SELF_TYPES
+        } else {
+            TypeVariableFixationReadiness.READY_FOR_FIXATION_UPPER
+        }
 
         // Prevents from fixation
         !variableHasProperArgumentConstraints(variable) -> TypeVariableFixationReadiness.WITHOUT_PROPER_ARGUMENT_CONSTRAINT

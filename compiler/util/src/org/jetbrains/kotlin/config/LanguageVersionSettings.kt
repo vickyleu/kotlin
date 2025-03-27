@@ -388,6 +388,7 @@ enum class LanguageFeature(
     WhenGuards(KOTLIN_2_2, kind = OTHER), // KT-13626
     MultiDollarInterpolation(KOTLIN_2_2, kind = OTHER), // KT-2425
     JvmDefaultEnableByDefault(KOTLIN_2_2, kind = OTHER), // KT-71768
+    FixationEnhancementsIn22(KOTLIN_2_2, kind = OTHER), // KT-76345
 
     // 2.3
 
