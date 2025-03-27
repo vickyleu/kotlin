@@ -100,11 +100,20 @@ class FrameworkLayout(
 
 class FrameworkDescriptor(
     val file: File,
+    val resources: File?,
     val isStatic: Boolean,
     val target: KonanTarget,
 ) : Serializable {
-    constructor(framework: Framework) : this(
+    constructor(file: File, isStatic: Boolean, target: KonanTarget) : this(
+        file,
+        null,
+        isStatic,
+        target
+    )
+
+    constructor(framework: Framework, resources: File? = null) : this(
         framework.outputFile,
+        resources,
         framework.isStatic,
         framework.konanTarget
     )
