@@ -46713,6 +46713,12 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
       }
 
       @Test
+      @TestMetadata("fakeOverrideGenericBase.kt")
+      public void testFakeOverrideGenericBase() {
+        runTest("compiler/testData/codegen/boxInline/anonymousObject/fakeOverrideGenericBase.kt");
+      }
+
+      @Test
       @TestMetadata("fakeOverrideInDefaultMultiModule.kt")
       public void testFakeOverrideInDefaultMultiModule() {
         runTest("compiler/testData/codegen/boxInline/anonymousObject/fakeOverrideInDefaultMultiModule.kt");
@@ -46722,6 +46728,12 @@ public class FirNativeCodegenBoxTestGenerated extends AbstractNativeCodegenBoxTe
       @TestMetadata("fakeOverrideMultiModule.kt")
       public void testFakeOverrideMultiModule() {
         runTest("compiler/testData/codegen/boxInline/anonymousObject/fakeOverrideMultiModule.kt");
+      }
+
+      @Test
+      @TestMetadata("fakeOverrideReferenceGenericBase.kt")
+      public void testFakeOverrideReferenceGenericBase() {
+        runTest("compiler/testData/codegen/boxInline/anonymousObject/fakeOverrideReferenceGenericBase.kt");
       }
 
       @Test
