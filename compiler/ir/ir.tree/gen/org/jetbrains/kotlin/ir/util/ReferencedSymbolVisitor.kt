@@ -15,15 +15,15 @@ import org.jetbrains.kotlin.ir.symbols.*
  */
 interface ReferencedSymbolVisitor {
 
-    fun visitReferencedClass(symbol: IrClassSymbol)
+    fun visitReferencedClass(symbol: IrClassSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedProperty(symbol: IrPropertySymbol)
+    fun visitReferencedProperty(symbol: IrPropertySymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedScript(symbol: IrScriptSymbol)
+    fun visitReferencedScript(symbol: IrScriptSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedConstructor(symbol: IrConstructorSymbol)
+    fun visitReferencedConstructor(symbol: IrConstructorSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedEnumEntry(symbol: IrEnumEntrySymbol)
+    fun visitReferencedEnumEntry(symbol: IrEnumEntrySymbol) { visitReferencedSymbol(symbol) }
 
     fun visitReferencedFunction(symbol: IrFunctionSymbol) {
         when (symbol) {
@@ -32,13 +32,13 @@ interface ReferencedSymbolVisitor {
         }
     }
 
-    fun visitReferencedSimpleFunction(symbol: IrSimpleFunctionSymbol)
+    fun visitReferencedSimpleFunction(symbol: IrSimpleFunctionSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedField(symbol: IrFieldSymbol)
+    fun visitReferencedField(symbol: IrFieldSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedLocalDelegatedProperty(symbol: IrLocalDelegatedPropertySymbol)
+    fun visitReferencedLocalDelegatedProperty(symbol: IrLocalDelegatedPropertySymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedVariable(symbol: IrVariableSymbol)
+    fun visitReferencedVariable(symbol: IrVariableSymbol) { visitReferencedSymbol(symbol) }
 
     fun visitReferencedDeclarationWithAccessors(symbol: IrDeclarationWithAccessorsSymbol) {
         when (symbol) {
@@ -55,7 +55,7 @@ interface ReferencedSymbolVisitor {
         }
     }
 
-    fun visitReferencedTypeParameter(symbol: IrTypeParameterSymbol)
+    fun visitReferencedTypeParameter(symbol: IrTypeParameterSymbol) { visitReferencedSymbol(symbol) }
 
     fun visitReferencedReturnTarget(symbol: IrReturnTargetSymbol) {
         when (symbol) {
@@ -64,7 +64,7 @@ interface ReferencedSymbolVisitor {
         }
     }
 
-    fun visitReferencedReturnableBlock(symbol: IrReturnableBlockSymbol)
+    fun visitReferencedReturnableBlock(symbol: IrReturnableBlockSymbol) { visitReferencedSymbol(symbol) }
 
     fun visitReferencedValue(symbol: IrValueSymbol) {
         when (symbol) {
@@ -73,7 +73,9 @@ interface ReferencedSymbolVisitor {
         }
     }
 
-    fun visitReferencedValueParameter(symbol: IrValueParameterSymbol)
+    fun visitReferencedValueParameter(symbol: IrValueParameterSymbol) { visitReferencedSymbol(symbol) }
 
-    fun visitReferencedTypeAlias(symbol: IrTypeAliasSymbol)
+    fun visitReferencedTypeAlias(symbol: IrTypeAliasSymbol) { visitReferencedSymbol(symbol) }
+
+    fun visitReferencedSymbol(symbol: IrSymbol)
 }

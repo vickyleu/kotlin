@@ -54,7 +54,7 @@ private fun TreeGenerator.printIrTree(model: Model<Element>, generationPath: Fil
             typeVisitorType to ::TypeVisitorPrinter.bind(model.rootElement),
             typeVisitorVoidType to ::TypeVisitorVoidPrinter.bind(model.rootElement),
             deepCopyIrTreeWithSymbolsType to ::DeepCopyIrTreeWithSymbolsPrinter,
-            irTreeSymbolsVisitorType to ::IrTreeSymbolsVisitorPrinter,
+            irTreeSymbolsVisitorType to ::IrTreeSymbolsVisitorPrinter.bind(model.rootElement),
             typeTransformerType to ::TypeTransformerPrinter.bind(model.rootElement),
             typeTransformerVoidType to ::TypeTransformerVoidPrinter.bind(model.rootElement),
         )
