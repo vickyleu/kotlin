@@ -28,11 +28,12 @@ interface IrLazyDeclarationBase : IrDeclaration {
     fun KotlinType.toIrType(): IrType =
         typeTranslator.translateType(this)
 
-    fun ReceiverParameterDescriptor.generateReceiverParameterStub(): IrValueParameter =
+    fun ReceiverParameterDescriptor.generateReceiverParameterStub(kind: IrParameterKind): IrValueParameter =
         factory.createValueParameter(
             startOffset = UNDEFINED_OFFSET,
             endOffset = UNDEFINED_OFFSET,
             origin = origin,
+            kind = kind,
             name = name,
             type = type.toIrType(),
             isAssignable = false,
