@@ -357,8 +357,17 @@ afterEvaluate {
     }
 }
 
-if (project.path != ":analysis:analysis-api-platform-interface") {
-    configurations.configureEach {
-        exclude(group = "com.github.ben-manes.caffeine", module = "caffeine")
+// temporary workaround until IJPL-181266 is backported to 251
+afterEvaluate {
+    if (!configurations.names.contains("implementation")) return@afterEvaluate
+    configurations.named("implementation").configure {
+        if (!isCanBeDeclared) return@configure
+        withDependencies {
+            val caffeineExplicitlyAdded =
+                filterIsInstance<ModuleDependency>().any { it.group == "com.github.ben-manes.caffeine" && it.name == "caffeine" }
+            if (!caffeineExplicitlyAdded) {
+                exclude(group = "com.github.ben-manes.caffeine", module = "caffeine")
+            }
+        }
     }
 }
