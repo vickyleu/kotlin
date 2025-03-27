@@ -356,3 +356,9 @@ afterEvaluate {
         }
     }
 }
+
+if (project.path != ":analysis:analysis-api-platform-interface") {
+    configurations.configureEach {
+        exclude(group = "com.github.ben-manes.caffeine", module = "caffeine")
+    }
+}
