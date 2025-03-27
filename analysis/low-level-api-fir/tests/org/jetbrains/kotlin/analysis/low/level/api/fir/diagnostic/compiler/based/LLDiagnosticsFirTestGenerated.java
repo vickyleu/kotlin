@@ -8658,6 +8658,12 @@ public class LLDiagnosticsFirTestGenerated extends AbstractLLDiagnosticsTest {
       }
 
       @Test
+      @TestMetadata("valueOfOrNullNonReified.kt")
+      public void testValueOfOrNullNonReified() {
+        runTest("compiler/fir/analysis-tests/testData/resolveWithStdlib/problems/valueOfOrNullNonReified.kt");
+      }
+
+      @Test
       @TestMetadata("weakHashMap.kt")
       public void testWeakHashMap() {
         runTest("compiler/fir/analysis-tests/testData/resolveWithStdlib/problems/weakHashMap.kt");

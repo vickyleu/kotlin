@@ -87,6 +87,7 @@ class VariableFixationFinder(
         FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND,
         READY_FOR_FIXATION_UPPER,
         READY_FOR_FIXATION_LOWER,
+        READY_FOR_FIXATION_EQUALITY,
         READY_FOR_FIXATION_REIFIED,
     }
 
@@ -124,6 +125,10 @@ class VariableFixationFinder(
         variableHasOnlyIncorporatedConstraintsFromDeclaredUpperBound(variable) ->
             TypeVariableFixationReadiness.FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND
         isReified(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_REIFIED
+        // 2.2+: It seems quite logical to prefer EQUALITY constraints to LOWER/UPPER, as this type of constraint is exact
+        fixationEnhancementsIn22 && hasProperArgumentConstraint(variable) ->
+            TypeVariableFixationReadiness.READY_FOR_FIXATION_EQUALITY
+        // 1.5+ (questionable) logic: we prefer LOWER constraints to UPPER constraints, mostly because of KT-41934
         variableHasLowerNonNothingProperConstraint(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_LOWER
         else -> TypeVariableFixationReadiness.READY_FOR_FIXATION_UPPER
     }
