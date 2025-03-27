@@ -382,11 +382,6 @@ tasks.withType<Test>().configureEach {
     val noTestProperty = project.providers.gradleProperty("noTest")
     onlyIf { !noTestProperty.isPresent }
 
-    // Trigger task timeout earlier than TC timeout, so we could collect more info what went wrong with IT
-    kotlinBuildProperties.getOrNull("kotlin.gradle.testRunTimeoutInMinutes")?.toString()?.toLong()?.let {
-        timeout.set(Duration.ofMinutes(it))
-    }
-
     /**
      * Gradle needs these opens to serialize CC and adds them implicitly:
      * - https://github.com/gradle/gradle/blob/2c7035c5fc5c18c044d2de45764f88ada143e4a7/platforms/core-runtime/base-services/src/main/java/org/gradle/internal/jvm/JpmsConfiguration.java#L41
