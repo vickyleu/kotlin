@@ -23838,6 +23838,12 @@ public class FirLightTreeOldFrontendDiagnosticsWithLatestLanguageVersionTestGene
         }
 
         @Test
+        @TestMetadata("delegatedConstructorOfPrivateClass.kt")
+        public void testDelegatedConstructorOfPrivateClass() {
+          runTest("compiler/testData/diagnostics/tests/inline/nonPublicMember/delegatedConstructorOfPrivateClass.kt");
+        }
+
+        @Test
         @TestMetadata("enumMemberInAnnotation.kt")
         public void testEnumMemberInAnnotation() {
           runTest("compiler/testData/diagnostics/tests/inline/nonPublicMember/enumMemberInAnnotation.kt");
