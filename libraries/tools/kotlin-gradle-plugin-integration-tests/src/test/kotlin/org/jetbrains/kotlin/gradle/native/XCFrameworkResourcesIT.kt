@@ -29,6 +29,55 @@ import kotlin.io.path.writeText
 class XCFrameworkResourcesIT : KGPBaseTest() {
 
     /**
+     * Tests the tasks related to XCFramework resources to ensure they are up-to-date across multiple build executions.
+     * This includes validating that resource linking, assembling, and embedding tasks for XCFramework remain up-to-date
+     * when no changes are introduced between successive builds.
+     *
+     * @param gradleVersion the Gradle version to be used for executing the test.
+     */
+    @DisplayName("XCFramework resorces tasks up-to-date")
+    @GradleTest
+    fun testXCFrameworkResourcesUpToDate(
+        gradleVersion: GradleVersion,
+    ) {
+        project("resourcesXCFramework", gradleVersion) {
+            configureForResources {
+                listOf(
+                    iosX64(),
+                    iosArm64(),
+                    iosSimulatorArm64(),
+                )
+            }
+
+            build("assembleSharedDebugXCFramework") {
+                assertTasksExecuted(
+                    ":linkDebugFrameworkIosArm64",
+                    ":linkDebugFrameworkIosSimulatorArm64",
+                    ":linkDebugFrameworkIosX64"
+                )
+
+                assertTasksExecuted(
+                    ":assembleDebugIosSimulatorFatFrameworkForSharedXCFramework",
+                    ":assembleSharedDebugXCFramework"
+                )
+            }
+
+            build("assembleSharedDebugXCFramework") {
+                assertTasksUpToDate(
+                    ":linkDebugFrameworkIosArm64",
+                    ":linkDebugFrameworkIosSimulatorArm64",
+                    ":linkDebugFrameworkIosX64"
+                )
+
+                assertTasksUpToDate(
+                    ":assembleDebugIosSimulatorFatFrameworkForSharedXCFramework",
+                    ":assembleSharedDebugXCFramework"
+                )
+            }
+        }
+    }
+
+    /**
      * Tests the publication of multiplatform resources for multiple targets embedded
      * within an XCFramework.
      *
@@ -50,7 +99,6 @@ class XCFrameworkResourcesIT : KGPBaseTest() {
 
             build("assembleSharedDebugXCFramework") {
                 assertTasksExecuted(":assembleSharedDebugXCFramework")
-                assertTasksExecuted(":assembleSharedDebugResourcesForXCFramework")
 
                 val xcframeworkPath = projectPath.resolve("build/XCFrameworks/debug/Shared.xcframework")
                 val iosArm64FrameworkPath = xcframeworkPath.resolve("ios-arm64/Shared.framework")
@@ -96,7 +144,6 @@ class XCFrameworkResourcesIT : KGPBaseTest() {
 
             build("assembleSharedDebugXCFramework") {
                 assertTasksExecuted(":assembleSharedDebugXCFramework")
-                assertTasksExecuted(":assembleSharedDebugResourcesForXCFramework")
 
                 val xcframeworkPath = projectPath.resolve("build/XCFrameworks/debug/Shared.xcframework")
                 val iosArm64FrameworkPath = xcframeworkPath.resolve("ios-arm64/Shared.framework")
@@ -139,7 +186,6 @@ class XCFrameworkResourcesIT : KGPBaseTest() {
 
             build("assembleSharedDebugXCFramework") {
                 assertTasksExecuted(":assembleSharedDebugXCFramework")
-                assertTasksExecuted(":assembleSharedDebugResourcesForXCFramework")
 
                 assertDirectoriesExist(
                     drawables, files, font, values,
@@ -160,7 +206,6 @@ class XCFrameworkResourcesIT : KGPBaseTest() {
 
             build("assembleSharedDebugXCFramework") {
                 assertTasksExecuted(":assembleSharedDebugXCFramework")
-                assertTasksExecuted(":assembleSharedDebugResourcesForXCFramework")
 
                 assertDirectoriesExist(
                     files, values,
@@ -196,7 +241,6 @@ class XCFrameworkResourcesIT : KGPBaseTest() {
 
                 build("assembleSharedDebugXCFramework") {
                     assertTasksExecuted(":assembleSharedDebugXCFramework")
-                    assertTasksExecuted(":assembleSharedDebugResourcesForXCFramework")
                 }
 
                 val xcframeworkPath = projectPath.resolve("build/XCFrameworks/debug/Shared.xcframework")
