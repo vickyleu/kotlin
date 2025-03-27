@@ -74,6 +74,7 @@ class Generator(
             printImports()
             printGeneratedMessage()
 
+            println("@Suppress(\"UNCHECKED_CAST\")")
             println("abstract class $checkersComponentName {")
             withIndent {
                 println("companion object {")
@@ -110,7 +111,11 @@ class Generator(
                     if (parents.isNotEmpty()) {
                         print(')')
                     }
-                    println(".toTypedArray() }")
+                    print(".toTypedArray()")
+                    if (parents.isNotEmpty()) {
+                        print(" as ${alias.component1().arrayType}")
+                    }
+                    println(" }")
                 }
             }
             println("}")
