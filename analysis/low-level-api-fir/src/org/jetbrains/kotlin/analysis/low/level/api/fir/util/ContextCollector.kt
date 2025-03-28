@@ -506,7 +506,7 @@ private class ContextCollectorVisitor(
         dumpContext(regularClass, ContextKind.SELF)
 
         context.withClassHeader(regularClass) {
-            processSignatureAnnotations(regularClass)
+            processRawSignatureAnnotations(regularClass)
         }
 
         onActiveBody {
@@ -552,11 +552,10 @@ private class ContextCollectorVisitor(
         }
     }
 
-    @OptIn(PrivateForInline::class)
     private fun Processor.processFileHeader(file: FirFile) {
         process(file.packageDirective)
         processList(file.imports)
-        processList(file.annotations)
+        processRawSignatureAnnotations(file)
     }
 
     /**
@@ -575,7 +574,8 @@ private class ContextCollectorVisitor(
     override fun visitConstructor(constructor: FirConstructor) = withProcessor(constructor) {
         dumpContext(constructor, ContextKind.SELF)
 
-        processSignatureAnnotations(constructor)
+        // no need to wrap with the constructor as it should be treated as a class header
+        processRawSignatureAnnotations(constructor)
 
         onActiveBody {
             constructor.lazyResolveToPhase(FirResolvePhase.BODY_RESOLVE)
@@ -618,7 +618,7 @@ private class ContextCollectorVisitor(
             // We have to wrap annotation processing into withEnumEntry as well as it provides the correct context
             // Otherwise there will be the enum entry as an implicit receiver
             context.withEnumEntry(enumEntry) {
-                processSignatureAnnotations(enumEntry)
+                processRawSignatureAnnotations(enumEntry)
 
                 onActiveBody {
                     enumEntry.lazyResolveToPhase(FirResolvePhase.BODY_RESOLVE)
@@ -824,7 +824,6 @@ private class ContextCollectorVisitor(
                 }
             }
         }
-
     }
 
     override fun visitAnonymousInitializer(anonymousInitializer: FirAnonymousInitializer) = withProcessor(anonymousInitializer) {
@@ -915,12 +914,35 @@ private class ContextCollectorVisitor(
         }
     }
 
+    /**
+     * Iterates directly through annotations without any [context] adjustments.
+     *
+     * This function is needed in the case if special modification of [context] is required.
+     * In this case such adjustments have to be done before this function.
+     *
+     * [processSignatureAnnotations] should be used by default.
+     *
+     * @see processSignatureAnnotations
+     */
     @ContextCollectorDsl
-    private fun Processor.processSignatureAnnotations(declaration: FirDeclaration) {
+    private fun Processor.processRawSignatureAnnotations(declaration: FirDeclaration) {
         for (annotation in declaration.annotations) {
             onActive {
                 process(annotation)
             }
+        }
+    }
+
+    /**
+     * Processes [FirDeclaration.annotations] in the context of [declaration].
+     *
+     * @see org.jetbrains.kotlin.fir.resolve.transformers.plugin.FirAnnotationArgumentsTransformer
+     */
+    @ContextCollectorDsl
+    private fun Processor.processSignatureAnnotations(declaration: FirDeclaration) {
+        @OptIn(PrivateForInline::class)
+        context.withContainer(declaration) {
+            processRawSignatureAnnotations(declaration)
         }
     }
 
