@@ -79,15 +79,27 @@ class VariableFixationFinder(
         FORBIDDEN,
         WITHOUT_PROPER_ARGUMENT_CONSTRAINT, // proper constraint from arguments -- not from upper bound for type parameters
         OUTER_TYPE_VARIABLE_DEPENDENCY,
+
+        // This is used for self-type-based bounds and deprioritized in 1.5+.
+        // 2.2+ uses this kind of readiness for reified type parameters only, otherwise
+        // READY_FOR_FIXATION_CAPTURED_UPPER is in use
         READY_FOR_FIXATION_DECLARED_UPPER_BOUND_WITH_SELF_TYPES,
+
         WITH_COMPLEX_DEPENDENCY, // if type variable T has constraint with non fixed type variable inside (non-top-level): T <: Foo<S>
         WITH_COMPLEX_DEPENDENCY_BUT_PROPER_EQUALITY_CONSTRAINT, // Same as before but also has a constraint T = ... not dependent on others
         ALL_CONSTRAINTS_TRIVIAL_OR_NON_PROPER, // proper trivial constraint from arguments, Nothing <: T
         RELATED_TO_ANY_OUTPUT_TYPE,
         FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND,
+
+        // We prefer LOWER T >: SomeRegularType to UPPER T <: SomeRegularType, KT-41934 is the only reason known
         READY_FOR_FIXATION_UPPER,
         READY_FOR_FIXATION_LOWER,
+
+        // Captured types are difficult to manipulate, so with T <: Captured(...)
+        // it's better to fix T earlier than T >: SomeRegularType / T <: SomeRegularType
         READY_FOR_FIXATION_CAPTURED_UPPER,
+
+        // We can do not so much with EQUALITY constraint, so it's better to fix it ASAP
         READY_FOR_FIXATION_EQUALITY,
         READY_FOR_FIXATION_REIFIED,
     }
@@ -132,6 +144,8 @@ class VariableFixationFinder(
             TypeVariableFixationReadiness.READY_FOR_FIXATION_EQUALITY
         // 1.5+ (questionable) logic: we prefer LOWER constraints to UPPER constraints, mostly because of KT-41934
         variableHasLowerNonNothingProperConstraint(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_LOWER
+        fixationEnhancementsIn22 && variableHasCapturedUpperProperConstraint(variable) ->
+            TypeVariableFixationReadiness.READY_FOR_FIXATION_CAPTURED_UPPER
         else -> TypeVariableFixationReadiness.READY_FOR_FIXATION_UPPER
     }
 
@@ -260,6 +274,14 @@ class VariableFixationFinder(
 
         return constraints.any {
             it.kind.isLower() && isProperArgumentConstraint(it) && !it.type.typeConstructor().isNothingConstructor()
+        }
+    }
+
+    private fun Context.variableHasCapturedUpperProperConstraint(variable: TypeConstructorMarker): Boolean {
+        val constraints = notFixedTypeVariables[variable]?.constraints ?: return false
+
+        return constraints.any {
+            it.kind.isUpper() && isProperArgumentConstraint(it) && it.type.typeConstructor().isCapturedTypeConstructor()
         }
     }
 
