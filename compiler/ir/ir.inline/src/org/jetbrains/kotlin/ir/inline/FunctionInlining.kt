@@ -170,7 +170,7 @@ private class CallInlining(
                     inlinedFunctionEndOffset = inlineFunctionToStore.endOffset,
                     resultType = returnType,
                     inlinedFunctionSymbol = inlineFunctionToStore.symbol.takeIf { originalInlinedElement is IrFunction },
-                    inlinedFunctionFileEntry = inlineFunctionToStore.fileEntry,
+                    inlinedFunctionFileEntry = callee.fileEntry,
                     origin = null,
                 ) {
                     evaluateArguments(
