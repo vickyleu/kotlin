@@ -101,6 +101,8 @@ class VariableFixationFinder(
 
         // We can do not so much with EQUALITY constraint, so it's better to fix it ASAP
         READY_FOR_FIXATION_EQUALITY,
+
+        // Not used in 2.2+. K1 used this for reified type parameters, mainly to get discriminateNothingForReifiedParameter.kt working
         READY_FOR_FIXATION_REIFIED,
     }
 
@@ -138,7 +140,7 @@ class VariableFixationFinder(
         dependencyProvider.isVariableRelatedToAnyOutputType(variable) -> TypeVariableFixationReadiness.RELATED_TO_ANY_OUTPUT_TYPE
         variableHasOnlyIncorporatedConstraintsFromDeclaredUpperBound(variable) ->
             TypeVariableFixationReadiness.FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND
-        isReified(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_REIFIED
+        !fixationEnhancementsIn22 && isReified(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_REIFIED
         // 2.2+: It seems quite logical to prefer EQUALITY constraints to LOWER/UPPER, as this type of constraint is exact
         fixationEnhancementsIn22 && hasProperArgumentConstraint(variable) ->
             TypeVariableFixationReadiness.READY_FOR_FIXATION_EQUALITY
