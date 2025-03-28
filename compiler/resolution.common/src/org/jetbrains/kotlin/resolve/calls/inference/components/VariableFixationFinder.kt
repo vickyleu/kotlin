@@ -87,6 +87,7 @@ class VariableFixationFinder(
         FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND,
         READY_FOR_FIXATION_UPPER,
         READY_FOR_FIXATION_LOWER,
+        READY_FOR_FIXATION_CAPTURED_UPPER,
         READY_FOR_FIXATION_EQUALITY,
         READY_FOR_FIXATION_REIFIED,
     }
@@ -104,12 +105,13 @@ class VariableFixationFinder(
 
         // Pre-2.2: might be fixed, but this condition should come earlier than the next one,
         // because self-type-based cases do not have proper constraints, though they assumed to be fixed
-        // 2.2+: self-type-based upper bounds are considered normal upper bounds (affects e.g. KT-74999)
+        // 2.2+: self-type-based upper bounds are considered captured upper bounds
+        // and have higher priority as upper/lower (affects e.g. KT-74999)
         // For reified variables we keep old behavior, as captured types aren't usable for their substitutions (see KT-49838, KT-51040)
         areAllProperConstraintsSelfTypeBased(variable) -> if (!fixationEnhancementsIn22 || isReified(variable)) {
             TypeVariableFixationReadiness.READY_FOR_FIXATION_DECLARED_UPPER_BOUND_WITH_SELF_TYPES
         } else {
-            TypeVariableFixationReadiness.READY_FOR_FIXATION_UPPER
+            TypeVariableFixationReadiness.READY_FOR_FIXATION_CAPTURED_UPPER
         }
 
         // Prevents from fixation
