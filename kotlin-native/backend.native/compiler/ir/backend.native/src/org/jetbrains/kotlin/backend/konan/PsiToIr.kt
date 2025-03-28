@@ -159,7 +159,7 @@ internal fun PsiToIrContext.psiToIr(
                     }.reversed()
                 }
 
-                for (dependency in sortDependencies(dependencies).filter { it != moduleDescriptor }) {
+                for (dependency in sortDependencies(dependencies).reversed().filter { it != moduleDescriptor }) {
                     val kotlinLibrary = (dependency.getCapability(KlibModuleOrigin.CAPABILITY) as? DeserializedKlibModuleOrigin)?.library
                     val isFullyCachedLibrary = kotlinLibrary != null &&
                             config.cachedLibraries.isLibraryCached(kotlinLibrary) && kotlinLibrary != config.libraryToCache?.klib

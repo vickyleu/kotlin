@@ -105,7 +105,7 @@ abstract class IrAbstractInvalidationTest(
             moduleSourceFiles,
             configuration,
             sourceModule.jsFrontEndResult.jsAnalysisResult,
-            sortDependencies(sourceModule.moduleDependencies),
+            sortDependencies(sourceModule.moduleDependencies).reversed(),
             icData,
             IrFactoryImpl,
         ) {

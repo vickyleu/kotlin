@@ -88,7 +88,7 @@ class ClassicFrontend2IrConverter(
             sourceFiles,
             configuration,
             analysisResult,
-            sortDependencies(JsEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)),
+            sortDependencies(JsEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)).reversed(),
             icData,
             IrFactoryImpl,
         ) {

@@ -87,7 +87,7 @@ class NativeDeserializerFacade(
 
         val moduleInfo = getIrModuleInfoForKlib(
             moduleDescriptor,
-            sortDependencies(NativeEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)) + mainModuleLib,
+            sortDependencies(NativeEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)).reversed() + mainModuleLib,
             friendModules,
             configuration,
             symbolTable,

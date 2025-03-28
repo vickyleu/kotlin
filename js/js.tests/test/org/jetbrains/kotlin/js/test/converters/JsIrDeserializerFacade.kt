@@ -66,7 +66,7 @@ class JsIrDeserializerFacade(
 
         val moduleInfo = getIrModuleInfoForKlib(
             moduleDescriptor,
-            sortDependencies(JsEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)) + mainModuleLib,
+            sortDependencies(JsEnvironmentConfigurator.getAllDependenciesMappingFor(module, testServices)).reversed() + mainModuleLib,
             friendModules,
             filesToLoad,
             configuration,
