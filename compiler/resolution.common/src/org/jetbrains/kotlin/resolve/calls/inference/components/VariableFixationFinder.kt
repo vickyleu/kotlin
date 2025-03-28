@@ -103,6 +103,7 @@ class VariableFixationFinder(
         READY_FOR_FIXATION_EQUALITY,
 
         // Not used in 2.2+. K1 used this for reified type parameters, mainly to get discriminateNothingForReifiedParameter.kt working
+        // K2 works without this because of KT-55691
         READY_FOR_FIXATION_REIFIED,
     }
 
