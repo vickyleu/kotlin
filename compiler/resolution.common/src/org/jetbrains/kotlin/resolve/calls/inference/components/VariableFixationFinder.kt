@@ -78,7 +78,7 @@ class VariableFixationFinder(
     enum class TypeVariableFixationReadiness {
         FORBIDDEN,
         WITHOUT_PROPER_ARGUMENT_CONSTRAINT, // proper constraint from arguments -- not from upper bound for type parameters
-        OUTER_TYPE_VARIABLE_DEPENDENCY,
+        OUTER_TYPE_VARIABLE_DEPENDENCY, // PCLA-only readiness
 
         // This is used for self-type-based bounds and deprioritized in 1.5+.
         // 2.2+ uses this kind of readiness for reified type parameters only, otherwise
@@ -86,7 +86,6 @@ class VariableFixationFinder(
         READY_FOR_FIXATION_DECLARED_UPPER_BOUND_WITH_SELF_TYPES,
 
         WITH_COMPLEX_DEPENDENCY, // if type variable T has constraint with non fixed type variable inside (non-top-level): T <: Foo<S>
-        WITH_COMPLEX_DEPENDENCY_BUT_PROPER_EQUALITY_CONSTRAINT, // Same as before but also has a constraint T = ... not dependent on others
         ALL_CONSTRAINTS_TRIVIAL_OR_NON_PROPER, // proper trivial constraint from arguments, Nothing <: T
         RELATED_TO_ANY_OUTPUT_TYPE,
         FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND,
@@ -135,16 +134,16 @@ class VariableFixationFinder(
         dependencyProvider.isRelatedToOuterTypeVariable(variable) -> TypeVariableFixationReadiness.OUTER_TYPE_VARIABLE_DEPENDENCY
 
         // All cases below do not prevent fixation but just define the priority order of a variable
-        hasDependencyToOtherTypeVariables(variable) -> computeReadinessForVariableWithDependencies(variable)
+        // 2.2+: It seems quite logical to prefer EQUALITY constraints to LOWER/UPPER, as this type of constraint is exact
+        fixationEnhancementsIn22 && hasProperArgumentConstraint(variable) ->
+            TypeVariableFixationReadiness.READY_FOR_FIXATION_EQUALITY
+        hasDependencyToOtherTypeVariables(variable) -> TypeVariableFixationReadiness.WITH_COMPLEX_DEPENDENCY
         // TODO: Consider removing this kind of readiness, see KT-63032
         allConstraintsTrivialOrNonProper(variable) -> TypeVariableFixationReadiness.ALL_CONSTRAINTS_TRIVIAL_OR_NON_PROPER
         dependencyProvider.isVariableRelatedToAnyOutputType(variable) -> TypeVariableFixationReadiness.RELATED_TO_ANY_OUTPUT_TYPE
         variableHasOnlyIncorporatedConstraintsFromDeclaredUpperBound(variable) ->
             TypeVariableFixationReadiness.FROM_INCORPORATION_OF_DECLARED_UPPER_BOUND
         !fixationEnhancementsIn22 && isReified(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_REIFIED
-        // 2.2+: It seems quite logical to prefer EQUALITY constraints to LOWER/UPPER, as this type of constraint is exact
-        fixationEnhancementsIn22 && hasProperArgumentConstraint(variable) ->
-            TypeVariableFixationReadiness.READY_FOR_FIXATION_EQUALITY
         // 1.5+ (questionable) logic: we prefer LOWER constraints to UPPER constraints, mostly because of KT-41934
         variableHasLowerNonNothingProperConstraint(variable) -> TypeVariableFixationReadiness.READY_FOR_FIXATION_LOWER
         fixationEnhancementsIn22 && variableHasCapturedUpperProperConstraint(variable) ->
@@ -230,16 +229,6 @@ class VariableFixationFinder(
                 return true
         }
         return false
-    }
-
-    private fun Context.computeReadinessForVariableWithDependencies(typeVariable: TypeConstructorMarker): TypeVariableFixationReadiness {
-        return if (!languageVersionSettings.supportsFeature(LanguageFeature.PreferDependentTypeVariablesWithProperArgumentConstraint) ||
-            !hasProperArgumentConstraint(typeVariable)
-        ) {
-            TypeVariableFixationReadiness.WITH_COMPLEX_DEPENDENCY
-        } else {
-            TypeVariableFixationReadiness.WITH_COMPLEX_DEPENDENCY_BUT_PROPER_EQUALITY_CONSTRAINT
-        }
     }
 
     private fun Context.hasProperArgumentConstraint(typeVariable: TypeConstructorMarker): Boolean {
