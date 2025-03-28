@@ -647,6 +647,10 @@ class ObjCExportTranslatorImpl(
             attributes.addIfNotNull(getDeprecationAttribute(method))
         }
 
+        if (namer.needsExplicitMethodFamily(method.name)) {
+            attributes += "objc_method_family(none)"
+        }
+
         val comment = buildComment(method, baseMethodBridge, parameters)
 
         return ObjCMethod(method, isInstanceMethod, returnType, selectorParts, parameters, attributes, comment)
