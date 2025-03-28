@@ -6275,19 +6275,6 @@ public final class org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor : java/
 	public final fun isStatic ()Z
 }
 
-public abstract class org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor$Type : java/io/Serializable {
-}
-
-public final class org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor$Type$Fat : org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor$Type {
-	public fun <init> (Ljava/util/List;)V
-	public final fun getTargets ()Ljava/util/List;
-}
-
-public final class org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor$Type$Slim : org/jetbrains/kotlin/gradle/tasks/FrameworkDescriptor$Type {
-	public fun <init> (Lorg/jetbrains/kotlin/konan/target/KonanTarget;)V
-	public final fun getTarget ()Lorg/jetbrains/kotlin/konan/target/KonanTarget;
-}
-
 public final class org/jetbrains/kotlin/gradle/tasks/FrameworkDsymLayout {
 	public fun <init> (Ljava/io/File;)V
 	public final fun exists ()Z
